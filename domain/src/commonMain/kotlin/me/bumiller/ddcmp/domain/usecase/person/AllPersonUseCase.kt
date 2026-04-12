@@ -15,7 +15,7 @@ class AllPersonUseCase(
     val dreamRepo: DreamRepository
 ) : FlowUseCase<I, List<Person>> {
 
-    override suspend fun invoke(i: I): Flow<List<Person>> =
+    override fun invoke(i: I): Flow<List<Person>> =
         base(i)
             .map { it.applySort(i.sortMode, i.sortDirection) }
 

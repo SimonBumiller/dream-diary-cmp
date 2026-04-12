@@ -44,10 +44,16 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.compose.navigation)
             implementation(project(":core:database"))
             implementation(project(":core:datastore"))
             implementation(project(":domain"))
             implementation(project(":feature:home"))
+            implementation(project(":feature:settings"))
+            implementation(project(":feature:onboarding"))
+            implementation(project(":ui:common"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

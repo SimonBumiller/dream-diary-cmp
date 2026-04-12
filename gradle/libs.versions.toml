@@ -24,6 +24,8 @@ runner = "1.5.2"
 core = "1.5.0"
 datastore = "1.2.1"
 koin = "4.2.0"
+koin-compiler = "1.0.0-RC1"
+navigation = "1.1.0-rc01"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -54,7 +56,11 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+compose-navigation = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "navigation" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -68,3 +74,4 @@ androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.lib
 androidLint = { id = "com.android.lint", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 androidx-room = { id = "androidx.room", version.ref = "room" }
+koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-compiler" }

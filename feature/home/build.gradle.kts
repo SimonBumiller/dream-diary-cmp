@@ -18,6 +18,16 @@ kotlin {
 
     jvm()
 
+    listOf(
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "ComposeApp"
+            isStatic = true
+        }
+    }
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
@@ -47,7 +57,7 @@ kotlin {
 }
 
 android {
-    namespace = "me.bumiller.ddcmp"
+    namespace = "me.bumiller.ddcmp.feature.home"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     packaging {

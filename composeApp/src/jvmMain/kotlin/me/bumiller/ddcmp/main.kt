@@ -9,6 +9,6 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         title = "dream-diary-cmp",
     ) {
-        App()
+        AppRoot()
     }
 }

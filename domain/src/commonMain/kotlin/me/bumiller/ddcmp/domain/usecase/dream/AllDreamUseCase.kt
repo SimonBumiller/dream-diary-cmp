@@ -18,7 +18,7 @@ class AllDreamUseCase(
     val repo: DreamRepository
 ) : FlowUseCase<I, List<Dream>> {
 
-    override suspend fun invoke(i: I): Flow<List<Dream>> = repo.all
+    override fun invoke(i: I): Flow<List<Dream>> = repo.all
         .map { it.applySort(i.sortMode, i.sortDirection).applyFilter(i) }
 
     private fun List<Dream>.applySort(mode: DreamSort, direction: SortDirection) =

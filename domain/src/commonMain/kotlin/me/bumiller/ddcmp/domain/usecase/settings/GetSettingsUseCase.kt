@@ -7,5 +7,5 @@ import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 class GetSettingsUseCase(
     val store: SettingsStore
 ) : FlowUseCase<Unit, Settings> {
-    override suspend fun invoke(i: Unit) = store.settings
+    override fun invoke(i: Unit) = store.settings
 }

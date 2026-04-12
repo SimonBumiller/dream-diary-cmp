@@ -17,4 +17,11 @@ fun interface UseCase<in I, out O> {
 /**
  * Use-case that produces a flow.
  */
-fun interface FlowUseCase<in I, out O> : UseCase<I, Flow<O>>
+fun interface FlowUseCase<in I, out O> {
+
+    /**
+     * Invokes the use-case for a given input.
+     */
+    operator fun invoke(i: I): Flow<O>
+
+}

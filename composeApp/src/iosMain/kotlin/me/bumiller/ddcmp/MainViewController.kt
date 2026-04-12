@@ -6,5 +6,5 @@ import platform.UIKit.UIViewController
 fun MainViewController(): UIViewController {
     initKoin()
 
-    return ComposeUIViewController { App() }
+    return ComposeUIViewController { AppRoot() }
 }

@@ -8,7 +8,7 @@ import okio.Path
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
-private const val FILENAME = "settings.datastore"
+private const val FILENAME = "settings.preferences_pb"
 
 /**
  * Creates a datastore inside a given parent directory.

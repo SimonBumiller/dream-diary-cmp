@@ -16,7 +16,7 @@ class AllEmotionsUseCase(
     val dreamRepo: DreamRepository
 ) : FlowUseCase<I, List<Emotion>> {
 
-    override suspend fun invoke(i: I): Flow<List<Emotion>> =
+    override fun invoke(i: I): Flow<List<Emotion>> =
         base(i)
             .map { it.applyFilter(i) }
 
