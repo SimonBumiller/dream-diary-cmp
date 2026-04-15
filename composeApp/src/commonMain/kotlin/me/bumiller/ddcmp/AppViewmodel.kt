@@ -3,11 +3,14 @@ package me.bumiller.ddcmp
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.Settings
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
 import me.bumiller.ddcmp.navigation.MainRoutes
+import me.bumiller.ddcmp.ui.common.UIE
+import me.bumiller.ddcmp.ui.common.VME
 import me.bumiller.ddcmp.ui.common.AppViewModel as BaseViewModel
 
 /**
@@ -20,7 +23,10 @@ internal class AppViewmodel(
      */
     getSettings: GetSettingsUseCase
 
-) : BaseViewModel() {
+) : BaseViewModel<AppViewmodel.UiEvent, AppViewmodel.ViewModelEvent>() {
+
+    internal interface UiEvent: UIE
+    internal interface ViewModelEvent: VME
 
     private val navBackStack = MutableStateFlow<List<MainRoutes>>(emptyList())
 
@@ -51,8 +57,10 @@ internal class AppViewmodel(
     /**
      * Navigates to a specific route.
      */
-    fun navigateTo(route: MainRoutes) {
-        navBackStack.value += route
+    fun navigateTo(route: MainRoutes, replace: Boolean = false) {
+        val old = navBackStack.value
+        val new = if(replace) old - old.last() + route else old + route
+        navBackStack.value = new
     }
 
     /**
@@ -60,6 +68,10 @@ internal class AppViewmodel(
      */
     fun navigateBack() {
         navBackStack.value = navBackStack.value.dropLast(1)
+    }
+
+    override suspend fun handleEvent(event: UiEvent) {
+
     }
 
 }

@@ -1,0 +1,30 @@
+<resources>
+    <string name="cd_onboarding_welcome">Illustration of a crescent moon and clouds.</string>
+    <string name="cd_onboarding_data">Illustration of a notebook with a cloud of persons, emotions and dates.</string>
+    <string name="cd_onboarding_connections">Illustration of connections between dates, persons and emotions.</string>
+    <string name="cd_onboarding_security">Illustration of a lock indicating security.</string>
+
+    <string name="welcome_title">Welcome to your Dream Diary</string>
+    <string name="welcome_description">Capture your internal nighttime activities and discover your unconscious thoughts.</string>
+
+    <string name="data_title">Record your Dreams</string>
+    <string name="data_description">Note down your dreams and related data before the memory fades away.</string>
+
+    <string name="connections_title">Discover Patterns and Meaning</string>
+    <string name="connections_description">Develop a higher sense of self-understanding by gaining insight into symbols and persons.</string>
+    <string name="connections_continue_label">Begin</string>
+
+    <string name="confidentiality_title">Confidentiality</string>
+    <string name="confidentiality_description">The confidentiality defines how much information is visible in overview screens on the app. This can be useful if you want to prevent sensitive information from being visible.</string>
+
+    <string name="theme_title">App Theme</string>
+    <string name="theme_description">Configure the app's visuals based on your personal needs, by enabling or disabling the dark mode.</string>
+    <string name="theme_mode_label">App Theme</string>
+    <string name="theme_dynamic_description">To experience a unique color-theme personalized to your phone, enable the dynamic theme.</string>
+    <string name="theme_dynamic_label">Dynamic Theme</string>
+
+    <string name="lock_title">Secure App</string>
+    <string name="lock_description">To have your dreams fully protected, you can require your device to be biometrically unlocked before opening the app.</string>
+    <string name="lock_unlock_label">Enable app lock</string>
+    <string name="lock_continue_label">Finish setup</string>
+</resources>

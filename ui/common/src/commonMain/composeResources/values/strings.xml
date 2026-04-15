@@ -1,0 +1,13 @@
+<resources>
+    <string name="confidentiality_none_name">None</string>
+    <string name="confidentiality_medium_name">Medium</string>
+    <string name="confidentiality_severe_name">High </string>
+
+    <string name="confidentiality_none_description">No content of dreams is hidden. Every dream can be freely accessed when the app is opened.</string>
+    <string name="confidentiality_medium_description">Only the titles of dreams are shown in overview screens. Every dream can be freely accessed when the app is opened.</string>
+    <string name="confidentiality_severe_description">No content of a dream is shown. To view any content, the dream needs to be unlocked.</string>
+
+    <string name="colormode_light_name">Light</string>
+    <string name="colormode_dark_name">Dark</string>
+    <string name="colormode_system_name">System</string>
+</resources>

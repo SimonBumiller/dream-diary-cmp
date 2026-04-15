@@ -44,7 +44,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.compose.navigation)
+            implementation(libs.compose.material3.windowsizeclass)
             implementation(project(":domain"))
+            implementation(project(":ui:common"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -5,4 +5,4 @@ import androidx.compose.runtime.Composable
 import me.bumiller.ddcmp.domain.model.ColorMode
 
 @Composable
-actual fun systemTheme(mode: ColorMode): ColorScheme? = null
+actual fun systemTheme(dark: Boolean): ColorScheme? = null

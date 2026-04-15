@@ -32,6 +32,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.android.biometric)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -40,8 +41,13 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.compose.material3.windowsizeclass)
+            implementation(project(":domain"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -10,4 +10,4 @@ import me.bumiller.ddcmp.domain.model.ColorMode
  * @return Null if dynamic theming is not available.
  */
 @Composable
-expect fun systemTheme(mode: ColorMode): ColorScheme?
+expect fun systemTheme(dark: Boolean): ColorScheme?

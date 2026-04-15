@@ -47,6 +47,7 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.compose.navigation)
+            implementation(libs.compose.material3.windowsizeclass)
             implementation(project(":core:database"))
             implementation(project(":core:datastore"))
             implementation(project(":domain"))
