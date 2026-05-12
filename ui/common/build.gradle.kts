@@ -47,6 +47,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.compose.material3.windowsizeclass)
+            implementation(libs.kotlin.datetime)
+            implementation(libs.compose.material.icons)
+            implementation(libs.compose.navigation)
             implementation(project(":domain"))
         }
         commonTest.dependencies {

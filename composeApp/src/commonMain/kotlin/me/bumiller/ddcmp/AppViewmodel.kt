@@ -1,7 +1,9 @@
 package me.bumiller.ddcmp
 
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
@@ -28,17 +30,18 @@ internal class AppViewmodel(
     internal interface UiEvent: UIE
     internal interface ViewModelEvent: VME
 
-    private val navBackStack = MutableStateFlow<List<MainRoutes>>(emptyList())
-
     init {
         viewModelScope.launch {
             val settings = getSettings(Unit).first()
             val initialEntry = if (settings.onboardingFinished) MainRoutes.Home
             else MainRoutes.Onboarding
 
-            navBackStack.value = listOf(initialEntry)
+            _initialEntry.value = initialEntry
         }
     }
+
+    private val _initialEntry = MutableStateFlow<MainRoutes?>(null)
+    val initialEntry = _initialEntry.asStateFlow()
 
     /**
      * The current state of the app.
@@ -47,46 +50,11 @@ internal class AppViewmodel(
         .map { AppState(it) }
         .stateIn(null)
 
-    /**
-     * The ui state of the app.
-     */
-    val uiState = navBackStack
-        .map { AppUiState(it) }
-        .stateIn(AppUiState(emptyList()))
-
-    /**
-     * Navigates to a specific route.
-     */
-    fun navigateTo(route: MainRoutes, replace: Boolean = false) {
-        val old = navBackStack.value
-        val new = if(replace) old - old.last() + route else old + route
-        navBackStack.value = new
-    }
-
-    /**
-     * Navigates back one route.
-     */
-    fun navigateBack() {
-        navBackStack.value = navBackStack.value.dropLast(1)
-    }
-
     override suspend fun handleEvent(event: UiEvent) {
 
     }
 
 }
-
-/**
- * The ui state of the app.
- */
-internal data class AppUiState(
-
-    /**
-     * The navigation back stack.
-     */
-    val navBackStack: List<MainRoutes>
-
-)
 
 /**
  * The state of the app.

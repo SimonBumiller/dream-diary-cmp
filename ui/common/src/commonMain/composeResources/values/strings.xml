@@ -10,4 +10,30 @@
     <string name="colormode_light_name">Light</string>
     <string name="colormode_dark_name">Dark</string>
     <string name="colormode_system_name">System</string>
+
+    <string name="emotiontype_joy">Joy</string>
+    <string name="emotiontype_pleasure">Pleasure</string>
+    <string name="emotiontype_anger">Anger</string>
+    <string name="emotiontype_sadness">Sadness</string>
+
+    <string name="cd_appbar_more">Show more actions</string>
+
+    <string name="sort_created">Created</string>
+    <string name="sort_updated">Edited</string>
+
+    <string name="sort_dream_valence">Mood</string>
+    <string name="sort_dream_confidentiality">Confidentiality</string>
+    <string name="sort_dream_name">Name</string>
+    <string name="sort_dream_dreamt">Date</string>
+
+    <string name="sort_emotion_name">Name</string>
+    <string name="sort_person_name">Name</string>
+
+    <string name="sort_descending">Descending</string>
+    <string name="sort_ascending">Ascending</string>
+
+    <string name="discard_changes_dialog_confirm_label">Discard changes</string>
+    <string name="discard_changes_dialog_dismiss_label">Cancel</string>
+    <string name="discard_changes_dialog_title">Discard changes?</string>
+    <string name="discard_changes_dialog_text">You have unsaved changes in this context. Do you want to discard them, or continue editing?</string>
 </resources>

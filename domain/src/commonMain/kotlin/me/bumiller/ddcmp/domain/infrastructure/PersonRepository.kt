@@ -1,10 +1,14 @@
 package me.bumiller.ddcmp.domain.infrastructure
 
+import kotlinx.coroutines.flow.Flow
 import me.bumiller.ddcmp.domain.infrastructure.meta.Repository
 import me.bumiller.ddcmp.domain.model.Person
-import me.bumiller.ddcmp.domain.model.meta.SortMode
 
 /**
  * Typed person repository.
  */
-interface PersonRepository : Repository<Person>
+interface PersonRepository : Repository<Person> {
+
+    fun getForDream(dreamId: Long): Flow<List<Person>?>
+
+}

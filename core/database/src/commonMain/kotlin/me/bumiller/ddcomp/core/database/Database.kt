@@ -9,6 +9,8 @@ import me.bumiller.ddcomp.core.database.converter.InstantConverter
 import me.bumiller.ddcomp.core.database.dao.DreamDao
 import me.bumiller.ddcomp.core.database.dao.EmotionDao
 import me.bumiller.ddcomp.core.database.dao.PersonDao
+import me.bumiller.ddcomp.core.database.dao.m2m.DreamEmotionM2MDao
+import me.bumiller.ddcomp.core.database.dao.m2m.DreamPersonM2MDao
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
 import me.bumiller.ddcomp.core.database.entity.PersonEntity
@@ -40,6 +42,9 @@ abstract class RelationalDatabase : RoomDatabase() {
     abstract fun emotionDao(): EmotionDao
 
     abstract fun personDao(): PersonDao
+
+    abstract fun dreamEmotionM2MDao(): DreamEmotionM2MDao
+    abstract fun dreamPersonM2MDao(): DreamPersonM2MDao
 
 }
 

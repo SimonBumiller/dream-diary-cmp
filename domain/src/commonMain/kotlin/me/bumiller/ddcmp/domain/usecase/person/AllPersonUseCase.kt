@@ -21,8 +21,8 @@ class AllPersonUseCase(
 
     private fun base(i: I) =
         if (i.dreamId == null) repo.all
-        else dreamRepo.id(i.dreamId)
-            .map { it?.persons ?: emptyList() }
+        else repo.getForDream(i.dreamId)
+            .map { it ?: emptyList() }
 
     private fun List<Person>.applySort(mode: SortMode.PersonSort, direction: SortDirection) =
         sortedWith { one, two ->

@@ -1,0 +1,61 @@
+<resources>
+    <string name="dream_title">Dream from %1$s</string>
+
+    <string name="dreamlist_title">Dream Diary</string>
+
+    <string name="dreamlist_action_stats">Statistics</string>
+    <string name="dreamlist_action_settings">Settings</string>
+    <string name="dreamlist_action_emotions">Emotions</string>
+    <string name="dreamlist_action_persons">Persons</string>
+
+    <string name="dreamadd_description_placeholder">Enter the course of your dream…</string>
+    <string name="dreamadd_title">Dream</string>
+
+    <string name="dreamadd_persons_title">Persons</string>
+    <string name="dreamadd_persons_info">Here you can select persons to be associated with the dream. Add persons that appeared here, you thought about or that played other roles in the dream.</string>
+    <string name="dreamadd_persons_label">Person</string>
+
+    <string name="dreamadd_confidentiality_title">Confidentiality</string>
+    <string name="dreamadd_confidentiality_info">Here you can select the confidentiality level of this dream. Higher confidentiality means the dream is secured stronger, but less accessible. Check the settings for detailed explanations.</string>
+
+    <string name="dreamadd_emotions_title">Emotions</string>
+    <string name="dreamadd_emotions_info">Here you can select emotions to be associated with the dream. Add emotions that you felt during the dream or describe your mood after waking up.</string>
+    <string name="dreamadd_emotions_label">Emotion</string>
+    <string name="dreamadd_title_info">Set a custom title for the dream, or keep the default one that shows the date.</string>
+    <string name="dreamadd_title_label">Title (optional)</string>
+    <string name="dreamadd_note_info">Set a note to capture additional information, e.g. bedtime routine or ingested food.</string>
+    <string name="dreamadd_note_label">Note (optional)</string>
+
+    <string name="emotionlist_title">Emotions</string>
+    <string name="emotionlist_empty_placeholder_pre">There are currently no emotions present. Use the '+' button to add custom emotions,</string>
+    <string name="emotionlist_empty_placeholder_clickable"> or add the six basic emotions as determined by Paul Ekman</string>
+    <string name="emotionlist_empty_placeholder_post">.</string>
+    <string name="emotionlist_matrix_title">Emotion Matrix</string>
+    <string name="emotionlist_matrix_description">The following matrix shows a visual representation of all emotions you have added. Emotions are classified by their 'valence' (mood of emotion) and 'arousal' (strength of emotion). You can click anywhere on the matrix to see which entry is assigned to which emotion.</string>
+
+    <string-array name="basic_emotions_names">
+        <item>Happiness</item>
+        <item>Sadness</item>
+        <item>Fear</item>
+        <item>Anger</item>
+        <item>Disgust</item>
+        <item>Surprise</item>
+    </string-array>
+    <string-array name="basic_emotions_valences">
+        <item>0.9</item>
+        <item>-0.9</item>
+        <item>-0.8</item>
+        <item>-0.7</item>
+        <item>-0.8</item>
+        <item>0.0</item>
+    </string-array>
+    <string-array name="basic_emotions_arousal">
+        <item>0.7</item>
+        <item>-0.6</item>
+        <item>0.9</item>
+        <item>0.8</item>
+        <item>0.3</item>
+        <item>0.8</item>
+    </string-array>
+
+</resources>

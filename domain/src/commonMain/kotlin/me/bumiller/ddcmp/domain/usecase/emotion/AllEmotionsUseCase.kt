@@ -1,6 +1,7 @@
 package me.bumiller.ddcmp.domain.usecase.emotion
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
@@ -37,8 +38,7 @@ class AllEmotionsUseCase(
 
     private fun base(i: I) =
         if (i.dreamId == null) repo.all
-        else dreamRepo.id(i.dreamId)
-            .map { it?.emotions ?: emptyList() }
+        else repo.getForDream(i.dreamId).map { it ?: emptyList() }
 
     /**
      * Input type

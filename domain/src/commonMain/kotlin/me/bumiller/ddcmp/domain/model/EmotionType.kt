@@ -30,7 +30,7 @@ enum class EmotionType {
         /**
          * Gets the appropriate emotion type for an emotion.
          */
-        fun from(e: Emotion) =
+        fun from(e: EmotionCoordinate) =
             when (e.arousal.value) {
                 in 0F..1F if e.valence.value in 0F..1F -> Joy
                 in -1F..0F if e.valence.value in 0F..1F -> Pleasure

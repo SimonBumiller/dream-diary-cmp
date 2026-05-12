@@ -7,16 +7,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.ui.NavDisplay
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.collectLatest
 import me.bumiller.ddcmp.navigation.MainRoutes
 import me.bumiller.ddcmp.theme.AppTheme
 import me.bumiller.ddcmp.theme.systemTheme
 import me.ddcmp.feature.home.HomeEntry
-import me.ddcmp.feature.onboarding.OnboardingEntry
 import me.ddcmp.feature.home.SettingsEntry
-import org.koin.compose.KoinContext
+import me.ddcmp.feature.onboarding.OnboardingEntry
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -33,6 +33,7 @@ fun AppRoot(
     onScreenReady: () -> Unit = {}
 ) {
     val viewmodel = koinViewModel<AppViewmodel>()
+    val navController = rememberNavController()
 
     // Wait until the state is available
     LaunchedEffect(Unit) {
@@ -44,14 +45,12 @@ fun AppRoot(
     }
 
     val _state by viewmodel.state.collectAsState()
-    val uiState by viewmodel.uiState.collectAsState()
+    val initialEntry by viewmodel.initialEntry.collectAsState()
 
     // If the state is not yet present, or the backstack is still empty, we simply show nothing.
     // Works because splash screen should be visible atm.
     val state = _state ?: return
-    if (uiState.navBackStack.isEmpty()) return
-
-    println("Settings: ${state.settings}")
+    if (initialEntry == null) return
 
     AppTheme(
         mode = state.settings.colorMode,
@@ -59,26 +58,25 @@ fun AppRoot(
         sizeClass = sizeClass,
         systemTheme = { systemTheme(it) }
     ) {
-        NavDisplay(
+        NavHost(
             modifier = Modifier
                 .fillMaxSize(),
-            backStack = uiState.navBackStack,
-            onBack = { viewmodel.navigateBack() },
-            entryProvider = entryProvider {
-                entry<MainRoutes.Home> {
-                    HomeEntry()
-                }
-
-                entry<MainRoutes.Onboarding> {
-                    OnboardingEntry(
-                        onFinished = { viewmodel.navigateTo(MainRoutes.Home) }
-                    )
-                }
-
-                entry<MainRoutes.Settings> {
-                    SettingsEntry()
-                }
+            navController = navController,
+            startDestination = initialEntry!!
+        ) {
+            composable<MainRoutes.Home> {
+                HomeEntry()
             }
-        )
+
+            composable<MainRoutes.Onboarding> {
+                OnboardingEntry(
+                    onFinished = { navController.navigate(MainRoutes.Home) }
+                )
+            }
+
+            composable<MainRoutes.Settings> {
+                SettingsEntry()
+            }
+        }
     }
 }

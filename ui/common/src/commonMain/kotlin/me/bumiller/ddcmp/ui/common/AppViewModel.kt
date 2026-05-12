@@ -90,7 +90,7 @@ abstract class AppViewModel<UiEvent : UIE, ViewModelEvent : VME> : ViewModel() {
      * @param Data The type of which to create a new ui state for
      * @return The newly created ui state flow
      */
-    protected inline fun <reified Data : Any?> registerUiState(
+    protected inline fun <reified Data> registerUiState(
         initialValue: Data,
         key: Any
     ): MutableStateFlow<Data> {
@@ -150,7 +150,7 @@ abstract class AppViewModel<UiEvent : UIE, ViewModelEvent : VME> : ViewModel() {
  */
 @Composable
 inline fun <ScreenEvent : UIE, Event : VME, reified ViewModel : AppViewModel<ScreenEvent, Event>> ViewModelScope(
-    noinline onViewModelEvent: suspend (Event) -> Unit,
+    noinline onViewModelEvent: suspend (Event) -> Unit = {},
     crossinline content: @Composable (ViewModel) -> Unit
 ) {
     val viewModel = koinViewModel<ViewModel>()

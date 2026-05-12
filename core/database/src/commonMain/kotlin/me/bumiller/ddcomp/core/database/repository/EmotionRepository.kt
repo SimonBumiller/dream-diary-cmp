@@ -1,18 +1,25 @@
 package me.bumiller.ddcomp.core.database.repository
 
+import kotlinx.coroutines.flow.map
+import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcomp.core.database.Mapping
+import me.bumiller.ddcomp.core.database.dao.DreamDao
 import me.bumiller.ddcomp.core.database.dao.EmotionDao
-import me.bumiller.ddcomp.core.database.dao.PersonDao
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
-import me.bumiller.ddcomp.core.database.entity.PersonEntity
 import me.bumiller.ddcomp.core.database.repository.base.SimpleBaseRepository
 
 class EmotionRepository(
-    emotionDao: EmotionDao
-): SimpleBaseRepository<Emotion, EmotionEntity>(
+    emotionDao: EmotionDao,
+    val dreamDao: DreamDao
+) : SimpleBaseRepository<Emotion, EmotionEntity>(
     dao = emotionDao,
     map = Mapping::emotion,
     reverseMap = Mapping.Reverse::emotion
-)
+), EmotionRepository {
+
+    override fun getForDream(dreamId: Long) = dreamDao
+        .getByIdAggregate(dreamId)
+        .map { dream -> dream?.emotions?.map(Mapping::emotion) }
+
+}

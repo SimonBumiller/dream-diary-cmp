@@ -1,6 +1,7 @@
 package me.bumiller.ddcmp.domain.model
 
 import me.bumiller.ddcmp.domain.model.meta.Editable
+import me.bumiller.ddcmp.domain.model.meta.Searchable
 import me.bumiller.ddcmp.domain.model.meta.Unique
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
@@ -25,4 +26,9 @@ data class Person(
      */
     var note: String?
 
-): Unique, Editable
+): Unique, Editable, Searchable {
+
+    override val searchableFields: List<String>
+        get() = listOfNotNull(name, note)
+
+}

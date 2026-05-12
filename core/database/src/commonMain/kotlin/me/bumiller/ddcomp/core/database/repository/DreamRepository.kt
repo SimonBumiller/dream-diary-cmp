@@ -7,9 +7,19 @@ import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcomp.core.database.Mapping
 import me.bumiller.ddcomp.core.database.dao.DreamDao
+import me.bumiller.ddcomp.core.database.dao.EmotionDao
+import me.bumiller.ddcomp.core.database.dao.PersonDao
+import me.bumiller.ddcomp.core.database.dao.m2m.DreamEmotionM2MDao
+import me.bumiller.ddcomp.core.database.dao.m2m.DreamPersonM2MDao
+import me.bumiller.ddcomp.core.database.entity.m2m.DreamEmotionM2M
+import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
 
 class DreamRepository(
-    private val dreamDao: DreamDao
+    private val dreamDao: DreamDao,
+    private val emotionDao: EmotionDao,
+    private val personDao: PersonDao,
+    private val dreamPersonM2MDao: DreamPersonM2MDao,
+    private val dreamEmotionM2MDao: DreamEmotionM2MDao
 ) : DreamRepository {
 
     override val all: Flow<List<Dream>> = dreamDao.getAllAggregate()
@@ -21,11 +31,46 @@ class DreamRepository(
         dreams.singleOrNull { it.id == id }
     }
 
-    override suspend fun save(t: Dream) = dreamDao.upsert(Mapping.Reverse.dream(t))
+    override suspend fun save(t: Dream): Long {
+        return dreamDao.upsert(Mapping.Reverse.dream(t))
+    }
 
     override suspend fun delete(id: Long) = dreamDao.getById(id)
         .first()
         ?.let { dreamDao.delete(it) > 0 } ?: false
+
+    override suspend fun addEmotionTo(dreamId: Long, emotionId: Long) {
+        dreamEmotionM2MDao.insert(DreamEmotionM2M(dreamId, emotionId))
+    }
+
+    override suspend fun removeEmotionFrom(dreamId: Long, emotionId: Long) {
+        dreamEmotionM2MDao.delete(dreamId, emotionId)
+    }
+
+    override fun getForEmotion(emotionId: Long): Flow<List<Dream>> =
+        dreamDao.getAllAggregate()
+            .map { aggregates ->
+                aggregates.filter { aggregate ->
+                    aggregate.emotions.any { it.id == emotionId }
+                }
+                    .map { Mapping.dream(it.dream) }
+            }
+
+    override suspend fun addPersonTo(dreamId: Long, personId: Long) {
+        dreamPersonM2MDao.insert(DreamPersonM2M(dreamId, personId))
+    }
+
+    override suspend fun removePersonFrom(dreamId: Long, personId: Long) {
+        dreamPersonM2MDao.delete(dreamId, personId)
+    }
+
+    override fun getForPerson(personId: Long): Flow<List<Dream>> = dreamDao.getAllAggregate()
+        .map { aggregates ->
+            aggregates.filter { aggregate ->
+                aggregate.persons.any { it.id == personId }
+            }
+                .map { Mapping.dream(it.dream) }
+        }
 
 
 }

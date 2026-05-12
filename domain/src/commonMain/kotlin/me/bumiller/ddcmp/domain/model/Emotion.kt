@@ -1,6 +1,7 @@
 package me.bumiller.ddcmp.domain.model
 
 import me.bumiller.ddcmp.domain.model.meta.Editable
+import me.bumiller.ddcmp.domain.model.meta.Searchable
 import me.bumiller.ddcmp.domain.model.meta.Unique
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
@@ -18,16 +19,21 @@ data class Emotion(
     /**
      * The arousal level.
      */
-    var arousal: Arousal,
+    override var arousal: Arousal,
 
     /**
      * The valence level.
      */
-    var valence: Valence,
+    override var valence: Valence,
 
     /**
      * The name of the emotion.
      */
     var name: String
 
-) : Unique, Editable
+) : Unique, Editable, Searchable, EmotionCoordinate {
+
+    override val searchableFields: List<String>
+        get() = listOf(name)
+
+}

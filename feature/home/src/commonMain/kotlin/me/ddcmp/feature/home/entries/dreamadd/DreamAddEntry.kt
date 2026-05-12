@@ -1,0 +1,389 @@
+package me.ddcmp.feature.home.entries.dreamadd
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.InputChip
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.minimumInteractiveComponentSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigationevent.NavigationEventInfo
+import androidx.navigationevent.compose.NavigationBackHandler
+import androidx.navigationevent.compose.rememberNavigationEventState
+import dream_diary_cmp.feature.home.generated.resources.Res
+import dream_diary_cmp.feature.home.generated.resources.dream_title
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_confidentiality_info
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_confidentiality_title
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_description_placeholder
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_emotions_info
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_emotions_label
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_emotions_title
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_note_info
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_note_label
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_persons_info
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_persons_label
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_persons_title
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_title
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_title_info
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_title_label
+import kotlinx.coroutines.delay
+import me.bumiller.ddcmp.domain.model.Emotion
+import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.util.search
+import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.ConfidentialitySelector
+import me.bumiller.ddcmp.ui.common.component.SearchTextField
+import me.bumiller.ddcmp.ui.common.dialog.DiscardChangesDialog
+import me.bumiller.ddcmp.ui.common.format.formatInstant
+import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent
+import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.ChangeDescription
+import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.SelectPerson
+import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+
+@Composable
+internal fun DreamAddEntry(
+    onBack: () -> Unit
+) {
+    ViewModelScope<UiEvent, DreamAddViewModel.ViewModelEvent, DreamAddViewModel>(
+        onViewModelEvent = {
+            when (it) {
+                DreamAddViewModel.ViewModelEvent.GoBack -> onBack()
+            }
+        }
+    ) { vm ->
+        val uiState by vm.uiState.collectAsStateWithLifecycle()
+        val dreamState by vm.dreamState.collectAsStateWithLifecycle()
+        val canSave by vm.canSave.collectAsStateWithLifecycle()
+        val persons by vm.personsState.collectAsStateWithLifecycle()
+        val emotions by vm.emotionsState.collectAsStateWithLifecycle()
+
+        DreamAddEntry(vm::onEvent, uiState, dreamState, canSave, persons, emotions)
+    }
+}
+
+val transparentTextFieldColors: TextFieldColors
+    @Composable get() = TextFieldDefaults.colors().copy(
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        errorIndicatorColor = Color.Transparent,
+        focusedContainerColor = Color.Transparent,
+        errorContainerColor = Color.Transparent,
+        disabledContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent
+    )
+
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class,
+    ExperimentalTime::class, ExperimentalComposeUiApi::class
+)
+@Composable
+private fun DreamAddEntry(
+    onEvent: (UiEvent) -> Unit,
+    uiState: DreamAddViewModel.UiState,
+    dreamState: DreamAddViewModel.DreamState,
+    canSave: Boolean,
+    persons: List<Person>,
+    emotions: List<Emotion>
+) {
+    val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(Unit) {
+        delay(300L)
+        keyboardController?.run {
+            show()
+            focusRequester.requestFocus()
+        }
+    }
+
+    NavigationBackHandler(
+        state = rememberNavigationEventState(NavigationEventInfo.None)
+    ) {
+        onEvent(UiEvent.NavigateBack)
+    }
+
+    if (uiState.showDiscardDialog) {
+        DiscardChangesDialog(
+            onDiscard = { onEvent(UiEvent.NavigateBack) },
+            onKeep = { onEvent(UiEvent.HideDiscardDialog) }
+        )
+    }
+
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text(stringResource(Res.string.dreamadd_title)) },
+                actions = {
+                    FilledIconButton(
+                        onClick = { onEvent(UiEvent.Save) },
+                        modifier = Modifier
+                            .minimumInteractiveComponentSize()
+                            .size(IconButtonDefaults.extraSmallContainerSize(IconButtonDefaults.IconButtonWidthOption.Wide)),
+                        enabled = canSave
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(IconButtonDefaults.extraSmallIconSize)
+                        )
+                    }
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = { onEvent(UiEvent.NavigateBack) }
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                            contentDescription = null
+                        )
+                    }
+                }
+            )
+        }
+    ) { pv ->
+        Column(
+            modifier = Modifier
+                .padding(pv)
+                .fillMaxSize()
+                .imePadding()
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                value = dreamState.description,
+                onValueChange = { onEvent(ChangeDescription(it)) },
+                placeholder = { Text(stringResource(Res.string.dreamadd_description_placeholder)) },
+                keyboardOptions = KeyboardOptions().copy(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    autoCorrectEnabled = true
+
+                ),
+                minLines = 4,
+                colors = transparentTextFieldColors
+            )
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 8.dp,
+                            end = 8.dp,
+                            top = 4.dp,
+                            bottom = 12.dp
+                        ),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(Res.string.dreamadd_persons_title),
+                        style = MaterialTheme.typography.titleMediumEmphasized
+                    )
+
+                    Text(
+                        text = stringResource(Res.string.dreamadd_persons_info),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                    FlowRow(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        dreamState.persons.forEach { person ->
+                            InputChip(
+                                selected = false,
+                                onClick = { onEvent(UiEvent.UnSelectPerson(person)) },
+                                label = { Text(person.name) }
+                            )
+                        }
+                    }
+
+                    SearchTextField(
+                        query = uiState.personQuery,
+                        onQueryChange = { UiEvent.ChangePersonQuery(it) },
+                        label = { Text(stringResource(Res.string.dreamadd_persons_label)) },
+                        values = persons.search(uiState.personQuery),
+                        name = Person::name,
+                        onSelect = { onEvent(SelectPerson(it)) }
+                    )
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 8.dp,
+                            end = 8.dp,
+                            top = 4.dp,
+                            bottom = 12.dp
+                        ),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(Res.string.dreamadd_emotions_title),
+                        style = MaterialTheme.typography.titleMediumEmphasized
+                    )
+
+                    Text(
+                        text = stringResource(Res.string.dreamadd_emotions_info),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                    FlowRow(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        dreamState.emotions.forEach { emotion ->
+                            InputChip(
+                                selected = false,
+                                onClick = { onEvent(UiEvent.UnSelectEmotion(emotion)) },
+                                label = { Text(emotion.name) }
+                            )
+                        }
+                    }
+
+                    SearchTextField(
+                        query = uiState.emotionQuery,
+                        onQueryChange = { UiEvent.ChangeEmotionQuery(it) },
+                        label = { Text(stringResource(Res.string.dreamadd_emotions_label)) },
+                        values = emotions.search(uiState.emotionQuery),
+                        name = Emotion::name,
+                        onSelect = { onEvent(UiEvent.SelectEmotion(it)) }
+                    )
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 8.dp,
+                            end = 8.dp,
+                            top = 4.dp,
+                            bottom = 12.dp
+                        ),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(Res.string.dreamadd_confidentiality_title),
+                        style = MaterialTheme.typography.titleMediumEmphasized
+                    )
+
+                    Text(
+                        text = stringResource(Res.string.dreamadd_confidentiality_info),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                    ConfidentialitySelector(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        confidentiality = dreamState.confidentiality,
+                        onSelect = { onEvent(UiEvent.SetConfidentiality(it)) }
+                    )
+                }
+            }
+
+            Spacer(
+                modifier = Modifier
+                    .height(8.dp)
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = stringResource(Res.string.dreamadd_title_info),
+                    style = MaterialTheme.typography.bodySmall
+                )
+
+                OutlinedTextField(
+                    value = dreamState.title,
+                    onValueChange = { onEvent(UiEvent.ChangeTitle(it)) },
+                    placeholder = {
+                        Text(
+                            stringResource(
+                                Res.string.dream_title,
+                                formatInstant(Clock.System.now())
+                            )
+                        )
+                    },
+                    label = { Text(stringResource(Res.string.dreamadd_title_label)) }
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .height(8.dp)
+                )
+
+                Text(
+                    text = stringResource(Res.string.dreamadd_note_info),
+                    style = MaterialTheme.typography.bodySmall
+                )
+
+                OutlinedTextField(
+                    value = dreamState.note,
+                    onValueChange = { onEvent(UiEvent.ChangeNote(it)) },
+                    label = { Text(stringResource(Res.string.dreamadd_note_label)) },
+                    minLines = 3
+                )
+            }
+        }
+    }
+}

@@ -1,6 +1,7 @@
 package me.bumiller.ddcmp.domain.model
 
 import me.bumiller.ddcmp.domain.model.meta.Editable
+import me.bumiller.ddcmp.domain.model.meta.Searchable
 import me.bumiller.ddcmp.domain.model.meta.Unique
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
@@ -44,30 +45,11 @@ data class Dream(
     /**
      * The confidentiality level of the dream.
      */
-    var confidentiality: Confidentiality,
+    var confidentiality: Confidentiality
 
-    /**
-     * The persons that are part of the dream.
-     */
-    val persons: MutableList<Person>,
+) : Unique, Editable, Searchable {
 
-    /**
-     * The emotions that are part of the dream.
-     */
-    val emotions: MutableList<Emotion>
-
-) : Unique, Editable {
-
-    /**
-     * Dynamically calculates the average valence of the dream's emotions.
-     */
-    val averageValence: Valence
-        get() = Valence(
-            emotions
-                .map(Emotion::valence)
-                .map(Valence::value)
-                .average()
-                .toFloat()
-        )
+    override val searchableFields: List<String>
+        get() = listOfNotNull(title, description, note)
 
 }

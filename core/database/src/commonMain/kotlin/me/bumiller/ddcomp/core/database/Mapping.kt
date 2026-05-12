@@ -76,11 +76,7 @@ object Mapping {
 
     fun confidentiality(value: String) = Confidentiality.valueOf(value)
 
-    fun dream(
-        entity: DreamEntity,
-        personEntities: List<PersonEntity>,
-        emotionEntities: List<EmotionEntity>
-    ) =
+    fun dream(entity: DreamEntity) =
         with(entity) {
             Dream(
                 id = id,
@@ -91,15 +87,11 @@ object Mapping {
                 description = description,
                 note = note,
                 favorite = favorite,
-                confidentiality = confidentiality(confidentiality),
-                persons = personEntities.map(::person).toMutableList(),
-                emotions = emotionEntities.map(::emotion).toMutableList()
+                confidentiality = confidentiality(confidentiality)
             )
         }
 
     fun dreamAggregate(aggregate: DreamEntity.Aggregate) =
-        with(aggregate) {
-            dream(aggregate.dream, aggregate.persons, aggregate.emotions)
-        }
+        dream(aggregate.dream)
 
 }

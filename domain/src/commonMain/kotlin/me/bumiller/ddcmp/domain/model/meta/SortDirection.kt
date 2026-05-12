@@ -13,6 +13,11 @@ enum class SortDirection {
     /**
      * Higher values first.
      */
-    Descending
+    Descending;
+
+    operator fun not() = when (this) {
+        Ascending -> Descending
+        Descending -> Ascending
+    }
 
 }
