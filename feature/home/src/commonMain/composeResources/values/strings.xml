@@ -27,11 +27,52 @@
     <string name="dreamadd_note_label">Note (optional)</string>
 
     <string name="emotionlist_title">Emotions</string>
+    <string name="emotionlist_description">Below is a list of all emotions you added. Emotions form the basis of your subconsciousness and can be associated with dreams.</string>
     <string name="emotionlist_empty_placeholder_pre">There are currently no emotions present. Use the '+' button to add custom emotions,</string>
     <string name="emotionlist_empty_placeholder_clickable"> or add the six basic emotions as determined by Paul Ekman</string>
     <string name="emotionlist_empty_placeholder_post">.</string>
     <string name="emotionlist_matrix_title">Emotion Matrix</string>
     <string name="emotionlist_matrix_description">The following matrix shows a visual representation of all emotions you have added. Emotions are classified by their 'valence' (mood of emotion) and 'arousal' (strength of emotion). You can click anywhere on the matrix to see which entry is assigned to which emotion.</string>
+
+    <string name="emotionadd_title">Emotion</string>
+    <string name="emotionadd_name_placeholder">Enter the name of the emotion</string>
+    <string name="emotionadd_name_label">Emotion</string>
+    <string name="emotionadd_grid_title">Emotion value</string>
+    <string name="emotionadd_grid_info">Characterize the emotion by selecting its valence (mood) and arousal (strength). The other dots represent already existing emotions.</string>
+    <string name="emotionadd_closest_label">The selected value is closest to:</string>
+
+    <string name="personlist_title">Persons</string>
+    <string name="personlist_description">Below is a list of all persons added by you. Persons are an important part of your subconsciousness and can be associated with dreams.</string>
+    <string name="personlist_empty_placeholder">There are currently no persons present. Use the '+' button to add new persons.</string>
+
+    <string name="personadd_title_add">Add Person</string>
+    <string name="personadd_title_edit">Edit Person</string>
+    <string name="personadd_name_placeholder">Enter name of the person…</string>
+    <string name="personadd_name_label">Name</string>
+    <string name="personadd_note_placeholder">Add some relevant information…</string>
+    <string name="personadd_note_label">Notes (optional)</string>
+    <string name="personadd_confirm_label_add">Add</string>
+    <string name="personadd_confirm_label_edit">Save</string>
+    <string name="personadd_cancel_label">Cancel</string>
+
+    <string name="dreamdetail_action_stats">Dream statistics</string>
+    <string name="dreamdetail_action_favorite">Mark as favorite</string>
+    <string name="dreamdetail_action_edit">Edit</string>
+    <string name="dreamdetail_note_label">Contextual Note: </string>
+    <string name="dreamdetail_persons_title">Persons</string>
+    <string name="dreamdetail_persons_info_empty">This dream does not have any associated persons.</string>
+    <plurals name="dreamdetail_persons_info">
+        <item quantity="one">In total, there is one person taking part in this dream.</item>
+        <item quantity="other">In total, there are %1$d persons taking part in this dream.</item>
+    </plurals>
+    <string name="dreamdetail_emotions_title">Emotions</string>
+    <string name="dreamdetail_emotions_info_empty">This dream does not have any associated emotions.</string>
+    <plurals name="dreamdetail_emotions_info">
+        <item quantity="one">In total, there is one emotion associated with this dream.</item>
+        <item quantity="other">In total, there are %1$d emotions associated with this dream.</item>
+    </plurals>
+    <string name="dreamdetail_confidentiality_pre">This dream is marked with </string>
+    <string name="dreamdetail_confidentiality_post"> confidentiality.</string>
 
     <string-array name="basic_emotions_names">
         <item>Happiness</item>

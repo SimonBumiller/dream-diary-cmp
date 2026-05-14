@@ -239,8 +239,7 @@ private fun DreamAddEntry(
                     FlowRow(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         dreamState.persons.forEach { person ->
                             InputChip(
@@ -285,8 +284,7 @@ private fun DreamAddEntry(
                     FlowRow(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         dreamState.emotions.forEach { emotion ->
                             InputChip(

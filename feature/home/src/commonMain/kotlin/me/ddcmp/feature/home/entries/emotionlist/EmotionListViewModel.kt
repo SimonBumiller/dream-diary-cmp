@@ -40,6 +40,7 @@ internal class EmotionListViewModel(
 
         UiEvent.AddEmotion -> fireEvent(ViewModelEvent.NavigateToAdd)
         UiEvent.GoBack -> fireEvent(ViewModelEvent.NavigateBack)
+        is UiEvent.EditEmotion -> fireEvent(ViewModelEvent.NavigateToEdit(event.id))
         UiEvent.AddBasicEmotions -> {
             val names = getStringArray(Res.array.basic_emotions_names)
             val valences = getStringArray(Res.array.basic_emotions_valences)
@@ -77,11 +78,13 @@ internal class EmotionListViewModel(
         data object AddEmotion : UiEvent
         data object AddBasicEmotions : UiEvent
         data class SelectEmotion(val emotion: Emotion?) : UiEvent
+        data class EditEmotion(val id: Long): UiEvent
     }
 
     sealed interface ViewModelEvent : VME {
         data object NavigateBack : ViewModelEvent
         data object NavigateToAdd : ViewModelEvent
+        data class NavigateToEdit(val id: Long): ViewModelEvent
     }
 
 }

@@ -18,8 +18,10 @@ class SaveDreamUseCase(
 ) : UseCase<SaveDreamUseCase.I, Dream> {
 
     override suspend fun invoke(i: I ): Dream {
-        val newId = dreamRepo.save(i.dream)
-        val dream = i.dream.copy(id = newId)
+        val dream = dreamRepo.save(i.dream).let {
+            if(it == -1L) i.dream
+            else i.dream.copy(id = it)
+        }
 
         val existingEmotions = emotionRepo.getForDream(dream.id).first() ?: emptyList()
         val existingPersons = personRepo.getForDream(dream.id).first() ?: emptyList()

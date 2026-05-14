@@ -4,12 +4,12 @@ import androidx.collection.FloatFloatPair
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.toPath
@@ -29,6 +29,7 @@ import androidx.graphics.shapes.RoundedPolygon
 import kotlinx.coroutines.delay
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.EmotionType
+import me.bumiller.ddcmp.ui.common.component.AppInputChip
 import me.bumiller.ddcmp.ui.common.style.color
 import me.bumiller.ddcmp.ui.common.style.shape
 import me.bumiller.ddcmp.ui.common.translation.translateName
@@ -154,18 +155,23 @@ internal fun ChipEmotionBadge(
     modifier: Modifier = Modifier,
     emotions: List<Emotion>,
     onClick: (Emotion) -> Unit,
+    onLongClick: (Emotion) -> Unit = {},
     label: @Composable (Emotion) -> String = { EmotionType.from(it).translateName },
     selected: Boolean = false
 ) {
+    val intSource = remember { MutableInteractionSource() }
+
     AbstractEmotionBadge(
         modifier = modifier,
         emotions = emotions,
         label = label,
         display = { m, emotion, badge, label ->
-            InputChip(
+            AppInputChip(
                 modifier = m,
                 selected = selected,
                 onClick = { onClick(emotion) },
+                onLongClick = { onLongClick(emotion) },
+                interactionSource = intSource,
                 label = { label() },
                 leadingIcon = { badge() }
             )

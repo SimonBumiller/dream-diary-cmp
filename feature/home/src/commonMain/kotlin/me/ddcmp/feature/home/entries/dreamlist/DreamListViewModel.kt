@@ -15,6 +15,12 @@ import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToAddDream
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToDreamDetail
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToEmotions
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToPersons
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToSettings
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToStats
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
@@ -73,12 +79,12 @@ internal class DreamListViewModel(
             }
         }
 
-        is UiEvent.ClickDream -> TODO()
-        UiEvent.GoToSettings -> fireEvent(ViewModelEvent.GoToSettings)
-        UiEvent.GoToStats -> fireEvent(ViewModelEvent.GoToStats)
-        UiEvent.GoToEmotions -> fireEvent(ViewModelEvent.GoToEmotions)
-        UiEvent.AddDream -> fireEvent(ViewModelEvent.GoToAddDream)
-        UiEvent.GoToPersons -> fireEvent(ViewModelEvent.GoToPersons)
+        is UiEvent.ClickDream -> fireEvent(GoToDreamDetail(event.dream.id))
+        UiEvent.GoToSettings -> fireEvent(GoToSettings)
+        UiEvent.GoToStats -> fireEvent(GoToStats)
+        UiEvent.GoToEmotions -> fireEvent(GoToEmotions)
+        UiEvent.AddDream -> fireEvent(GoToAddDream)
+        UiEvent.GoToPersons -> fireEvent(GoToPersons)
     }
 
     sealed interface UiEvent : UIE {
@@ -111,6 +117,7 @@ internal class DreamListViewModel(
         data object GoToSettings: ViewModelEvent
         data object GoToStats: ViewModelEvent
         data object GoToPersons: ViewModelEvent
+        data class GoToDreamDetail(val dreamId: Long): ViewModelEvent
 
     }
 
@@ -120,7 +127,7 @@ internal class DreamListViewModel(
 
         val sortMode: DreamSort = DreamSort.Dreamt,
 
-        val sortDirection: SortDirection = SortDirection.Descending,
+        val sortDirection: SortDirection = SortDirection.Ascending,
 
         val selectedDream: Dream? = null
 

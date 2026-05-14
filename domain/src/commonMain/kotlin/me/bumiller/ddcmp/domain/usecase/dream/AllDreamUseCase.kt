@@ -102,7 +102,7 @@ class AllDreamUseCase(
         /**
          * The sort direction
          */
-        val sortDirection: SortDirection = SortDirection.Descending,
+        val sortDirection: SortDirection = SortDirection.Ascending,
 
         /**
          * The time range to include in the result.

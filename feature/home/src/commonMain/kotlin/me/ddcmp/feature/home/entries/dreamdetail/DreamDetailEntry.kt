@@ -1,0 +1,320 @@
+package me.ddcmp.feature.home.entries.dreamdetail
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.LineAxis
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.InputChip
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle.Event.ON_PAUSE
+import androidx.lifecycle.Lifecycle.Event.ON_RESUME
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dream_diary_cmp.feature.home.generated.resources.Res
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_edit
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_favorite
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_stats
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_confidentiality_post
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_confidentiality_pre
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_emotions_info
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_emotions_info_empty
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_emotions_title
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_note_label
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_info
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_info_empty
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_title
+import me.bumiller.ddcmp.domain.model.Confidentiality
+import me.bumiller.ddcmp.domain.model.Dream
+import me.bumiller.ddcmp.domain.model.Emotion
+import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.biometric.BiometricContainer
+import me.bumiller.ddcmp.ui.common.component.MultiStyleText
+import me.bumiller.ddcmp.ui.common.component.TextStyleWithCallback
+import me.bumiller.ddcmp.ui.common.format.formatInstant
+import me.bumiller.ddcmp.ui.common.layout.AppBarAction
+import me.bumiller.ddcmp.ui.common.layout.AppBarActions
+import me.bumiller.ddcmp.ui.common.plus
+import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.UiEvent
+import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent
+import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.resources.stringResource
+import kotlin.time.ExperimentalTime
+
+@Composable
+internal fun DreamDetailEntry(
+    onEdit: (id: Long) -> Unit,
+    onGoToEmotion: (id: Long) -> Unit,
+    onGoToPerson: (id: Long) -> Unit,
+    onBack: () -> Unit
+) {
+    ViewModelScope<UiEvent, ViewModelEvent, DreamDetailViewModel>(
+        onViewModelEvent = {
+            when (it) {
+                is ViewModelEvent.GoToEdit -> onEdit(it.dreamId)
+                is ViewModelEvent.GoToEmotion -> onGoToEmotion(it.emotionId)
+                is ViewModelEvent.GoToPerson -> onGoToPerson(it.personId)
+                ViewModelEvent.GoBack -> onBack()
+            }
+        }
+    ) { vm ->
+        val state by vm.dreamState.collectAsStateWithLifecycle()
+        val uiState by vm.uiState.collectAsStateWithLifecycle()
+        val biometricAuthState = vm.biometricAuthState
+
+        val lifecycleOwner = LocalLifecycleOwner.current
+        DisposableEffect(lifecycleOwner) {
+            val observer = LifecycleEventObserver { _, event ->
+                if (event in listOf(ON_PAUSE)) {
+                    vm.onEvent(UiEvent.Unauthenticate)
+                } else if (event == ON_RESUME) {
+                    vm.onEvent(UiEvent.Authenticate)
+                }
+            }
+            lifecycleOwner.lifecycle.addObserver(observer)
+
+            onDispose {
+                lifecycleOwner.lifecycle.removeObserver(observer)
+            }
+        }
+
+        BiometricContainer(
+            state = biometricAuthState,
+            onResult = { vm.onEvent(UiEvent.OnBiometricAuthResult(it)) }
+        )
+
+        if (state != null && uiState.authenticated) {
+            val (dream, emotions, persons) = state!!
+
+            DreamDetailEntry(vm::onEvent, dream, emotions, persons)
+        }
+    }
+}
+
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalTime::class,
+    ExperimentalMaterial3ExpressiveApi::class
+)
+@Composable
+private fun DreamDetailEntry(
+    onEvent: (UiEvent) -> Unit,
+    dream: Dream,
+    emotions: List<Emotion>,
+    persons: List<Person>
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(formatInstant(dream.dreamt))
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = { onEvent(UiEvent.Back) }
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                            contentDescription = null
+                        )
+                    }
+                },
+                actions = {
+                    AppBarActions(
+                        actions = listOf(
+                            AppBarAction(
+                                label = stringResource(Res.string.dreamdetail_action_favorite),
+                                icon = if (dream.favorite) Icons.Default.Favorite else Icons.Outlined.FavoriteBorder,
+                                handler = { onEvent(UiEvent.ToggleFavorite) }
+                            ),
+                            AppBarAction(
+                                label = stringResource(Res.string.dreamdetail_action_edit),
+                                icon = Icons.Default.Edit,
+                                handler = { onEvent(UiEvent.Edit) }
+                            ),
+                            AppBarAction(
+                                label = stringResource(Res.string.dreamdetail_action_stats),
+                                icon = Icons.Default.LineAxis,
+                                handler = { onEvent(UiEvent.GoToDreamStats) }
+                            )
+                        )
+                    )
+                }
+            )
+        }
+    ) { pv ->
+        Column(
+            modifier = Modifier
+                .padding(pv + PaddingValues(horizontal = 8.dp))
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Column {
+                if (dream.title != null) {
+                    Text(
+                        text = dream.title!!,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Text(
+                    text = dream.description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Justify
+                )
+            }
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 8.dp,
+                            end = 8.dp,
+                            top = 4.dp,
+                            bottom = 12.dp
+                        ),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(Res.string.dreamdetail_persons_title),
+                        style = MaterialTheme.typography.titleMediumEmphasized
+                    )
+
+                    Text(
+                        text = if (persons.isNotEmpty()) pluralStringResource(
+                            Res.plurals.dreamdetail_persons_info,
+                            persons.size,
+                            persons.size
+                        )
+                        else stringResource(Res.string.dreamdetail_persons_info_empty),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                    FlowRow(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        persons.forEach { person ->
+                            InputChip(
+                                selected = false,
+                                onClick = { onEvent(UiEvent.ClickPerson(person)) },
+                                label = { Text(person.name) }
+                            )
+                        }
+                    }
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 8.dp,
+                            end = 8.dp,
+                            top = 4.dp,
+                            bottom = 12.dp
+                        ),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(Res.string.dreamdetail_emotions_title),
+                        style = MaterialTheme.typography.titleMediumEmphasized
+                    )
+
+                    Text(
+                        text = if (emotions.isNotEmpty()) pluralStringResource(
+                            Res.plurals.dreamdetail_emotions_info,
+                            emotions.size,
+                            emotions.size
+                        )
+                        else stringResource(Res.string.dreamdetail_emotions_info_empty),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                    FlowRow(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        emotions.forEach { emotion ->
+                            InputChip(
+                                selected = false,
+                                onClick = { onEvent(UiEvent.ClickEmotion(emotion)) },
+                                label = { Text(emotion.name) }
+                            )
+                        }
+                    }
+                }
+
+                dream.note?.let { note ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 8.dp,
+                                end = 8.dp,
+                                top = 4.dp,
+                                bottom = 12.dp
+                            )
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.dreamdetail_note_label),
+                            style = MaterialTheme.typography.titleMediumEmphasized
+                        )
+
+                        Text(
+                            text = note,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontStyle = FontStyle.Italic
+                        )
+                    }
+                }
+
+            }
+            if (dream.confidentiality != Confidentiality.None) {
+                MultiStyleText(
+                    modifier = Modifier.fillMaxWidth(),
+                    defaultStyle = MaterialTheme.typography.bodyMedium,
+                    stringResource(Res.string.dreamdetail_confidentiality_pre) to null,
+                    dream.confidentiality.name to TextStyleWithCallback(
+                        MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                    ),
+                    stringResource(Res.string.dreamdetail_confidentiality_post) to null
+                )
+            }
+        }
+    }
+}

@@ -2,17 +2,20 @@ package me.bumiller.ddcmp.ui.common.biometric
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 
 class BiometricAuthState {
 
-    private val _authRequests = Channel<Unit>()
-    val authRequests: Flow<Unit> = _authRequests.receiveAsFlow()
+    private val _authRequests = MutableSharedFlow<Unit>(
+        replay = 0,
+        extraBufferCapacity = 1
+    )
+    val authRequests: Flow<Unit> = _authRequests
 
     fun requestAuth() {
-        _authRequests.trySend(Unit)
+        _authRequests.tryEmit(Unit)
     }
 
 }

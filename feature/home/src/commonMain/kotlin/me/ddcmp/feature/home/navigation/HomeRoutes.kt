@@ -12,8 +12,26 @@ internal sealed interface HomeRoutes {
     data object EmotionList : HomeRoutes
 
     @Serializable
+    data object PersonList : HomeRoutes
+
+    @Serializable
+    data class AddPerson(
+        val personId: Long? = null
+    ) : HomeRoutes
+
+    @Serializable
     data class AddDream(
         val dreamId: Long? = null
+    ) : HomeRoutes
+
+    @Serializable
+    data class AddEmotion(
+        val emotionId: Long? = null
+    ) : HomeRoutes
+
+    @Serializable
+    data class DreamDetail(
+        val dreamId: Long
     ) : HomeRoutes
 
 }

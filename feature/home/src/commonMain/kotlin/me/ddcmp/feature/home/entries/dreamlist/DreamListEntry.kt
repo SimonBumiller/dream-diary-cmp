@@ -48,6 +48,13 @@ import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.ddcmp.feature.home.component.DreamItem
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.UiEvent
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToAddDream
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToDreamDetail
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToEmotions
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToPersons
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToSettings
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToStats
 import me.ddcmp.feature.home.navigation.HomeRoutes
 import org.jetbrains.compose.resources.stringResource
 
@@ -58,15 +65,17 @@ internal fun DreamListEntry(
     onGoToEmotions: () -> Unit,
     onGoToStats: () -> Unit,
     onGoToPersons: () -> Unit,
+    onGoToDreamDetail: (id: Long) -> Unit
 ) {
-    ViewModelScope<UiEvent, DreamListViewModel.ViewModelEvent, DreamListViewModel>(
+    ViewModelScope<UiEvent, ViewModelEvent, DreamListViewModel>(
         onViewModelEvent = {
             when (it) {
-                DreamListViewModel.ViewModelEvent.GoToAddDream -> onAddDream()
-                DreamListViewModel.ViewModelEvent.GoToEmotions -> onGoToEmotions()
-                DreamListViewModel.ViewModelEvent.GoToSettings -> onGoToSettings()
-                DreamListViewModel.ViewModelEvent.GoToStats -> onGoToStats()
-                DreamListViewModel.ViewModelEvent.GoToPersons -> onGoToPersons()
+                GoToAddDream -> onAddDream()
+                GoToEmotions -> onGoToEmotions()
+                GoToSettings -> onGoToSettings()
+                GoToStats -> onGoToStats()
+                GoToPersons -> onGoToPersons()
+                is GoToDreamDetail -> onGoToDreamDetail(it.dreamId)
             }
         }
     ) { vm ->
@@ -130,7 +139,7 @@ internal fun DreamListEntry(
                                 label = stringResource(Res.string.dreamlist_action_persons),
                                 icon = Icons.Default.Group,
                                 handler = { onEvent(UiEvent.GoToPersons) }
-                            ),
+                            )
                         )
                     )
                 }

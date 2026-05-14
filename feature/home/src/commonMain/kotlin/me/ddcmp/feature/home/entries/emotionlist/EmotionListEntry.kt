@@ -21,11 +21,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.home.generated.resources.Res
+import dream_diary_cmp.feature.home.generated.resources.emotionlist_description
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_empty_placeholder_clickable
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_empty_placeholder_post
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_empty_placeholder_pre
@@ -50,13 +52,15 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun EmotionListEntry(
     onBack: () -> Unit,
-    onAdd: () -> Unit
+    onAdd: () -> Unit,
+    onEdit: (id: Long) -> Unit
 ) {
     ViewModelScope<UiEvent, ViewModelEvent, EmotionListViewModel>(
         onViewModelEvent = {
             when (it) {
                 ViewModelEvent.NavigateBack -> onBack()
                 ViewModelEvent.NavigateToAdd -> onAdd()
+                is ViewModelEvent.NavigateToEdit -> onEdit(it.id)
             }
         }
     ) { vm ->
@@ -134,13 +138,18 @@ private fun EmotionListEntry(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
-                        style = MaterialTheme.typography.bodySmall
+                        defaultStyle = MaterialTheme.typography.bodySmall
                             .copy(textAlign = TextAlign.Center),
                         stringResource(Res.string.emotionlist_empty_placeholder_pre) to normalStyle,
                         stringResource(Res.string.emotionlist_empty_placeholder_clickable) to clickableStyle,
                         stringResource(Res.string.emotionlist_empty_placeholder_post) to normalStyle
                     )
                 }
+            } else {
+                Text(
+                    text = stringResource(Res.string.emotionlist_description),
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
 
             FlowRow(
@@ -155,6 +164,7 @@ private fun EmotionListEntry(
                         emotions = listOf(emotion),
                         label = { it.name },
                         onClick = {},
+                        onLongClick = { onEvent(UiEvent.EditEmotion(it.id)) },
                         selected = emotion.id == uiState.selectedEmotion?.id
                     )
                 }
@@ -164,6 +174,12 @@ private fun EmotionListEntry(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.End),
+                    text = "Long-press to edit",
+                    style = MaterialTheme.typography.labelSmall
+                )
                 Text(
                     text = stringResource(Res.string.emotionlist_matrix_title),
                     style = MaterialTheme.typography.titleMedium
@@ -178,8 +194,8 @@ private fun EmotionListEntry(
                 modifier = Modifier
                     .fillMaxWidth(),
                 existingPoints = emotions.toSet(),
-                onClickClosest = {
-                    onEvent(UiEvent.SelectEmotion(it))
+                onClickClosest = { _, emotion ->
+                    onEvent(UiEvent.SelectEmotion(emotion))
                 }
             )
         }

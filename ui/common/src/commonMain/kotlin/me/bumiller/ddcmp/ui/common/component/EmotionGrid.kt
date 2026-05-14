@@ -21,17 +21,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import me.bumiller.ddcmp.domain.model.Arousal
 import me.bumiller.ddcmp.domain.model.EmotionCoordinate
 import me.bumiller.ddcmp.domain.model.EmotionType
 import me.bumiller.ddcmp.domain.model.EmotionType.Anger
 import me.bumiller.ddcmp.domain.model.EmotionType.Joy
 import me.bumiller.ddcmp.domain.model.EmotionType.Pleasure
 import me.bumiller.ddcmp.domain.model.EmotionType.Sadness
+import me.bumiller.ddcmp.domain.model.Valence
 import me.bumiller.ddcmp.ui.common.style.color
 import me.bumiller.ddcmp.ui.common.translation.translateName
 import kotlin.math.abs
@@ -42,9 +47,11 @@ import kotlin.math.sqrt
 fun <T : EmotionCoordinate> EmotionGrid(
     modifier: Modifier = Modifier,
     existingPoints: Set<T> = emptySet(),
-    onClickClosest: (T?) -> Unit = {}
+    selectedPoint: T? = null,
+    onClickClosest: (coordinate: EmotionCoordinate, T?) -> Unit = { _, _ -> }
 ) {
     val dotColor = MaterialTheme.colorScheme.outline
+    val dotColorSpecial = MaterialTheme.colorScheme.tertiary
     val minimumInteractiveSize =
         with(LocalDensity.current) { LocalMinimumInteractiveComponentSize.current.toPx() }
 
@@ -58,19 +65,42 @@ fun <T : EmotionCoordinate> EmotionGrid(
             .drawWithContent(
                 onDraw = {
                     drawContent()
-                    existingPoints.forEach { emotionCoordinate ->
-                        val relX = emotionCoordinate.valence
-                        val relY = emotionCoordinate.arousal
+                    existingPoints
+                        .associateWith { false }
+                        .run {
+                            selectedPoint?.let {
+                                plus(selectedPoint to true)
+                            } ?: this
+                        }
+                        .forEach { (emotionCoordinate, special) ->
+                            val relX = emotionCoordinate.valence
+                            val relY = emotionCoordinate.arousal
 
-                        val x = (relX.value + 1) / 2 * size.width
-                        val y = (1 - (relY.value + 1) / 2) * size.height
+                            val x = (relX.value + 1) / 2 * size.width
+                            val y = (1 - (relY.value + 1) / 2) * size.height
 
-                        drawCircle(
-                            color = dotColor,
-                            radius = 8F,
-                            center = Offset(x, y)
-                        )
-                    }
+                            if(special) {
+                                val size = 32F
+                                val center = Offset(x, y)
+
+                                withTransform({
+                                    rotate(45F, pivot = center)
+                                }) {
+                                    drawRect(
+                                        color = dotColorSpecial,
+                                        topLeft = Offset(center.x - size / 2, center.y - size / 2),
+                                        size = Size(size, size)
+                                    )
+                                }
+                            } else {
+                                drawCircle(
+                                    color = dotColor,
+                                    radius = 8F,
+                                    center = Offset(x, y)
+                                )
+                            }
+
+                        }
                 }
             )
             .pointerInput(Unit) {
@@ -87,13 +117,15 @@ fun <T : EmotionCoordinate> EmotionGrid(
                         }
                         .minBy { (_, dif) -> dif }
 
+                    val emotionCoordinate = object : EmotionCoordinate {
+                        override val valence = Valence(valence)
+                        override val arousal = Arousal(arousal)
+                    }
                     val actualDistance = minOf(size.width, size.height) / 2 * relDistance
 
-                    println("Captured click on (${pos.x}, ${pos.y}), transformed to ($valence, $arousal) and got distance $actualDistance to emotion $closest")
-
-                    if(actualDistance <= minimumInteractiveSize)
-                        onClickClosest(closest)
-                    else onClickClosest(null)
+                    if (actualDistance <= minimumInteractiveSize)
+                        onClickClosest(emotionCoordinate, closest)
+                    else onClickClosest(emotionCoordinate, null)
                 }
             }
     ) {

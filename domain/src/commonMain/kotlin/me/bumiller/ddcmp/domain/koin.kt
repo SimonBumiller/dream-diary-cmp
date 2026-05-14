@@ -5,6 +5,7 @@ import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
+import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
 import org.koin.dsl.module
@@ -16,10 +17,11 @@ val domain = module {
     single { AllDreamUseCase(get(), get(), get()) }
     single { SaveDreamUseCase(get(), get(), get()) }
 
-    single { AllEmotionsUseCase(get(), get()) }
+    single { AllEmotionsUseCase(get()) }
     single { SaveEmotionUseCase(get()) }
 
-    single { AllPersonUseCase(get(), get()) }
+    single { AllPersonUseCase(get()) }
+    single { SavePersonUseCase(get()) }
 
     single { GetSettingsUseCase(get()) }
     single { SetSettingsUseCase(get()) }

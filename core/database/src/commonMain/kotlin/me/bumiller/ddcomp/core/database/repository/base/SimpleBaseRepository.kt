@@ -18,8 +18,9 @@ open class SimpleBaseRepository<Model : Unique, Entity : BaseEntity>(
 
 ) : Repository<Model> {
 
-    override val all: Flow<List<Model>> = dao.getAll()
-        .map { it.map(map) }
+    override val all: Flow<List<Model>>
+        get() = dao.getAll()
+            .map { it.map(map) }
 
     override fun id(id: Long) = dao.getById(id)
         .map { it?.let(map) }

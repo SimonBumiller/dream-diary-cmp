@@ -32,21 +32,21 @@ private const val TagPrefix = "MultiStyleText-Tag-"
  * Utility component to color a text in multiple colors.
  *
  * @param modifier The modifier
- * @param style The text style
+ * @param defaultStyle The text style
  * @param pairs The pairs, assigning each text a specific style and an optional callback.
  */
 @Composable
 fun MultiStyleText(
     modifier: Modifier = Modifier,
-    style: TextStyle = LocalTextStyle.current,
-    vararg pairs: Pair<String, TextStyleWithCallback>
+    defaultStyle: TextStyle = LocalTextStyle.current,
+    vararg pairs: Pair<String, TextStyleWithCallback?>
 ) {
     Text(
         modifier = modifier,
-        style = style,
+        style = defaultStyle,
         text = buildAnnotatedString {
             pairs.forEachIndexed { index, (text, style) ->
-                if (style.callback != null) {
+                if (style?.callback != null) {
                     pushLink(
                         LinkAnnotation.Clickable(
                             tag = "$TagPrefix$index",
@@ -55,12 +55,11 @@ fun MultiStyleText(
                     )
                 }
 
-                withStyle(style.style.toSpanStyle()) {
-                    println(style.style)
+                withStyle(style?.style?.toSpanStyle() ?: defaultStyle.toSpanStyle()) {
                     append(text)
                 }
 
-                if (style.callback != null) {
+                if (style?.callback != null) {
                     pop()
                 }
             }

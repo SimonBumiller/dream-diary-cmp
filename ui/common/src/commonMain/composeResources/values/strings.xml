@@ -32,6 +32,9 @@
     <string name="sort_descending">Descending</string>
     <string name="sort_ascending">Ascending</string>
 
+    <string name="biometric_title">Authenticate</string>
+    <string name="biometric_description">Please authenticate your identity</string>
+
     <string name="discard_changes_dialog_confirm_label">Discard changes</string>
     <string name="discard_changes_dialog_dismiss_label">Cancel</string>
     <string name="discard_changes_dialog_title">Discard changes?</string>

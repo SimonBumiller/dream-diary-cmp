@@ -162,7 +162,6 @@ internal class DreamAddViewModel(
     }
 
     init {
-
         registerUiState(UiState())
         registerUiState(DreamState())
 
