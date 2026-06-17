@@ -153,7 +153,10 @@ private fun LockScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceAround,
+                verticalArrangement = Arrangement.spacedBy(
+                    space = 16.dp,
+                    alignment = Alignment.CenterVertically
+                ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(

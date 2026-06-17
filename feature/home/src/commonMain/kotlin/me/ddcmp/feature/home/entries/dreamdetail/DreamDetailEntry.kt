@@ -33,8 +33,10 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.Event.ON_PAUSE
 import androidx.lifecycle.Lifecycle.Event.ON_RESUME
+import androidx.lifecycle.Lifecycle.Event.ON_STOP
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -87,15 +89,21 @@ internal fun DreamDetailEntry(
         }
     ) { vm ->
         val state by vm.dreamState.collectAsStateWithLifecycle()
+
+        if(state == null)
+            return@ViewModelScope
+
+        val requireAuth = state!!.dream.confidentiality.locked
         val uiState by vm.uiState.collectAsStateWithLifecycle()
         val biometricAuthState = vm.biometricAuthState
 
         val lifecycleOwner = LocalLifecycleOwner.current
+
         DisposableEffect(lifecycleOwner) {
             val observer = LifecycleEventObserver { _, event ->
-                if (event in listOf(ON_PAUSE)) {
+                if (event in listOf(ON_STOP) && requireAuth) {
                     vm.onEvent(UiEvent.Unauthenticate)
-                } else if (event == ON_RESUME) {
+                } else if (event == ON_RESUME && requireAuth) {
                     vm.onEvent(UiEvent.Authenticate)
                 }
             }
@@ -111,7 +119,7 @@ internal fun DreamDetailEntry(
             onResult = { vm.onEvent(UiEvent.OnBiometricAuthResult(it)) }
         )
 
-        if (state != null && uiState.authenticated) {
+        if (state != null && (uiState.authenticated || !requireAuth)) {
             val (dream, emotions, persons) = state!!
 
             DreamDetailEntry(vm::onEvent, dream, emotions, persons)

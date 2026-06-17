@@ -39,12 +39,14 @@ import dream_diary_cmp.feature.home.generated.resources.dreamlist_action_emotion
 import dream_diary_cmp.feature.home.generated.resources.dreamlist_action_persons
 import dream_diary_cmp.feature.home.generated.resources.dreamlist_action_settings
 import dream_diary_cmp.feature.home.generated.resources.dreamlist_action_stats
+import dream_diary_cmp.feature.home.generated.resources.dreamlist_empty_placeholder
 import dream_diary_cmp.feature.home.generated.resources.dreamlist_title
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode.DreamSort
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
+import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.ddcmp.feature.home.component.DreamItem
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.UiEvent
@@ -151,57 +153,59 @@ internal fun DreamListEntry(
                 .fillMaxSize()
                 .padding(pv)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End
-            ) {
-                Box {
-                    Text(
-                        modifier = Modifier
-                            .clip(MaterialTheme.shapes.medium)
-                            .clickable(
-                                onClick = {
-                                    onEvent(UiEvent.ToggleDropdownVisibility(!uiState.sortModeDropdownVisible))
-                                }
-                            )
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                        text = uiState.sortMode.translateName,
-                        style = MaterialTheme.typography.labelLarge
-                    )
+            if (dreamState.isNotEmpty()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Box {
+                        Text(
+                            modifier = Modifier
+                                .clip(MaterialTheme.shapes.medium)
+                                .clickable(
+                                    onClick = {
+                                        onEvent(UiEvent.ToggleDropdownVisibility(!uiState.sortModeDropdownVisible))
+                                    }
+                                )
+                                .padding(horizontal = 8.dp, vertical = 4.dp),
+                            text = uiState.sortMode.translateName,
+                            style = MaterialTheme.typography.labelLarge
+                        )
 
-                    DropdownMenu(
-                        expanded = uiState.sortModeDropdownVisible,
-                        onDismissRequest = { onEvent(UiEvent.ToggleDropdownVisibility(false)) }
-                    ) {
-                        listOf(
-                            DreamSort.Dreamt,
-                            DreamSort.AverageValence,
-                            DreamSort.Confidentiality,
-                            DreamSort.Name
-                        ).forEach { mode ->
-                            DropdownMenuItem(
-                                text = { Text(mode.translateName) },
-                                onClick = {
-                                    onEvent(UiEvent.ToggleDropdownVisibility(false))
-                                    onEvent(UiEvent.ChangeSortMode(mode))
-                                }
-                            )
+                        DropdownMenu(
+                            expanded = uiState.sortModeDropdownVisible,
+                            onDismissRequest = { onEvent(UiEvent.ToggleDropdownVisibility(false)) }
+                        ) {
+                            listOf(
+                                DreamSort.Dreamt,
+                                DreamSort.AverageValence,
+                                DreamSort.Confidentiality,
+                                DreamSort.Name
+                            ).forEach { mode ->
+                                DropdownMenuItem(
+                                    text = { Text(mode.translateName) },
+                                    onClick = {
+                                        onEvent(UiEvent.ToggleDropdownVisibility(false))
+                                        onEvent(UiEvent.ChangeSortMode(mode))
+                                    }
+                                )
+                            }
                         }
                     }
-                }
 
-                IconButton(
-                    onClick = { onEvent(UiEvent.ChangeSortDirection(!uiState.sortDirection)) }
-                ) {
-                    Icon(
-                        imageVector = when (uiState.sortDirection) {
-                            SortDirection.Ascending -> Icons.Default.ArrowUpward
-                            SortDirection.Descending -> Icons.Default.ArrowDownward
-                        },
-                        contentDescription = uiState.sortDirection.translateName
-                    )
+                    IconButton(
+                        onClick = { onEvent(UiEvent.ChangeSortDirection(!uiState.sortDirection)) }
+                    ) {
+                        Icon(
+                            imageVector = when (uiState.sortDirection) {
+                                SortDirection.Ascending -> Icons.Default.ArrowUpward
+                                SortDirection.Descending -> Icons.Default.ArrowDownward
+                            },
+                            contentDescription = uiState.sortDirection.translateName
+                        )
+                    }
                 }
             }
 
@@ -209,8 +213,20 @@ internal fun DreamListEntry(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                if(dreamState.isEmpty()) {
+                    item {
+                        DisabledContent {
+                            Text(
+                                text = stringResource(Res.string.dreamlist_empty_placeholder),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+                    }
+                }
+
                 items(
                     count = dreamState.size,
                     key = { dreamState[it].dream.id }

@@ -39,8 +39,8 @@ fun RowScope.AppBarActions(
         else -> 4
     }
 
-    val explicit = actions.subList(0, maxExplicit)
-    val hidden = actions.subList(maxExplicit, actions.size)
+    val explicit = actions.indices.filter{ it in 0..< maxExplicit }.map(actions::get)
+    val hidden = actions.indices.filter{ it >= maxExplicit }.map(actions::get)
 
     explicit.forEach { action ->
         IconButton(

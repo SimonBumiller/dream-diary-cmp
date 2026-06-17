@@ -244,7 +244,7 @@ internal class DreamAddViewModel(
      * Calculated by checking if the current dream state changed, relative to the initial dream state.
      */
     val canSave = uiState<DreamState>()
-        .map { it != initialDreamState }
+        .map { it != initialDreamState && it.description.isNotBlank() }
         .stateIn(false)
 
     /**

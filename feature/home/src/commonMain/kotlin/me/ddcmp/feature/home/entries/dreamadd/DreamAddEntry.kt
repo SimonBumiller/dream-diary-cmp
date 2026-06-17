@@ -14,7 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
@@ -34,6 +33,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.minimumInteractiveComponentSize
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -75,6 +75,7 @@ import me.bumiller.ddcmp.ui.common.component.ConfidentialitySelector
 import me.bumiller.ddcmp.ui.common.component.SearchTextField
 import me.bumiller.ddcmp.ui.common.dialog.DiscardChangesDialog
 import me.bumiller.ddcmp.ui.common.format.formatInstant
+import me.bumiller.ddcmp.ui.common.layout.ColumnOrRow
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.ChangeDescription
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.SelectPerson
@@ -210,178 +211,204 @@ private fun DreamAddEntry(
                 colors = transparentTextFieldColors
             )
 
-            Card(
+            ColumnOrRow(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 8.dp,
-                            end = 8.dp,
-                            top = 4.dp,
-                            bottom = 12.dp
-                        ),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Text(
-                        text = stringResource(Res.string.dreamadd_persons_title),
-                        style = MaterialTheme.typography.titleMediumEmphasized
+                    .fillMaxWidth(),
+                doColumn = { it.widthSizeClass != WindowWidthSizeClass.Expanded },
+                first = {
+                    MainMetaSection(dreamState, onEvent, uiState, persons, emotions)
+                },
+                second = {
+                    OptionalSection(dreamState, onEvent)
+                },
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalTime::class)
+@Composable
+private fun OptionalSection(
+    dreamState: DreamAddViewModel.DreamState,
+    onEvent: (UiEvent) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            text = stringResource(Res.string.dreamadd_title_info),
+            style = MaterialTheme.typography.bodySmall
+        )
+
+        OutlinedTextField(
+            value = dreamState.title,
+            onValueChange = { onEvent(UiEvent.ChangeTitle(it)) },
+            placeholder = {
+                Text(
+                    stringResource(
+                        Res.string.dream_title,
+                        formatInstant(Clock.System.now())
                     )
+                )
+            },
+            label = { Text(stringResource(Res.string.dreamadd_title_label)) }
+        )
 
-                    Text(
-                        text = stringResource(Res.string.dreamadd_persons_info),
-                        style = MaterialTheme.typography.bodySmall
-                    )
+        Spacer(
+            modifier = Modifier
+                .height(8.dp)
+        )
 
-                    FlowRow(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        dreamState.persons.forEach { person ->
-                            InputChip(
-                                selected = false,
-                                onClick = { onEvent(UiEvent.UnSelectPerson(person)) },
-                                label = { Text(person.name) }
-                            )
-                        }
-                    }
+        Text(
+            text = stringResource(Res.string.dreamadd_note_info),
+            style = MaterialTheme.typography.bodySmall
+        )
 
-                    SearchTextField(
-                        query = uiState.personQuery,
-                        onQueryChange = { UiEvent.ChangePersonQuery(it) },
-                        label = { Text(stringResource(Res.string.dreamadd_persons_label)) },
-                        values = persons.search(uiState.personQuery),
-                        name = Person::name,
-                        onSelect = { onEvent(SelectPerson(it)) }
-                    )
-                }
+        OutlinedTextField(
+            value = dreamState.note,
+            onValueChange = { onEvent(UiEvent.ChangeNote(it)) },
+            label = { Text(stringResource(Res.string.dreamadd_note_label)) },
+            minLines = 3
+        )
+    }
+}
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 8.dp,
-                            end = 8.dp,
-                            top = 4.dp,
-                            bottom = 12.dp
-                        ),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Text(
-                        text = stringResource(Res.string.dreamadd_emotions_title),
-                        style = MaterialTheme.typography.titleMediumEmphasized
-                    )
-
-                    Text(
-                        text = stringResource(Res.string.dreamadd_emotions_info),
-                        style = MaterialTheme.typography.bodySmall
-                    )
-
-                    FlowRow(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        dreamState.emotions.forEach { emotion ->
-                            InputChip(
-                                selected = false,
-                                onClick = { onEvent(UiEvent.UnSelectEmotion(emotion)) },
-                                label = { Text(emotion.name) }
-                            )
-                        }
-                    }
-
-                    SearchTextField(
-                        query = uiState.emotionQuery,
-                        onQueryChange = { UiEvent.ChangeEmotionQuery(it) },
-                        label = { Text(stringResource(Res.string.dreamadd_emotions_label)) },
-                        values = emotions.search(uiState.emotionQuery),
-                        name = Emotion::name,
-                        onSelect = { onEvent(UiEvent.SelectEmotion(it)) }
-                    )
-                }
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 8.dp,
-                            end = 8.dp,
-                            top = 4.dp,
-                            bottom = 12.dp
-                        ),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Text(
-                        text = stringResource(Res.string.dreamadd_confidentiality_title),
-                        style = MaterialTheme.typography.titleMediumEmphasized
-                    )
-
-                    Text(
-                        text = stringResource(Res.string.dreamadd_confidentiality_info),
-                        style = MaterialTheme.typography.bodySmall
-                    )
-
-                    ConfidentialitySelector(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        confidentiality = dreamState.confidentiality,
-                        onSelect = { onEvent(UiEvent.SetConfidentiality(it)) }
-                    )
-                }
-            }
-
-            Spacer(
-                modifier = Modifier
-                    .height(8.dp)
+@Composable
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+private fun MainMetaSection(
+    dreamState: DreamAddViewModel.DreamState,
+    onEvent: (UiEvent) -> Unit,
+    uiState: DreamAddViewModel.UiState,
+    persons: List<Person>,
+    emotions: List<Emotion>
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp,
+                    top = 4.dp,
+                    bottom = 12.dp
+                ),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.dreamadd_persons_title),
+                style = MaterialTheme.typography.titleMediumEmphasized
             )
 
-            Column(
+            Text(
+                text = stringResource(Res.string.dreamadd_persons_info),
+                style = MaterialTheme.typography.bodySmall
+            )
+
+            FlowRow(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = stringResource(Res.string.dreamadd_title_info),
-                    style = MaterialTheme.typography.bodySmall
-                )
-
-                OutlinedTextField(
-                    value = dreamState.title,
-                    onValueChange = { onEvent(UiEvent.ChangeTitle(it)) },
-                    placeholder = {
-                        Text(
-                            stringResource(
-                                Res.string.dream_title,
-                                formatInstant(Clock.System.now())
-                            )
-                        )
-                    },
-                    label = { Text(stringResource(Res.string.dreamadd_title_label)) }
-                )
-
-                Spacer(
-                    modifier = Modifier
-                        .height(8.dp)
-                )
-
-                Text(
-                    text = stringResource(Res.string.dreamadd_note_info),
-                    style = MaterialTheme.typography.bodySmall
-                )
-
-                OutlinedTextField(
-                    value = dreamState.note,
-                    onValueChange = { onEvent(UiEvent.ChangeNote(it)) },
-                    label = { Text(stringResource(Res.string.dreamadd_note_label)) },
-                    minLines = 3
-                )
+                dreamState.persons.forEach { person ->
+                    InputChip(
+                        selected = false,
+                        onClick = { onEvent(UiEvent.UnSelectPerson(person)) },
+                        label = { Text(person.name) }
+                    )
+                }
             }
+
+            SearchTextField(
+                query = uiState.personQuery,
+                onQueryChange = { UiEvent.ChangePersonQuery(it) },
+                label = { Text(stringResource(Res.string.dreamadd_persons_label)) },
+                values = persons.search(uiState.personQuery),
+                name = Person::name,
+                onSelect = { onEvent(SelectPerson(it)) }
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp,
+                    top = 4.dp,
+                    bottom = 12.dp
+                ),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.dreamadd_emotions_title),
+                style = MaterialTheme.typography.titleMediumEmphasized
+            )
+
+            Text(
+                text = stringResource(Res.string.dreamadd_emotions_info),
+                style = MaterialTheme.typography.bodySmall
+            )
+
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                dreamState.emotions.forEach { emotion ->
+                    InputChip(
+                        selected = false,
+                        onClick = { onEvent(UiEvent.UnSelectEmotion(emotion)) },
+                        label = { Text(emotion.name) }
+                    )
+                }
+            }
+
+            SearchTextField(
+                query = uiState.emotionQuery,
+                onQueryChange = { UiEvent.ChangeEmotionQuery(it) },
+                label = { Text(stringResource(Res.string.dreamadd_emotions_label)) },
+                values = emotions.search(uiState.emotionQuery),
+                name = Emotion::name,
+                onSelect = { onEvent(UiEvent.SelectEmotion(it)) }
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp,
+                    top = 4.dp,
+                    bottom = 12.dp
+                ),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.dreamadd_confidentiality_title),
+                style = MaterialTheme.typography.titleMediumEmphasized
+            )
+
+            Text(
+                text = stringResource(Res.string.dreamadd_confidentiality_info),
+                style = MaterialTheme.typography.bodySmall
+            )
+
+            ConfidentialitySelector(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                confidentiality = dreamState.confidentiality,
+                onSelect = { onEvent(UiEvent.SetConfidentiality(it)) }
+            )
         }
     }
 }

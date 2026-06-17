@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -48,6 +47,7 @@ kotlin {
             implementation(libs.compose.material.icons)
             implementation(libs.backhandler)
             implementation(libs.backhandler.compose)
+            implementation(libs.compose.material3.windowsizeclass)
             implementation(libs.compose.navigation)
             implementation(project(":domain"))
             implementation(project(":ui:common"))
