@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Add
@@ -36,7 +38,6 @@ import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiEvent
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiEvent.AddPerson
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiEvent.GoBack
-import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiState
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.ViewModelEvent
 import org.jetbrains.compose.resources.stringResource
 
@@ -55,10 +56,9 @@ internal fun PersonListEntry(
             }
         }
     ) { vm ->
-        val uiState by vm.uiState.collectAsStateWithLifecycle()
         val persons by vm.persons.collectAsStateWithLifecycle()
 
-        PersonListEntry(vm::onEvent, uiState, persons)
+        PersonListEntry(vm::onEvent, persons)
     }
 }
 
@@ -66,7 +66,6 @@ internal fun PersonListEntry(
 @Composable
 private fun PersonListEntry(
     onEvent: (UiEvent) -> Unit,
-    uiState: UiState,
     persons: List<Person>
 ) {
     Scaffold(
@@ -118,9 +117,18 @@ private fun PersonListEntry(
                 )
             }
 
+            Text(
+                modifier = Modifier
+                    .align(Alignment.End),
+                text = "Long-press to edit",
+                style = MaterialTheme.typography.labelSmall
+            )
+
             FlowRow(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .verticalScroll(rememberScrollState())
+                    .fillMaxWidth()
+                    .weight(1F),
                 horizontalArrangement = Arrangement.Center
             ) {
                 persons.forEach { person ->
@@ -130,19 +138,12 @@ private fun PersonListEntry(
                         label = {
                             Text(person.name)
                         },
-                        onClick = { onEvent(UiEvent.SelectPerson(person)) },
+                        onClick = {  },
                         onLongClick = { onEvent(UiEvent.EditPerson(person.id)) },
-                        selected = person.id == uiState.selectedPerson?.id
+                        selected = false
                     )
                 }
             }
-
-            Text(
-                modifier = Modifier
-                    .align(Alignment.End),
-                text = "Long-press to edit",
-                style = MaterialTheme.typography.labelSmall
-            )
         }
     }
 }

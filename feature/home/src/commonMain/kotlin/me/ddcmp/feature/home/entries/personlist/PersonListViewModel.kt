@@ -16,17 +16,8 @@ internal class PersonListViewModel(
 ) :
     AppViewModel<UiEvent, ViewModelEvent>() {
 
-    init {
-        registerUiState<UiState>(UiState())
-    }
-
-    val uiState = uiState<UiState>().asStateFlow()
-
     @OptIn(ExperimentalTime::class)
     override suspend fun handleEvent(event: UiEvent) = when (event) {
-        is UiEvent.SelectPerson -> updateUiState<UiState> {
-            it.copy(selectedPerson = event.person)
-        }
 
         UiEvent.AddPerson -> fireEvent(ViewModelEvent.NavigateToAdd)
         UiEvent.GoBack -> fireEvent(ViewModelEvent.NavigateBack)
@@ -37,14 +28,9 @@ internal class PersonListViewModel(
     val persons = getPersons(AllPersonUseCase.I())
         .stateIn(emptyList())
 
-    data class UiState(
-        val selectedPerson: Person? = null
-    )
-
     sealed interface UiEvent : UIE {
         data object GoBack : UiEvent
         data object AddPerson : UiEvent
-        data class SelectPerson(val person: Person?) : UiEvent
         data class EditPerson(val id: Long) : UiEvent
     }
 
