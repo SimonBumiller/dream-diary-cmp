@@ -46,6 +46,7 @@ import me.bumiller.ddcmp.domain.model.meta.SortMode.DreamSort
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
+import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.ddcmp.feature.home.component.DreamItem
@@ -57,7 +58,6 @@ import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToPersons
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToSettings
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToStats
-import me.ddcmp.feature.home.navigation.HomeRoutes
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -92,9 +92,13 @@ internal fun DreamListEntry(
 @Composable
 internal fun DreamListEntry(
     onEvent: (UiEvent) -> Unit,
-    dreamState: List<DreamListViewModel.DreamAggregate>,
+    dreamState: List<DreamListViewModel.DreamAggregate>?,
     uiState: DreamListViewModel.UiState
 ) {
+    val isLoading = dreamState == null
+    val isEmpty = dreamState?.isEmpty() == true
+    val hasDreams = dreamState?.isNotEmpty() == true
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -111,41 +115,45 @@ internal fun DreamListEntry(
             }
         },
         topBar = {
-            CenterAlignedTopAppBar(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                title = {
-                    Text(
-                        text = stringResource(Res.string.dreamlist_title)
-                    )
-                },
-                actions = {
-                    AppBarActions(
-                        actions = listOf(
-                            AppBarAction(
-                                label = stringResource(Res.string.dreamlist_action_stats),
-                                icon = Icons.Default.LineAxis,
-                                handler = { onEvent(UiEvent.GoToStats) }
-                            ),
-                            AppBarAction(
-                                label = stringResource(Res.string.dreamlist_action_settings),
-                                icon = Icons.Default.Settings,
-                                handler = { onEvent(UiEvent.GoToSettings) }
-                            ),
-                            AppBarAction(
-                                label = stringResource(Res.string.dreamlist_action_emotions),
-                                icon = Icons.Default.Mood,
-                                handler = { onEvent(UiEvent.GoToEmotions) }
-                            ),
-                            AppBarAction(
-                                label = stringResource(Res.string.dreamlist_action_persons),
-                                icon = Icons.Default.Group,
-                                handler = { onEvent(UiEvent.GoToPersons) }
+            TopBarWithProgressIndicator(
+                loading = isLoading
+            ) {
+                CenterAlignedTopAppBar(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    title = {
+                        Text(
+                            text = stringResource(Res.string.dreamlist_title)
+                        )
+                    },
+                    actions = {
+                        AppBarActions(
+                            actions = listOf(
+                                AppBarAction(
+                                    label = stringResource(Res.string.dreamlist_action_stats),
+                                    icon = Icons.Default.LineAxis,
+                                    handler = { onEvent(UiEvent.GoToStats) }
+                                ),
+                                AppBarAction(
+                                    label = stringResource(Res.string.dreamlist_action_settings),
+                                    icon = Icons.Default.Settings,
+                                    handler = { onEvent(UiEvent.GoToSettings) }
+                                ),
+                                AppBarAction(
+                                    label = stringResource(Res.string.dreamlist_action_emotions),
+                                    icon = Icons.Default.Mood,
+                                    handler = { onEvent(UiEvent.GoToEmotions) }
+                                ),
+                                AppBarAction(
+                                    label = stringResource(Res.string.dreamlist_action_persons),
+                                    icon = Icons.Default.Group,
+                                    handler = { onEvent(UiEvent.GoToPersons) }
+                                )
                             )
                         )
-                    )
-                }
-            )
+                    }
+                )
+            }
         }
     ) { pv ->
         Column(
@@ -153,7 +161,7 @@ internal fun DreamListEntry(
                 .fillMaxSize()
                 .padding(pv)
         ) {
-            if (dreamState.isNotEmpty()) {
+            if (hasDreams) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -216,7 +224,7 @@ internal fun DreamListEntry(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if(dreamState.isEmpty()) {
+                if (isEmpty) {
                     item {
                         DisabledContent {
                             Text(
@@ -227,20 +235,23 @@ internal fun DreamListEntry(
                     }
                 }
 
-                items(
-                    count = dreamState.size,
-                    key = { dreamState[it].dream.id }
-                ) {
-                    DreamItem(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        dream = dreamState[it].dream,
-                        onClick = { onEvent(UiEvent.ClickDream(dreamState[it].dream)) },
-                        selected = dreamState[it].dream.id == uiState.selectedDream?.id,
-                        emotions = dreamState[it].emotions,
-                        persons = dreamState[it].persons
-                    )
+                if (hasDreams) {
+                    items(
+                        count = dreamState.size,
+                        key = { dreamState[it].dream.id }
+                    ) {
+                        DreamItem(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            dream = dreamState[it].dream,
+                            onClick = { onEvent(UiEvent.ClickDream(dreamState[it].dream)) },
+                            selected = dreamState[it].dream.id == uiState.selectedDream?.id,
+                            emotions = dreamState[it].emotions,
+                            persons = dreamState[it].persons
+                        )
+                    }
                 }
+
             }
         }
     }

@@ -33,4 +33,7 @@ interface EmotionDao: AggregateDao<EmotionEntity, EmotionEntity.Aggregate> {
     @Transaction
     @Query("SELECT * FROM emotions WHERE emotions.id = :id")
     override fun getByIdAggregate(id: Long): Flow<EmotionEntity.Aggregate?>
+
+    @Query("DELETE FROM dreams")
+    override suspend fun deleteAll()
 }

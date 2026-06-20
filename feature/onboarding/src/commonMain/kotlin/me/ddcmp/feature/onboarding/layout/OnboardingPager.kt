@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
@@ -29,10 +30,10 @@ import me.ddcmp.feature.onboarding.OnboardingStyles
 @Composable
 internal fun <Screen> OnboardingPager(
     modifier: Modifier,
+    state: PagerState = rememberPagerState { screens.size },
     screens: List<Screen>,
     content: @Composable (Screen) -> Unit
 ) {
-    val state = rememberPagerState { screens.size }
     val sizeClass = LocalWindowSizeClass.current
 
     if (sizeClass.doVertical) {

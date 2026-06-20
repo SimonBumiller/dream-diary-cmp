@@ -40,7 +40,7 @@ internal class DreamListViewModel(
      * The state that contains the dreams.
      */
     val dreamState = createDreamsState()
-        .stateIn(emptyList())
+        .stateIn(null)
 
     /**
      * The ui state

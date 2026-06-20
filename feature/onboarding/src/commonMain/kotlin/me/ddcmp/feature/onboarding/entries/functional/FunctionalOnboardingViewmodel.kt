@@ -23,7 +23,16 @@ internal class FunctionalOnboardingViewmodel(
 
 ) : AppViewModel<FunctionalOnboardingViewmodel.UiEvent, FunctionalOnboardingViewmodel.ViewModelEvent>() {
 
-    sealed interface ViewModelEvent : VME
+    sealed interface ViewModelEvent : VME {
+
+        /**
+         * We go to import.
+         */
+        data object GoToImport: ViewModelEvent
+
+        data object FinishOnboarding: ViewModelEvent
+
+    }
 
     sealed interface UiEvent : UIE {
 
@@ -31,6 +40,11 @@ internal class FunctionalOnboardingViewmodel(
          * User finished onboarding
          */
         data object FinishOnboarding: UiEvent
+
+        /**
+         * User wants to perform import.
+         */
+        data object DoImport: UiEvent
 
         /**
          * User selected a new confidentiality settings.
@@ -109,6 +123,9 @@ internal class FunctionalOnboardingViewmodel(
 
         is UiEvent.FinishOnboarding -> {
             setSettings(settings.value.copy(onboardingFinished = true))
+            fireEvent(ViewModelEvent.FinishOnboarding)
         }
+
+        is UiEvent.DoImport -> fireEvent(ViewModelEvent.GoToImport)
     }
 }

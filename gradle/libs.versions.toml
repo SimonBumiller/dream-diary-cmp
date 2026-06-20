@@ -30,6 +30,10 @@ biometric = "1.1.0"
 datetime = "0.7.1"
 icons = "1.7.3"
 backhandler = "1.1.1"
+filekt = "0.12.0"
+serialization_json = "1.11.0"
+serialization_yaml = "0.13.0"
+serialization_xml = "1.0.0-rc3"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -71,6 +75,12 @@ compose-material-icons = { group = "org.jetbrains.compose.material", name = "mat
 kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 backhandler = { module = "androidx.navigationevent:navigationevent", version.ref = "backhandler" }
 backhandler-compose = { module = "androidx.navigationevent:navigationevent-compose", version.ref = "backhandler" }
+filekt-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekt" }
+filekt-dialogs = { module = "io.github.vinceglb:filekit-dialogs", version.ref = "filekt" }
+filekt-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekt" }
+serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization_json" }
+serialization-yaml = { module = "net.mamoe.yamlkt:yamlkt", version.ref = "serialization_yaml" }
+serialization-xml = { module = "io.github.pdvrieze.xmlutil:core", version.ref = "serialization_xml" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

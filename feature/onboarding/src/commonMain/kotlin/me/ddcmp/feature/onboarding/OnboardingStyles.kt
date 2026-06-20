@@ -39,11 +39,4 @@ internal object OnboardingStyles {
         @Composable get() = MaterialTheme.colorScheme.outline
             .copy(alpha = 0.38F)
 
-    /**
-     * Style for the name of a confidentiality item.
-     */
-    val confidentialityItemTitle: TextStyle
-         @Composable get() = MaterialTheme.typography.titleMedium
-             .copy(fontWeight = FontWeight.Bold)
-
 }

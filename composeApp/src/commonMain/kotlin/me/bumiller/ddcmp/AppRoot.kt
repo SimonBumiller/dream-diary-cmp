@@ -16,6 +16,7 @@ import me.bumiller.ddcmp.theme.AppTheme
 import me.bumiller.ddcmp.theme.systemTheme
 import me.ddcmp.feature.home.HomeEntry
 import me.ddcmp.feature.home.SettingsEntry
+import me.ddcmp.feature.import.ImportEntry
 import me.ddcmp.feature.onboarding.OnboardingEntry
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -68,9 +69,21 @@ fun AppRoot(
                 HomeEntry()
             }
 
+            composable<MainRoutes.Import> {
+                ImportEntry(
+                    onFinished = {
+                        navController.popBackStack()
+                        navController.navigate(MainRoutes.Home)
+                    }
+                )
+            }
+
             composable<MainRoutes.Onboarding> {
                 OnboardingEntry(
-                    onFinished = { navController.navigate(MainRoutes.Home) }
+                    onFinished = {
+                        navController.navigate(MainRoutes.Home)
+                    },
+                    onImport = { navController.navigate(MainRoutes.Import) }
                 )
             }
 

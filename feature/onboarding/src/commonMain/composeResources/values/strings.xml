@@ -27,4 +27,9 @@
     <string name="lock_description">To have your dreams fully protected, you can require your device to be biometrically unlocked before opening the app.</string>
     <string name="lock_unlock_label">Enable app lock</string>
     <string name="lock_continue_label">Finish setup</string>
+
+    <string name="import_title">Restore Data</string>
+    <string name="import_description">You can import a data backup you have created in the past or exported on legacy apps.</string>
+    <string name="import_import_label">Import data</string>
+    <string name="import_noimport_label">Skip</string>
 </resources>

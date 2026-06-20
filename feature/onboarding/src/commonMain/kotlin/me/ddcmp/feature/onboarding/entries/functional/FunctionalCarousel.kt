@@ -6,32 +6,35 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.onboarding.generated.resources.Res
 import dream_diary_cmp.feature.onboarding.generated.resources.confidentiality_description
 import dream_diary_cmp.feature.onboarding.generated.resources.confidentiality_title
+import dream_diary_cmp.feature.onboarding.generated.resources.import_description
+import dream_diary_cmp.feature.onboarding.generated.resources.import_import_label
+import dream_diary_cmp.feature.onboarding.generated.resources.import_noimport_label
+import dream_diary_cmp.feature.onboarding.generated.resources.import_title
 import dream_diary_cmp.feature.onboarding.generated.resources.lock_continue_label
 import dream_diary_cmp.feature.onboarding.generated.resources.lock_description
 import dream_diary_cmp.feature.onboarding.generated.resources.lock_title
@@ -41,6 +44,7 @@ import dream_diary_cmp.feature.onboarding.generated.resources.theme_dynamic_desc
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_dynamic_label
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_mode_label
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_title
+import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.ColorMode
 import me.bumiller.ddcmp.domain.model.ColorTheme
 import me.bumiller.ddcmp.domain.model.Confidentiality
@@ -50,6 +54,7 @@ import me.bumiller.ddcmp.ui.common.biometric.BiometricContainer
 import me.bumiller.ddcmp.ui.common.biometric.BiometricResult
 import me.bumiller.ddcmp.ui.common.biometric.biometricAvailable
 import me.bumiller.ddcmp.ui.common.biometric.rememberBiometricState
+import me.bumiller.ddcmp.ui.common.component.RadioSelectors
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import me.bumiller.ddcmp.ui.common.style.dynamicColorAvailable
 import me.bumiller.ddcmp.ui.common.translation.translateDescription
@@ -65,10 +70,16 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun FunctionalCarousel(
-    onContinue: () -> Unit
+    onContinue: () -> Unit,
+    onImport: () -> Unit
 ) {
     ViewModelScope<UiEvent, ViewModelEvent, FunctionalOnboardingViewmodel>(
-        onViewModelEvent = {}
+        onViewModelEvent = {
+            when (it) {
+                ViewModelEvent.GoToImport -> onImport()
+                ViewModelEvent.FinishOnboarding -> onContinue()
+            }
+        }
     ) { vm ->
         val settings by vm.settings.collectAsStateWithLifecycle()
         val uiState by vm.uiState.collectAsStateWithLifecycle()
@@ -78,7 +89,7 @@ internal fun FunctionalCarousel(
 }
 
 private enum class FunctionalScreens {
-    Confidentiality, Theme, Lock
+    Confidentiality, Theme, Lock, Import
 }
 
 @Composable
@@ -92,9 +103,14 @@ private fun FunctionalCarousel(
         if (!biometricAvailable()) it - FunctionalScreens.Lock
         else it
     }
+
+    val pager = rememberPagerState { screens.size }
+    val scope = rememberCoroutineScope()
+
     OnboardingPager(
         modifier = Modifier
             .fillMaxSize(),
+        state = pager,
         screens = screens
     ) { screen ->
         when (screen) {
@@ -117,6 +133,15 @@ private fun FunctionalCarousel(
                 onContinue = {
                     onEvent(UiEvent.FinishOnboarding)
                     onContinue()
+                }
+            )
+
+            FunctionalScreens.Import -> ImportScreen(
+                onImport = {
+                    onEvent(UiEvent.DoImport)
+                },
+                onNotImport = {
+                    onEvent(UiEvent.FinishOnboarding)
                 }
             )
         }
@@ -184,18 +209,54 @@ private fun LockScreen(
                         style = MaterialTheme.typography.labelLarge
                     )
                 }
-
-                Button(
-                    modifier = Modifier
-                        .width(300.dp),
-                    onClick = onContinue
-                ) {
-                    Text(stringResource(Res.string.lock_continue_label))
-                }
             }
         }
     )
 
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ImportScreen(
+    onImport: () -> Unit,
+    onNotImport: () -> Unit
+) {
+    BaseOnboardingLayout(
+        modifier = Modifier
+            .fillMaxSize(),
+        primary = {
+            OnboardingTextSection(
+                title = stringResource(Res.string.import_title),
+                description = stringResource(Res.string.import_description),
+                slimWidth = false
+            )
+        },
+        primaryPadding = false,
+        verticalPrimaryWeight = 0.5F,
+        secondary = {
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Button(
+                    modifier = Modifier
+                        .width(300.dp),
+                    onClick = onImport
+                ) {
+                    Text(stringResource(Res.string.import_import_label))
+                }
+                OutlinedButton(
+                    modifier = Modifier
+                        .width(300.dp),
+                    onClick = onNotImport
+                ) {
+                    Text(stringResource(Res.string.import_noimport_label))
+                }
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -313,56 +374,13 @@ private fun ConfidentialityScreen(
         primaryPadding = false,
         verticalPrimaryWeight = 0.5F,
         secondary = {
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Confidentiality.entries.forEach {
-                    ConfidentialityItem(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        confidentiality = it,
-                        selected = it == settings.defaultConfidentiality,
-                        onSelect = { onSelectConfidentiality(it) }
-                    )
-                }
-            }
+            RadioSelectors(
+                items = Confidentiality.entries.toList(),
+                selected = settings.defaultConfidentiality,
+                onSelect = { onSelectConfidentiality(it) },
+                title = { it.translateName },
+                description = { it.translateDescription }
+            )
         }
     )
-}
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-private fun ConfidentialityItem(
-    modifier: Modifier,
-    confidentiality: Confidentiality,
-    onSelect: () -> Unit,
-    selected: Boolean
-) {
-    Row(
-        modifier = modifier
-            .clip(MaterialTheme.shapes.large)
-            .clickable(onClick = onSelect),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        RadioButton(
-            selected = selected,
-            onClick = onSelect
-        )
-        DisabledContent(!selected) {
-            Column {
-                Text(
-                    text = confidentiality.translateName,
-                    style = OnboardingStyles.confidentialityItemTitle
-                )
-                Text(
-                    text = confidentiality.translateDescription,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        }
-    }
 }

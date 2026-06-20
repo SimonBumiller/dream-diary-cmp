@@ -17,6 +17,8 @@ kotlin {
             dependencies {
                 implementation(libs.coroutines)
                 implementation(libs.koin.core)
+                implementation(libs.kotlin.datetime)
+                implementation(libs.filekt.core)
             }
         }
     }

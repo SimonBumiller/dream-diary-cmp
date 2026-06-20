@@ -31,4 +31,7 @@ interface PersonDao: AggregateDao<PersonEntity, PersonEntity.Aggregate> {
 
     @Query("SELECT * FROM persons")
     override fun getAllAggregate(): Flow<List<PersonEntity.Aggregate>>
+
+    @Query("DELETE FROM dreams")
+    override suspend fun deleteAll()
 }

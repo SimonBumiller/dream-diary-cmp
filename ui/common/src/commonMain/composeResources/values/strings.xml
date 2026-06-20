@@ -39,4 +39,8 @@
     <string name="discard_changes_dialog_dismiss_label">Cancel</string>
     <string name="discard_changes_dialog_title">Discard changes?</string>
     <string name="discard_changes_dialog_text">You have unsaved changes in this context. Do you want to discard them, or continue editing?</string>
+
+    <string name="importfiletype_json_name">Json</string>
+    <string name="importfiletype_xml_name">Xml</string>
+    <string name="importfiletype_yaml_name">Yaml</string>
 </resources>

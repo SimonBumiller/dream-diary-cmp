@@ -16,7 +16,8 @@ import me.ddcmp.feature.onboarding.navigation.OnboardingRoutes
 
 @Composable
 fun OnboardingEntry(
-    onFinished: () -> Unit
+    onFinished: () -> Unit,
+    onImport: () -> Unit
 ) {
     val navController = rememberNavController()
 
@@ -38,7 +39,10 @@ fun OnboardingEntry(
             }
 
             composable<OnboardingRoutes.Functional> {
-                FunctionalCarousel(onFinished)
+                FunctionalCarousel(
+                    onContinue = onFinished,
+                    onImport = onImport
+                )
             }
         }
     }

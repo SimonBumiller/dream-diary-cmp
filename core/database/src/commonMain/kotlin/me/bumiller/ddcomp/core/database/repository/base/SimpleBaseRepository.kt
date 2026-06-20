@@ -33,4 +33,8 @@ open class SimpleBaseRepository<Model : Unique, Entity : BaseEntity>(
             dao.delete(it) > 0
         } ?: false
 
+    override suspend fun deleteAll() {
+        dao.deleteAll()
+    }
+
 }

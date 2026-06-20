@@ -33,4 +33,7 @@ interface DreamDao: AggregateDao<DreamEntity, DreamEntity.Aggregate> {
 
     @Query("SELECT * FROM dreams")
     override fun getAllAggregate(): Flow<List<DreamEntity.Aggregate>>
+
+    @Query("DELETE FROM dreams")
+    override suspend fun deleteAll()
 }

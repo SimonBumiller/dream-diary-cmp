@@ -34,6 +34,7 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+            implementation(libs.filekt.core)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -51,9 +52,11 @@ kotlin {
             implementation(libs.compose.material3.windowsizeclass)
             implementation(project(":core:database"))
             implementation(project(":core:datastore"))
+            implementation(project(":core:io"))
             implementation(project(":domain"))
             implementation(project(":feature:home"))
             implementation(project(":feature:settings"))
+            implementation(project(":feature:import"))
             implementation(project(":feature:onboarding"))
             implementation(project(":ui:common"))
         }

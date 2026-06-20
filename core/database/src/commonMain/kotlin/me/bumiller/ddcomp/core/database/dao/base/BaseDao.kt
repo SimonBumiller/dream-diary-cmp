@@ -14,4 +14,6 @@ interface BaseDao<Entity> {
 
     fun getAll(): Flow<List<Entity>>
 
+    suspend fun deleteAll()
+
 }

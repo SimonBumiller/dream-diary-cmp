@@ -16,8 +16,6 @@ import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
 
 class DreamRepository(
     private val dreamDao: DreamDao,
-    private val emotionDao: EmotionDao,
-    private val personDao: PersonDao,
     private val dreamPersonM2MDao: DreamPersonM2MDao,
     private val dreamEmotionM2MDao: DreamEmotionM2MDao
 ) : DreamRepository {
@@ -38,6 +36,10 @@ class DreamRepository(
     override suspend fun delete(id: Long) = dreamDao.getById(id)
         .first()
         ?.let { dreamDao.delete(it) > 0 } ?: false
+
+    override suspend fun deleteAll() {
+        dreamDao.deleteAll()
+    }
 
     override suspend fun addEmotionTo(dreamId: Long, emotionId: Long) {
         dreamEmotionM2MDao.insert(DreamEmotionM2M(dreamId, emotionId))

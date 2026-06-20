@@ -4,10 +4,12 @@ import me.bumiller.ddcmp.domain.model.Arousal
 import me.bumiller.ddcmp.domain.model.Confidentiality
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.Emotion
+import me.bumiller.ddcmp.domain.model.ImportResult
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.model.Valence
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
+import me.bumiller.ddcomp.core.database.entity.ImportLogEntity
 import me.bumiller.ddcomp.core.database.entity.PersonEntity
 import kotlin.time.ExperimentalTime
 
@@ -34,6 +36,23 @@ object Mapping {
                 arousal = arousal.value,
                 valence = valence.value,
                 name = name
+            )
+        }
+
+        fun import(model: ImportResult) = with(model) {
+            ImportLogEntity(
+                id = id,
+                created = timestamp,
+                updated = timestamp,
+                isFileAccessFailure = this is ImportResult.Failure.FileAccess,
+                isDataConsistencyFailure = this is ImportResult.Failure.DataConsistency,
+                isFileFormatFailure = this is ImportResult.Failure.FileFormat,
+                dreamCount = (this as? ImportResult.Success)?.dreamCount ?: 0,
+                personCount = (this as? ImportResult.Success)?.personCount ?: 0,
+                firstDream = (this as? ImportResult.Success)?.firstDream ?: timestamp,
+                lastDream = (this as? ImportResult.Success)?.lastDream ?: timestamp,
+                isNormal = this is ImportResult.Success.Normal,
+                emotionCount = (this as? ImportResult.Success.Normal)?.emotionCount ?: 0
             )
         }
 
@@ -71,6 +90,28 @@ object Mapping {
             arousal = Arousal(arousal),
             valence = Valence(valence),
             name = name
+        )
+    }
+
+    fun import(entity: ImportLogEntity) = with(entity) {
+        if (isFileAccessFailure) ImportResult.Failure.FileAccess(id, created)
+        else if (isFileFormatFailure) ImportResult.Failure.FileFormat(id, created)
+        else if (isDataConsistencyFailure) ImportResult.Failure.DataConsistency(id, created)
+        else if (isNormal) ImportResult.Success.Normal(
+            emotionCount = emotionCount,
+            dreamCount = dreamCount,
+            personCount = personCount,
+            firstDream = firstDream,
+            lastDream = lastDream,
+            id = id,
+            timestamp = created
+        ) else ImportResult.Success.Legacy(
+            dreamCount = dreamCount,
+            personCount = personCount,
+            firstDream = firstDream,
+            lastDream = lastDream,
+            id = id,
+            timestamp = created
         )
     }
 

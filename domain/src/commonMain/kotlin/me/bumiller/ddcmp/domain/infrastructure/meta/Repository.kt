@@ -28,4 +28,9 @@ interface Repository<T: Unique> {
      */
     suspend fun delete(id: Long): Boolean
 
+    /**
+     * Deletes all entries in the repository.
+     */
+    suspend fun deleteAll()
+
 }

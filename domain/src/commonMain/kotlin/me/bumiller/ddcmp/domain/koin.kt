@@ -2,8 +2,10 @@ package me.bumiller.ddcmp.domain
 
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
-import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
+import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
+import me.bumiller.ddcmp.domain.usecase.io.GetImportLogUsecase
+import me.bumiller.ddcmp.domain.usecase.io.ImportUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
@@ -25,4 +27,7 @@ val domain = module {
 
     single { GetSettingsUseCase(get()) }
     single { SetSettingsUseCase(get()) }
+
+    single { ImportUseCase(get(), get(), get(), get(), get(), get()) }
+    single { GetImportLogUsecase(get()) }
 }
