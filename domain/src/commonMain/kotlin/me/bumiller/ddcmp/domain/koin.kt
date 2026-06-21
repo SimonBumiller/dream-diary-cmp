@@ -1,5 +1,8 @@
 package me.bumiller.ddcmp.domain
 
+import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic
+import me.bumiller.ddcmp.domain.stats.dream.global.DreamTimeFrequencyHistogram
+import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeekdayFrequencyHistogram
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
@@ -30,4 +33,9 @@ val domain = module {
 
     single { ImportUseCase(get(), get(), get(), get(), get(), get()) }
     single { GetImportLogUsecase(get()) }
+
+
+    single { DreamTimeFrequencyHistogram(get()) }
+    single { DreamWeekdayFrequencyHistogram(get()) }
+    single { DreamStreakStatistic(get()) }
 }

@@ -1,17 +1,23 @@
 package me.ddcmp.feature.home.entries.dreamlist
 
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode.DreamSort
+import me.bumiller.ddcmp.domain.model.stats.Stat
+import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
-import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
@@ -21,6 +27,7 @@ import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToPersons
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToSettings
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToStats
+import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
@@ -28,12 +35,24 @@ internal class DreamListViewModel(
 
     private val getDreams: AllDreamUseCase,
 
-    private val saveDream: SaveDreamUseCase
+    private val dreamHistogram: DreamStreakStatistic
 
 ) : AppViewModel<DreamListViewModel.UiEvent, DreamListViewModel.ViewModelEvent>() {
 
     init {
         registerUiState(UiState())
+
+        viewModelScope.launch {
+            val range = LocalDate(2000, 1, 1)..LocalDate(2030, 1, 1)
+            dreamHistogram(
+                DreamStreakStatistic.I(
+                    range,
+                    Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+                )
+            ).collect { dreamHistogram ->
+                println(dreamHistogram)
+            }
+        }
     }
 
     /**
@@ -105,19 +124,19 @@ internal class DreamListViewModel(
 
         data class ClickDream(val dream: Dream) : UiEvent
 
-        data object AddDream: UiEvent
+        data object AddDream : UiEvent
 
     }
 
     sealed interface ViewModelEvent : VME {
 
-        data object GoToAddDream: ViewModelEvent
+        data object GoToAddDream : ViewModelEvent
 
-        data object GoToEmotions: ViewModelEvent
-        data object GoToSettings: ViewModelEvent
-        data object GoToStats: ViewModelEvent
-        data object GoToPersons: ViewModelEvent
-        data class GoToDreamDetail(val dreamId: Long): ViewModelEvent
+        data object GoToEmotions : ViewModelEvent
+        data object GoToSettings : ViewModelEvent
+        data object GoToStats : ViewModelEvent
+        data object GoToPersons : ViewModelEvent
+        data class GoToDreamDetail(val dreamId: Long) : ViewModelEvent
 
     }
 

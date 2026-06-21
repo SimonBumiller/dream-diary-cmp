@@ -49,6 +49,7 @@ kotlin {
             implementation(libs.backhandler.compose)
             implementation(libs.compose.material3.windowsizeclass)
             implementation(libs.compose.navigation)
+            implementation(libs.kotlin.datetime)
             implementation(project(":domain"))
             implementation(project(":ui:common"))
         }

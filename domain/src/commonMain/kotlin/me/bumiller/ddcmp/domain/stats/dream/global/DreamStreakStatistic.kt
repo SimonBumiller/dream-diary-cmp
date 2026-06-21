@@ -1,0 +1,144 @@
+package me.bumiller.ddcmp.domain.stats.dream.global
+
+import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
+import kotlinx.datetime.toLocalDateTime
+import me.bumiller.ddcmp.domain.model.Dream
+import me.bumiller.ddcmp.domain.model.stats.Stat
+import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic.I
+import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic.StreakStatistic
+import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
+import kotlin.time.ExperimentalTime
+
+/**
+ * Statistical usecase that reports on the longest and current streak of dreams, i.e. consecutive days on which dreams have been entered.
+ */
+class DreamStreakStatistic(
+
+    /**
+     * Use case to get all statistics
+     */
+    private val getDreams: AllDreamUseCase
+
+) : FlowUseCase<I, Stat<StreakStatistic>> {
+
+    private val timeZone = TimeZone.currentSystemDefault()
+
+    override fun invoke(i: I): Flow<Stat<StreakStatistic>> = getDreams.asynchronousDreamStatistic(
+        dateRange = i.dateRange,
+        synchronousDelegate = { dreams ->
+            delegateAsynchronous(dreams, i.referenceDay)
+        }
+    )
+
+    @OptIn(ExperimentalTime::class)
+    private fun delegateAsynchronous(
+        dreams: List<Dream>,
+        referenceDay: LocalDate
+    ): StreakStatistic? {
+        val dates = dreams
+            .asSequence()
+            .map(Dream::dreamt)
+            .map { it.toLocalDateTime(timeZone).date }
+            .sorted()
+            .distinct()
+            .toList()
+
+        val longestStreak = dates.longestConsecutive()
+        val currentStreak = dates.currentConsecutive(referenceDay)
+
+        if (longestStreak.isEmpty())
+            return null
+
+        return StreakStatistic(longestStreak, currentStreak)
+    }
+
+    private fun List<LocalDate>.currentConsecutive(
+        current: LocalDate
+    ): List<LocalDate> {
+        val currentIndex = indexOf(current)
+
+        if (currentIndex == -1)
+            return emptyList()
+
+        var start = currentIndex
+        var recentValue = current
+
+        while (
+            start - 1 in indices &&
+            this[start - 1] == recentValue - DatePeriod(days = 1)
+        ) {
+            start--
+            recentValue -= DatePeriod(days = 1)
+        }
+
+        return subList(start, currentIndex + 1)
+    }
+
+    private fun List<LocalDate>.longestConsecutive(): List<LocalDate> {
+        if (isEmpty()) return emptyList()
+
+        var bestStart = 0
+        var bestLen = 1
+
+        var curStart = 0
+        var curLen = 1
+
+        for (i in 1 until size) {
+            if (this[i] == this[i - 1] + DatePeriod(days = 1)) {
+                curLen++
+            } else {
+                curStart = i
+                curLen = 1
+            }
+
+            if (curLen > bestLen) {
+                bestLen = curLen
+                bestStart = curStart
+            }
+        }
+
+        return subList(bestStart, bestStart + bestLen)
+    }
+
+    /**
+     * Streak statistic data
+     */
+    data class StreakStatistic(
+
+        /**
+         * The longest streak.
+         */
+        val longest: List<LocalDate>,
+
+        /**
+         * The current streak.
+         */
+        val current: List<LocalDate>
+
+    )
+
+    /**
+     * The input.
+     */
+    data class I(
+
+        /**
+         * The date range in which the statistic is calculated.
+         */
+        val dateRange: ClosedRange<LocalDate>,
+
+        /**
+         * The reference day for the current streak.
+         * I.e. a streak is current if the reference day is contained.
+         */
+        val referenceDay: LocalDate
+
+    )
+
+}
