@@ -1,6 +1,5 @@
 package me.bumiller.ddcmp.domain.stats.dream.global
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -8,9 +7,7 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.stats.HistogramMeta
-import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
-import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import kotlin.time.ExperimentalTime
 
 /**
@@ -19,28 +16,19 @@ import kotlin.time.ExperimentalTime
 @OptIn(ExperimentalTime::class)
 class DreamTimeFrequencyHistogram(
 
-    /**
-     * Usecase to get all available dreams.
-     */
-    private val getDreams: AllDreamUseCase
+    getDreams: AllDreamUseCase
 
-) : FlowUseCase<ClosedRange<LocalDate>, Stat<HistogramMeta<LocalDate, DatePeriod, Int>>> {
+) : DreamListBasedStatistic<ClosedRange<LocalDate>, HistogramMeta<LocalDate, DatePeriod, Int>>(
+    getDreams
+) {
 
-    val timeZone = TimeZone.currentSystemDefault()
+    override fun ClosedRange<LocalDate>.invoke() = this
 
-    override fun invoke(i: ClosedRange<LocalDate>): Flow<Stat<HistogramMeta<LocalDate, DatePeriod, Int>>> =
-        getDreams.asynchronousDreamStatistic(
-            dateRange = i,
-            synchronousDelegate = ::delegateSynchronously
-        )
-
-    private fun delegateSynchronously(
-        dreams: List<Dream>
+    override fun invoke(
+        input: ClosedRange<LocalDate>,
+        dreams: List<Dream>,
+        actualRange: ClosedRange<LocalDate>
     ): HistogramMeta<LocalDate, DatePeriod, Int>? {
-        // Contains the actual range that the dreams span.
-        // This is a subrange of the input range.
-        val actualRange = findActualRange(dreams)
-
         // The size of the buckets that we use to create the frequencies.
         val bucketSize = calculateBucketSize(actualRange)
 
@@ -88,14 +76,5 @@ class DreamTimeFrequencyHistogram(
         else if (daysDiff <= 6 * 30) DatePeriod(days = 7)
         else if (daysDiff <= 24 * 30) DatePeriod(days = 21)
         else DatePeriod(months = 1)
-    }
-
-    private fun findActualRange(dreams: List<Dream>): ClosedRange<LocalDate> {
-        val start = dreams.minOf(Dream::dreamt)
-            .toLocalDateTime(timeZone).date
-        val end = dreams.maxOf(Dream::dreamt)
-            .toLocalDateTime(timeZone).date
-
-        return start..end
     }
 }

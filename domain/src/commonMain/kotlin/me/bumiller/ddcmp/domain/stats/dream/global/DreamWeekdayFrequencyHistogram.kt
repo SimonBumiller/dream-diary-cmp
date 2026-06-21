@@ -1,15 +1,12 @@
 package me.bumiller.ddcmp.domain.stats.dream.global
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.stats.HistogramMeta
-import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
-import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import kotlin.time.ExperimentalTime
 
 /**
@@ -18,23 +15,16 @@ import kotlin.time.ExperimentalTime
 @OptIn(ExperimentalTime::class)
 class DreamWeekdayFrequencyHistogram(
 
-    /**
-     * Usecase to get all available dreams.
-     */
-    private val getDreams: AllDreamUseCase
+    getDreams: AllDreamUseCase
 
-) : FlowUseCase<ClosedRange<LocalDate>, Stat<HistogramMeta<DayOfWeek, Unit, Int>>> {
+) : DreamListBasedStatistic<ClosedRange<LocalDate>, HistogramMeta<DayOfWeek, Unit, Int>>(getDreams) {
 
-    private val timeZone = TimeZone.currentSystemDefault()
+    override fun ClosedRange<LocalDate>.invoke() = this
 
-    override fun invoke(i: ClosedRange<LocalDate>): Flow<Stat<HistogramMeta<DayOfWeek, Unit, Int>>>
-        = getDreams.asynchronousDreamStatistic(
-            dateRange = i,
-            synchronousDelegate = ::delegateAsynchronous
-        )
-
-    private fun delegateAsynchronous(
-        dreams: List<Dream>
+    override fun invoke(
+        input: ClosedRange<LocalDate>,
+        dreams: List<Dream>,
+        actualRange: ClosedRange<LocalDate>
     ): HistogramMeta<DayOfWeek, Unit, Int>? {
         val histogram = dreams
             .groupBy { dream ->
@@ -51,11 +41,10 @@ class DreamWeekdayFrequencyHistogram(
             bucketCount = DayOfWeek.entries.size
         )
 
-        if(meta.average == 0F)
+        if (meta.average == 0F)
             return null
 
         return meta
     }
-
 
 }

@@ -1,6 +1,5 @@
 package me.bumiller.ddcmp.domain.stats.dream.global
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -8,38 +7,27 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
-import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic.I
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic.StreakStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
-import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import kotlin.time.ExperimentalTime
 
 /**
  * Statistical usecase that reports on the longest and current streak of dreams, i.e. consecutive days on which dreams have been entered.
  */
+@OptIn(ExperimentalTime::class)
 class DreamStreakStatistic(
 
-    /**
-     * Use case to get all statistics
-     */
-    private val getDreams: AllDreamUseCase
+    getDreams: AllDreamUseCase
 
-) : FlowUseCase<I, Stat<StreakStatistic>> {
+) : DreamListBasedStatistic<I, StreakStatistic>(getDreams) {
 
-    private val timeZone = TimeZone.currentSystemDefault()
+    override fun I.invoke() = dateRange
 
-    override fun invoke(i: I): Flow<Stat<StreakStatistic>> = getDreams.asynchronousDreamStatistic(
-        dateRange = i.dateRange,
-        synchronousDelegate = { dreams ->
-            delegateAsynchronous(dreams, i.referenceDay)
-        }
-    )
-
-    @OptIn(ExperimentalTime::class)
-    private fun delegateAsynchronous(
+    override fun invoke(
+        input: I,
         dreams: List<Dream>,
-        referenceDay: LocalDate
+        actualRange: ClosedRange<LocalDate>
     ): StreakStatistic? {
         val dates = dreams
             .asSequence()
@@ -50,7 +38,7 @@ class DreamStreakStatistic(
             .toList()
 
         val longestStreak = dates.longestConsecutive()
-        val currentStreak = dates.currentConsecutive(referenceDay)
+        val currentStreak = dates.currentConsecutive(input.referenceDay)
 
         if (longestStreak.isEmpty())
             return null
@@ -129,7 +117,7 @@ class DreamStreakStatistic(
     data class I(
 
         /**
-         * The date range in which the statistic is calculated.
+         * The date range for the dreams.
          */
         val dateRange: ClosedRange<LocalDate>,
 

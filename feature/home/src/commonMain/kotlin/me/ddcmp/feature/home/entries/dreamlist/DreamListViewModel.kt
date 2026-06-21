@@ -17,6 +17,8 @@ import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode.DreamSort
 import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic
+import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeekdayFrequencyHistogram
+import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
@@ -35,7 +37,7 @@ internal class DreamListViewModel(
 
     private val getDreams: AllDreamUseCase,
 
-    private val dreamHistogram: DreamStreakStatistic
+    private val dreamHistogram: DreamWeeklyFrequencyStatistic
 
 ) : AppViewModel<DreamListViewModel.UiEvent, DreamListViewModel.ViewModelEvent>() {
 
@@ -45,7 +47,7 @@ internal class DreamListViewModel(
         viewModelScope.launch {
             val range = LocalDate(2000, 1, 1)..LocalDate(2030, 1, 1)
             dreamHistogram(
-                DreamStreakStatistic.I(
+                DreamWeeklyFrequencyStatistic.I(
                     range,
                     Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
                 )
