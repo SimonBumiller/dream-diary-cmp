@@ -21,16 +21,17 @@ abstract class DreamListBasedStatistic<I, O>(
      */
     private val getDreams: AllDreamUseCase
 
-): FlowUseCase<I, Stat<O>> {
+) : FlowUseCase<I, Stat<O>> {
 
     protected val timeZone = TimeZone.currentSystemDefault()
 
     override fun invoke(i: I): Flow<Stat<O>> = getDreams.asynchronousDreamStatistic(
         dateRange = i(),
         synchronousDelegate = { dreams ->
-            val start = dreams.minOf { it.dreamt }.toLocalDateTime(timeZone).date
-            val end = dreams.maxOf { it.dreamt }.toLocalDateTime(timeZone).date
-            val empiricalRange = start..end
+            val start = dreams.minOfOrNull { it.dreamt }?.toLocalDateTime(timeZone)?.date
+            val end = dreams.maxOfOrNull { it.dreamt }?.toLocalDateTime(timeZone)?.date
+            val empiricalRange = if (start != null && end != null) start..end
+            else return@asynchronousDreamStatistic null
 
             this(i, dreams, empiricalRange)
         }
@@ -43,7 +44,11 @@ abstract class DreamListBasedStatistic<I, O>(
      * @param dreams The dreams from the specified date range
      * @param actualRange The empirical range of the dreams retrieved
      */
-    protected abstract operator fun invoke(input: I, dreams: List<Dream>, actualRange: ClosedRange<LocalDate>): O?
+    protected abstract operator fun invoke(
+        input: I,
+        dreams: List<Dream>,
+        actualRange: ClosedRange<LocalDate>
+    ): O?
 
     /**
      * Produces the date range from the input.
