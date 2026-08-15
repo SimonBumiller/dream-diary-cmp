@@ -14,6 +14,12 @@ internal sealed interface HomeRoutes {
     @Serializable
     data object PersonList : HomeRoutes
 
+    /**
+     * Navigation route for the statistics screens.
+     */
+    @Serializable
+    data object Statistics: HomeRoutes
+
     @Serializable
     data class AddPerson(
         val personId: Long? = null

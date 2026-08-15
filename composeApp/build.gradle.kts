@@ -57,8 +57,10 @@ kotlin {
             implementation(project(":feature:home"))
             implementation(project(":feature:settings"))
             implementation(project(":feature:import"))
+            implementation(project(":feature:stats"))
             implementation(project(":feature:onboarding"))
             implementation(project(":ui:common"))
+            implementation(project(":ui:diagram"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

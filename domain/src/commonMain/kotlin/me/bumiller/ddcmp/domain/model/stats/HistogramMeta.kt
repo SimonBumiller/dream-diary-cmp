@@ -15,12 +15,13 @@ data class HistogramMeta<Bucket, BucketSize, Value : Number>(
      */
     val bucketSize: BucketSize,
 
+) {
+
     /**
      * The number of buckets
      */
     val bucketCount: Int
-
-) {
+        get() = histogram.size
 
     /**
      * The average number per bucket.

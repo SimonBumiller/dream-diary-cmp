@@ -37,8 +37,7 @@ class DreamWeekdayFrequencyHistogram(
 
         val meta = HistogramMeta(
             histogram = histogram,
-            bucketSize = Unit,
-            bucketCount = DayOfWeek.entries.size
+            bucketSize = Unit
         )
 
         if (meta.average == 0F)

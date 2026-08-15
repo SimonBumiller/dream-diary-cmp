@@ -31,7 +31,7 @@ private fun createInstantRange(dateRange: ClosedRange<LocalDate>): ClosedRange<I
  */
 fun <T> AllDreamUseCase.asynchronousDreamStatistic(
     dateRange: ClosedRange<LocalDate>,
-    dreamQuery: AllDreamUseCase.I = I(
+    dreamQuery: I = I(
         sortMode = SortMode.DreamSort.Dreamt,
         sortDirection = SortDirection.Ascending,
         timeRange = createInstantRange(dateRange)

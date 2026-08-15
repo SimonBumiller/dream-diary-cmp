@@ -1,6 +1,6 @@
 package me.bumiller.ddcmp.ui.common.format
 
-import androidx.compose.runtime.IntState
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -10,12 +10,14 @@ import kotlin.time.Instant
 /**
  * Formats a specific local date according to locale rules.
  */
-internal expect fun formatLocalDate(date: LocalDate): String
+expect fun formatLocalDate(date: LocalDate): String
 
 /**
  * Formats only the month and year part of a local date.
  */
 internal expect fun formatLocalDateMonth(date: LocalDate): String
+
+expect fun formatLocalDateYearIndependent(date: LocalDate): String
 
 @OptIn(ExperimentalTime::class)
 fun formatInstant(instant: Instant): String {
@@ -24,6 +26,11 @@ fun formatInstant(instant: Instant): String {
 
     return formatLocalDate(localDate)
 }
+
+/**
+ * Get the abbreviated version of the name of the day-of-week
+ */
+expect fun formatDayOfWeekShort(dayOfWeek: DayOfWeek): String
 
 @OptIn(ExperimentalTime::class)
 fun formatInstantMonthYear(instant: Instant): String {

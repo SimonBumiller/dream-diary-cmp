@@ -58,8 +58,7 @@ class DreamTimeFrequencyHistogram(
 
         val meta = HistogramMeta(
             histogram = histogram,
-            bucketSize = bucketSize,
-            bucketCount = bucketCounter
+            bucketSize = bucketSize
         )
 
         return meta

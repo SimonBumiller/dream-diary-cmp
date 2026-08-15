@@ -29,6 +29,8 @@ class DreamStreakStatistic(
         dreams: List<Dream>,
         actualRange: ClosedRange<LocalDate>
     ): StreakStatistic? {
+        if(input.referenceDay !in input.dateRange) return null
+
         val dates = dreams
             .asSequence()
             .map(Dream::dreamt)

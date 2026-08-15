@@ -7,11 +7,11 @@ import me.bumiller.ddcomp.core.database.database
 import me.ddcmp.feature.home.home
 import me.ddcmp.feature.import.import
 import me.ddcmp.feature.onboarding.di.onboarding
+import me.ddcmp.feature.stats.statistics
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
-import org.koin.plugin.module.dsl.viewModel
 
 /**
  * The koin module for the app.
@@ -29,6 +29,6 @@ fun initKoin(config: KoinApplication.() -> Unit = {}) {
     startKoin {
         config()
 
-        modules(app, database, datastore, domain, onboarding, home, import, io)
+        modules(app, database, datastore, domain, onboarding, home, import, io, statistics)
     }
 }

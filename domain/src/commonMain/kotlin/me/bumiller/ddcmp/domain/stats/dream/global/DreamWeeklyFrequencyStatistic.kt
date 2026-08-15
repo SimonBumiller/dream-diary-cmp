@@ -26,6 +26,8 @@ class DreamWeeklyFrequencyStatistic(
         dreams: List<Dream>,
         actualRange: ClosedRange<LocalDate>
     ): WeeklyFrequency? {
+        if(input.referenceDay !in input.dateRange) return null
+
         val epochDays =
             dreams.map(Dream::dreamt)
                 .map { instant -> instant.toLocalDateTime(timeZone).date.toEpochDays() }

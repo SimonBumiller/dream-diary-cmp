@@ -51,6 +51,7 @@ kotlin {
             implementation(libs.compose.navigation)
             implementation(libs.kotlin.datetime)
             implementation(project(":domain"))
+            implementation(project(":feature:stats"))
             implementation(project(":ui:common"))
         }
         commonTest.dependencies {

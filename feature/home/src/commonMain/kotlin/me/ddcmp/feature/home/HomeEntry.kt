@@ -16,6 +16,7 @@ import me.ddcmp.feature.home.entries.emotionlist.EmotionListEntry
 import me.ddcmp.feature.home.entries.personadd.PersonAddEntry
 import me.ddcmp.feature.home.entries.personlist.PersonListEntry
 import me.ddcmp.feature.home.navigation.HomeRoutes
+import me.ddcmp.feature.stats.StatsEntry
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
@@ -39,7 +40,9 @@ fun HomeEntry() {
                     onGoToEmotions = {
                         navController.navigate(HomeRoutes.EmotionList)
                     },
-                    onGoToStats = {},
+                    onGoToStats = {
+                        navController.navigate(HomeRoutes.Statistics)
+                    },
                     onGoToSettings = {},
                     onGoToPersons = {
                         navController.navigate(HomeRoutes.PersonList)
@@ -52,6 +55,13 @@ fun HomeEntry() {
             composable<HomeRoutes.AddDream> {
                 DreamAddEntry(
                     onBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable<HomeRoutes.Statistics> {
+                StatsEntry(
+                    onReturn = {
                         navController.popBackStack()
                     }
                 )
