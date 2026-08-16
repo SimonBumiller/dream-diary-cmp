@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,22 +30,26 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Popup
 import me.bumiller.ddcmp.domain.model.stats.HistogramMeta
 import me.bumiller.ddcmp.ui.common.modifier.rotatedLayout
+import kotlin.math.floor
 
 @Composable
-fun <Bucket, Value : Number> Histogram(
+fun <Bucket, Value : Number, BucketSize> Histogram(
     modifier: Modifier = Modifier,
-    meta: HistogramMeta<Bucket, *, Value>,
+    meta: HistogramMeta<Bucket, BucketSize, Value>,
     bucketLabel: (@Composable (Bucket) -> String)? = null,
     bucketComparator: (Bucket, Bucket) -> Int = { _, _ -> 0 },
-    showAverage: Boolean = true
+    showAverage: Boolean = true,
+    tooltip: (@Composable (Bucket, Value, BucketSize) -> Unit)? = null,
 ) {
     var labelsHeight by remember {
         mutableStateOf<Int?>(null)
@@ -76,7 +81,8 @@ fun <Bucket, Value : Number> Histogram(
                     .weight(1F),
                 meta = meta,
                 bucketComparator = bucketComparator,
-                showAverage = showAverage
+                showAverage = showAverage,
+                tooltip = tooltip
             )
 
             // Row containing the histogram labels
@@ -146,20 +152,20 @@ private fun <Bucket> HistogramLabels(
             .keys
             .sortedWith(bucketComparator)
             .forEach { key ->
-            bucketLabel?.invoke(key)?.let { label ->
-                Text(
-                    modifier = Modifier
-                        .weight(1F)
-                        .rotatedLayout(-45F)
-                        .rotate(-45F),
-                    text = label,
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.labelMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                bucketLabel?.invoke(key)?.let { label ->
+                    Text(
+                        modifier = Modifier
+                            .weight(1F)
+                            .rotatedLayout(-45F)
+                            .rotate(-45F),
+                        text = label,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
-        }
     }
 }
 
@@ -180,12 +186,14 @@ private fun ContentDrawScope.drawAverageLine(average: Float, max: Float, color: 
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun <Bucket> HistogramBars(
+private fun <Bucket, BucketSize, Value : Number> HistogramBars(
     modifier: Modifier,
-    meta: HistogramMeta<Bucket, *, *>,
+    meta: HistogramMeta<Bucket, BucketSize, Value>,
     bucketComparator: (Bucket, Bucket) -> Int,
-    showAverage: Boolean
+    showAverage: Boolean,
+    tooltip: (@Composable (Bucket, Value, BucketSize) -> Unit)? = null,
 ) {
     val maxValue = remember(meta.histogram) {
         meta.histogram.values.maxOf(Number::toFloat)
@@ -193,6 +201,14 @@ private fun <Bucket> HistogramBars(
     val average = remember(meta) { meta.average }
 
     val averageColor = MaterialTheme.colorScheme.secondary
+
+    val sortedKeys = remember(meta.histogram) {
+        meta.histogram.keys.sortedWith(bucketComparator)
+    }
+
+    var selectedKey by remember {
+        mutableStateOf<Bucket?>(null)
+    }
 
     BoxWithConstraints(
         modifier = modifier
@@ -203,6 +219,30 @@ private fun <Bucket> HistogramBars(
                     drawAverageLine(average, maxValue, averageColor)
                 }
             }
+            .pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent()
+
+                        var newSelected: Bucket? = null
+
+                        for (change in event.changes) {
+                            val x = change.position.x
+                            val y = change.position.y
+
+                            if (x !in 0F..size.width.toFloat() || y !in 0F..size.height.toFloat())
+                                newSelected = null
+                            else {
+                                val relativeX = x / size.width
+                                val keyIndex = floor(relativeX * meta.histogram.size).toInt()
+                                newSelected = sortedKeys[keyIndex]
+                            }
+
+                        }
+                        selectedKey = newSelected
+                    }
+                }
+            }
     ) {
         val maxHeight = maxHeight
 
@@ -211,50 +251,77 @@ private fun <Bucket> HistogramBars(
             modifier = Modifier
                 .fillMaxSize(),
             verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(meta.histogram.size.barCountToSpacing())
         ) {
-            meta.histogram
-                .keys
-                .sortedWith(bucketComparator)
+            sortedKeys
                 .forEach { key ->
                     val value = meta.histogram[key]!!
 
                     val relativeValue = value.toFloat() / maxValue
                     val height = maxHeight * relativeValue
 
+                    println("Got key $key and value $value and will have a relative heigh of $relativeValue with absolute mapping $height")
+
                     HistogramBar(
                         modifier = Modifier
                             .weight(1F)
                             .fillMaxHeight(),
-                        height = height
+                        height = height,
+                        selected = key == selectedKey,
+                        tooltip = tooltip?.let {
+                            { it(key, value, meta.bucketSize) }
+                        },
+                        unselect = {
+                            selectedKey = null
+                        }
                     )
                 }
         }
     }
 }
 
+private fun Int.barCountToSpacing(): Dp =
+    if (this <= 8) 8.dp
+    else if (this <= 16) 6.dp
+    else if (this <= 32) 2.dp
+    else 1.dp
+
 @Composable
 private fun HistogramBar(
     modifier: Modifier = Modifier,
-    height: Dp
+    height: Dp,
+    selected: Boolean,
+    tooltip: (@Composable () -> Unit)? = null,
+    unselect: () -> Unit
 ) {
     val shape = RoundedCornerShape(
         topStart = 8.dp,
         topEnd = 8.dp
     )
 
-    Column(
+    val background =
+        if (selected) MaterialTheme.colorScheme.primary
+        else MaterialTheme.colorScheme.primaryContainer
+
+    Box(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Bottom)
+        contentAlignment = Alignment.BottomCenter
     ) {
         Box(
             modifier = Modifier
                 .height(height)
                 .fillMaxWidth()
                 .clip(shape)
-                .background(MaterialTheme.colorScheme.primaryContainer)
+                .background(background)
         )
+
+        if (selected && tooltip != null) {
+            Popup(
+                onDismissRequest = unselect,
+                alignment = Alignment.Center,
+                content = tooltip
+            )
+        }
     }
 
 }

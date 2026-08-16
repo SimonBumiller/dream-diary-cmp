@@ -29,6 +29,13 @@ actual fun formatDayOfWeekShort(dayOfWeek: DayOfWeek): String {
     )
 }
 
+actual fun formatDayOfWeek(dayOfWeek: DayOfWeek): String {
+    return dayOfWeek.toJavaDayOfWeek().getDisplayName(
+        TextStyle.FULL,
+        Locale.getDefault()
+    )
+}
+
 actual fun formatLocalDateYearIndependent(date: LocalDate): String {
     val formatter = DateTimeFormatter.ofPattern("dd MMMM", Locale.getDefault())
     return date.toJavaLocalDate().format(formatter)

@@ -57,6 +57,23 @@ actual fun formatDayOfWeekShort(dayOfWeek: DayOfWeek): String {
     return symbols[index] as String
 }
 
+actual fun formatDayOfWeek(dayOfWeek: DayOfWeek): String {
+    val formatter = NSDateFormatter()
+    val symbols = formatter.weekdaySymbols
+
+    val index = when (dayOfWeek) {
+        DayOfWeek.SUNDAY -> 0
+        DayOfWeek.MONDAY -> 1
+        DayOfWeek.TUESDAY -> 2
+        DayOfWeek.WEDNESDAY -> 3
+        DayOfWeek.THURSDAY -> 4
+        DayOfWeek.FRIDAY -> 5
+        DayOfWeek.SATURDAY -> 6
+    }
+
+    return symbols[index] as String
+}
+
 actual fun formatLocalDateYearIndependent(date: LocalDate): String {
     val components = NSCalendar.currentCalendar.components(
         NSCalendarUnitYear or NSCalendarUnitMonth or NSCalendarUnitDay,

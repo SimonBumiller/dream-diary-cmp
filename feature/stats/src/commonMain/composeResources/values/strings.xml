@@ -8,6 +8,11 @@
     <string name="global_dream_weekday_frequency_description">This chart shows on which days of the week you tend to record your dreams. See how your dream journaling habits are distributed throughout the week.</string>
     <string name="global_dream_streak_title">Dream Streak</string>
     <string name="global_dream_streak_description">This statistic shows how consistently you record your dreams on consecutive days. It displays both your current streak and your longest streak, helping you see your recording habits and consistency over time.</string>
+    <string name="global_dream_time_frequency_title">Dream Count over Time.</string>
+    <string name="global_dream_time_frequency_description">This statistic shows how many dreams you had in selected periods of time. You can see what times you had many, and what times you had little dreams and correlate them to important phases in your life.</string>
+    <string name="global_dream_time_frequency_tooltip_1">From %1$s to %2$s</string>
+    <string name="global_dream_time_frequency_tooltip_2">In total %1$d dreams</string>
+    <string name="global_dream_weekday_frequency_tooltip">%1$s: %2$d</string>
 
     <string name="stat_data_missing_title">Statistic not available</string>
     <string name="stat_data_missing_description">Collect more data by recording dreams so this statistic can be calculated!</string>

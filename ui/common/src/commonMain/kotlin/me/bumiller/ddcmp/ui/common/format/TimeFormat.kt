@@ -32,6 +32,11 @@ fun formatInstant(instant: Instant): String {
  */
 expect fun formatDayOfWeekShort(dayOfWeek: DayOfWeek): String
 
+/**
+ * Get the version of the name of the day-of-week
+ */
+expect fun formatDayOfWeek(dayOfWeek: DayOfWeek): String
+
 @OptIn(ExperimentalTime::class)
 fun formatInstantMonthYear(instant: Instant): String {
     val localDate = instant.toLocalDateTime(TimeZone.currentSystemDefault())

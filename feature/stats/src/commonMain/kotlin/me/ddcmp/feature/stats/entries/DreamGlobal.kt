@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,9 +24,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.stats.generated.resources.Res
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_streak_description
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_streak_title
+import dream_diary_cmp.feature.stats.generated.resources.global_dream_time_frequency_description
+import dream_diary_cmp.feature.stats.generated.resources.global_dream_time_frequency_title
+import dream_diary_cmp.feature.stats.generated.resources.global_dream_time_frequency_tooltip_1
+import dream_diary_cmp.feature.stats.generated.resources.global_dream_time_frequency_tooltip_2
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_title
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_weekday_frequency_description
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_weekday_frequency_title
+import dream_diary_cmp.feature.stats.generated.resources.global_dream_weekday_frequency_tooltip
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_weekly_average_description_30_days
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_weekly_average_description_6_months
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_weekly_average_description_7_days
@@ -38,12 +46,15 @@ import kotlinx.datetime.DayOfWeek.THURSDAY
 import kotlinx.datetime.DayOfWeek.TUESDAY
 import kotlinx.datetime.DayOfWeek.WEDNESDAY
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.plus
 import me.bumiller.ddcmp.domain.model.stats.HistogramMeta
 import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic.StreakStatistic
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic.WeeklyFrequency
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.format.formatDayOfWeek
 import me.bumiller.ddcmp.ui.common.format.formatDayOfWeekShort
+import me.bumiller.ddcmp.ui.common.format.formatLocalDate
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.diagram.histogram.Histogram
@@ -128,7 +139,13 @@ private fun DreamGlobal(
                 Histogram(
                     meta = histogram,
                     bucketLabel = { formatDayOfWeekShort(it) },
-                    bucketComparator = weekdayOrderComparator
+                    bucketComparator = weekdayOrderComparator,
+                    tooltip = { from, count, _ ->
+                        WeekdayFrequencyTooltip(
+                            from = from,
+                            dreamCount = count
+                        )
+                    }
                 )
             }
 
@@ -170,6 +187,91 @@ private fun DreamGlobal(
                     streak = streak
                 )
             }
+
+            StatCard(
+                modifier = Modifier
+                    .height(350.dp),
+                stat = timeFrequency!!,
+                title = stringResource(Res.string.global_dream_time_frequency_title),
+                description = stringResource(Res.string.global_dream_time_frequency_description)
+            ) { histogram ->
+                Histogram(
+                    meta = histogram,
+                    bucketLabel = { it.toString() },
+                    bucketComparator = { date1, date2 ->
+                        date1.toEpochDays().compareTo(date2.toEpochDays())
+                    },
+                    tooltip = { from, count, length ->
+                        TimeFrequencyTooltip(
+                            from = from,
+                            length = length,
+                            dreamCount = count
+                        )
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun TimeFrequencyTooltip(
+    modifier: Modifier = Modifier,
+    from: LocalDate,
+    length: DatePeriod,
+    dreamCount: Int
+) {
+    val to = from.plus(length)
+
+    val fromString = formatLocalDate(from)
+    val toString = formatLocalDate(to)
+
+    ElevatedCard(
+        modifier = modifier
+            .widthIn(max = 160.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(
+                    horizontal = 6.dp,
+                    vertical = 4.dp
+                )
+        ) {
+            Text(
+                text = stringResource(Res.string.global_dream_time_frequency_tooltip_1, fromString, toString),
+                style = MaterialTheme.typography.labelSmall
+            )
+            Text(
+                text = stringResource(Res.string.global_dream_time_frequency_tooltip_2, dreamCount),
+                style = MaterialTheme.typography.labelSmall
+            )
+        }
+    }
+}
+
+@Composable
+private fun WeekdayFrequencyTooltip(
+    modifier: Modifier = Modifier,
+    from: DayOfWeek,
+    dreamCount: Int
+) {
+    val dowName = formatDayOfWeek(from)
+
+    ElevatedCard(
+        modifier = modifier
+            .widthIn(max = 160.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(
+                    horizontal = 6.dp,
+                    vertical = 4.dp
+                )
+        ) {
+            Text(
+                text = stringResource(Res.string.global_dream_weekday_frequency_tooltip, dowName, dreamCount),
+                style = MaterialTheme.typography.labelSmall
+            )
         }
     }
 }
