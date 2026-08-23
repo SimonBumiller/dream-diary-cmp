@@ -6,11 +6,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -35,12 +38,15 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import me.bumiller.ddcmp.domain.model.stats.HistogramMeta
 import me.bumiller.ddcmp.ui.common.modifier.rotatedLayout
 import kotlin.math.floor
+import kotlin.math.roundToInt
 
 @Composable
 fun <Bucket, Value : Number, BucketSize> Histogram(
@@ -50,11 +56,16 @@ fun <Bucket, Value : Number, BucketSize> Histogram(
     bucketComparator: (Bucket, Bucket) -> Int = { _, _ -> 0 },
     showAverage: Boolean = true,
     tooltip: (@Composable (Bucket, Value, BucketSize) -> Unit)? = null,
+    labelStyle: HistogramLabelStyle = HistogramLabelStyle.AllVisible
 ) {
     var labelsHeight by remember {
         mutableStateOf<Int?>(null)
     }
 
+    val labelIndices = when (labelStyle) {
+        HistogramLabelStyle.AllVisible -> 0 ..< meta.histogram.size
+        is HistogramLabelStyle.PartiallyVisible -> evenlySpaced(meta.histogram.size, labelStyle.labelCount)
+    }
 
     Row(
         modifier = modifier
@@ -82,7 +93,8 @@ fun <Bucket, Value : Number, BucketSize> Histogram(
                 meta = meta,
                 bucketComparator = bucketComparator,
                 showAverage = showAverage,
-                tooltip = tooltip
+                tooltip = tooltip,
+                labelIndices = labelIndices
             )
 
             // Row containing the histogram labels
@@ -92,7 +104,9 @@ fun <Bucket, Value : Number, BucketSize> Histogram(
                 meta = meta,
                 bucketLabel = bucketLabel,
                 bucketComparator = bucketComparator,
-                onHeightDetermined = { labelsHeight = it }
+                onHeightDetermined = { labelsHeight = it },
+                labelStyle = labelStyle,
+                labelIndices = labelIndices
             )
         }
 
@@ -138,7 +152,9 @@ private fun <Bucket> HistogramLabels(
     meta: HistogramMeta<Bucket, *, *>,
     bucketLabel: (@Composable (Bucket) -> String)?,
     bucketComparator: (Bucket, Bucket) -> Int,
-    onHeightDetermined: (height: Int) -> Unit
+    onHeightDetermined: (height: Int) -> Unit,
+    labelStyle: HistogramLabelStyle,
+    labelIndices: Iterable<Int>
 ) {
     Row(
         modifier = modifier
@@ -146,18 +162,18 @@ private fun <Bucket> HistogramLabels(
                 it.size.height.let(onHeightDetermined)
             },
         verticalAlignment = Alignment.Bottom,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = labelStyle.arrangement
     ) {
         meta.histogram
             .keys
             .sortedWith(bucketComparator)
+            .filterIndexed { index, _ -> index in labelIndices }
             .forEach { key ->
                 bucketLabel?.invoke(key)?.let { label ->
                     Text(
-                        modifier = Modifier
-                            .weight(1F)
-                            .rotatedLayout(-45F)
-                            .rotate(-45F),
+                        modifier = labelStyle.baseModifier(this)
+                            .rotatedLayout(labelStyle.rotation)
+                            .rotate(labelStyle.rotation),
                         text = label,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.labelMedium,
@@ -167,6 +183,64 @@ private fun <Bucket> HistogramLabels(
                 }
             }
     }
+}
+
+class CenterSpacedArrangement : Arrangement.Horizontal {
+    override fun Density.arrange(
+        totalSize: Int,
+        sizes: IntArray,
+        layoutDirection: LayoutDirection,
+        outPositions: IntArray,
+    ) {
+        // Start with normal SpaceBetween positioning
+        if (sizes.size == 1) {
+            outPositions[0] = -sizes[0] / 2
+            return
+        }
+
+        val space = (totalSize - sizes.sum()) / (sizes.size - 1)
+
+        var position = 0
+        sizes.indices.forEach { i ->
+            outPositions[i] = position
+
+            position += sizes[i] + space
+        }
+
+        // Center only the first item on the left edge
+        outPositions[0] -= sizes[0] / 2
+    }
+}
+
+    /**
+ * Style configuration for the labels of the histogram.
+ */
+sealed class HistogramLabelStyle(
+    internal val rotation: Float,
+    internal val arrangement: Arrangement.Horizontal,
+    internal val baseModifier: @Composable RowScope.() -> Modifier
+) {
+
+    /**
+     * All labels are visible.
+     */
+    data object AllVisible: HistogramLabelStyle(
+        rotation = -45.0F,
+        arrangement = Arrangement.spacedBy(8.dp),
+        baseModifier = { Modifier.weight(1F) }
+    )
+
+    /**
+     * Only [labelCount] labels are visible.
+     */
+    data class PartiallyVisible(
+        val labelCount: Int
+    ): HistogramLabelStyle(
+        rotation = -45.0F,
+        arrangement = CenterSpacedArrangement(),
+        baseModifier = { Modifier }
+    )
+
 }
 
 private fun ContentDrawScope.drawAverageLine(average: Float, max: Float, color: Color) {
@@ -194,6 +268,7 @@ private fun <Bucket, BucketSize, Value : Number> HistogramBars(
     bucketComparator: (Bucket, Bucket) -> Int,
     showAverage: Boolean,
     tooltip: (@Composable (Bucket, Value, BucketSize) -> Unit)? = null,
+    labelIndices: Iterable<Int>
 ) {
     val maxValue = remember(meta.histogram) {
         meta.histogram.values.maxOf(Number::toFloat)
@@ -218,6 +293,23 @@ private fun <Bucket, BucketSize, Value : Number> HistogramBars(
                 if (showAverage) {
                     drawAverageLine(average, maxValue, averageColor)
                 }
+
+//                val barCount = meta.histogram.size
+//                val spacing = meta.histogram.size.barCountToSpacing().toPx()
+//                val barWidth = (size.width - spacing * (barCount - 1)) / barCount
+//
+//                labelIndices.forEach { index ->
+//                    if (index in 0 until barCount) {
+//                        val x = index * (barWidth + spacing) + barWidth / 2f
+//
+//                        drawLine(
+//                            color = Color.White,
+//                            start = Offset(x, size.height),
+//                            end = Offset(x, size.height + 6.dp.toPx()),
+//                            strokeWidth = 2.dp.toPx()
+//                        )
+//                    }
+//                }
             }
             .pointerInput(Unit) {
                 awaitPointerEventScope {
@@ -254,13 +346,11 @@ private fun <Bucket, BucketSize, Value : Number> HistogramBars(
             horizontalArrangement = Arrangement.spacedBy(meta.histogram.size.barCountToSpacing())
         ) {
             sortedKeys
-                .forEach { key ->
+                .forEachIndexed { index, key ->
                     val value = meta.histogram[key]!!
 
                     val relativeValue = value.toFloat() / maxValue
                     val height = maxHeight * relativeValue
-
-                    println("Got key $key and value $value and will have a relative heigh of $relativeValue with absolute mapping $height")
 
                     HistogramBar(
                         modifier = Modifier
@@ -273,10 +363,21 @@ private fun <Bucket, BucketSize, Value : Number> HistogramBars(
                         },
                         unselect = {
                             selectedKey = null
-                        }
+                        },
+                        showLabel = index in labelIndices
                     )
                 }
         }
+    }
+}
+
+fun evenlySpaced(size: Int, targetSize: Int): List<Int> {
+    require(targetSize in 1..size)
+
+    if (targetSize == 1) return listOf(0)
+
+    return (0 until targetSize).map { i ->
+        (i.toDouble() * (size - 1) / (targetSize - 1)).roundToInt()
     }
 }
 
@@ -291,6 +392,7 @@ private fun HistogramBar(
     modifier: Modifier = Modifier,
     height: Dp,
     selected: Boolean,
+    showLabel: Boolean,
     tooltip: (@Composable () -> Unit)? = null,
     unselect: () -> Unit
 ) {
@@ -314,6 +416,20 @@ private fun HistogramBar(
                 .clip(shape)
                 .background(background)
         )
+
+        if (showLabel) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = 6.dp)
+                    .width(2.dp)
+                    .height(6.dp)
+                    .clip(RoundedCornerShape(
+                        bottomStart = 6.dp, bottomEnd = 6.dp
+                    ))
+                    .background(MaterialTheme.colorScheme.onSurface)
+            )
+        }
 
         if (selected && tooltip != null) {
             Popup(

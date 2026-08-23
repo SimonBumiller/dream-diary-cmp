@@ -10,12 +10,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.EditCalendar
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -52,12 +58,14 @@ import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic.StreakStatistic
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic.WeeklyFrequency
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.dialog.DateRangeDialog
 import me.bumiller.ddcmp.ui.common.format.formatDayOfWeek
 import me.bumiller.ddcmp.ui.common.format.formatDayOfWeekShort
 import me.bumiller.ddcmp.ui.common.format.formatLocalDate
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.diagram.histogram.Histogram
+import me.bumiller.ddcmp.ui.diagram.histogram.HistogramLabelStyle
 import me.ddcmp.feature.stats.components.StatCard
 import me.ddcmp.feature.stats.components.StreakDashboard
 import me.ddcmp.feature.stats.components.WeeklyAverageDashboard
@@ -80,8 +88,11 @@ internal fun DreamGlobal(
         val weekdayFrequency by vm.weekdayHistogram.collectAsStateWithLifecycle()
         val weeklyFrequency by vm.weeklyFrequency.collectAsStateWithLifecycle()
         val streakStatistic by vm.streakStatistic.collectAsStateWithLifecycle()
+        val uiState by vm.uiState.collectAsStateWithLifecycle()
 
-        DreamGlobal(timeFrequency, weekdayFrequency, weeklyFrequency, streakStatistic, vm::onEvent)
+        DreamGlobal(timeFrequency, weekdayFrequency, weeklyFrequency, streakStatistic, uiState, vm::onEvent)
+
+
     }
 }
 
@@ -92,6 +103,7 @@ private fun DreamGlobal(
     weekdayFrequency: Stat<HistogramMeta<DayOfWeek, Unit, Int>>?,
     weeklyFrequency: Stat<WeeklyFrequency>?,
     streakStatistic: Stat<StreakStatistic>?,
+    uiState: DreamGlobalViewModel.UiState,
     onEvent: (UiEvent) -> Unit
 ) {
     val isLoading = listOf(
@@ -100,6 +112,19 @@ private fun DreamGlobal(
         weekdayFrequency,
         streakStatistic
     ).any { it == null }
+
+    if(uiState.showDateRangeDialog) {
+        DateRangeDialog(
+            modifier = Modifier,
+            onDismiss = { onEvent(UiEvent.ToggleDateRangeDialogVisibility) },
+            onRangeSelected = {
+                it?.let {
+                    onEvent(UiEvent.ChangeDateRange(it))
+                }
+            },
+            currentRange = uiState.dateRange
+        )
+    }
 
     Scaffold(
         modifier = Modifier
@@ -115,6 +140,18 @@ private fun DreamGlobal(
                         Text(
                             text = stringResource(Res.string.global_dream_title)
                         )
+                    },
+                    actions = {
+                        IconButton(
+                            onClick = {
+                                onEvent(UiEvent.ToggleDateRangeDialogVisibility)
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.EditCalendar,
+                                contentDescription = null
+                            )
+                        }
                     }
                 )
             }
@@ -207,7 +244,8 @@ private fun DreamGlobal(
                             length = length,
                             dreamCount = count
                         )
-                    }
+                    },
+                    labelStyle = HistogramLabelStyle.PartiallyVisible(3)
                 )
             }
         }

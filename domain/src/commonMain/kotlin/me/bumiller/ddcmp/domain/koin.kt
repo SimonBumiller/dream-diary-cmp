@@ -5,6 +5,7 @@ import me.bumiller.ddcmp.domain.stats.dream.global.DreamTimeFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeekdayFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
@@ -21,6 +22,7 @@ import org.koin.dsl.module
  */
 val domain = module {
     single { AllDreamUseCase(get(), get(), get()) }
+    single { DreamDatesUseCase(get()) }
     single { SaveDreamUseCase(get(), get(), get()) }
 
     single { AllEmotionsUseCase(get()) }

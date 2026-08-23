@@ -17,9 +17,7 @@ import kotlin.time.ExperimentalTime
  */
 @OptIn(ExperimentalTime::class)
 class DreamStreakStatistic(
-
     getDreams: AllDreamUseCase
-
 ) : DreamListBasedStatistic<I, StreakStatistic>(getDreams) {
 
     override fun I.invoke() = dateRange
@@ -29,8 +27,6 @@ class DreamStreakStatistic(
         dreams: List<Dream>,
         actualRange: ClosedRange<LocalDate>
     ): StreakStatistic? {
-        if(input.referenceDay !in input.dateRange) return null
-
         val dates = dreams
             .asSequence()
             .map(Dream::dreamt)
@@ -40,7 +36,8 @@ class DreamStreakStatistic(
             .toList()
 
         val longestStreak = dates.longestConsecutive()
-        val currentStreak = dates.currentConsecutive(input.referenceDay)
+        val currentStreak =  if(input.referenceDay !in input.dateRange) emptyList()
+            else dates.currentConsecutive(input.referenceDay)
 
         if (longestStreak.isEmpty())
             return null

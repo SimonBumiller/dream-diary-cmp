@@ -19,7 +19,12 @@ abstract class DreamListBasedStatistic<I, O>(
     /**
      * Usecase to get all dreams.
      */
-    private val getDreams: AllDreamUseCase
+    private val getDreams: AllDreamUseCase,
+
+    /**
+     * Whether the end value should be forced, or to be cut to the last dream-date.
+     */
+    private val forceEnd: Boolean = false
 
 ) : FlowUseCase<I, Stat<O>> {
 
@@ -29,7 +34,8 @@ abstract class DreamListBasedStatistic<I, O>(
         dateRange = i(),
         synchronousDelegate = { dreams ->
             val start = dreams.minOfOrNull { it.dreamt }?.toLocalDateTime(timeZone)?.date
-            val end = dreams.maxOfOrNull { it.dreamt }?.toLocalDateTime(timeZone)?.date
+            val end = if(forceEnd) i().endInclusive
+                else dreams.maxOfOrNull { it.dreamt }?.toLocalDateTime(timeZone)?.date
             val empiricalRange = if (start != null && end != null) start..end
             else return@asynchronousDreamStatistic null
 

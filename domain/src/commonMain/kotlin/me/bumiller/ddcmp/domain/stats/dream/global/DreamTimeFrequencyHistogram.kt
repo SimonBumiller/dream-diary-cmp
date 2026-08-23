@@ -19,7 +19,8 @@ class DreamTimeFrequencyHistogram(
     getDreams: AllDreamUseCase
 
 ) : DreamListBasedStatistic<ClosedRange<LocalDate>, HistogramMeta<LocalDate, DatePeriod, Int>>(
-    getDreams
+    getDreams = getDreams,
+    forceEnd = true
 ) {
 
     override fun ClosedRange<LocalDate>.invoke() = this

@@ -43,4 +43,13 @@
     <string name="importfiletype_json_name">Json</string>
     <string name="importfiletype_xml_name">Xml</string>
     <string name="importfiletype_yaml_name">Yaml</string>
+
+    <string name="date_range_dialog_preconfigured_last_week">Last 7 days</string>
+    <string name="date_range_dialog_preconfigured_last_month">Last 30 days</string>
+    <string name="date_range_dialog_preconfigured_last_half_year">Last 6 months</string>
+    <string name="date_range_dialog_preconfigured_last_year">Last year</string>
+    <string name="date_range_dialog_preconfigured_last_two_years">Last 2 years</string>
+    <string name="date_range_dialog_preconfigured_last_five_years">Last 5 years</string>
+    <string name="date_range_dialog_preconfigured_all_time">All time</string>
+    <string name="date_range_dialog_description">Select the timespan which should be accounted for when calculating the statistics.</string>
 </resources>
