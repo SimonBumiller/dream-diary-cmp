@@ -26,3 +26,15 @@ We use big display letters to show the number.
 **Dream streak** The current and biggest number of consecutive dreams.
 
 We use big display letters to show the numbers.
+
+**Person Count Distribution**
+
+We use a histogram to display the frequency of person-counts in dreams.
+
+**Word Count Distribution**
+
+We use a histogram to display the frequency of words in dreams.
+
+**Emotion Count Distribution**
+
+We use a histogram to display the frequency of emotion-counts in dreams.

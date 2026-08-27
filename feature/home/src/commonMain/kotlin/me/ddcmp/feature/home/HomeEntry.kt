@@ -30,7 +30,7 @@ fun HomeEntry() {
     ) {
         NavHost(
             navController = navController,
-            startDestination = HomeRoutes.Statistics
+            startDestination = HomeRoutes.DreamList
         ) {
             composable<HomeRoutes.DreamList> {
                 DreamListEntry(

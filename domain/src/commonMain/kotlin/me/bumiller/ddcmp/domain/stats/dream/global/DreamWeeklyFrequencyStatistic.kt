@@ -6,6 +6,7 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.stats.Stat
+import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamListBasedStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import kotlin.time.ExperimentalTime
 
