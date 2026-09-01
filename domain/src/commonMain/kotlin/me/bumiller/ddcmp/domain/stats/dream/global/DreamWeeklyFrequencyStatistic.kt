@@ -22,7 +22,7 @@ class DreamWeeklyFrequencyStatistic(
 
     override fun I.invoke(): ClosedRange<LocalDate> = dateRange
 
-    override fun invoke(
+    override suspend fun invoke(
         input: I,
         dreams: List<Dream>,
         actualRange: ClosedRange<LocalDate>

@@ -16,7 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.collectLatest
-import me.bumiller.ddcmp.domain.model.stats.HistogramMeta
+import me.bumiller.ddcmp.domain.model.stats.Histogram
 import me.bumiller.ddcmp.navigation.MainRoutes
 import me.bumiller.ddcmp.theme.AppTheme
 import me.bumiller.ddcmp.theme.systemTheme
@@ -118,8 +118,8 @@ private fun HistogramPreview(
         "Sat" to 6,
         "Sun" to 6
     )
-    val meta = HistogramMeta(
-        histogram = histogram,
+    val meta = Histogram(
+        dataMap = histogram,
         bucketSize = Unit
     )
 

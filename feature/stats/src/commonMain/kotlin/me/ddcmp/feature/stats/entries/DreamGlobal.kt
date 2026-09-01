@@ -13,7 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.EditCalendar
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,7 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -53,7 +51,7 @@ import kotlinx.datetime.DayOfWeek.TUESDAY
 import kotlinx.datetime.DayOfWeek.WEDNESDAY
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
-import me.bumiller.ddcmp.domain.model.stats.HistogramMeta
+import me.bumiller.ddcmp.domain.model.stats.Histogram
 import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic.StreakStatistic
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic.WeeklyFrequency
@@ -99,8 +97,8 @@ internal fun DreamGlobal(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DreamGlobal(
-    timeFrequency: Stat<HistogramMeta<LocalDate, DatePeriod, Int>>?,
-    weekdayFrequency: Stat<HistogramMeta<DayOfWeek, Unit, Int>>?,
+    timeFrequency: Stat<Histogram<LocalDate, DatePeriod, Int>>?,
+    weekdayFrequency: Stat<Histogram<DayOfWeek, Unit, Int>>?,
     weeklyFrequency: Stat<WeeklyFrequency>?,
     streakStatistic: Stat<StreakStatistic>?,
     uiState: DreamGlobalViewModel.UiState,

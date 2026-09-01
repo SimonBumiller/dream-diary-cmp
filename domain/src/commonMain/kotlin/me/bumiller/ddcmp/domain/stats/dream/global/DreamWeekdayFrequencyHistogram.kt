@@ -2,10 +2,10 @@ package me.bumiller.ddcmp.domain.stats.dream.global
 
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
-import me.bumiller.ddcmp.domain.model.stats.HistogramMeta
-import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamListBasedStatistic
+import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamFrequencyHistogramStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import kotlin.time.ExperimentalTime
 
@@ -14,36 +14,31 @@ import kotlin.time.ExperimentalTime
  */
 @OptIn(ExperimentalTime::class)
 class DreamWeekdayFrequencyHistogram(
-
     getDreams: AllDreamUseCase
-
-) : DreamListBasedStatistic<ClosedRange<LocalDate>, HistogramMeta<DayOfWeek, Unit, Int>>(getDreams) {
+) : DreamFrequencyHistogramStatistic<ClosedRange<LocalDate>, DayOfWeek, Unit>(getDreams) {
 
     override fun ClosedRange<LocalDate>.invoke() = this
 
-    override fun invoke(
+    override suspend fun createMetadata(
         input: ClosedRange<LocalDate>,
-        dreams: List<Dream>,
-        actualRange: ClosedRange<LocalDate>
-    ): HistogramMeta<DayOfWeek, Unit, Int>? {
-        val histogram = dreams
-            .groupBy { dream ->
-                dream
-                    .dreamt
-                    .toLocalDateTime(timeZone)
-                    .dayOfWeek
-            }
-            .mapValues { entry -> entry.value.size }
-
-        val meta = HistogramMeta(
-            histogram = histogram,
-            bucketSize = Unit
+        actualRange: ClosedRange<LocalDate>,
+        dreams: List<Dream>
+    ): Pair<List<DayOfWeek>, Unit> {
+        val weekdays = listOf(
+            DayOfWeek.MONDAY,
+            DayOfWeek.TUESDAY,
+            DayOfWeek.WEDNESDAY,
+            DayOfWeek.THURSDAY,
+            DayOfWeek.FRIDAY,
+            DayOfWeek.SATURDAY,
+            DayOfWeek.SUNDAY
         )
 
-        if (meta.average == 0F)
-            return null
+        return weekdays to Unit
+    }
 
-        return meta
+    override suspend fun findBucketFor(dream: Dream, buckets: List<DayOfWeek>): DayOfWeek {
+        return dream.dreamt.toLocalDateTime(TimeZone.currentSystemDefault()).dayOfWeek
     }
 
 }

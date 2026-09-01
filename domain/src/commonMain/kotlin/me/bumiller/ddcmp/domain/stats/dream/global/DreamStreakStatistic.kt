@@ -22,7 +22,7 @@ class DreamStreakStatistic(
 
     override fun I.invoke() = dateRange
 
-    override fun invoke(
+    override suspend fun invoke(
         input: I,
         dreams: List<Dream>,
         actualRange: ClosedRange<LocalDate>

@@ -57,7 +57,7 @@ abstract class DreamListBasedStatistic<I, O>(
      * @param dreams The dreams from the specified date range
      * @param actualRange The empirical range of the dreams retrieved
      */
-    protected abstract operator fun invoke(
+    protected abstract suspend operator fun invoke(
         input: I,
         dreams: List<Dream>,
         actualRange: ClosedRange<LocalDate>
@@ -89,7 +89,7 @@ fun <T> AllDreamUseCase.asynchronousDreamStatistic(
         sortDirection = SortDirection.Ascending,
         timeRange = createInstantRange(dateRange)
     ),
-    synchronousDelegate: (List<Dream>) -> T?
+    synchronousDelegate: suspend (List<Dream>) -> T?
 ): Flow<Stat<T>> {
     val dreams = this(dreamQuery).map { it.map(AllDreamUseCase.O::dream) }
 

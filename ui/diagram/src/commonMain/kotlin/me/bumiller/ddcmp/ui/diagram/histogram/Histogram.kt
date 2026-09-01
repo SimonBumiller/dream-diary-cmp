@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import me.bumiller.ddcmp.domain.model.stats.HistogramMeta
+import me.bumiller.ddcmp.domain.model.stats.Histogram
 import me.bumiller.ddcmp.ui.common.modifier.rotatedLayout
 import kotlin.math.floor
 import kotlin.math.roundToInt
@@ -51,7 +51,7 @@ import kotlin.math.roundToInt
 @Composable
 fun <Bucket, Value : Number, BucketSize> Histogram(
     modifier: Modifier = Modifier,
-    meta: HistogramMeta<Bucket, BucketSize, Value>,
+    meta: Histogram<Bucket, BucketSize, Value>,
     bucketLabel: (@Composable (Bucket) -> String)? = null,
     bucketComparator: (Bucket, Bucket) -> Int = { _, _ -> 0 },
     showAverage: Boolean = true,
@@ -63,8 +63,8 @@ fun <Bucket, Value : Number, BucketSize> Histogram(
     }
 
     val labelIndices = when (labelStyle) {
-        HistogramLabelStyle.AllVisible -> 0 ..< meta.histogram.size
-        is HistogramLabelStyle.PartiallyVisible -> evenlySpaced(meta.histogram.size, labelStyle.labelCount)
+        HistogramLabelStyle.AllVisible -> 0 ..< meta.dataMap.size
+        is HistogramLabelStyle.PartiallyVisible -> evenlySpaced(meta.dataMap.size, labelStyle.labelCount)
     }
 
     Row(
@@ -117,11 +117,11 @@ fun <Bucket, Value : Number, BucketSize> Histogram(
 @Composable
 private fun HistogramScale(
     modifier: Modifier,
-    meta: HistogramMeta<*, *, *>,
+    meta: Histogram<*, *, *>,
     labelCount: Int = 3
 ) {
-    val maxValue = remember(meta.histogram) {
-        meta.histogram.values.maxOf(Number::toFloat)
+    val maxValue = remember(meta.dataMap) {
+        meta.dataMap.values.maxOf(Number::toFloat)
     }
 
     val lastLabel = labelCount - 1
@@ -149,7 +149,7 @@ private fun HistogramScale(
 @Composable
 private fun <Bucket> HistogramLabels(
     modifier: Modifier,
-    meta: HistogramMeta<Bucket, *, *>,
+    meta: Histogram<Bucket, *, *>,
     bucketLabel: (@Composable (Bucket) -> String)?,
     bucketComparator: (Bucket, Bucket) -> Int,
     onHeightDetermined: (height: Int) -> Unit,
@@ -164,7 +164,7 @@ private fun <Bucket> HistogramLabels(
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = labelStyle.arrangement
     ) {
-        meta.histogram
+        meta.dataMap
             .keys
             .sortedWith(bucketComparator)
             .filterIndexed { index, _ -> index in labelIndices }
@@ -264,21 +264,21 @@ private fun ContentDrawScope.drawAverageLine(average: Float, max: Float, color: 
 @Composable
 private fun <Bucket, BucketSize, Value : Number> HistogramBars(
     modifier: Modifier,
-    meta: HistogramMeta<Bucket, BucketSize, Value>,
+    meta: Histogram<Bucket, BucketSize, Value>,
     bucketComparator: (Bucket, Bucket) -> Int,
     showAverage: Boolean,
     tooltip: (@Composable (Bucket, Value, BucketSize) -> Unit)? = null,
     labelIndices: Iterable<Int>
 ) {
-    val maxValue = remember(meta.histogram) {
-        meta.histogram.values.maxOf(Number::toFloat)
+    val maxValue = remember(meta.dataMap) {
+        meta.dataMap.values.maxOf(Number::toFloat)
     }
     val average = remember(meta) { meta.average }
 
     val averageColor = MaterialTheme.colorScheme.secondary
 
-    val sortedKeys = remember(meta.histogram) {
-        meta.histogram.keys.sortedWith(bucketComparator)
+    val sortedKeys = remember(meta.dataMap) {
+        meta.dataMap.keys.sortedWith(bucketComparator)
     }
 
     var selectedKey by remember {
@@ -326,7 +326,7 @@ private fun <Bucket, BucketSize, Value : Number> HistogramBars(
                                 newSelected = null
                             else {
                                 val relativeX = x / size.width
-                                val keyIndex = floor(relativeX * meta.histogram.size).toInt()
+                                val keyIndex = floor(relativeX * meta.dataMap.size).toInt()
                                 newSelected = sortedKeys[keyIndex]
                             }
 
@@ -343,11 +343,11 @@ private fun <Bucket, BucketSize, Value : Number> HistogramBars(
             modifier = Modifier
                 .fillMaxSize(),
             verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.spacedBy(meta.histogram.size.barCountToSpacing())
+            horizontalArrangement = Arrangement.spacedBy(meta.dataMap.size.barCountToSpacing())
         ) {
             sortedKeys
                 .forEachIndexed { index, key ->
-                    val value = meta.histogram[key]!!
+                    val value = meta.dataMap[key]!!
 
                     val relativeValue = value.toFloat() / maxValue
                     val height = maxHeight * relativeValue

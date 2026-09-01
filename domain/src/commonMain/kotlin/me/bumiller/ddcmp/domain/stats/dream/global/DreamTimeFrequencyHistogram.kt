@@ -5,8 +5,8 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
-import me.bumiller.ddcmp.domain.model.stats.HistogramMeta
-import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamListBasedStatistic
+import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamFrequencyHistogramStatistic
+import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamHistogramStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import kotlin.time.ExperimentalTime
 
@@ -15,54 +15,40 @@ import kotlin.time.ExperimentalTime
  */
 @OptIn(ExperimentalTime::class)
 class DreamTimeFrequencyHistogram(
-
     getDreams: AllDreamUseCase
-
-) : DreamListBasedStatistic<ClosedRange<LocalDate>, HistogramMeta<LocalDate, DatePeriod, Int>>(
+) : DreamFrequencyHistogramStatistic<ClosedRange<LocalDate>, LocalDate, DatePeriod>(
     getDreams = getDreams,
     forceEnd = true
 ) {
 
     override fun ClosedRange<LocalDate>.invoke() = this
 
-    override fun invoke(
+    override suspend fun createMetadata(
         input: ClosedRange<LocalDate>,
-        dreams: List<Dream>,
-        actualRange: ClosedRange<LocalDate>
-    ): HistogramMeta<LocalDate, DatePeriod, Int>? {
-        // The size of the buckets that we use to create the frequencies.
+        actualRange: ClosedRange<LocalDate>,
+        dreams: List<Dream>
+    ): Pair<List<LocalDate>, DatePeriod> {
         val bucketSize = calculateBucketSize(actualRange)
 
-        // The histogram that maps buckets, identified by the first included day, to the dream counts.
-        val histogram = mutableMapOf<LocalDate, Int>()
+        val bucketStarts = mutableListOf<LocalDate>()
 
-        var bucketCounter = 0
         var currentBucketStart = actualRange.start
         while (currentBucketStart in actualRange) {
-            bucketCounter++
-            val currentBucket = currentBucketStart..(currentBucketStart + bucketSize)
+            bucketStarts += currentBucketStart
 
-            val dreamCountInBucket = dreams.count { dream ->
-                val localDateOfDream = dream.dreamt.toLocalDateTime(timeZone).date
-                localDateOfDream in currentBucket
-            }
-
-            // We put the start of the current bucket and the dream count in the histogram
-            histogram[currentBucketStart] = dreamCountInBucket
-
-            // The next bucket starts on the day after the current end
-            // We offset by 1 so we don't count the ending several times.
-            currentBucketStart = currentBucket.endInclusive + DatePeriod(days = 1)
+            val currentBucketEnd = currentBucketStart + bucketSize
+            currentBucketStart = currentBucketEnd + DatePeriod(days = 1)
         }
 
-        if (bucketCounter <= 2) return null
+        return bucketStarts to bucketSize
+    }
 
-        val meta = HistogramMeta(
-            histogram = histogram,
-            bucketSize = bucketSize
-        )
+    override suspend fun findBucketFor(dream: Dream, buckets: List<LocalDate>): LocalDate {
+        val dreamDate = dream.dreamt
+            .toLocalDateTime(timeZone)
+            .date
 
-        return meta
+        return buckets.last { it <= dreamDate }
     }
 
     /*
