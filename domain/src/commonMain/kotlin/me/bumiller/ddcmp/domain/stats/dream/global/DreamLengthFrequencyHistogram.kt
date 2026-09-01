@@ -1,10 +1,6 @@
 package me.bumiller.ddcmp.domain.stats.dream.global
 
-import kotlinx.datetime.DatePeriod
-import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.plus
-import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamFrequencyHistogramStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
@@ -27,14 +23,18 @@ class DreamLengthFrequencyHistogram(
         actualRange: ClosedRange<LocalDate>,
         dreams: List<Dream>
     ): Pair<List<Int>, Int> {
-        val longest = dreams.maxOfOrNull { it.description.wordCount() }!!
-        val shortest = dreams.minOfOrNull { it.description.wordCount() }!!
+        val longest = dreams.maxOfOrNull {
+            val len = it.length
+            println("Got length with description ${it.description}")
+            len
+        }!!
+        val shortest = dreams.minOfOrNull { it.length }!!
 
         val bucketSize = calculateBucketSize(longest, shortest)
 
         val bucketStarts = mutableListOf<Int>()
 
-        var currentBucketStart = longest
+        var currentBucketStart = shortest
         while (currentBucketStart <= longest) {
             bucketStarts += currentBucketStart
 
@@ -46,7 +46,7 @@ class DreamLengthFrequencyHistogram(
     }
 
     override suspend fun findBucketFor(dream: Dream, buckets: List<Int>): Int {
-        val dreamWordCount = dream.description.wordCount()
+        val dreamWordCount = dream.length
 
         return buckets.last { it <= dreamWordCount }
     }
@@ -60,10 +60,5 @@ class DreamLengthFrequencyHistogram(
         else if (range < 90) range / 8
         else range / 20
     }
-
-    private fun String.wordCount() =
-        trim()
-            .split("\\s")
-            .size
 
 }

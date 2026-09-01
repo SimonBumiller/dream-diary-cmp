@@ -76,6 +76,7 @@ internal fun DreamDetailEntry(
     onEdit: (id: Long) -> Unit,
     onGoToEmotion: (id: Long) -> Unit,
     onGoToPerson: (id: Long) -> Unit,
+    onGoToDreamStats: (id: Long) -> Unit,
     onBack: () -> Unit
 ) {
     ViewModelScope<UiEvent, ViewModelEvent, DreamDetailViewModel>(
@@ -85,6 +86,7 @@ internal fun DreamDetailEntry(
                 is ViewModelEvent.GoToEmotion -> onGoToEmotion(it.emotionId)
                 is ViewModelEvent.GoToPerson -> onGoToPerson(it.personId)
                 ViewModelEvent.GoBack -> onBack()
+                is ViewModelEvent.GoToDreamStats -> onGoToDreamStats(it.dreamId)
             }
         }
     ) { vm ->

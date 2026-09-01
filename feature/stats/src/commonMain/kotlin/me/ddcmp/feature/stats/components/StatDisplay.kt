@@ -2,6 +2,8 @@ package me.ddcmp.feature.stats.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,6 +12,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -25,6 +28,7 @@ internal fun <T> StatCard(
     stat: Stat<T>,
     title: String,
     description: String,
+    badges: (@Composable RowScope.(T) -> Unit)? = null,
     display: @Composable (T) -> Unit
 ) {
     Card(
@@ -39,11 +43,26 @@ internal fun <T> StatCard(
                     bottom = 6.dp
                 )
         ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium
-                    .copy(fontWeight = FontWeight.Bold)
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium
+                        .copy(fontWeight = FontWeight.Bold)
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .weight(1F)
+                )
+
+                if(badges != null && stat is Stat.Present) {
+                    badges(stat.stat)
+                }
+            }
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodySmall

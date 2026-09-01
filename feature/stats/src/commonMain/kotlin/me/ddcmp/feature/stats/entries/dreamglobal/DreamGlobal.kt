@@ -1,4 +1,4 @@
-package me.ddcmp.feature.stats.entries
+package me.ddcmp.feature.stats.entries.dreamglobal
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -67,8 +67,9 @@ import me.bumiller.ddcmp.ui.diagram.histogram.HistogramLabelStyle
 import me.ddcmp.feature.stats.components.StatCard
 import me.ddcmp.feature.stats.components.StreakDashboard
 import me.ddcmp.feature.stats.components.WeeklyAverageDashboard
-import me.ddcmp.feature.stats.entries.DreamGlobalViewModel.UiEvent
-import me.ddcmp.feature.stats.entries.DreamGlobalViewModel.ViewModelEvent
+import me.ddcmp.feature.stats.domain.DateRangeViewModel
+import me.ddcmp.feature.stats.entries.dreamglobal.DreamGlobalViewModel.UiEvent
+import me.ddcmp.feature.stats.entries.dreamglobal.DreamGlobalViewModel.ViewModelEvent
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -86,9 +87,9 @@ internal fun DreamGlobal(
         val weekdayFrequency by vm.weekdayHistogram.collectAsStateWithLifecycle()
         val weeklyFrequency by vm.weeklyFrequency.collectAsStateWithLifecycle()
         val streakStatistic by vm.streakStatistic.collectAsStateWithLifecycle()
-        val uiState by vm.uiState.collectAsStateWithLifecycle()
+        val dateRangeState by vm.dateRangeState.collectAsStateWithLifecycle()
 
-        DreamGlobal(timeFrequency, weekdayFrequency, weeklyFrequency, streakStatistic, uiState, vm::onEvent)
+        DreamGlobal(timeFrequency, weekdayFrequency, weeklyFrequency, streakStatistic, dateRangeState, vm::onEvent)
 
 
     }
@@ -101,7 +102,7 @@ private fun DreamGlobal(
     weekdayFrequency: Stat<Histogram<DayOfWeek, Unit, Int>>?,
     weeklyFrequency: Stat<WeeklyFrequency>?,
     streakStatistic: Stat<StreakStatistic>?,
-    uiState: DreamGlobalViewModel.UiState,
+    dateRangeState: DateRangeViewModel.DateRangeUiState,
     onEvent: (UiEvent) -> Unit
 ) {
     val isLoading = listOf(
@@ -111,7 +112,7 @@ private fun DreamGlobal(
         streakStatistic
     ).any { it == null }
 
-    if(uiState.showDateRangeDialog) {
+    if(dateRangeState.showDateRangeDialog) {
         DateRangeDialog(
             modifier = Modifier,
             onDismiss = { onEvent(UiEvent.ToggleDateRangeDialogVisibility) },
@@ -120,7 +121,7 @@ private fun DreamGlobal(
                     onEvent(UiEvent.ChangeDateRange(it))
                 }
             },
-            currentRange = uiState.dateRange
+            currentRange = dateRangeState.dateRange
         )
     }
 

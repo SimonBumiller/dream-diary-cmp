@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddEntry
 import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailEntry
 import me.ddcmp.feature.home.entries.dreamlist.DreamListEntry
@@ -41,7 +42,7 @@ fun HomeEntry() {
                         navController.navigate(HomeRoutes.EmotionList)
                     },
                     onGoToStats = {
-                        navController.navigate(HomeRoutes.Statistics)
+                        navController.navigate(HomeRoutes.Statistics())
                     },
                     onGoToSettings = {},
                     onGoToPersons = {
@@ -60,7 +61,10 @@ fun HomeEntry() {
                 )
             }
             composable<HomeRoutes.Statistics> {
+                val route = it.savedStateHandle.toRoute<HomeRoutes.Statistics>()
+
                 StatsEntry(
+                    dreamId = route.dreamId,
                     onReturn = {
                         navController.popBackStack()
                     }
@@ -109,6 +113,9 @@ fun HomeEntry() {
                     },
                     onGoToPerson = {
                         // navController.navigate(HomeRoutes.Perso)
+                    },
+                    onGoToDreamStats = {
+                        navController.navigate(HomeRoutes.Statistics(it))
                     },
                     onBack = { navController.popBackStack() }
                 )

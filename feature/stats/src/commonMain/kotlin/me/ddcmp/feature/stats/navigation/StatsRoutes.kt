@@ -14,4 +14,10 @@ internal sealed interface StatsRoutes {
     @Serializable
     data object DreamGlobal: StatsRoutes
 
+    /**
+     * Route for the specific dream stats.
+     */
+    @Serializable
+    data class Dream(val id: Long): StatsRoutes
+
 }

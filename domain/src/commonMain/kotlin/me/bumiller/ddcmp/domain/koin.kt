@@ -1,9 +1,13 @@
 package me.bumiller.ddcmp.domain
 
+import me.bumiller.ddcmp.domain.stats.dream.global.DreamLengthFrequencyHistogram
+import me.bumiller.ddcmp.domain.stats.dream.global.DreamPersonCountFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamTimeFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeekdayFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic
+import me.bumiller.ddcmp.domain.stats.dream.global.MarkedDreamLengthFrequencyHistogram
+import me.bumiller.ddcmp.domain.stats.dream.global.MarkedDreamPersonCountFrequencyHistogram
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
@@ -42,4 +46,8 @@ val domain = module {
     single { DreamWeekdayFrequencyHistogram(get()) }
     single { DreamStreakStatistic(get()) }
     single { DreamWeeklyFrequencyStatistic(get()) }
+    single { DreamPersonCountFrequencyHistogram(get(), get()) }
+    single { MarkedDreamPersonCountFrequencyHistogram(get(), get()) }
+    single { DreamLengthFrequencyHistogram(get()) }
+    single { MarkedDreamLengthFrequencyHistogram(get(), get()) }
 }

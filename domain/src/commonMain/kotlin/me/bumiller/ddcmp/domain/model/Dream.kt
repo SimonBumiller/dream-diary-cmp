@@ -52,4 +52,7 @@ data class Dream(
     override val searchableFields: List<String>
         get() = listOfNotNull(title, description, note)
 
+    val length: Int
+        get() = Regex("\\S+").findAll(description).count()
+
 }

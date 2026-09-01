@@ -26,5 +26,15 @@
     <string name="streak_dashboard_interval">%1$s – %2$s</string>
     <string name="streak_dashboard_interval_single">%1$s</string>
     <string name="streak_dashboard_interval_none">N/A</string>
+
+    <string name="dream_title">Dream Statistics</string>
+    <string name="dream_length_title">Dream Length</string>
+    <string name="dream_length_description">This statistic shows how long the dream is compared to other dreams. Dream length is measured by words in the dreams description.</string>
+
+    <string name="histogram_rank_label_length_lowest">Very short</string>
+    <string name="histogram_rank_label_length_low">Short</string>
+    <string name="histogram_rank_label_length_average">Average</string>
+    <string name="histogram_rank_label_length_high">Long</string>
+    <string name="histogram_rank_label_length_highest">Very Long</string>
 </resources>
 

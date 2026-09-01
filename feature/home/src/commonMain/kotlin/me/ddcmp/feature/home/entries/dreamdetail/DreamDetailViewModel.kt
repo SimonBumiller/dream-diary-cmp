@@ -46,7 +46,7 @@ internal class DreamDetailViewModel(
 
     @OptIn(ExperimentalTime::class)
     override suspend fun handleEvent(event: UiEvent) = when (event) {
-        UiEvent.GoToDreamStats -> TODO()
+        UiEvent.GoToDreamStats -> fireEvent(GoToDreamStats(navRoute.dreamId))
         UiEvent.ToggleFavorite -> viewModelScope.launch {
             val state = dreamState.value
             val newDream = state?.dream?.let {
@@ -97,6 +97,7 @@ internal class DreamDetailViewModel(
 
     sealed interface ViewModelEvent : VME {
         data class GoToEdit(val dreamId: Long): ViewModelEvent
+        data class GoToDreamStats(val dreamId: Long): ViewModelEvent
         data class GoToEmotion(val emotionId: Long): ViewModelEvent
         data class GoToPerson(val personId: Long): ViewModelEvent
         data object GoBack: ViewModelEvent

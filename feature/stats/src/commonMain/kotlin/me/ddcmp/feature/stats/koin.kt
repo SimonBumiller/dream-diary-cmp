@@ -1,6 +1,7 @@
 package me.ddcmp.feature.stats
 
-import me.ddcmp.feature.stats.entries.DreamGlobalViewModel
+import me.ddcmp.feature.stats.entries.dream.DreamViewModel
+import me.ddcmp.feature.stats.entries.dreamglobal.DreamGlobalViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -9,4 +10,5 @@ import org.koin.dsl.module
  */
 val statistics = module {
     viewModelOf(::DreamGlobalViewModel)
+    viewModelOf(::DreamViewModel)
 }
