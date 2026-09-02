@@ -188,9 +188,10 @@ internal fun DreamListEntry(
                         ) {
                             listOf(
                                 DreamSort.Dreamt,
+                                DreamSort.Name,
+                                DreamSort.Length,
                                 DreamSort.AverageValence,
-                                DreamSort.Confidentiality,
-                                DreamSort.Name
+                                DreamSort.Confidentiality
                             ).forEach { mode ->
                                 DropdownMenuItem(
                                     text = { Text(mode.translateName) },

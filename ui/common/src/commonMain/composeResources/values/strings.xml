@@ -25,6 +25,7 @@
     <string name="sort_dream_confidentiality">Confidentiality</string>
     <string name="sort_dream_name">Name</string>
     <string name="sort_dream_dreamt">Date</string>
+    <string name="sort_dream_length">Length</string>
 
     <string name="sort_emotion_name">Name</string>
     <string name="sort_person_name">Name</string>

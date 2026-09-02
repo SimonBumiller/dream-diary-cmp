@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.LocalDate
 import me.bumiller.ddcmp.domain.common.combineSafe
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
@@ -40,6 +41,7 @@ class AllDreamUseCase(
                 DreamSort.Confidentiality -> one.dream.confidentiality.compareTo(two.dream.confidentiality)
                 DreamSort.Dreamt -> one.dream.dreamt.compareTo(two.dream.dreamt)
                 DreamSort.Name -> one.dream.title.compareTo(two.dream.title)
+                DreamSort.Length -> one.dream.length.compareTo(two.dream.length)
             }
         }.let {
             if (i.sortDirection == SortDirection.Descending) it.reversed()

@@ -66,6 +66,8 @@ import me.bumiller.ddcmp.ui.diagram.histogram.Histogram
 import me.bumiller.ddcmp.ui.diagram.histogram.HistogramLabelStyle
 import me.ddcmp.feature.stats.components.StatCard
 import me.ddcmp.feature.stats.components.StreakDashboard
+import me.ddcmp.feature.stats.components.TimeFrequencyTooltip
+import me.ddcmp.feature.stats.components.WeekdayFrequencyTooltip
 import me.ddcmp.feature.stats.components.WeeklyAverageDashboard
 import me.ddcmp.feature.stats.domain.DateRangeViewModel
 import me.ddcmp.feature.stats.entries.dreamglobal.DreamGlobalViewModel.UiEvent
@@ -247,68 +249,6 @@ private fun DreamGlobal(
                     labelStyle = HistogramLabelStyle.PartiallyVisible(3)
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun TimeFrequencyTooltip(
-    modifier: Modifier = Modifier,
-    from: LocalDate,
-    length: DatePeriod,
-    dreamCount: Int
-) {
-    val to = from.plus(length)
-
-    val fromString = formatLocalDate(from)
-    val toString = formatLocalDate(to)
-
-    ElevatedCard(
-        modifier = modifier
-            .widthIn(max = 160.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(
-                    horizontal = 6.dp,
-                    vertical = 4.dp
-                )
-        ) {
-            Text(
-                text = stringResource(Res.string.global_dream_time_frequency_tooltip_1, fromString, toString),
-                style = MaterialTheme.typography.labelSmall
-            )
-            Text(
-                text = stringResource(Res.string.global_dream_time_frequency_tooltip_2, dreamCount),
-                style = MaterialTheme.typography.labelSmall
-            )
-        }
-    }
-}
-
-@Composable
-private fun WeekdayFrequencyTooltip(
-    modifier: Modifier = Modifier,
-    from: DayOfWeek,
-    dreamCount: Int
-) {
-    val dowName = formatDayOfWeek(from)
-
-    ElevatedCard(
-        modifier = modifier
-            .widthIn(max = 160.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(
-                    horizontal = 6.dp,
-                    vertical = 4.dp
-                )
-        ) {
-            Text(
-                text = stringResource(Res.string.global_dream_weekday_frequency_tooltip, dowName, dreamCount),
-                style = MaterialTheme.typography.labelSmall
-            )
         }
     }
 }

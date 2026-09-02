@@ -185,14 +185,14 @@ private fun RowScope.TypeBox(
                 Text(
                     modifier = Modifier
                         .align(Alignment.BottomEnd),
-                    text = "High Valence",
+                    text = "High Valence", // TODO: Translation
                     color = dimmedColorStrong
                 )
                 Text(
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .padding(start = 4.dp),
-                    text = "Arousal",
+                    text = "Arousal", // TODO: Translation
                     color = dimmedColorStrong
                 )
             }
@@ -202,7 +202,7 @@ private fun RowScope.TypeBox(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                         .padding(start = 4.dp),
-                    text = "Arousal",
+                    text = "Arousal", // TODO: Translation
                     color = dimmedColorStrong
                 )
             }
@@ -211,14 +211,14 @@ private fun RowScope.TypeBox(
                 Text(
                     modifier = Modifier
                         .align(Alignment.TopStart),
-                    text = "Low Valence",
+                    text = "Low Valence", // TODO: Translation
                     color = dimmedColorStrong
                 )
                 Text(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(end = 4.dp),
-                    text = "Low",
+                    text = "Low", // TODO: Translation
                     color = dimmedColorStrong
                 )
             }
@@ -229,7 +229,7 @@ private fun RowScope.TypeBox(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(end = 4.dp),
-                    text = "High",
+                    text = "High", // TODO: Translation
                     color = dimmedColorStrong
                 )
             }

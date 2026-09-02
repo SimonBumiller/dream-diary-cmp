@@ -16,6 +16,7 @@ sealed interface SortMode {
         data object Dreamt : DreamSort
         data object Confidentiality : DreamSort
         data object AverageValence : DreamSort
+        data object Length: DreamSort
     }
 
     /**

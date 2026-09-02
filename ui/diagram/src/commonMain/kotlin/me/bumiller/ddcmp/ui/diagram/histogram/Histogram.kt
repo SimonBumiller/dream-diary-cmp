@@ -163,6 +163,7 @@ private fun <Bucket> HistogramLabels(
 ) {
     Row(
         modifier = modifier
+            .padding(top = 8.dp) // Needed to distance from the markers
             .onGloballyPositioned {
                 it.size.height.let(onHeightDetermined)
             },

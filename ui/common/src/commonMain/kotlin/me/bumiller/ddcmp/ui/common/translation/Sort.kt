@@ -7,6 +7,7 @@ import dream_diary_cmp.ui.common.generated.resources.sort_created
 import dream_diary_cmp.ui.common.generated.resources.sort_descending
 import dream_diary_cmp.ui.common.generated.resources.sort_dream_confidentiality
 import dream_diary_cmp.ui.common.generated.resources.sort_dream_dreamt
+import dream_diary_cmp.ui.common.generated.resources.sort_dream_length
 import dream_diary_cmp.ui.common.generated.resources.sort_dream_name
 import dream_diary_cmp.ui.common.generated.resources.sort_dream_valence
 import dream_diary_cmp.ui.common.generated.resources.sort_emotion_name
@@ -29,6 +30,7 @@ val SortMode.translateName: String
         SortMode.EmotionSort.Name -> Res.string.sort_emotion_name
         SortMode.PersonSort.Name -> Res.string.sort_person_name
         SortMode.Updated -> Res.string.sort_updated
+        SortMode.DreamSort.Length -> Res.string.sort_dream_length
     }.let { stringResource(it) }
 
 /**

@@ -28,13 +28,37 @@
     <string name="streak_dashboard_interval_none">N/A</string>
 
     <string name="dream_title">Dream Statistics</string>
-    <string name="dream_length_title">Dream Length</string>
+
+    <string name="dream_length_title">Length of Dream</string>
     <string name="dream_length_description">This statistic shows how long the dream is compared to other dreams. Dream length is measured by words in the dreams description.</string>
+    <string name="dream_length_info_pre">This dream contains </string>
+    <string name="dream_length_info_length">%1$d words</string>
+    <string name="dream_length_info_center">, which is more than </string>
+    <string name="dream_length_info_rank">%1$d%</string>
+    <string name="dream_length_info_post"> of all your dreams.</string>
+    <string name="dream_length_tooltip_line_1">%1$d – %2$d words</string>
+    <string name="dream_length_tooltip_line_2">Total %1$d dreams</string>
+
+    <string name="dream_pcount_title">Count of persons in Dream</string>
+    <string name="dream_pcount_description">This statistic shows how many different persons are present in the dream, and how that compares to other dreams.</string>
+    <string name="dream_pcount_info_pre">This dream features </string>
+    <string name="dream_pcount_info_pcount">%1$d different persons</string>
+    <string name="dream_pcount_info_center">, which is more than </string>
+    <string name="dream_pcount_info_rank">%1$d%</string>
+    <string name="dream_pcount_info_post"> of all your dreams.</string>
+    <string name="dream_pcount_tooltip_line_1">%1$d persons</string>
+    <string name="dream_pcount_tooltip_line_2">Total %1$d dreams</string>
 
     <string name="histogram_rank_label_length_lowest">Very short</string>
     <string name="histogram_rank_label_length_low">Short</string>
     <string name="histogram_rank_label_length_average">Average</string>
     <string name="histogram_rank_label_length_high">Long</string>
     <string name="histogram_rank_label_length_highest">Very Long</string>
+
+    <string name="histogram_rank_label_pcount_lowest">Very few</string>
+    <string name="histogram_rank_label_pcount_low">Few</string>
+    <string name="histogram_rank_label_pcount_average">Average</string>
+    <string name="histogram_rank_label_pcount_high">Many</string>
+    <string name="histogram_rank_label_pcount_highest">Very Many</string>
 </resources>
 
