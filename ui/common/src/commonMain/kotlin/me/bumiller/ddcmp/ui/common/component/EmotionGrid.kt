@@ -29,6 +29,12 @@ import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import dream_diary_cmp.ui.common.generated.resources.Res
+import dream_diary_cmp.ui.common.generated.resources.emotion_grid_arousal
+import dream_diary_cmp.ui.common.generated.resources.emotion_grid_arousal_high
+import dream_diary_cmp.ui.common.generated.resources.emotion_grid_arousal_low
+import dream_diary_cmp.ui.common.generated.resources.emotion_grid_high_valence
+import dream_diary_cmp.ui.common.generated.resources.emotion_grid_low_valence
 import me.bumiller.ddcmp.domain.model.Arousal
 import me.bumiller.ddcmp.domain.model.EmotionCoordinate
 import me.bumiller.ddcmp.domain.model.EmotionType
@@ -39,6 +45,7 @@ import me.bumiller.ddcmp.domain.model.EmotionType.Sadness
 import me.bumiller.ddcmp.domain.model.Valence
 import me.bumiller.ddcmp.ui.common.style.color
 import me.bumiller.ddcmp.ui.common.translation.translateName
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -185,14 +192,14 @@ private fun RowScope.TypeBox(
                 Text(
                     modifier = Modifier
                         .align(Alignment.BottomEnd),
-                    text = "High Valence", // TODO: Translation
+                    text = stringResource(Res.string.emotion_grid_high_valence),
                     color = dimmedColorStrong
                 )
                 Text(
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .padding(start = 4.dp),
-                    text = "Arousal", // TODO: Translation
+                    text = stringResource(Res.string.emotion_grid_arousal),
                     color = dimmedColorStrong
                 )
             }
@@ -202,7 +209,7 @@ private fun RowScope.TypeBox(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                         .padding(start = 4.dp),
-                    text = "Arousal", // TODO: Translation
+                    text = stringResource(Res.string.emotion_grid_arousal),
                     color = dimmedColorStrong
                 )
             }
@@ -211,14 +218,14 @@ private fun RowScope.TypeBox(
                 Text(
                     modifier = Modifier
                         .align(Alignment.TopStart),
-                    text = "Low Valence", // TODO: Translation
+                    text = stringResource(Res.string.emotion_grid_low_valence),
                     color = dimmedColorStrong
                 )
                 Text(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(end = 4.dp),
-                    text = "Low", // TODO: Translation
+                    text = stringResource(Res.string.emotion_grid_arousal_low),
                     color = dimmedColorStrong
                 )
             }
@@ -229,7 +236,7 @@ private fun RowScope.TypeBox(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(end = 4.dp),
-                    text = "High", // TODO: Translation
+                    text = stringResource(Res.string.emotion_grid_arousal_high),
                     color = dimmedColorStrong
                 )
             }
