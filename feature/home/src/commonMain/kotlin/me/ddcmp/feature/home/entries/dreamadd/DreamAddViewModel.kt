@@ -11,12 +11,15 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
 import me.bumiller.ddcmp.domain.model.Confidentiality
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase.I as DreamsQuery
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase.I
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
@@ -28,6 +31,7 @@ import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.ViewModelEvent.G
 import me.ddcmp.feature.home.navigation.HomeRoutes
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
 internal class DreamAddViewModel(
@@ -106,7 +110,7 @@ internal class DreamAddViewModel(
 
             viewModelScope.launch {
                 val existing = if (navRoute.dreamId == null) null
-                else allDreams(AllDreamUseCase.I(id = navRoute.dreamId))
+                else allDreams(DreamsQuery(id = navRoute.dreamId))
                     .map { it.singleOrNull() }
                     .firstOrNull()
                 val existingDream = existing?.dream
@@ -117,7 +121,7 @@ internal class DreamAddViewModel(
                     id = existingDream?.id ?: 0,
                     created = existingDream?.created ?: now,
                     edited = now,
-                    dreamt = existingDream?.dreamt ?: now,
+                    dreamt = state.dreamt,
                     title = state.title.ifBlank { null },
                     description = state.description,
                     note = state.note.ifBlank { null },
@@ -125,7 +129,7 @@ internal class DreamAddViewModel(
                     confidentiality = state.confidentiality
                 )
 
-                SaveDreamUseCase.I(
+                I(
                     dream = dream,
                     persons = state.persons,
                     emotions = state.emotions
@@ -159,6 +163,14 @@ internal class DreamAddViewModel(
         is UiEvent.SetConfidentiality -> updateUiState<DreamState> {
             it.copy(confidentiality = event.confidentiality)
         }
+
+        UiEvent.ToggleDreamtDialog -> updateUiState<UiState> {
+            it.copy(showDreamtDialog = !it.showDreamtDialog)
+        }
+
+        is UiEvent.ChangeDreamtDate -> updateUiState<DreamState> {
+            it.copy(dreamt = event.date)
+        }
     }
 
     init {
@@ -173,6 +185,9 @@ internal class DreamAddViewModel(
                 updateUiState<DreamState> {
                     it.copy(confidentiality = defaultConf)
                 }
+                updateUiState<UiState> {
+                    it.copy(finishedLoading = true)
+                }
             } else { // If the dream exists, we update the state to reflect the existing dream
                 val dream = allDreams(AllDreamUseCase.I(id = navRoute.dreamId))
                     .map { it.firstOrNull() }
@@ -186,11 +201,16 @@ internal class DreamAddViewModel(
                             note = dream.dream.note ?: "",
                             persons = dream.persons,
                             emotions = dream.emotions,
-                            confidentiality = dream.dream.confidentiality
+                            confidentiality = dream.dream.confidentiality,
+                            dreamt = dream.dream.dreamt
                         )
                         initialDreamState = newState
                         newState
                     }
+                }
+
+                updateUiState<UiState> {
+                    it.copy(finishedLoading = true)
                 }
             }
         }
@@ -262,7 +282,9 @@ internal class DreamAddViewModel(
 
         val emotions: List<Emotion> = emptyList(),
 
-        val confidentiality: Confidentiality = Confidentiality.None
+        val confidentiality: Confidentiality = Confidentiality.None,
+
+        val dreamt: Instant = Clock.System.now()
     )
 
     /**
@@ -274,7 +296,11 @@ internal class DreamAddViewModel(
 
         val emotionQuery: String = "",
 
-        val showDiscardDialog: Boolean = false
+        val showDiscardDialog: Boolean = false,
+
+        val showDreamtDialog: Boolean = false,
+
+        val finishedLoading: Boolean = false
 
     )
 
@@ -290,10 +316,11 @@ internal class DreamAddViewModel(
         data class SelectEmotion(val emotion: Emotion) : UiEvent
         data class UnSelectEmotion(val emotion: Emotion) : UiEvent
         data class SetConfidentiality(val confidentiality: Confidentiality): UiEvent
+        data class ChangeDreamtDate(val date: Instant): UiEvent
         data object Save : UiEvent
         data object NavigateBack : UiEvent
         data object HideDiscardDialog : UiEvent
-
+        data object ToggleDreamtDialog: UiEvent
     }
 
     sealed interface ViewModelEvent : VME {

@@ -1,5 +1,6 @@
 package me.ddcmp.feature.home.entries.dreamadd
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -17,7 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledIconButton
@@ -32,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -67,15 +68,20 @@ import dream_diary_cmp.feature.home.generated.resources.dreamadd_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_title_info
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_title_label
 import kotlinx.coroutines.delay
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.util.search
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.ConfidentialitySelector
 import me.bumiller.ddcmp.ui.common.component.SearchTextField
+import me.bumiller.ddcmp.ui.common.dialog.DDCDatePickerDialog
 import me.bumiller.ddcmp.ui.common.dialog.DiscardChangesDialog
 import me.bumiller.ddcmp.ui.common.format.formatInstant
+import me.bumiller.ddcmp.ui.common.format.formatLocalDate
 import me.bumiller.ddcmp.ui.common.layout.ColumnOrRow
+import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.ChangeDescription
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.SelectPerson
@@ -152,41 +158,69 @@ private fun DreamAddEntry(
         )
     }
 
+    if (uiState.showDreamtDialog) {
+        DDCDatePickerDialog(
+            onDismiss = { onEvent(UiEvent.ToggleDreamtDialog) },
+            onSelect = { _, instant ->
+                onEvent(UiEvent.ChangeDreamtDate(instant))
+                onEvent(UiEvent.ToggleDreamtDialog)
+            },
+            initialSelected = dreamState.dreamt
+        )
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(Res.string.dreamadd_title)) },
-                actions = {
-                    FilledIconButton(
-                        onClick = { onEvent(UiEvent.Save) },
-                        modifier = Modifier
-                            .minimumInteractiveComponentSize()
-                            .size(IconButtonDefaults.extraSmallContainerSize(IconButtonDefaults.IconButtonWidthOption.Wide)),
-                        enabled = canSave
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = null,
+            TopBarWithProgressIndicator(
+                loading = !uiState.finishedLoading
+            ) {
+                TopAppBar(
+                    title = { Text(stringResource(Res.string.dreamadd_title)) },
+                    subtitle = {
+                        if (uiState.finishedLoading) {
+                            Text(
+                                modifier = Modifier
+                                    .clickable(
+                                        onClick = { onEvent(UiEvent.ToggleDreamtDialog) }
+                                    ),
+                                text = formatLocalDate(dreamState.dreamt.toLocalDateTime(TimeZone.currentSystemDefault()).date)
+                            )
+                        }
+                    },
+                    actions = {
+                        FilledIconButton(
+                            onClick = { onEvent(UiEvent.Save) },
                             modifier = Modifier
-                                .size(IconButtonDefaults.extraSmallIconSize)
-                        )
+                                .minimumInteractiveComponentSize()
+                                .size(IconButtonDefaults.extraSmallContainerSize(IconButtonDefaults.IconButtonWidthOption.Wide)),
+                            enabled = canSave
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(IconButtonDefaults.extraSmallIconSize)
+                            )
+                        }
+                    },
+                    navigationIcon = {
+                        IconButton(
+                            onClick = { onEvent(UiEvent.NavigateBack) }
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                                contentDescription = null
+                            )
+                        }
                     }
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = { onEvent(UiEvent.NavigateBack) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                            contentDescription = null
-                        )
-                    }
-                }
-            )
+                )
+            }
         }
     ) { pv ->
+        if(!uiState.finishedLoading) return@Scaffold
+
         Column(
             modifier = Modifier
                 .padding(pv)
