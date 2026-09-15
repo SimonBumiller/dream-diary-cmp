@@ -12,6 +12,11 @@ sealed interface Stat<StatType> {
      */
     data class Present<StatType>(val stat: StatType) : Stat<StatType>
 
+    fun <R> map(mapper: (StatType) -> R): Stat<R> = when (this) {
+        is NotEnoughData -> NotEnoughData()
+        is Present -> Present(mapper(stat))
+    }
+
     companion object {
 
         /**

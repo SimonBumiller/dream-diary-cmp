@@ -1,12 +1,8 @@
 <resources>
     <string name="dream_title">Dream from %1$s</string>
 
-    <string name="dreamlist_title">Dream Diary</string>
-
-    <string name="dreamlist_action_stats">Statistics</string>
-    <string name="dreamlist_action_settings">Settings</string>
-    <string name="dreamlist_action_emotions">Emotions</string>
-    <string name="dreamlist_action_persons">Persons</string>
+    <string name="dreamlist_title">Dreams</string>
+    <string name="dreamlist_action_add">Add Dream</string>
     <string name="dreamlist_empty_placeholder">You currently have no dreams added. Use the '+' button to add your first dream.</string>
 
     <string name="dreamadd_description_placeholder">Enter the course of your dream…</string>
@@ -28,6 +24,7 @@
     <string name="dreamadd_note_label">Note (optional)</string>
 
     <string name="emotionlist_title">Emotions</string>
+    <string name="emotionlist_action_add">Add Emotion</string>
     <string name="emotionlist_description">Below is a list of all emotions you added. Emotions form the basis of your subconsciousness and can be associated with dreams.</string>
     <string name="emotionlist_empty_placeholder_pre">There are currently no emotions present. Use the '+' button to add custom emotions,</string>
     <string name="emotionlist_empty_placeholder_clickable"> or add the six basic emotions as determined by Paul Ekman</string>
@@ -43,6 +40,7 @@
     <string name="emotionadd_closest_label">The selected value is closest to:</string>
 
     <string name="personlist_title">Persons</string>
+    <string name="personlist_action_add">Add Person</string>
     <string name="personlist_description">Below is a list of all persons added by you. Persons are an important part of your subconsciousness and can be associated with dreams.</string>
     <string name="personlist_empty_placeholder">There are currently no persons present. Use the '+' button to add new persons.</string>
 
@@ -74,6 +72,24 @@
     </plurals>
     <string name="dreamdetail_confidentiality_pre">This dream is marked with </string>
     <string name="dreamdetail_confidentiality_post"> confidentiality.</string>
+
+    <string name="overview_current_week_title_below_average">Lower dream activity that usual</string>
+    <string name="overview_current_week_description_below_average">You have had fewer dreams in the last seven days than you usually have. This could be caused by lower average sleep duration or less attention to your dreaming behavior.</string>
+    <string name="overview_current_week_title_average">Normal dream activity</string>
+    <string name="overview_current_week_description_average">Your dream activity in the last seven days somewhat resembles your normal dream activity. Get more insight by looking at the statistics about your dream-behavior.</string>
+    <string name="overview_current_week_title_above_average">Higher dream activity than usual</string>
+    <string name="overview_current_week_description_above_average">You have had more dreams in the last seven days than you usually have. This could be caused by more nocturnal awakenings during REM-phases or more attention to your dreaming behavior.</string>
+    <string name="overview_current_week_title_nodata">You're just getting started!</string>
+    <string name="overview_current_week_description_nodata">You have just started your dream-recording journey! Continue to record your dreams in order to get statistics and insights into your dreaming-behavior.</string>
+
+    <string name="overview_title">Dream Diary</string>
+    <string name="overview_actions_settings">Settings</string>
+    <string name="overview_feature_persons_title">Persons:</string>
+    <string name="overview_feature_emotions_title">Emotions:</string>
+    <string name="overview_feature_dreams_title">Dreams:</string>
+    <string name="overview_no_recent_dreams">You have not recorded any dreams in the last seven days. Use the '+' button to record a dream.</string>
+    <string name="overview_dreams_label">Recent Dreams</string>
+    <string name="overview_record_dream">Record Dream</string>
 
     <string-array name="basic_emotions_names">
         <item>Happiness</item>

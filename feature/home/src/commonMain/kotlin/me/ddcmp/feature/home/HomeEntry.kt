@@ -14,6 +14,7 @@ import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailEntry
 import me.ddcmp.feature.home.entries.dreamlist.DreamListEntry
 import me.ddcmp.feature.home.entries.emotionadd.EmotionAddEntry
 import me.ddcmp.feature.home.entries.emotionlist.EmotionListEntry
+import me.ddcmp.feature.home.entries.overview.OverviewEntry
 import me.ddcmp.feature.home.entries.personadd.PersonAddEntry
 import me.ddcmp.feature.home.entries.personlist.PersonListEntry
 import me.ddcmp.feature.home.navigation.HomeRoutes
@@ -31,25 +32,18 @@ fun HomeEntry() {
     ) {
         NavHost(
             navController = navController,
-            startDestination = HomeRoutes.DreamList
+            startDestination = HomeRoutes.Overview
         ) {
             composable<HomeRoutes.DreamList> {
                 DreamListEntry(
                     onAddDream = {
                         navController.navigate(HomeRoutes.AddDream())
                     },
-                    onGoToEmotions = {
-                        navController.navigate(HomeRoutes.EmotionList)
-                    },
-                    onGoToStats = {
-                        navController.navigate(HomeRoutes.Statistics())
-                    },
-                    onGoToSettings = {},
-                    onGoToPersons = {
-                        navController.navigate(HomeRoutes.PersonList)
-                    },
                     onGoToDreamDetail = {
                         navController.navigate(HomeRoutes.DreamDetail(it))
+                    },
+                    goBack = {
+                        navController.popBackStack()
                     }
                 )
             }
@@ -109,15 +103,38 @@ fun HomeEntry() {
                         navController.navigate(HomeRoutes.AddDream(it))
                     },
                     onGoToEmotion = {
-                        // navController.navigate(HomeRoutes.Emot)
+                        navController.navigate(HomeRoutes.EmotionList)
                     },
                     onGoToPerson = {
-                        // navController.navigate(HomeRoutes.Perso)
+                        navController.navigate(HomeRoutes.PersonList)
                     },
                     onGoToDreamStats = {
                         navController.navigate(HomeRoutes.Statistics(it))
                     },
                     onBack = { navController.popBackStack() }
+                )
+            }
+            composable<HomeRoutes.Overview> {
+                OverviewEntry(
+                    onAddDream = {
+                        navController.navigate(HomeRoutes.AddDream())
+                    },
+                    onGoToSettings = {},
+                    onGoToEmotions = {
+                        navController.navigate(HomeRoutes.EmotionList)
+                    },
+                    onGoToStats = {
+                        navController.navigate(HomeRoutes.Statistics())
+                    },
+                    onGoToPersons = {
+                        navController.navigate(HomeRoutes.PersonList)
+                    },
+                    onGoToDreams = {
+                        navController.navigate(HomeRoutes.DreamList)
+                    },
+                    onGoToDreamDetail = {
+                        navController.navigate(HomeRoutes.DreamDetail(it))
+                    }
                 )
             }
 

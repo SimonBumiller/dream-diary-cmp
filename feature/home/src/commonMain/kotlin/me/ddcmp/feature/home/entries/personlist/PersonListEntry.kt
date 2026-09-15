@@ -27,14 +27,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.home.generated.resources.Res
+import dream_diary_cmp.feature.home.generated.resources.emotionlist_action_add
+import dream_diary_cmp.feature.home.generated.resources.personlist_action_add
 import dream_diary_cmp.feature.home.generated.resources.personlist_description
 import dream_diary_cmp.feature.home.generated.resources.personlist_empty_placeholder
 import dream_diary_cmp.feature.home.generated.resources.personlist_title
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.AppInputChip
+import me.bumiller.ddcmp.ui.common.layout.AppBarAction
+import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
+import me.ddcmp.feature.home.entries.emotionlist.EmotionListViewModel.UiEvent.AddEmotion
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiEvent
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiEvent.AddPerson
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiEvent.GoBack
@@ -71,18 +76,6 @@ private fun PersonListEntry(
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    onEvent(AddPerson)
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
-            }
-        },
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(Res.string.personlist_title)) },
@@ -95,6 +88,17 @@ private fun PersonListEntry(
                             contentDescription = null
                         )
                     }
+                },
+                actions = {
+                    AppBarActions(
+                        actions = listOf(
+                            AppBarAction(
+                                label = stringResource(Res.string.personlist_action_add),
+                                icon = Icons.Default.Add,
+                                handler = { onEvent(AddPerson) }
+                            )
+                        )
+                    )
                 }
             )
         }

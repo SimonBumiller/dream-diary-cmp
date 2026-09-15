@@ -27,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.home.generated.resources.Res
+import dream_diary_cmp.feature.home.generated.resources.dreamlist_action_add
+import dream_diary_cmp.feature.home.generated.resources.emotionlist_action_add
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_description
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_empty_placeholder_clickable
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_empty_placeholder_post
@@ -39,9 +41,12 @@ import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.EmotionGrid
 import me.bumiller.ddcmp.ui.common.component.MultiStyleText
 import me.bumiller.ddcmp.ui.common.component.TextStyleWithCallback
+import me.bumiller.ddcmp.ui.common.layout.AppBarAction
+import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import me.ddcmp.feature.home.component.ChipEmotionBadge
+import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel
 import me.ddcmp.feature.home.entries.emotionlist.EmotionListViewModel.UiEvent
 import me.ddcmp.feature.home.entries.emotionlist.EmotionListViewModel.UiEvent.AddBasicEmotions
 import me.ddcmp.feature.home.entries.emotionlist.EmotionListViewModel.UiEvent.AddEmotion
@@ -81,18 +86,6 @@ private fun EmotionListEntry(
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    onEvent(AddEmotion)
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
-            }
-        },
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(Res.string.emotionlist_title)) },
@@ -105,6 +98,17 @@ private fun EmotionListEntry(
                             contentDescription = null
                         )
                     }
+                },
+                actions = {
+                    AppBarActions(
+                        actions = listOf(
+                            AppBarAction(
+                                label = stringResource(Res.string.emotionlist_action_add),
+                                icon = Icons.Default.Add,
+                                handler = { onEvent(AddEmotion) }
+                            )
+                        )
+                    )
                 }
             )
         }

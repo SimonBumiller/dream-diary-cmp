@@ -5,19 +5,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
-import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode.DreamSort
-import me.bumiller.ddcmp.domain.model.stats.Stat
-import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic
-import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeekdayFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
@@ -25,10 +19,6 @@ import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToAddDream
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToDreamDetail
-import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToEmotions
-import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToPersons
-import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToSettings
-import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.ViewModelEvent.GoToStats
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -69,16 +59,14 @@ internal class DreamListViewModel(
     val uiState = uiState<UiState>().asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalTime::class)
-    private fun createDreamsState(): Flow<List<DreamAggregate>> = uiState<UiState>()
+    private fun createDreamsState(): Flow<List<AllDreamUseCase.O>> = uiState<UiState>()
         .flatMapLatest { uiState ->
             val i = AllDreamUseCase.I(
                 sortMode = uiState.sortMode,
                 sortDirection = uiState.sortDirection
             )
 
-            getDreams(i).map { os ->
-                os.map(DreamAggregate::create)
-            }
+            getDreams(i)
         }
 
     override suspend fun handleEvent(event: UiEvent) = when (event) {
@@ -101,11 +89,8 @@ internal class DreamListViewModel(
         }
 
         is UiEvent.ClickDream -> fireEvent(GoToDreamDetail(event.dream.id))
-        UiEvent.GoToSettings -> fireEvent(GoToSettings)
-        UiEvent.GoToStats -> fireEvent(GoToStats)
-        UiEvent.GoToEmotions -> fireEvent(GoToEmotions)
         UiEvent.AddDream -> fireEvent(GoToAddDream)
-        UiEvent.GoToPersons -> fireEvent(GoToPersons)
+        UiEvent.GoBack -> fireEvent(ViewModelEvent.GoBack)
     }
 
     sealed interface UiEvent : UIE {
@@ -116,28 +101,18 @@ internal class DreamListViewModel(
 
         data class ChangeSortDirection(val direction: SortDirection) : UiEvent
 
-        data object GoToSettings : UiEvent
-
-        data object GoToStats : UiEvent
-
-        data object GoToEmotions : UiEvent
-
-        data object GoToPersons : UiEvent
-
         data class ClickDream(val dream: Dream) : UiEvent
 
         data object AddDream : UiEvent
+        data object GoBack : UiEvent
 
     }
 
     sealed interface ViewModelEvent : VME {
 
         data object GoToAddDream : ViewModelEvent
+        data object GoBack : ViewModelEvent
 
-        data object GoToEmotions : ViewModelEvent
-        data object GoToSettings : ViewModelEvent
-        data object GoToStats : ViewModelEvent
-        data object GoToPersons : ViewModelEvent
         data class GoToDreamDetail(val dreamId: Long) : ViewModelEvent
 
     }
@@ -153,23 +128,5 @@ internal class DreamListViewModel(
         val selectedDream: Dream? = null
 
     )
-
-    data class DreamAggregate(
-
-        val dream: Dream,
-
-        val emotions: List<Emotion>,
-
-        val persons: List<Person>
-
-    ) {
-
-        companion object {
-
-            fun create(o: AllDreamUseCase.O) = DreamAggregate(o.dream, o.emotions, o.persons)
-
-        }
-
-    }
 
 }

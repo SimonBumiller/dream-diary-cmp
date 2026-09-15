@@ -5,6 +5,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
+import me.bumiller.ddcmp.domain.model.stats.RelativeRelation
 import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamListBasedStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
@@ -61,8 +62,18 @@ class DreamWeeklyFrequencyStatistic(
             overallAverage = overall!!,
             lastSevenDays = lastSevenDays,
             lastThirtyDays = Stat.ofNullable(lastThirtyDays),
-            lastSixMonths = Stat.ofNullable(lastSixMonths)
+            lastSixMonths = Stat.ofNullable(lastSixMonths),
+            lastSevenDaysRelative = calculateRelative(lastSevenDays, overall)
         )
+    }
+
+    private fun calculateRelative(
+        overall: Float,
+        lastSevenDays: Float
+    ) = (lastSevenDays / overall).let {
+        if(it <= 0.85F) RelativeRelation.BelowAverage
+        else if(it <= 1.15F) RelativeRelation.Average
+        else RelativeRelation.AboveAverage
     }
 
     private fun calculateLastSevenDays(
@@ -124,7 +135,12 @@ class DreamWeeklyFrequencyStatistic(
         /**
          * Weekly dream count over last six months.
          */
-        val lastSixMonths: Stat<Float>
+        val lastSixMonths: Stat<Float>,
+
+        /**
+         * How the last seven days dream count is in relation to the overall count.
+         */
+        val lastSevenDaysRelative: RelativeRelation
 
     )
 

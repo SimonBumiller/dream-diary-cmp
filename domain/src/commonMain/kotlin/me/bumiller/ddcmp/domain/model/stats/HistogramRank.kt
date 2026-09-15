@@ -3,18 +3,16 @@ package me.bumiller.ddcmp.domain.model.stats
 /**
  * Models different sections of histogram ranks.
  */
-enum class HistogramRank(
-    val descriptor: String
-) {
+enum class HistogramRank {
 
-    Lowest("lowest"),
+    Lowest,
 
-    Low("low"),
+    Low,
 
-    Average("average"),
+    Average,
 
-    High("high"),
+    High,
 
-    Highest("highest")
+    Highest
 
 }

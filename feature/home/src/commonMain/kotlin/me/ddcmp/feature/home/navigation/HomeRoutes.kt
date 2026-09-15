@@ -6,6 +6,9 @@ import kotlinx.serialization.Serializable
 internal sealed interface HomeRoutes {
 
     @Serializable
+    data object Overview : HomeRoutes
+
+    @Serializable
     data object DreamList : HomeRoutes
 
     @Serializable
