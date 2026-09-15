@@ -34,8 +34,7 @@ internal fun DreamLazyColumn(
 
     LazyColumn(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

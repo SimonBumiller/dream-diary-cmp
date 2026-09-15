@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,6 +41,7 @@ import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
+import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.ddcmp.feature.home.component.DreamLazyColumn
 import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel.UiEvent
@@ -123,7 +125,7 @@ internal fun DreamListEntry(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(pv)
+                .padding(pv + PaddingValues(horizontal = 8.dp))
         ) {
             if (hasDreams) {
                 Row(

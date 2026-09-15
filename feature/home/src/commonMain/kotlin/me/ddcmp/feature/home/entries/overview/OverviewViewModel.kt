@@ -39,7 +39,7 @@ internal class OverviewViewModel(
 
     private val recentDreamsQuery = AllDreamUseCase.I(
         sortDirection = SortDirection.Descending,
-        timeRange = Clock.System.now().minus(3.days)..Clock.System.now()
+        timeRange = Clock.System.now().minus(7.days)..Clock.System.now()
     )
     val recentDreams = allDreams(recentDreamsQuery)
         .stateIn(initial = null)

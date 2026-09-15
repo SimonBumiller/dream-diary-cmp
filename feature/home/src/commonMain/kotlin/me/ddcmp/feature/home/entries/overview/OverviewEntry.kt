@@ -205,7 +205,8 @@ private fun OverviewEntry(
 
             DreamLazyColumn(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
                 dreams = recentDreams,
                 onClick = { onEvent(UiEvent.GoToDream(it.id)) },
                 emptyPlaceholder = {
