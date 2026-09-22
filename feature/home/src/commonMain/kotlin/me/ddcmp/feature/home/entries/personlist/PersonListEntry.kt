@@ -50,7 +50,8 @@ import org.jetbrains.compose.resources.stringResource
 internal fun PersonListEntry(
     onBack: () -> Unit,
     onAdd: () -> Unit,
-    onEdit: (id: Long) -> Unit
+    onEdit: (id: Long) -> Unit,
+    onGoToPerson: (id: Long) -> Unit
 ) {
     ViewModelScope<UiEvent, ViewModelEvent, PersonListViewModel>(
         onViewModelEvent = {
@@ -58,6 +59,7 @@ internal fun PersonListEntry(
                 ViewModelEvent.NavigateBack -> onBack()
                 ViewModelEvent.NavigateToAdd -> onAdd()
                 is ViewModelEvent.NavigateToEdit -> onEdit(it.id)
+                is ViewModelEvent.NavigateToPerson -> onGoToPerson(it.id)
             }
         }
     ) { vm ->
@@ -142,7 +144,7 @@ private fun PersonListEntry(
                         label = {
                             Text(person.name)
                         },
-                        onClick = {  },
+                        onClick = { onEvent(UiEvent.GoToPerson(person.id)) },
                         onLongClick = { onEvent(UiEvent.EditPerson(person.id)) },
                         selected = false
                     )

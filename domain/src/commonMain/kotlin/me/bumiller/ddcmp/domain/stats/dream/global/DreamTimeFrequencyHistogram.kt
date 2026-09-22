@@ -6,7 +6,6 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamFrequencyHistogramStatistic
-import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamHistogramStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import kotlin.time.ExperimentalTime
 
@@ -26,7 +25,7 @@ class DreamTimeFrequencyHistogram(
     override suspend fun createMetadata(
         input: ClosedRange<LocalDate>,
         actualRange: ClosedRange<LocalDate>,
-        dreams: List<Dream>
+        dreams: List<AllDreamUseCase.O>
     ): Pair<List<LocalDate>, DatePeriod> {
         val bucketSize = calculateBucketSize(actualRange)
 

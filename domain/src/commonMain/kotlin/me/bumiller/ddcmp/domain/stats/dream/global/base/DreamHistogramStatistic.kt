@@ -22,7 +22,7 @@ abstract class DreamHistogramStatistic<I, Bucket, BucketSize, BucketValue : Numb
     protected abstract suspend fun createMetadata(
         input: I,
         actualRange: ClosedRange<LocalDate>,
-        dreams: List<Dream>
+        dreams: List<AllDreamUseCase.O>
     ): Pair<List<Bucket>, BucketSize>?
 
     /**
@@ -51,13 +51,13 @@ abstract class DreamHistogramStatistic<I, Bucket, BucketSize, BucketValue : Numb
 
     override suspend fun invoke(
         input: I,
-        dreams: List<Dream>,
+        dreams: List<AllDreamUseCase.O>,
         actualRange: ClosedRange<LocalDate>
     ): Histogram<Bucket, BucketSize, BucketValue>? {
         val (buckets, bucketSize) = createMetadata(input, actualRange, dreams) ?: return null
 
         val dreamsWithBuckets = dreams.associateWith {
-            findBucketFor(it, buckets)
+            findBucketFor(it.dream, buckets)
         }
             .apply {
                 values.forEach { bucket ->
@@ -72,7 +72,7 @@ abstract class DreamHistogramStatistic<I, Bucket, BucketSize, BucketValue : Numb
             )
 
         val bucketsWithValues = bucketsWithDreams.map { (bucket, dreams) ->
-            val values = dreams.map { getDreamValue(it, bucket) }
+            val values = dreams.map { getDreamValue(it.dream, bucket) }
             val value = combineValues(values)
 
             bucket to value

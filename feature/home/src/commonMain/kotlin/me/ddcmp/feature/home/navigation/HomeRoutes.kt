@@ -25,6 +25,14 @@ internal sealed interface HomeRoutes {
         val dreamId: Long? = null
     ): HomeRoutes
 
+    /**
+     * Navigation route for the person detail screen.
+     */
+    @Serializable
+    data class PersonDetail(
+        val personId: Long
+    ): HomeRoutes
+
     @Serializable
     data class AddPerson(
         val personId: Long? = null

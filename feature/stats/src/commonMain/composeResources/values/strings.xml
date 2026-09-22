@@ -14,9 +14,6 @@
     <string name="global_dream_time_frequency_tooltip_2">In total %1$d dreams</string>
     <string name="global_dream_weekday_frequency_tooltip">%1$s: %2$d</string>
 
-    <string name="stat_data_missing_title">Statistic not available</string>
-    <string name="stat_data_missing_description">Collect more data by recording dreams so this statistic can be calculated!</string>
-
     <string name="weekly_average_overall">Overall</string>
     <string name="weekly_average_7_days">Last 7 days</string>
     <string name="weekly_average_30_days">Last 30 days</string>

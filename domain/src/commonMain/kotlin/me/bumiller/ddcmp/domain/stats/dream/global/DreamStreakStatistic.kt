@@ -24,12 +24,12 @@ class DreamStreakStatistic(
 
     override suspend fun invoke(
         input: I,
-        dreams: List<Dream>,
+        dreams: List<AllDreamUseCase.O>,
         actualRange: ClosedRange<LocalDate>
     ): StreakStatistic? {
         val dates = dreams
             .asSequence()
-            .map(Dream::dreamt)
+            .map { it.dream.dreamt }
             .map { it.toLocalDateTime(timeZone).date }
             .sorted()
             .distinct()

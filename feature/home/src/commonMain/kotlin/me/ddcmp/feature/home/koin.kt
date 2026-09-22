@@ -7,6 +7,7 @@ import me.ddcmp.feature.home.entries.emotionadd.EmotionAddViewModel
 import me.ddcmp.feature.home.entries.emotionlist.EmotionListViewModel
 import me.ddcmp.feature.home.entries.overview.OverviewViewModel
 import me.ddcmp.feature.home.entries.personadd.PersonAddViewModel
+import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
@@ -23,4 +24,5 @@ val home = module {
     viewModelOf(::PersonAddViewModel)
     viewModelOf(::DreamDetailViewModel)
     viewModelOf(::OverviewViewModel)
+    viewModelOf(::PersonDetailViewModel)
 }

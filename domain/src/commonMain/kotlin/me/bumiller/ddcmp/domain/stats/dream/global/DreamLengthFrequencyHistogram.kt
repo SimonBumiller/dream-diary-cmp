@@ -21,14 +21,13 @@ class DreamLengthFrequencyHistogram(
     override suspend fun createMetadata(
         input: ClosedRange<LocalDate>,
         actualRange: ClosedRange<LocalDate>,
-        dreams: List<Dream>
+        dreams: List<AllDreamUseCase.O>
     ): Pair<List<Int>, Int> {
         val longest = dreams.maxOfOrNull {
-            val len = it.length
-            println("Got length with description ${it.description}")
+            val len = it.dream.length
             len
         }!!
-        val shortest = dreams.minOfOrNull { it.length }!!
+        val shortest = dreams.minOfOrNull { it.dream.length }!!
 
         val bucketSize = calculateBucketSize(longest, shortest)
 

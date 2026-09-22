@@ -65,7 +65,7 @@ internal class DreamDetailViewModel(
 
         UiEvent.Edit -> fireEvent(GoToEdit(navRoute.dreamId))
         is UiEvent.ClickEmotion -> fireEvent(GoToEmotion(event.emotion.id))
-        is UiEvent.ClickPerson -> fireEvent(GoToEmotion(event.person.id))
+        is UiEvent.ClickPerson -> fireEvent(GoToPerson(event.person.id))
         UiEvent.Back -> fireEvent(GoBack)
         is UiEvent.OnBiometricAuthResult -> when (event.result) {
             BiometricResult.AuthenticationSuccess -> updateUiState<UiState> { it.copy(authenticated = true) }

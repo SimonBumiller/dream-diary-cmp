@@ -23,10 +23,10 @@ class DreamPersonCountFrequencyHistogram(
     override suspend fun createMetadata(
         input: ClosedRange<LocalDate>,
         actualRange: ClosedRange<LocalDate>,
-        dreams: List<Dream>
+        dreams: List<AllDreamUseCase.O>
     ): Pair<List<Int>, Unit> {
         val personCounts = dreams.map {
-            personRepo.getForDream(it.id)
+            personRepo.getForDream(it.dream.id)
                 .map { persons -> persons?.size ?: 0 }
                 .first()
         }

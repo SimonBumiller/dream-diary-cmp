@@ -16,6 +16,7 @@ import me.ddcmp.feature.home.entries.emotionadd.EmotionAddEntry
 import me.ddcmp.feature.home.entries.emotionlist.EmotionListEntry
 import me.ddcmp.feature.home.entries.overview.OverviewEntry
 import me.ddcmp.feature.home.entries.personadd.PersonAddEntry
+import me.ddcmp.feature.home.entries.persondetail.PersonDetailEntry
 import me.ddcmp.feature.home.entries.personlist.PersonListEntry
 import me.ddcmp.feature.home.navigation.HomeRoutes
 import me.ddcmp.feature.stats.StatsEntry
@@ -87,6 +88,9 @@ fun HomeEntry() {
                     },
                     onEdit = {
                         navController.navigate(HomeRoutes.AddPerson(it))
+                    },
+                    onGoToPerson = {
+                        navController.navigate(HomeRoutes.PersonDetail(it))
                     }
                 )
             }
@@ -106,12 +110,29 @@ fun HomeEntry() {
                         navController.navigate(HomeRoutes.EmotionList)
                     },
                     onGoToPerson = {
-                        navController.navigate(HomeRoutes.PersonList)
+                        navController.navigate(HomeRoutes.PersonDetail(it))
                     },
                     onGoToDreamStats = {
                         navController.navigate(HomeRoutes.Statistics(it))
                     },
                     onBack = { navController.popBackStack() }
+                )
+            }
+            composable<HomeRoutes.PersonDetail> {
+                PersonDetailEntry(
+                    onBack = { navController.popBackStack() },
+                    onEdit = {
+                        navController.navigate(HomeRoutes.AddPerson(it))
+                    },
+                    onGoToDream = {
+                        navController.navigate(HomeRoutes.DreamDetail(it))
+                    },
+                    onGoToPerson = {
+                        navController.navigate(HomeRoutes.PersonDetail(it))
+                    },
+                    onGoToEmotion = {
+//                        navController.navigate(HomeRoutes.EmotionList(it))
+                    },
                 )
             }
             composable<HomeRoutes.Overview> {

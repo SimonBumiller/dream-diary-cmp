@@ -8,7 +8,6 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.toLocalDateTime
-import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.model.stats.Stat
@@ -40,9 +39,9 @@ abstract class DreamListBasedStatistic<I, O>(
     override fun invoke(i: I): Flow<Stat<O>> = getDreams.asynchronousDreamStatistic(
         dateRange = i(),
         synchronousDelegate = { dreams ->
-            val start = dreams.minOfOrNull { it.dreamt }?.toLocalDateTime(timeZone)?.date
+            val start = dreams.minOfOrNull { it.dream.dreamt }?.toLocalDateTime(timeZone)?.date
             val end = if(forceEnd) i().endInclusive
-                else dreams.maxOfOrNull { it.dreamt }?.toLocalDateTime(timeZone)?.date
+                else dreams.maxOfOrNull { it.dream.dreamt }?.toLocalDateTime(timeZone)?.date
             val empiricalRange = if (start != null && end != null) start..end
             else return@asynchronousDreamStatistic null
 
@@ -59,7 +58,7 @@ abstract class DreamListBasedStatistic<I, O>(
      */
     protected abstract suspend operator fun invoke(
         input: I,
-        dreams: List<Dream>,
+        dreams: List<AllDreamUseCase.O>,
         actualRange: ClosedRange<LocalDate>
     ): O?
 
@@ -89,9 +88,9 @@ fun <T> AllDreamUseCase.asynchronousDreamStatistic(
         sortDirection = SortDirection.Ascending,
         timeRange = createInstantRange(dateRange)
     ),
-    synchronousDelegate: suspend (List<Dream>) -> T?
+    synchronousDelegate: suspend (List<AllDreamUseCase.O>) -> T?
 ): Flow<Stat<T>> {
-    val dreams = this(dreamQuery).map { it.map(AllDreamUseCase.O::dream) }
+    val dreams = this(dreamQuery)
 
     // We perform the calculation flow-independent.
     val returnValue = dreams.map(synchronousDelegate)

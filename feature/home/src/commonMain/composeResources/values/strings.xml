@@ -91,6 +91,21 @@
     <string name="overview_dreams_label">Recent Dreams</string>
     <string name="overview_record_dream">Record Dream</string>
 
+    <string name="person_detail_title">Person Info</string>
+    <string name="person_detail_associated_persons_title">Related Persons</string>
+    <string name="person_detail_associated_persons_description">This statistic shows what persons are related to %1$s. Related persons are those that occur more frequently in a dream when %1$s is present.</string>
+    <string name="person_detail_associated_emotions_title">Related Emotions</string>
+    <string name="person_detail_associated_emotions_description">This statistic shows what emotions are related to %1$s. Related emotions are those that occur more frequently in a dream when %1$s is present.</string>
+    <string name="person_detail_associated_index">%1$d.</string>
+    <string name="person_detail_associated_percentage">+ %1$d%</string>
+    <string name="person_detail_no_info_placeholder">No additional information was provided for this person.</string>
+    <string name="person_detail_no_occurence">This person has not yet occurred in a dream.</string>
+    <string name="person_detail_first_occurence_label">First appearance:</string>
+    <string name="person_detail_last_occurence_label">Last appearance:</string>
+    <string name="person_detail_dream_occurence_label">Total dream count:</string>
+    <string name="person_detail_tabs_dreams">Dreams</string>
+    <string name="person_detail_tabs_stats">Statistics</string>
+
     <string-array name="basic_emotions_names">
         <item>Happiness</item>
         <item>Sadness</item>

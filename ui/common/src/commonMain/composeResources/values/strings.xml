@@ -54,6 +54,8 @@
     <string name="date_picker_dialog_confirm_label">Choose</string>
     <string name="date_picker_dialog_cancel_label">Cancel</string>
 
+    <string name="stat_data_missing_description">Not enough data available to calculate this statistic.</string>
+
     <string name="date_range_dialog_preconfigured_last_week">Last 7 days</string>
     <string name="date_range_dialog_preconfigured_last_month">Last 30 days</string>
     <string name="date_range_dialog_preconfigured_last_half_year">Last 6 months</string>

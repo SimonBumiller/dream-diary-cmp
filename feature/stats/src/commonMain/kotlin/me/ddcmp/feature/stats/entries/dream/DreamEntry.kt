@@ -63,7 +63,7 @@ import me.bumiller.ddcmp.ui.diagram.histogram.HistogramLabelStyle
 import me.ddcmp.feature.stats.components.DreamLengthTooltip
 import me.ddcmp.feature.stats.components.DreamPersonCountTooltip
 import me.ddcmp.feature.stats.components.HistogramBadge
-import me.ddcmp.feature.stats.components.StatCard
+import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.ddcmp.feature.stats.entries.dream.DreamViewModel.UiEvent
 import me.ddcmp.feature.stats.entries.dream.DreamViewModel.ViewModelEvent
 import org.jetbrains.compose.resources.stringResource

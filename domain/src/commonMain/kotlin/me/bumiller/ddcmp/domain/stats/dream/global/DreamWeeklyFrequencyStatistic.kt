@@ -25,13 +25,13 @@ class DreamWeeklyFrequencyStatistic(
 
     override suspend fun invoke(
         input: I,
-        dreams: List<Dream>,
+        dreams: List<AllDreamUseCase.O>,
         actualRange: ClosedRange<LocalDate>
     ): WeeklyFrequency? {
         if(input.referenceDay !in input.dateRange) return null
 
         val epochDays =
-            dreams.map(Dream::dreamt)
+            dreams.map { it.dream.dreamt }
                 .map { instant -> instant.toLocalDateTime(timeZone).date.toEpochDays() }
 
         val firstEpochDay = epochDays.min()

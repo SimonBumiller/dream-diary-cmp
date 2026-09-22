@@ -17,6 +17,12 @@ sealed interface Stat<StatType> {
         is Present -> Present(mapper(stat))
     }
 
+    fun notEnoughDataIf(predicate: (StatType) -> Boolean): Stat<StatType> =
+        when (this) {
+            is NotEnoughData -> NotEnoughData()
+            is Present -> if (predicate(stat)) NotEnoughData() else Present(stat)
+        }
+
     companion object {
 
         /**
@@ -24,7 +30,7 @@ sealed interface Stat<StatType> {
          */
         fun <StatType> ofNullable(value: StatType?) =
             value?.let { Present<StatType>(value) }
-                ?: NotEnoughData<StatType>()
+                ?: NotEnoughData()
 
     }
 

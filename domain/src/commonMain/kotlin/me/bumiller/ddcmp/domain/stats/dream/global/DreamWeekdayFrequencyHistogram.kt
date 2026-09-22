@@ -22,7 +22,7 @@ class DreamWeekdayFrequencyHistogram(
     override suspend fun createMetadata(
         input: ClosedRange<LocalDate>,
         actualRange: ClosedRange<LocalDate>,
-        dreams: List<Dream>
+        dreams: List<AllDreamUseCase.O>
     ): Pair<List<DayOfWeek>, Unit> {
         val weekdays = listOf(
             DayOfWeek.MONDAY,
