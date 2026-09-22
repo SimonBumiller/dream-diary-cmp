@@ -1,9 +1,7 @@
 package me.bumiller.ddcmp.domain.usecase.emotion
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.EmotionType

@@ -1,7 +1,6 @@
 package me.bumiller.ddcmp.ui.common.dialog
 
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable

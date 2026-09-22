@@ -5,12 +5,12 @@ import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.ImportLogRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
-import me.bumiller.ddcomp.core.database.repository.DreamRepository as DreamRepositoryImpl
-import me.bumiller.ddcomp.core.database.repository.EmotionRepository as EmotionRepositoryImpl
-import me.bumiller.ddcomp.core.database.repository.PersonRepository as PersonRepositoryImpl
-import me.bumiller.ddcomp.core.database.repository.ImportLogRepository as ImportLogRepositoryImpl
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
+import me.bumiller.ddcomp.core.database.repository.DreamRepository as DreamRepositoryImpl
+import me.bumiller.ddcomp.core.database.repository.EmotionRepository as EmotionRepositoryImpl
+import me.bumiller.ddcomp.core.database.repository.ImportLogRepository as ImportLogRepositoryImpl
+import me.bumiller.ddcomp.core.database.repository.PersonRepository as PersonRepositoryImpl
 
 /**
  * Platform specific method to create the database builder

@@ -8,13 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -27,7 +23,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.home.generated.resources.Res
-import dream_diary_cmp.feature.home.generated.resources.dreamlist_action_add
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_action_add
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_description
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_empty_placeholder_clickable
@@ -38,6 +33,7 @@ import dream_diary_cmp.feature.home.generated.resources.emotionlist_matrix_title
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_title
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.EmotionGrid
 import me.bumiller.ddcmp.ui.common.component.MultiStyleText
 import me.bumiller.ddcmp.ui.common.component.TextStyleWithCallback
@@ -46,7 +42,6 @@ import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import me.ddcmp.feature.home.component.ChipEmotionBadge
-import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel
 import me.ddcmp.feature.home.entries.emotionlist.EmotionListViewModel.UiEvent
 import me.ddcmp.feature.home.entries.emotionlist.EmotionListViewModel.UiEvent.AddBasicEmotions
 import me.ddcmp.feature.home.entries.emotionlist.EmotionListViewModel.UiEvent.AddEmotion
@@ -90,14 +85,7 @@ private fun EmotionListEntry(
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(Res.string.emotionlist_title)) },
                 navigationIcon = {
-                    IconButton(
-                        onClick = { onEvent(UiEvent.GoBack) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                            contentDescription = null
-                        )
-                    }
+                    BackIconButton { onEvent(UiEvent.GoBack) }
                 },
                 actions = {
                     AppBarActions(

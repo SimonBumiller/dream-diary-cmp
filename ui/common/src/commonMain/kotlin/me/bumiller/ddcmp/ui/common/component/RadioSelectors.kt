@@ -16,10 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import me.bumiller.ddcmp.domain.model.Confidentiality
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
-import me.bumiller.ddcmp.ui.common.translation.translateDescription
-import me.bumiller.ddcmp.ui.common.translation.translateName
 
 @Composable
 fun <T> RadioSelectors(

@@ -1,6 +1,5 @@
 package me.bumiller.ddcmp.core.io.legacy
 
-import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.writeString
 import kotlinx.coroutines.flow.first

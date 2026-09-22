@@ -1,7 +1,5 @@
 package me.bumiller.ddcomp.core.database.dao.base
 
-import androidx.room.RawQuery
-import androidx.room.RoomRawQuery
 import kotlinx.coroutines.flow.Flow
 
 interface BaseDao<Entity> {

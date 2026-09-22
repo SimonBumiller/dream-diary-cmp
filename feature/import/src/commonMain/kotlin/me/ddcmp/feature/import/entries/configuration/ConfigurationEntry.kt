@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Publish
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
@@ -19,7 +18,6 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
@@ -37,7 +35,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.import.generated.resources.Res
-import dream_diary_cmp.feature.import.generated.resources.configuration_actions_back
 import dream_diary_cmp.feature.import.generated.resources.configuration_configuration_header
 import dream_diary_cmp.feature.import.generated.resources.configuration_description
 import dream_diary_cmp.feature.import.generated.resources.configuration_file_name_placeholder
@@ -52,8 +49,8 @@ import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.name
 import kotlinx.datetime.TimeZone
 import me.bumiller.ddcmp.domain.model.IOFileType
-import me.bumiller.ddcmp.domain.model.ImportResult
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.RadioSelectors
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
@@ -132,14 +129,7 @@ private fun ConfigurationEntry(
                         }
                     },
                     navigationIcon = {
-                        IconButton(
-                            onClick = { onEvent(UiEvent.Return) }
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                                contentDescription = stringResource(Res.string.configuration_actions_back)
-                            )
-                        }
+                        BackIconButton { onEvent(UiEvent.Return) }
                     }
                 )
             }

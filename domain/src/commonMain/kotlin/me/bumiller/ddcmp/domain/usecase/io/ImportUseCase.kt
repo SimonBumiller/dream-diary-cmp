@@ -9,7 +9,6 @@ import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import me.bumiller.ddcmp.domain.infrastructure.SettingsStore
 import me.bumiller.ddcmp.domain.io.BackupImporterFactory
 import me.bumiller.ddcmp.domain.model.ImportOption
-import me.bumiller.ddcmp.domain.model.ImportResult
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 
 /**

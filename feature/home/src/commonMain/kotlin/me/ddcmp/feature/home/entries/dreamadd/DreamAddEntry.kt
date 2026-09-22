@@ -15,14 +15,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
@@ -74,6 +72,7 @@ import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.util.search
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.ConfidentialitySelector
 import me.bumiller.ddcmp.ui.common.component.SearchTextField
 import me.bumiller.ddcmp.ui.common.dialog.DDCDatePickerDialog
@@ -206,14 +205,7 @@ private fun DreamAddEntry(
                         }
                     },
                     navigationIcon = {
-                        IconButton(
-                            onClick = { onEvent(UiEvent.NavigateBack) }
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                                contentDescription = null
-                            )
-                        }
+                        BackIconButton { onEvent(UiEvent.NavigateBack) }
                     }
                 )
             }

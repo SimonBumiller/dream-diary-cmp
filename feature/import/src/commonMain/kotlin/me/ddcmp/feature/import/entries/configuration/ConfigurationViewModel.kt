@@ -1,17 +1,13 @@
 package me.ddcmp.feature.import.entries.configuration
 
 import androidx.lifecycle.viewModelScope
-import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.dialogs.openFileSaver
-import io.github.vinceglb.filekit.readString
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
 import me.bumiller.ddcmp.domain.model.IOFileType
 import me.bumiller.ddcmp.domain.model.ImportOption
-import me.bumiller.ddcmp.domain.model.ImportResult
 import me.bumiller.ddcmp.domain.usecase.io.ImportUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE

@@ -2,7 +2,6 @@ package me.ddcmp.feature.home.entries.emotionadd
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,17 +13,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -48,9 +43,6 @@ import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationBackHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
 import dream_diary_cmp.feature.home.generated.resources.Res
-import dream_diary_cmp.feature.home.generated.resources.dreamadd_persons_info
-import dream_diary_cmp.feature.home.generated.resources.dreamadd_persons_label
-import dream_diary_cmp.feature.home.generated.resources.dreamadd_persons_title
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_closest_label
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_grid_info
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_grid_title
@@ -59,11 +51,9 @@ import dream_diary_cmp.feature.home.generated.resources.emotionadd_name_placehol
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_title
 import kotlinx.coroutines.delay
 import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.Person
-import me.bumiller.ddcmp.domain.util.search
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.EmotionGrid
-import me.bumiller.ddcmp.ui.common.component.SearchTextField
 import me.bumiller.ddcmp.ui.common.dialog.DiscardChangesDialog
 import me.bumiller.ddcmp.ui.common.plus
 import me.ddcmp.feature.home.entries.emotionadd.EmotionAddViewModel.UiEvent
@@ -151,14 +141,7 @@ private fun DreamAddEntry(
                     }
                 },
                 navigationIcon = {
-                    IconButton(
-                        onClick = { onEvent(UiEvent.NavigateBack) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                            contentDescription = null
-                        )
-                    }
+                    BackIconButton { onEvent(UiEvent.NavigateBack) }
                 }
             )
         }

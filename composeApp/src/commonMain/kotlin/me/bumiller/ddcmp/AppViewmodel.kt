@@ -1,11 +1,9 @@
 package me.bumiller.ddcmp
 
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.Settings

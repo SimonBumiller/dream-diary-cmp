@@ -1,15 +1,16 @@
 package me.ddcmp.feature.home.entries.personlist
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.asStateFlow
-import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiEvent
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.ViewModelEvent
-import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.ViewModelEvent.*
+import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.ViewModelEvent.NavigateBack
+import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.ViewModelEvent.NavigateToAdd
+import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.ViewModelEvent.NavigateToEdit
+import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.ViewModelEvent.NavigateToPerson
 import kotlin.time.ExperimentalTime
 
 internal class PersonListViewModel(

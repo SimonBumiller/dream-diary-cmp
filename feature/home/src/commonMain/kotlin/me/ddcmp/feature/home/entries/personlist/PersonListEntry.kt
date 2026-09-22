@@ -10,13 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.home.generated.resources.Res
-import dream_diary_cmp.feature.home.generated.resources.emotionlist_action_add
 import dream_diary_cmp.feature.home.generated.resources.personlist_action_add
 import dream_diary_cmp.feature.home.generated.resources.personlist_description
 import dream_diary_cmp.feature.home.generated.resources.personlist_empty_placeholder
@@ -35,11 +30,11 @@ import dream_diary_cmp.feature.home.generated.resources.personlist_title
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.AppInputChip
+import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
-import me.ddcmp.feature.home.entries.emotionlist.EmotionListViewModel.UiEvent.AddEmotion
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiEvent
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiEvent.AddPerson
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel.UiEvent.GoBack
@@ -82,14 +77,7 @@ private fun PersonListEntry(
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(Res.string.personlist_title)) },
                 navigationIcon = {
-                    IconButton(
-                        onClick = { onEvent(GoBack) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                            contentDescription = null
-                        )
-                    }
+                    BackIconButton { onEvent(GoBack) }
                 },
                 actions = {
                     AppBarActions(

@@ -15,7 +15,6 @@ import me.bumiller.ddcmp.domain.model.stats.bucketFor
 import me.bumiller.ddcmp.domain.stats.dream.global.MarkedDreamLengthFrequencyHistogram.I
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
-import kotlin.time.Duration.Companion.days
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)

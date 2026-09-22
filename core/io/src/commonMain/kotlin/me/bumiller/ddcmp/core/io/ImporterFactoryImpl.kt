@@ -1,9 +1,7 @@
 package me.bumiller.ddcmp.core.io
 
 import io.github.vinceglb.filekit.PlatformFile
-import kotlinx.coroutines.flow.first
 import me.bumiller.ddcmp.core.io.legacy.LegacyImporter
-import me.bumiller.ddcmp.domain.infrastructure.SettingsStore
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.io.BackupImporterFactory
 import me.bumiller.ddcmp.domain.model.ImportOption

@@ -11,13 +11,11 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.datetime.LocalDate
 import me.bumiller.ddcmp.domain.model.Confidentiality
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
-import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase.I as DreamsQuery
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase.I
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
@@ -32,6 +30,7 @@ import me.ddcmp.feature.home.navigation.HomeRoutes
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
+import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase.I as DreamsQuery
 
 @OptIn(ExperimentalTime::class)
 internal class DreamAddViewModel(

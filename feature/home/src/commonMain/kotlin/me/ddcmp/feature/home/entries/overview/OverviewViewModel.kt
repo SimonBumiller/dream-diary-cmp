@@ -13,7 +13,13 @@ import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
 import me.ddcmp.feature.home.entries.overview.OverviewViewModel.UiEvent
 import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent
-import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.*
+import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.AddDream
+import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.GoToDream
+import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.GoToDreams
+import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.GoToEmotions
+import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.GoToPersons
+import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.GoToSettings
+import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.GoToStatistics
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.days
 import kotlin.time.ExperimentalTime

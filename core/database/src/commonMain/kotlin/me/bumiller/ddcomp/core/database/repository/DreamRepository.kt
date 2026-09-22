@@ -7,8 +7,6 @@ import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcomp.core.database.Mapping
 import me.bumiller.ddcomp.core.database.dao.DreamDao
-import me.bumiller.ddcomp.core.database.dao.EmotionDao
-import me.bumiller.ddcomp.core.database.dao.PersonDao
 import me.bumiller.ddcomp.core.database.dao.m2m.DreamEmotionM2MDao
 import me.bumiller.ddcomp.core.database.dao.m2m.DreamPersonM2MDao
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamEmotionM2M

@@ -1,18 +1,12 @@
 package me.ddcmp.feature.import
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
-import androidx.navigationevent.OnForwardCompletedFallback
-import me.bumiller.ddcmp.domain.model.ImportResult
 import me.ddcmp.feature.import.entries.configuration.ConfigurationEntry
 import me.ddcmp.feature.import.entries.result.ResultEntry
 import me.ddcmp.feature.import.navigation.ImportRoutes
-import kotlin.reflect.typeOf
 
 /**
  * Entry for the import section of the app.

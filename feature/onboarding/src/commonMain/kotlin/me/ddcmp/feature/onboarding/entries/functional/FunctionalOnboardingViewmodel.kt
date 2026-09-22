@@ -10,7 +10,6 @@ import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
-import me.ddcmp.feature.onboarding.di.onboarding
 
 /**
  * Viewmodel for the functional onboarding carousel.

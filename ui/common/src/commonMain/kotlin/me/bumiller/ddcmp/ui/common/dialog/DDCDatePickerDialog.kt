@@ -14,7 +14,6 @@ import dream_diary_cmp.ui.common.generated.resources.date_picker_dialog_cancel_l
 import dream_diary_cmp.ui.common.generated.resources.date_picker_dialog_confirm_label
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock

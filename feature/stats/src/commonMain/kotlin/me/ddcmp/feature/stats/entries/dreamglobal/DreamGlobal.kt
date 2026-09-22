@@ -49,13 +49,13 @@ import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic.StreakStatistic
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic.WeeklyFrequency
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.bumiller.ddcmp.ui.common.dialog.DateRangeDialog
 import me.bumiller.ddcmp.ui.common.format.formatDayOfWeekShort
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.diagram.histogram.Histogram
 import me.bumiller.ddcmp.ui.diagram.histogram.HistogramLabelStyle
-import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.ddcmp.feature.stats.components.StreakDashboard
 import me.ddcmp.feature.stats.components.TimeFrequencyTooltip
 import me.ddcmp.feature.stats.components.WeekdayFrequencyTooltip

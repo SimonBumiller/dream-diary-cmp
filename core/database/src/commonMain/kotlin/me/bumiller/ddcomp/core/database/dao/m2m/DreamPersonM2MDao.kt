@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import me.bumiller.ddcomp.core.database.dao.base.M2MDao
-import me.bumiller.ddcomp.core.database.entity.m2m.DreamEmotionM2M
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
 
 @Dao

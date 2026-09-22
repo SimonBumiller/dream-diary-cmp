@@ -9,12 +9,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -55,7 +51,9 @@ import me.bumiller.ddcmp.domain.model.stats.MarkedHistogram
 import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.MultiStyleText
+import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.bumiller.ddcmp.ui.common.component.TextStyleWithCallback
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.diagram.histogram.Histogram
@@ -63,7 +61,6 @@ import me.bumiller.ddcmp.ui.diagram.histogram.HistogramLabelStyle
 import me.ddcmp.feature.stats.components.DreamLengthTooltip
 import me.ddcmp.feature.stats.components.DreamPersonCountTooltip
 import me.ddcmp.feature.stats.components.HistogramBadge
-import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.ddcmp.feature.stats.entries.dream.DreamViewModel.UiEvent
 import me.ddcmp.feature.stats.entries.dream.DreamViewModel.ViewModelEvent
 import org.jetbrains.compose.resources.stringResource
@@ -107,14 +104,7 @@ internal fun DreamEntry(
                     Text(stringResource(Res.string.dream_title))
                 },
                 navigationIcon = {
-                    IconButton(
-                        onClick = { onEvent(UiEvent.OnBack) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                            contentDescription = null
-                        )
-                    }
+                    BackIconButton { onEvent(UiEvent.OnBack) }
                 }
             )
         }

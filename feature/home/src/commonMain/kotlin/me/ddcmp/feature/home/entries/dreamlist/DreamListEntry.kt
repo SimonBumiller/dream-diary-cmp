@@ -10,11 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -38,6 +36,7 @@ import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode.DreamSort
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
@@ -98,14 +97,7 @@ internal fun DreamListEntry(
                         )
                     },
                     navigationIcon = {
-                        IconButton(
-                            onClick = { onEvent(UiEvent.GoBack) }
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                                contentDescription = null
-                            )
-                        }
+                        BackIconButton { onEvent(UiEvent.GoBack) }
                     },
                     actions = {
                         AppBarActions(

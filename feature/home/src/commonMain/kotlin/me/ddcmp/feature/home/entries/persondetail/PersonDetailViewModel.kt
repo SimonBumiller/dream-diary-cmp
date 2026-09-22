@@ -1,18 +1,13 @@
 package me.ddcmp.feature.home.entries.persondetail
 
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode
-import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.person.PersonInfluencingEmotionsStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonInfluencingPersonsStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonOccurrenceStatistic
@@ -23,7 +18,12 @@ import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.UiEvent
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent
-import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent.*
+import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent.Edit
+import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent.GoBack
+import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent.GoToDream
+import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent.GoToEmotion
+import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent.GoToPage
+import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent.GoToPerson
 import me.ddcmp.feature.home.navigation.HomeRoutes
 import kotlin.time.ExperimentalTime
 

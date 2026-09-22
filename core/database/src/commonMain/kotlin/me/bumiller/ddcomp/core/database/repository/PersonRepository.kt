@@ -1,6 +1,5 @@
 package me.bumiller.ddcomp.core.database.repository
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import me.bumiller.ddcmp.domain.model.Person

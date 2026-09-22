@@ -6,7 +6,6 @@ import androidx.room.Junction
 import androidx.room.PrimaryKey
 import androidx.room.Relation
 import me.bumiller.ddcomp.core.database.entity.base.BaseEntity
-import me.bumiller.ddcomp.core.database.entity.m2m.DreamEmotionM2M
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant

@@ -2,7 +2,6 @@ package me.ddcmp.feature.home.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,7 +15,6 @@ import dream_diary_cmp.feature.home.generated.resources.dreamlist_empty_placehol
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
-import me.ddcmp.feature.home.entries.dreamlist.DreamListViewModel
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

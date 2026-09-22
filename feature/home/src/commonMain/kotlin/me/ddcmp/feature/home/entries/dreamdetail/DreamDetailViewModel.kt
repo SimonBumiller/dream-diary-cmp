@@ -3,8 +3,6 @@ package me.ddcmp.feature.home.entries.dreamdetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -12,7 +10,7 @@ import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
-import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase.*
+import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase.I
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
@@ -20,7 +18,11 @@ import me.bumiller.ddcmp.ui.common.biometric.BiometricAuthState
 import me.bumiller.ddcmp.ui.common.biometric.BiometricResult
 import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.UiEvent
 import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent
-import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent.*
+import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent.GoBack
+import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent.GoToDreamStats
+import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent.GoToEdit
+import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent.GoToEmotion
+import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent.GoToPerson
 import me.ddcmp.feature.home.navigation.HomeRoutes
 import kotlin.time.ExperimentalTime
 

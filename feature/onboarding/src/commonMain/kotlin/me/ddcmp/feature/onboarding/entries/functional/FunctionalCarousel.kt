@@ -35,7 +35,6 @@ import dream_diary_cmp.feature.onboarding.generated.resources.import_description
 import dream_diary_cmp.feature.onboarding.generated.resources.import_import_label
 import dream_diary_cmp.feature.onboarding.generated.resources.import_noimport_label
 import dream_diary_cmp.feature.onboarding.generated.resources.import_title
-import dream_diary_cmp.feature.onboarding.generated.resources.lock_continue_label
 import dream_diary_cmp.feature.onboarding.generated.resources.lock_description
 import dream_diary_cmp.feature.onboarding.generated.resources.lock_title
 import dream_diary_cmp.feature.onboarding.generated.resources.lock_unlock_label
@@ -44,7 +43,6 @@ import dream_diary_cmp.feature.onboarding.generated.resources.theme_dynamic_desc
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_dynamic_label
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_mode_label
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_title
-import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.ColorMode
 import me.bumiller.ddcmp.domain.model.ColorTheme
 import me.bumiller.ddcmp.domain.model.Confidentiality
@@ -55,11 +53,9 @@ import me.bumiller.ddcmp.ui.common.biometric.BiometricResult
 import me.bumiller.ddcmp.ui.common.biometric.biometricAvailable
 import me.bumiller.ddcmp.ui.common.biometric.rememberBiometricState
 import me.bumiller.ddcmp.ui.common.component.RadioSelectors
-import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import me.bumiller.ddcmp.ui.common.style.dynamicColorAvailable
 import me.bumiller.ddcmp.ui.common.translation.translateDescription
 import me.bumiller.ddcmp.ui.common.translation.translateName
-import me.ddcmp.feature.onboarding.OnboardingStyles
 import me.ddcmp.feature.onboarding.entries.functional.FunctionalOnboardingViewmodel.UiEvent
 import me.ddcmp.feature.onboarding.entries.functional.FunctionalOnboardingViewmodel.UiState
 import me.ddcmp.feature.onboarding.entries.functional.FunctionalOnboardingViewmodel.ViewModelEvent

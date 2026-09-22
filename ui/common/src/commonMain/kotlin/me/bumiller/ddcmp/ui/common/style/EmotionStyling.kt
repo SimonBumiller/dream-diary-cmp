@@ -3,7 +3,6 @@ package me.bumiller.ddcmp.ui.common.style
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.graphics.shapes.RoundedPolygon
 import me.bumiller.ddcmp.domain.model.EmotionType
 
