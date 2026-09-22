@@ -11,6 +11,7 @@ import me.bumiller.ddcmp.domain.stats.dream.global.MarkedDreamPersonCountFrequen
 import me.bumiller.ddcmp.domain.stats.person.PersonInfluencingEmotionsStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonInfluencingPersonsStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonOccurrenceStatistic
+import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
@@ -56,4 +57,5 @@ val domain = module {
     single { PersonInfluencingEmotionsStatistic(get()) }
     single { PersonInfluencingPersonsStatistic(get()) }
     single { PersonOccurrenceStatistic(get()) }
+    single { PersonsOccurrencesCountStatistic(get()) }
 }

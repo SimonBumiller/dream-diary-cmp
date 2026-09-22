@@ -62,6 +62,9 @@ fun HomeEntry() {
                     dreamId = route.dreamId,
                     onReturn = {
                         navController.popBackStack()
+                    },
+                    onGoToPerson = {
+                        navController.navigate(HomeRoutes.PersonDetail(it))
                     }
                 )
             }

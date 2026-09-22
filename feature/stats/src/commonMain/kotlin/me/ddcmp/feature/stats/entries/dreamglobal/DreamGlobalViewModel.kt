@@ -6,6 +6,7 @@ import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamTimeFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeekdayFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic
+import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
@@ -20,7 +21,8 @@ internal class DreamGlobalViewModel(
     weekdayFrequency: DreamWeekdayFrequencyHistogram,
     weeklyFrequency: DreamWeeklyFrequencyStatistic,
     dreamStreak: DreamStreakStatistic,
-    dreamDates: DreamDatesUseCase
+    dreamDates: DreamDatesUseCase,
+    personsOccurrences: PersonsOccurrencesCountStatistic
 ) : DateRangeViewModel<DreamGlobalViewModel.UiEvent, DreamGlobalViewModel.ViewModelEvent>(dreamDates) {
 
     /**
@@ -35,6 +37,14 @@ internal class DreamGlobalViewModel(
      */
     val weekdayHistogram = dateRangeReactive { dateRange ->
         weekdayFrequency(dateRange)
+    }.stateIn(null)
+
+    /**
+     * Contains the top five most occurring persons together with their occurrence count.
+     */
+    val topOccurringPersons = dateRangeReactive { dateRange ->
+        val input = PersonsOccurrencesCountStatistic.I(dateRange, 5)
+        personsOccurrences(input)
     }.stateIn(null)
 
     /**
@@ -60,15 +70,18 @@ internal class DreamGlobalViewModel(
         UiEvent.Return -> fireEvent(ViewModelEvent.Return)
         is UiEvent.ChangeDateRange -> updateDateRange(event.dateRange)
         UiEvent.ToggleDateRangeDialogVisibility -> toggleDateRangeDialogVisibility()
+        is UiEvent.ClickOnPerson -> fireEvent(ViewModelEvent.GoToPerson(event.personId))
     }
 
     sealed interface UiEvent : UIE {
         data class ChangeDateRange(val dateRange: PickedDateRange) : UiEvent
+        data class ClickOnPerson(val personId: Long): UiEvent
         data object Return : UiEvent
         data object ToggleDateRangeDialogVisibility : UiEvent
     }
 
     sealed interface ViewModelEvent : VME {
+        data class GoToPerson(val personId: Long): ViewModelEvent
         data object Return : ViewModelEvent
     }
 

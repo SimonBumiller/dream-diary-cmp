@@ -13,6 +13,10 @@
     <string name="global_dream_time_frequency_tooltip_1">From %1$s to %2$s</string>
     <string name="global_dream_time_frequency_tooltip_2">In total %1$d dreams</string>
     <string name="global_dream_weekday_frequency_tooltip">%1$s: %2$d</string>
+    <string name="global_dream_top_persons_title">Most frequent persons</string>
+    <string name="global_dream_top_persons_description">This statistic shows what persons most commonly occur in your dreams.</string>
+    <string name="global_dream_top_person_index">%1$d.</string>
+    <string name="global_dream_top_person_count_label">%1$d dreams</string>
 
     <string name="weekly_average_overall">Overall</string>
     <string name="weekly_average_7_days">Last 7 days</string>

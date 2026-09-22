@@ -1,13 +1,18 @@
 package me.ddcmp.feature.stats.entries.dreamglobal
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.EditCalendar
@@ -15,11 +20,16 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.stats.generated.resources.Res
@@ -28,6 +38,10 @@ import dream_diary_cmp.feature.stats.generated.resources.global_dream_streak_tit
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_time_frequency_description
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_time_frequency_title
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_title
+import dream_diary_cmp.feature.stats.generated.resources.global_dream_top_person_count_label
+import dream_diary_cmp.feature.stats.generated.resources.global_dream_top_person_index
+import dream_diary_cmp.feature.stats.generated.resources.global_dream_top_persons_description
+import dream_diary_cmp.feature.stats.generated.resources.global_dream_top_persons_title
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_weekday_frequency_description
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_weekday_frequency_title
 import dream_diary_cmp.feature.stats.generated.resources.global_dream_weekly_average_description_30_days
@@ -44,11 +58,15 @@ import kotlinx.datetime.DayOfWeek.THURSDAY
 import kotlinx.datetime.DayOfWeek.TUESDAY
 import kotlinx.datetime.DayOfWeek.WEDNESDAY
 import kotlinx.datetime.LocalDate
+import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.model.stats.Histogram
 import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic.StreakStatistic
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic.WeeklyFrequency
+import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic
+import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic.PersonWithCount
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.bumiller.ddcmp.ui.common.dialog.DateRangeDialog
 import me.bumiller.ddcmp.ui.common.format.formatDayOfWeekShort
@@ -64,15 +82,18 @@ import me.ddcmp.feature.stats.domain.DateRangeViewModel
 import me.ddcmp.feature.stats.entries.dreamglobal.DreamGlobalViewModel.UiEvent
 import me.ddcmp.feature.stats.entries.dreamglobal.DreamGlobalViewModel.ViewModelEvent
 import org.jetbrains.compose.resources.stringResource
+import kotlin.math.roundToInt
 
 @Composable
 internal fun DreamGlobal(
-    onReturn: () -> Unit
+    onReturn: () -> Unit,
+    onGoToPerson: (Long) -> Unit
 ) {
     ViewModelScope<UiEvent, ViewModelEvent, DreamGlobalViewModel>(
         onViewModelEvent = {
             when (it) {
                 ViewModelEvent.Return -> onReturn()
+                is ViewModelEvent.GoToPerson -> onGoToPerson(it.personId)
             }
         }
     ) { vm ->
@@ -81,10 +102,9 @@ internal fun DreamGlobal(
         val weeklyFrequency by vm.weeklyFrequency.collectAsStateWithLifecycle()
         val streakStatistic by vm.streakStatistic.collectAsStateWithLifecycle()
         val dateRangeState by vm.dateRangeState.collectAsStateWithLifecycle()
+        val topOccurringPersons by vm.topOccurringPersons.collectAsStateWithLifecycle()
 
-        DreamGlobal(timeFrequency, weekdayFrequency, weeklyFrequency, streakStatistic, dateRangeState, vm::onEvent)
-
-
+        DreamGlobal(timeFrequency, weekdayFrequency, weeklyFrequency, streakStatistic, dateRangeState, topOccurringPersons, vm::onEvent)
     }
 }
 
@@ -96,13 +116,15 @@ private fun DreamGlobal(
     weeklyFrequency: Stat<WeeklyFrequency>?,
     streakStatistic: Stat<StreakStatistic>?,
     dateRangeState: DateRangeViewModel.DateRangeUiState,
+    topOccurringPersons: Stat<List<PersonWithCount>>?,
     onEvent: (UiEvent) -> Unit
 ) {
     val isLoading = listOf(
         timeFrequency,
         weeklyFrequency,
         weekdayFrequency,
-        streakStatistic
+        streakStatistic,
+        topOccurringPersons
     ).any { it == null }
 
     if(dateRangeState.showDateRangeDialog) {
@@ -144,7 +166,8 @@ private fun DreamGlobal(
                                 contentDescription = null
                             )
                         }
-                    }
+                    },
+                    navigationIcon = { BackIconButton { onEvent(UiEvent.Return) } }
                 )
             }
         }
@@ -218,6 +241,17 @@ private fun DreamGlobal(
             }
 
             StatCard(
+                stat = topOccurringPersons!!,
+                title = stringResource(Res.string.global_dream_top_persons_title),
+                description = stringResource(Res.string.global_dream_top_persons_description)
+            ) { topPersons ->
+                TopPersonsList(
+                    topPersons = topPersons,
+                    onPersonClick = { onEvent(UiEvent.ClickOnPerson(it.id)) }
+                )
+            }
+
+            StatCard(
                 modifier = Modifier
                     .height(350.dp),
                 stat = timeFrequency!!,
@@ -241,6 +275,65 @@ private fun DreamGlobal(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun TopPersonsList(
+    topPersons: List<PersonWithCount>,
+    onPersonClick: (Person) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        topPersons.forEachIndexed { index, topPerson ->
+            TopPersonRow(
+                index = index + 1,
+                person = topPerson,
+                onClick = { onPersonClick(topPerson.person) }
+            )
+        }
+    }
+}
+
+@Composable
+private fun TopPersonRow(
+    modifier: Modifier = Modifier,
+    index: Int,
+    person: PersonWithCount,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(Res.string.global_dream_top_person_index, index),
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+        )
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        Text(
+            text = person.person.name,
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        Spacer(modifier = Modifier.weight(1F))
+
+        Text(
+            text = stringResource(
+                Res.string.global_dream_top_person_count_label,
+                person.count
+            ),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }
 

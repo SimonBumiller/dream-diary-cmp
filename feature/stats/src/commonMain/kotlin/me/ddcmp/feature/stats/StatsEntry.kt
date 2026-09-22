@@ -12,7 +12,8 @@ import me.ddcmp.feature.stats.navigation.StatsRoutes.DreamGlobal
 @Composable
 fun StatsEntry(
     dreamId: Long?,
-    onReturn: () -> Unit
+    onReturn: () -> Unit,
+    onGoToPerson: (Long) -> Unit
 ) {
     val navController = rememberNavController()
 
@@ -25,7 +26,8 @@ fun StatsEntry(
     ) {
         composable<DreamGlobal> {
             DreamGlobal(
-                onReturn = onReturn
+                onReturn = onReturn,
+                onGoToPerson = onGoToPerson
             )
         }
         composable<StatsRoutes.Dream> {
