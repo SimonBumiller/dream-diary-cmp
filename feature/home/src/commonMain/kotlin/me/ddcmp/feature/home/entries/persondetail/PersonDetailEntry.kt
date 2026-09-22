@@ -176,7 +176,8 @@ private fun PersonDetailEntry(
             HorizontalPager(
                 modifier = Modifier
                     .fillMaxSize(),
-                state = tabPagerState
+                state = tabPagerState,
+                verticalAlignment = Alignment.Top
             ) { page ->
                 when (page) {
                     PersonDetailTabs.Stats.index -> StatisticsTab(
