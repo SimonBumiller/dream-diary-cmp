@@ -58,13 +58,16 @@ import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamConditionalOccurren
 import me.bumiller.ddcmp.domain.stats.person.PersonOccurrenceStatistic.PersonOccurrenceInfo
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.bumiller.ddcmp.ui.common.format.formatInstant
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
+import me.ddcmp.feature.home.component.DreamLazyColumn
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.UiEvent
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.UiEvent.ChangeTab
+import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.UiEvent.GoBack
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.UiState
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent
 import org.jetbrains.compose.resources.stringResource
@@ -90,7 +93,9 @@ internal fun PersonDetailEntry(
                 is ViewModelEvent.GoToDream -> onGoToDream(it.dreamId)
                 is ViewModelEvent.GoToEmotion -> onGoToEmotion(it.emotionId)
                 is ViewModelEvent.GoToPerson -> onGoToPerson(it.personId)
-                is ViewModelEvent.GoToPage -> { tabPagerState.animateScrollToPage(it.page) }
+                is ViewModelEvent.GoToPage -> {
+                    tabPagerState.animateScrollToPage(it.page)
+                }
             }
         }
     ) { vm ->
@@ -110,7 +115,6 @@ internal fun PersonDetailEntry(
         val dreams by vm.dreamsState.collectAsStateWithLifecycle()
         val occurrence by vm.occurrenceStats.collectAsStateWithLifecycle()
         val uiState by vm.uiState.collectAsStateWithLifecycle()
-
 
         PersonDetailEntry(
             vm::onEvent,
@@ -137,7 +141,7 @@ private fun PersonDetailEntry(
     uiState: UiState,
     tabPagerState: PagerState
 ) {
-    val loading = person == null || dreams == null || occurrence == null
+    val loading = person == null || occurrence == null
 
     Scaffold(
         modifier = Modifier
@@ -147,7 +151,8 @@ private fun PersonDetailEntry(
                 loading = loading
             ) {
                 CenterAlignedTopAppBar(
-                    title = { Text(stringResource(Res.string.person_detail_title)) }
+                    title = { Text(stringResource(Res.string.person_detail_title)) },
+                    navigationIcon = { BackIconButton { onEvent(GoBack) } }
                 )
             }
         }
@@ -164,7 +169,8 @@ private fun PersonDetailEntry(
 
             TabRow(
                 selected = uiState.selectedTab,
-                onChange = { onEvent(ChangeTab(it)) }
+                onChange = { onEvent(ChangeTab(it)) },
+                dreamsAvailable = !dreams.isNullOrEmpty()
             )
 
             HorizontalPager(
@@ -182,7 +188,7 @@ private fun PersonDetailEntry(
                         associatedEmotions
                     )
 
-                    PersonDetailTabs.Dreams.index -> DreamsTab()
+                    PersonDetailTabs.Dreams.index -> DreamsTab(dreams ?: emptyList(), onEvent)
                 }
             }
 
@@ -194,7 +200,7 @@ private fun PersonDetailEntry(
 @Composable
 private fun StatisticsTab(
     occurrence: Stat<PersonOccurrenceInfo>,
-    dreams: List<AllDreamUseCase.O>,
+    dreams: List<AllDreamUseCase.O>?,
     associatedPersons: Stat<List<ConditionalOccurrenceInfo<Person>>>?,
     person: Person,
     onEvent: (UiEvent) -> Unit,
@@ -263,15 +269,22 @@ private fun StatisticsTab(
 
 @Composable
 private fun DreamsTab(
-
+    dreams: List<AllDreamUseCase.O>,
+    onEvent: (UiEvent) -> Unit
 ) {
-
+    DreamLazyColumn(
+        modifier = Modifier
+            .fillMaxWidth(),
+        dreams = dreams,
+        onClick = { onEvent(UiEvent.GoToDream(it.id)) }
+    )
 }
 
 @Composable
 private fun TabRow(
     selected: PersonDetailTabs,
-    onChange: (PersonDetailTabs) -> Unit
+    onChange: (PersonDetailTabs) -> Unit,
+    dreamsAvailable: Boolean
 ) {
     SecondaryTabRow(
         selectedTabIndex = selected.index
@@ -280,7 +293,8 @@ private fun TabRow(
             Tab(
                 selected = tab == selected,
                 text = { Text(stringResource(tab.textResource)) },
-                onClick = { onChange(tab) }
+                onClick = { onChange(tab) },
+                enabled = dreamsAvailable
             )
         }
     }
@@ -306,7 +320,7 @@ private fun Header(
 @Composable
 private fun BasicStats(
     occurrence: Stat<PersonOccurrenceInfo>,
-    dreams: List<AllDreamUseCase.O>
+    dreams: List<AllDreamUseCase.O>?
 ) {
     Column {
         when (occurrence) {
@@ -314,7 +328,7 @@ private fun BasicStats(
             is Stat.Present -> Occurrence(occurrence.stat)
         }
 
-        if (dreams.isNotEmpty()) {
+        if (!dreams.isNullOrEmpty()) {
             DreamOccurrenceCount(dreams.size)
         }
     }

@@ -49,7 +49,7 @@ internal class PersonDetailViewModel(
 
     private val dreamsQuery = AllDreamUseCase.I(
         sortMode = SortMode.DreamSort.Dreamt,
-        sortDirection = SortDirection.Ascending,
+        sortDirection = SortDirection.Descending,
         personIds = setOf(personId)
     )
 
