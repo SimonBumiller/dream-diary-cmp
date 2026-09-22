@@ -62,7 +62,7 @@ class DreamWeeklyFrequencyStatistic(
             lastSevenDays = lastSevenDays,
             lastThirtyDays = Stat.ofNullable(lastThirtyDays),
             lastSixMonths = Stat.ofNullable(lastSixMonths),
-            lastSevenDaysRelative = calculateRelative(lastSevenDays, overall)
+            lastSevenDaysRelative = calculateRelative(overall, lastSevenDays)
         )
     }
 

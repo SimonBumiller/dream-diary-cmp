@@ -73,7 +73,7 @@
     <string name="dreamdetail_confidentiality_pre">This dream is marked with </string>
     <string name="dreamdetail_confidentiality_post"> confidentiality.</string>
 
-    <string name="overview_current_week_title_below_average">Lower dream activity that usual</string>
+    <string name="overview_current_week_title_below_average">Lower dream activity than usual</string>
     <string name="overview_current_week_description_below_average">You have had fewer dreams in the last seven days than you usually have. This could be caused by lower average sleep duration or less attention to your dreaming behavior.</string>
     <string name="overview_current_week_title_average">Normal dream activity</string>
     <string name="overview_current_week_description_average">Your dream activity in the last seven days somewhat resembles your normal dream activity. Get more insight by looking at the statistics about your dream-behavior.</string>
