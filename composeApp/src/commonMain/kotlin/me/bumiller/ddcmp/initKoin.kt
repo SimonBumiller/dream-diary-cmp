@@ -7,6 +7,7 @@ import me.bumiller.ddcomp.core.database.database
 import me.ddcmp.feature.home.home
 import me.ddcmp.feature.import.import
 import me.ddcmp.feature.onboarding.di.onboarding
+import me.ddcmp.feature.settings.settings
 import me.ddcmp.feature.stats.statistics
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
@@ -29,6 +30,8 @@ fun initKoin(config: KoinApplication.() -> Unit = {}) {
     startKoin {
         config()
 
-        modules(app, database, datastore, domain, onboarding, home, import, io, statistics)
+        modules(app, database, datastore, domain, onboarding, home, import, io, statistics,
+            settings
+        )
     }
 }

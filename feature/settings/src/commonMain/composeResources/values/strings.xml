@@ -1,0 +1,16 @@
+<resources>
+    <string name="settings_root_title">Settings</string>
+
+    <string name="settings_root_design_section_label">Design</string>
+    <string name="settings_root_design_color_theme_title">Dynamic color theme</string>
+    <string name="settings_root_design_color_theme_description">Use a color theme tailor-made to your operating systems color scheme.</string>
+    <string name="settings_root_design_color_mode_title">Color mode</string>
+
+    <string name="settings_root_confidentiality_section_label">Confidentiality</string>
+    <string name="settings_root_confidentiality_label">Default Confidentiality for Dreams</string>
+    <string name="settings_root_unlock_label">Lock app</string>
+    <string name="settings_root_unlock_description">Require biometric authentication before opening the app</string>
+    <string name="settings_root_confidentiality_none_description">No special protection</string>
+    <string name="settings_root_confidentiality_medium_description">Content preview is hidden</string>
+    <string name="settings_root_confidentiality_severe_description">Content preview and title is hidden, device unlock required</string>
+</resources>

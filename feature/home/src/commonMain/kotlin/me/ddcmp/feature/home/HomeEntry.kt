@@ -24,7 +24,9 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 @Composable
-fun HomeEntry() {
+fun HomeEntry(
+    onGoToSettings: () -> Unit
+) {
     val navController = rememberNavController()
 
     Surface(
@@ -143,7 +145,7 @@ fun HomeEntry() {
                     onAddDream = {
                         navController.navigate(HomeRoutes.AddDream())
                     },
-                    onGoToSettings = {},
+                    onGoToSettings = onGoToSettings,
                     onGoToEmotions = {
                         navController.navigate(HomeRoutes.EmotionList)
                     },
