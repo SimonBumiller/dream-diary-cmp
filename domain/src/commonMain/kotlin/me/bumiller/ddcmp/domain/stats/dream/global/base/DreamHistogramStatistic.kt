@@ -29,9 +29,9 @@ abstract class DreamHistogramStatistic<I, Bucket, BucketSize, BucketValue : Numb
      * Finds the bucket for a specific dream.
      *
      * @param dream The dream for which the bucket should be determined.
-     * @return The bucket of the dream
+     * @return The bucket of the dream, or null if the dream doesn't belong in any bucket.
      */
-    protected abstract suspend fun findBucketFor(dream: Dream, buckets: List<Bucket>): Bucket
+    protected abstract suspend fun findBucketFor(dream: AllDreamUseCase.O, buckets: List<Bucket>, input: I): Bucket?
 
     /**
      * Finds the value of the dream.
@@ -56,20 +56,24 @@ abstract class DreamHistogramStatistic<I, Bucket, BucketSize, BucketValue : Numb
     ): Histogram<Bucket, BucketSize, BucketValue>? {
         val (buckets, bucketSize) = createMetadata(input, actualRange, dreams) ?: return null
 
-        val dreamsWithBuckets = dreams.associateWith {
-            findBucketFor(it.dream, buckets)
+        val dreamsWithBuckets = dreams.mapNotNull {
+            val bucket = findBucketFor(it, buckets, input)
+            if(bucket == null) null
+            else it to (bucket as Bucket)
         }
+            .toMap()
             .apply {
                 values.forEach { bucket ->
                     require(bucket in buckets) { "Dream was assigned a bucket that it does not belong to." }
                 }
             }
 
-        val bucketsWithDreams = dreamsWithBuckets.entries
-            .groupBy(
-                keySelector = { it.value },
-                valueTransform = { it.key }
-            )
+        val bucketsWithDreams = buckets.associateWith { bucket ->
+            dreamsWithBuckets
+                .filter { it.value == bucket }
+                .keys
+                .toList()
+        }
 
         val bucketsWithValues = bucketsWithDreams.map { (bucket, dreams) ->
             val values = dreams.map { getDreamValue(it.dream, bucket) }

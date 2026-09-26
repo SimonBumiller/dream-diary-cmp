@@ -11,6 +11,7 @@ import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.stats.person.PersonInfluencingEmotionsStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonInfluencingPersonsStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonOccurrenceStatistic
+import me.bumiller.ddcmp.domain.stats.person.PersonTimeFrequencyHistogram
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
@@ -34,7 +35,8 @@ internal class PersonDetailViewModel(
     savedStateHandle: SavedStateHandle,
     associatedEmotions: PersonInfluencingEmotionsStatistic,
     associatedPersons: PersonInfluencingPersonsStatistic,
-    personOccurrence: PersonOccurrenceStatistic
+    personOccurrence: PersonOccurrenceStatistic,
+    timeFrequency: PersonTimeFrequencyHistogram
 ) : AppViewModel<UiEvent, ViewModelEvent>() {
 
     private val personId = savedStateHandle.toRoute<HomeRoutes.PersonDetail>().personId
@@ -78,6 +80,12 @@ internal class PersonDetailViewModel(
                 .map { it.take(5) }
                 .notEnoughDataIf { it.isEmpty() }
         }
+        .stateIn(null)
+
+    /**
+     * Stat histogram for the frequency of the person.
+     */
+    val timeFrequency = timeFrequency(personId)
         .stateIn(null)
 
     /**

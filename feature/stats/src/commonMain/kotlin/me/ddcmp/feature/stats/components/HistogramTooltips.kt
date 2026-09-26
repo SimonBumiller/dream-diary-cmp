@@ -47,7 +47,7 @@ private fun BasicTooltip(
 }
 
 @Composable
-internal fun TimeFrequencyTooltip(
+fun TimeFrequencyTooltip(
     modifier: Modifier = Modifier,
     from: LocalDate,
     length: DatePeriod,

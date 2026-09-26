@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
@@ -21,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SecondaryTabRow
@@ -49,10 +51,18 @@ import dream_diary_cmp.feature.home.generated.resources.person_detail_first_occu
 import dream_diary_cmp.feature.home.generated.resources.person_detail_last_occurence_label
 import dream_diary_cmp.feature.home.generated.resources.person_detail_no_info_placeholder
 import dream_diary_cmp.feature.home.generated.resources.person_detail_no_occurence
+import dream_diary_cmp.feature.home.generated.resources.person_detail_time_frequency_description
+import dream_diary_cmp.feature.home.generated.resources.person_detail_time_frequency_period
+import dream_diary_cmp.feature.home.generated.resources.person_detail_time_frequency_period_label
+import dream_diary_cmp.feature.home.generated.resources.person_detail_time_frequency_title
 import dream_diary_cmp.feature.home.generated.resources.person_detail_title
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.plus
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.model.stats.Histogram
 import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamConditionalOccurrenceStatistic.ConditionalOccurrenceInfo
 import me.bumiller.ddcmp.domain.stats.person.PersonOccurrenceStatistic.PersonOccurrenceInfo
@@ -61,15 +71,19 @@ import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.bumiller.ddcmp.ui.common.format.formatInstant
+import me.bumiller.ddcmp.ui.common.format.formatLocalDate
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
+import me.bumiller.ddcmp.ui.diagram.histogram.Histogram
+import me.bumiller.ddcmp.ui.diagram.histogram.HistogramLabelStyle
 import me.ddcmp.feature.home.component.DreamLazyColumn
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.UiEvent
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.UiEvent.ChangeTab
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.UiEvent.GoBack
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.UiState
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent
+import me.ddcmp.feature.stats.components.TimeFrequencyTooltip
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
 import kotlin.time.ExperimentalTime
@@ -114,6 +128,7 @@ internal fun PersonDetailEntry(
         val associatedPersons by vm.associatedPersons.collectAsStateWithLifecycle()
         val dreams by vm.dreamsState.collectAsStateWithLifecycle()
         val occurrence by vm.occurrenceStats.collectAsStateWithLifecycle()
+        val timeFrequency by vm.timeFrequency.collectAsStateWithLifecycle()
         val uiState by vm.uiState.collectAsStateWithLifecycle()
 
         PersonDetailEntry(
@@ -123,6 +138,7 @@ internal fun PersonDetailEntry(
             associatedPersons,
             dreams,
             occurrence,
+            timeFrequency,
             uiState,
             tabPagerState
         )
@@ -138,6 +154,7 @@ private fun PersonDetailEntry(
     associatedPersons: Stat<List<ConditionalOccurrenceInfo<Person>>>?,
     dreams: List<AllDreamUseCase.O>?,
     occurrence: Stat<PersonOccurrenceInfo>?,
+    timeFrequency: Stat<Histogram<LocalDate, DatePeriod, Int>>?,
     uiState: UiState,
     tabPagerState: PagerState
 ) {
@@ -186,7 +203,8 @@ private fun PersonDetailEntry(
                         associatedPersons,
                         person,
                         onEvent,
-                        associatedEmotions
+                        associatedEmotions,
+                        timeFrequency
                     )
 
                     PersonDetailTabs.Dreams.index -> DreamsTab(dreams ?: emptyList(), onEvent)
@@ -205,7 +223,8 @@ private fun StatisticsTab(
     associatedPersons: Stat<List<ConditionalOccurrenceInfo<Person>>>?,
     person: Person,
     onEvent: (UiEvent) -> Unit,
-    associatedEmotions: Stat<List<ConditionalOccurrenceInfo<Emotion>>>?
+    associatedEmotions: Stat<List<ConditionalOccurrenceInfo<Emotion>>>?,
+    timeFrequency: Stat<Histogram<LocalDate, DatePeriod, Int>>?
 ) {
     Column(
         modifier = Modifier
@@ -262,6 +281,71 @@ private fun StatisticsTab(
                             onClick = { onEvent(UiEvent.ClickEmotion(emotion.attribute)) }
                         )
                     }
+                }
+            }
+        }
+
+        if (timeFrequency != null) {
+            StatCard(
+                stat = timeFrequency,
+                title = stringResource(Res.string.person_detail_time_frequency_title),
+                description = stringResource(
+                    Res.string.person_detail_time_frequency_description,
+                    person.name
+                )
+            ) { histogram ->
+                val maxPeriodStart = histogram
+                    .dataMap
+                    .entries
+                    .maxByOrNull { it.value }
+                    ?.let { if (it.value > histogram.average) it else null }
+                    ?.key
+
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    if (maxPeriodStart != null) {
+                        val maxPeriodEnd = maxPeriodStart.plus(histogram.bucketSize)
+
+                        val maxPeriodString = formatLocalDate(maxPeriodStart)
+                        val maxPeriodEndString = formatLocalDate(maxPeriodEnd)
+
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(
+                                text = stringResource(Res.string.person_detail_time_frequency_period_label),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                text = stringResource(
+                                    Res.string.person_detail_time_frequency_period,
+                                    maxPeriodString,
+                                    maxPeriodEndString
+                                ),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+                    }
+
+                    Histogram(
+                        modifier = Modifier
+                            .height(200.dp),
+                        meta = histogram,
+                        bucketLabel = { it.toString() },
+                        bucketComparator = { date1, date2 ->
+                            date1.toEpochDays().compareTo(date2.toEpochDays())
+                        },
+                        tooltip = { from, count, length ->
+                            TimeFrequencyTooltip(
+                                from = from,
+                                length = length,
+                                dreamCount = count
+                            )
+                        },
+                        labelStyle = HistogramLabelStyle.PartiallyVisible(3)
+                    )
                 }
             }
         }

@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.LocalDate
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
-import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamFrequencyHistogramStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import kotlin.time.ExperimentalTime
@@ -39,8 +38,12 @@ class DreamPersonCountFrequencyHistogram(
         return range.toList() to Unit
     }
 
-    override suspend fun findBucketFor(dream: Dream, buckets: List<Int>): Int = personRepo
-        .getForDream(dream.id)
+    override suspend fun findBucketFor(
+        dream: AllDreamUseCase.O,
+        buckets: List<Int>,
+        input: ClosedRange<LocalDate>
+    ): Int = personRepo
+        .getForDream(dream.dream.id)
         .first()
         ?.size ?: 0
 

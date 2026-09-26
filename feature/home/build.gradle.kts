@@ -53,6 +53,7 @@ kotlin {
             implementation(project(":domain"))
             implementation(project(":feature:stats"))
             implementation(project(":ui:common"))
+            implementation(project(":ui:diagram"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

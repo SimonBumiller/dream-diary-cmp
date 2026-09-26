@@ -4,7 +4,6 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamFrequencyHistogramStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import kotlin.time.ExperimentalTime
@@ -37,8 +36,12 @@ class DreamWeekdayFrequencyHistogram(
         return weekdays to Unit
     }
 
-    override suspend fun findBucketFor(dream: Dream, buckets: List<DayOfWeek>): DayOfWeek {
-        return dream.dreamt.toLocalDateTime(TimeZone.currentSystemDefault()).dayOfWeek
+    override suspend fun findBucketFor(
+        dream: AllDreamUseCase.O,
+        buckets: List<DayOfWeek>,
+        input: ClosedRange<LocalDate>
+    ): DayOfWeek {
+        return dream.dream.dreamt.toLocalDateTime(TimeZone.currentSystemDefault()).dayOfWeek
     }
 
 }

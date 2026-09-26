@@ -4,7 +4,6 @@ import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
-import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamFrequencyHistogramStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import kotlin.time.ExperimentalTime
@@ -42,8 +41,12 @@ class DreamTimeFrequencyHistogram(
         return bucketStarts to bucketSize
     }
 
-    override suspend fun findBucketFor(dream: Dream, buckets: List<LocalDate>): LocalDate {
-        val dreamDate = dream.dreamt
+    override suspend fun findBucketFor(
+        dream: AllDreamUseCase.O,
+        buckets: List<LocalDate>,
+        input: ClosedRange<LocalDate>
+    ): LocalDate {
+        val dreamDate = dream.dream.dreamt
             .toLocalDateTime(timeZone)
             .date
 
