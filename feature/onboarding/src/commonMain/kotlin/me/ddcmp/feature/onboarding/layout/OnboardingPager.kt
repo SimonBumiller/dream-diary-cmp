@@ -4,6 +4,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
@@ -24,6 +26,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.ui.common.LocalWindowSizeClass
 import me.ddcmp.feature.onboarding.OnboardingStyles
 
@@ -34,6 +37,7 @@ internal fun <Screen> OnboardingPager(
     screens: List<Screen>,
     content: @Composable (Screen) -> Unit
 ) {
+    val scope = rememberCoroutineScope()
     val sizeClass = LocalWindowSizeClass.current
 
     if (sizeClass.doVertical) {
@@ -54,7 +58,12 @@ internal fun <Screen> OnboardingPager(
                     .padding(bottom = 12.dp),
                 numberOfPages = screens.size,
                 selectedPage = state.currentPage,
-                vertical = false
+                vertical = false,
+                onClick = {
+                    scope.launch {
+                        state.animateScrollToPage(it)
+                    }
+                }
             )
         }
     } else {
@@ -75,7 +84,12 @@ internal fun <Screen> OnboardingPager(
                     .padding(end = 12.dp),
                 numberOfPages = screens.size,
                 selectedPage = state.currentPage,
-                vertical = true
+                vertical = true,
+                onClick = {
+                    scope.launch {
+                        state.animateScrollToPage(it)
+                    }
+                }
             )
         }
     }
@@ -90,7 +104,8 @@ fun PageIndicatorView(
     isSelected: Boolean,
     animationDurationInMillis: Int,
     modifier: Modifier = Modifier,
-    vertical: Boolean
+    vertical: Boolean,
+    onClick: () -> Unit
 ) {
     val color: Color by animateColorAsState(
         targetValue = if (isSelected) MaterialTheme.colorScheme.primary
@@ -109,16 +124,17 @@ fun PageIndicatorView(
     Canvas(
         modifier = modifier
             .size(
-                width = if(!vertical) axis else 12.dp,
-                height = if(vertical) axis else 12.dp,
-            ),
+                width = if (!vertical) axis else 12.dp,
+                height = if (vertical) axis else 12.dp,
+            )
+            .clickable(onClick = onClick),
     ) {
         drawRoundRect(
             color = color,
             topLeft = Offset.Zero,
             size = Size(
-                width = if(!vertical) axis.toPx() else 12.dp.toPx(),
-                height = if(vertical) axis.toPx() else 12.dp.toPx(),
+                width = if (!vertical) axis.toPx() else 12.dp.toPx(),
+                height = if (vertical) axis.toPx() else 12.dp.toPx(),
             ),
             cornerRadius = CornerRadius(
                 x = 12.dp.toPx(),
@@ -134,7 +150,8 @@ fun PageIndicator(
     modifier: Modifier = Modifier,
     selectedPage: Int = 0,
     animationDurationInMillis: Int = 300,
-    vertical: Boolean
+    vertical: Boolean,
+    onClick: (index: Int) -> Unit
 ) {
     if (vertical) {
         Column(
@@ -147,7 +164,8 @@ fun PageIndicator(
                 PageIndicatorView(
                     isSelected = isSelected,
                     animationDurationInMillis = animationDurationInMillis,
-                    vertical = vertical
+                    vertical = vertical,
+                    onClick = { onClick(i) }
                 )
             }
         }
@@ -162,7 +180,8 @@ fun PageIndicator(
                 PageIndicatorView(
                     isSelected = isSelected,
                     animationDurationInMillis = animationDurationInMillis,
-                    vertical = vertical
+                    vertical = vertical,
+                    onClick = { onClick(i) }
                 )
             }
         }

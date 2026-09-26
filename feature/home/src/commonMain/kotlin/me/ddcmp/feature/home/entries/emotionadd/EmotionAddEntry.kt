@@ -39,9 +39,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigationevent.NavigationEventInfo
-import androidx.navigationevent.compose.NavigationBackHandler
-import androidx.navigationevent.compose.rememberNavigationEventState
 import dream_diary_cmp.feature.home.generated.resources.Res
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_closest_label
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_grid_info
@@ -52,6 +49,7 @@ import dream_diary_cmp.feature.home.generated.resources.emotionadd_title
 import kotlinx.coroutines.delay
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.backhandler.PlatformBackHandler
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.EmotionGrid
 import me.bumiller.ddcmp.ui.common.dialog.DiscardChangesDialog
@@ -105,9 +103,7 @@ private fun DreamAddEntry(
         }
     }
 
-    NavigationBackHandler(
-        state = rememberNavigationEventState(NavigationEventInfo.None)
-    ) {
+    PlatformBackHandler {
         onEvent(UiEvent.NavigateBack)
     }
 

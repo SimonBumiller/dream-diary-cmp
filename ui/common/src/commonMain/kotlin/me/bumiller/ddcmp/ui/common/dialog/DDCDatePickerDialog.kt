@@ -3,6 +3,7 @@ package me.bumiller.ddcmp.ui.common.dialog
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -28,7 +29,7 @@ fun SelectablePolicy(now: Long) = object : SelectableDates {
 
 }
 
-@OptIn(ExperimentalTime::class)
+@OptIn(ExperimentalTime::class, ExperimentalMaterial3Api::class)
 @Composable
 fun DDCDatePickerDialog(
     modifier: Modifier = Modifier,

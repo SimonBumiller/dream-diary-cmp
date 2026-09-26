@@ -45,7 +45,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.koin.core)
             implementation(libs.compose.material.icons)
-            implementation(libs.backhandler)
+            //implementation(libs.backhandler)
             implementation(libs.backhandler.compose)
             implementation(libs.compose.material3.windowsizeclass)
             implementation(libs.compose.navigation)

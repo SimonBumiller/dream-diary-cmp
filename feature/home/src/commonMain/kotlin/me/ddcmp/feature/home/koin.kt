@@ -9,20 +9,20 @@ import me.ddcmp.feature.home.entries.overview.OverviewViewModel
 import me.ddcmp.feature.home.entries.personadd.PersonAddViewModel
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel
-import org.koin.core.module.dsl.viewModelOf
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 /**
  * The koin module for the home module.
  */
 val home = module {
-    viewModelOf(::DreamListViewModel)
-    viewModelOf(::DreamAddViewModel)
-    viewModelOf(::EmotionListViewModel)
-    viewModelOf(::EmotionAddViewModel)
-    viewModelOf(::PersonListViewModel)
-    viewModelOf(::PersonAddViewModel)
-    viewModelOf(::DreamDetailViewModel)
-    viewModelOf(::OverviewViewModel)
-    viewModelOf(::PersonDetailViewModel)
+    factoryOf(::DreamListViewModel)
+    factoryOf(::DreamAddViewModel)
+    factoryOf(::EmotionListViewModel)
+    factoryOf(::EmotionAddViewModel)
+    factoryOf(::PersonListViewModel)
+    factoryOf(::PersonAddViewModel)
+    factoryOf(::DreamDetailViewModel)
+    factoryOf(::OverviewViewModel)
+    factoryOf(::PersonDetailViewModel)
 }

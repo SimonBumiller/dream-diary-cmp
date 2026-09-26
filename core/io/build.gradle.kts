@@ -64,6 +64,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
                 implementation(libs.filekt.core)
+                implementation(libs.coroutines)
 
                 implementation(libs.serialization.json)
                 // implementation(libs.serialization.yaml)

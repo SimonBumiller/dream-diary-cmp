@@ -1,26 +1,19 @@
 package me.bumiller.ddcmp
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.collectLatest
-import me.bumiller.ddcmp.domain.model.stats.Histogram
 import me.bumiller.ddcmp.navigation.MainRoutes
 import me.bumiller.ddcmp.theme.AppTheme
 import me.bumiller.ddcmp.theme.systemTheme
-import me.bumiller.ddcmp.ui.diagram.histogram.Histogram
 import me.ddcmp.feature.home.HomeEntry
 import me.ddcmp.feature.home.SettingsEntry
 import me.ddcmp.feature.import.ImportEntry
@@ -74,10 +67,6 @@ fun AppRoot(
         ) {
             composable<MainRoutes.Home> {
                 HomeEntry()
-//                HistogramPreview(
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                )
             }
 
             composable<MainRoutes.Import> {
@@ -101,41 +90,6 @@ fun AppRoot(
             composable<MainRoutes.Settings> {
                 SettingsEntry()
             }
-        }
-    }
-}
-
-@Composable
-private fun HistogramPreview(
-    modifier: Modifier
-) {
-    val histogram = mapOf(
-        "Mon" to 7,
-        "Tue" to 3,
-        "Wed" to 2,
-        "Thu" to 12,
-        "Fri" to 10,
-        "Sat" to 6,
-        "Sun" to 6
-    )
-    val meta = Histogram(
-        dataMap = histogram,
-        bucketSize = Unit
-    )
-
-    Surface(
-        modifier = modifier
-    ) {
-        Box(
-            modifier = modifier,
-            contentAlignment = Alignment.Center
-        ) {
-            Histogram(
-                modifier = Modifier
-                    .size(400.dp),
-                meta = meta,
-                bucketLabel = { it }
-            )
         }
     }
 }

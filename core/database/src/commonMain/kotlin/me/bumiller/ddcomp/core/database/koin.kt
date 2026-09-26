@@ -1,6 +1,7 @@
 package me.bumiller.ddcomp.core.database
 
 import androidx.room.RoomDatabase
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.ImportLogRepository
@@ -24,6 +25,7 @@ val database = module {
     single {
         databaseBuilder()
             .fallbackToDestructiveMigration(true)
+            .setDriver(BundledSQLiteDriver())
             .build()
     }
 
