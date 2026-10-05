@@ -1,11 +1,8 @@
 package me.bumiller.ddcmp.core.io.exporter
 
 import kotlinx.coroutines.flow.first
-import kotlinx.io.buffered
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.io.encodeToSink
-import me.bumiller.ddcmp.core.io.base.ZipFileExporter
 import me.bumiller.ddcmp.core.io.model.ListBased
 import me.bumiller.ddcmp.domain.model.ExportResult
 import me.bumiller.ddcmp.domain.model.IOFileType
@@ -13,7 +10,6 @@ import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import net.mamoe.yamlkt.Yaml
-import no.synth.kmpzip.kotlinx.asSink
 import no.synth.kmpzip.zip.ZipOutputStream
 import kotlin.time.ExperimentalTime
 

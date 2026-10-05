@@ -1,17 +1,13 @@
 package me.bumiller.ddcmp.core.io.exporter
 
 import kotlinx.coroutines.flow.first
-import kotlinx.io.buffered
-import me.bumiller.ddcmp.core.io.base.ZipFileExporter
 import me.bumiller.ddcmp.core.io.model.Xml
 import me.bumiller.ddcmp.domain.model.ExportResult
 import me.bumiller.ddcmp.domain.model.IOFileType
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
-import net.devrieze.xmlutil.serialization.kxio.encodeToSink
 import nl.adaptivity.xmlutil.serialization.XML
-import no.synth.kmpzip.kotlinx.asSink
 import no.synth.kmpzip.zip.ZipOutputStream
 
 private const val DREAMS_FILE_NAME = "dreams"

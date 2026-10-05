@@ -1,4 +1,4 @@
-package me.bumiller.ddcmp.core.io.base
+package me.bumiller.ddcmp.core.io.exporter
 
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.extension

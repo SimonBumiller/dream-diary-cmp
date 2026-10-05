@@ -7,11 +7,10 @@ import kotlinx.io.buffered
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.io.encodeToSink
-import me.bumiller.ddcmp.core.io.base.ZipFileExporter
 import me.bumiller.ddcmp.core.io.model.Legacy
 import me.bumiller.ddcmp.domain.model.ExportResult
-import me.bumiller.ddcomp.core.database.dao.DreamDao
-import me.bumiller.ddcomp.core.database.dao.PersonDao
+import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import no.synth.kmpzip.kotlinx.asSink
 import no.synth.kmpzip.zip.ZipEntry
 import no.synth.kmpzip.zip.ZipOutputStream
@@ -23,30 +22,32 @@ private const val FILE_NAME = "data.json"
  * Backup Exporter implementation
  */
 internal class LegacyExporter(
-    private val dreamDao: DreamDao,
-    private val personDao: PersonDao
+    private val allDreams: AllDreamUseCase,
+    private val allPersons: AllPersonUseCase
 ) : ZipFileExporter() {
 
     @OptIn(ExperimentalTime::class, ExperimentalSerializationApi::class)
     override suspend fun aggregateZipFile(zipStream: ZipOutputStream): ExportResult {
         val timeZone = TimeZone.currentSystemDefault()
 
-        val legacyDreams = dreamDao.getAll()
+        val allDreams = allDreams(AllDreamUseCase.I())
+
+        val legacyDreams = allDreams
             .first()
-            .map { dream ->
+            .map { (dream, _, _) ->
                 Legacy.Dream(
                     id = dream.id,
                     description = dream.description,
                     note = dream.note,
                     isFavourite = dream.favorite,
                     created = dream.dreamt.toLocalDateTime(timeZone).date.toString(),
-                    updated = dream.updated.toLocalDateTime(timeZone).date.toString(),
+                    updated = dream.edited.toLocalDateTime(timeZone).date.toString(),
                     clearness = null,
                     happiness = null
                 )
             }
 
-        val legacyPersons = personDao.getAll()
+        val legacyPersons = allPersons(AllPersonUseCase.I())
             .first()
             .map { person ->
                 Legacy.Person(
@@ -57,7 +58,7 @@ internal class LegacyExporter(
                 )
             }
 
-        val dreamPersonCrossrefs = dreamDao.getAllAggregate()
+        val dreamPersonCrossrefs = allDreams
             .first()
             .map { aggregate ->
                 aggregate.dream.id to aggregate.persons.map { it.id }

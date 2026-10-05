@@ -1,23 +1,21 @@
-package me.bumiller.ddcmp.core.io
+package me.bumiller.ddcmp.core.io.factory
 
 import io.github.vinceglb.filekit.PlatformFile
-import me.bumiller.ddcmp.core.io.legacy.LegacyImporter
+import me.bumiller.ddcmp.core.io.importer.LegacyImporter
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.io.BackupImporterFactory
 import me.bumiller.ddcmp.domain.model.ImportOption
 import me.bumiller.ddcmp.domain.model.ImportResult
 import me.bumiller.ddcmp.domain.model.Settings
-import me.bumiller.ddcomp.core.database.dao.DreamDao
-import me.bumiller.ddcomp.core.database.dao.PersonDao
-import me.bumiller.ddcomp.core.database.dao.m2m.DreamPersonM2MDao
+import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 internal class ImporterFactoryImpl(
-    private val dreamDao: DreamDao,
-    private val personDao: PersonDao,
-    private val dreamPersonM2MDao: DreamPersonM2MDao
-): BackupImporterFactory {
+    private val saveDream: SaveDreamUseCase,
+    private val savePerson: SavePersonUseCase
+) : BackupImporterFactory {
 
     @OptIn(ExperimentalTime::class)
     override fun createImporter(options: ImportOption, settings: Settings): BackupImporter {
@@ -26,10 +24,10 @@ internal class ImporterFactoryImpl(
                 timeZone = options.timeZone,
                 transferFavorites = options.transferFavorites,
                 defaultConfidentiality = settings.defaultConfidentiality,
-                dreamDao = dreamDao,
-                personDao = personDao,
-                dreamPersonM2MDao = dreamPersonM2MDao
+                createDream = saveDream,
+                createPerson = savePerson
             )
+
             is ImportOption.Normal -> object : BackupImporter {
                 override suspend fun importBackup(file: PlatformFile): ImportResult {
                     return ImportResult.Failure.DataConsistency(0, Clock.System.now())

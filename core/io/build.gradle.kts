@@ -77,7 +77,6 @@ kotlin {
                 implementation(libs.kotlin.datetime)
 
                 implementation(project(":domain"))
-                implementation(project(":core:database"))
             }
         }
         jvmTest {

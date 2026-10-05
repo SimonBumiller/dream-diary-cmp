@@ -1,4 +1,4 @@
-package me.bumiller.ddcmp.core.io.legacy
+package me.bumiller.ddcmp.core.io.importer
 
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.readString
@@ -9,13 +9,11 @@ import kotlinx.serialization.json.Json
 import me.bumiller.ddcmp.core.io.model.Legacy
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.model.Confidentiality
+import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.ImportResult
-import me.bumiller.ddcomp.core.database.dao.DreamDao
-import me.bumiller.ddcomp.core.database.dao.PersonDao
-import me.bumiller.ddcomp.core.database.dao.m2m.DreamPersonM2MDao
-import me.bumiller.ddcomp.core.database.entity.DreamEntity
-import me.bumiller.ddcomp.core.database.entity.PersonEntity
-import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
+import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -23,9 +21,8 @@ internal class LegacyImporter(
     private val timeZone: TimeZone,
     private val transferFavorites: Boolean,
     private val defaultConfidentiality: Confidentiality,
-    private val dreamDao: DreamDao,
-    private val personDao: PersonDao,
-    private val dreamPersonM2MDao: DreamPersonM2MDao
+    private val createDream: SaveDreamUseCase,
+    private val createPerson: SavePersonUseCase
 ) : BackupImporter {
 
     @OptIn(ExperimentalTime::class)
@@ -52,51 +49,55 @@ internal class LegacyImporter(
             val dreamExists = root.dreams.any { it.id == dreamId }
             val personExists = root.persons.any { it.id == personId }
 
-            if(!dreamExists || !personExists)
+            if (!dreamExists || !personExists)
                 return ImportResult.Failure.DataConsistency(0, now)
         }
 
         val dreams = root.dreams
             .map { legacyDream ->
-                DreamEntity(
+                Dream(
                     id = legacyDream.id,
-                    created = LocalDate.parse(legacyDream.created).atStartOfDayIn(timeZone),
-                    updated = LocalDate.parse(legacyDream.updated).atStartOfDayIn(timeZone),
-                    dreamt = LocalDate.parse(legacyDream.created).atStartOfDayIn(timeZone),
+                    created = LocalDate.parse(legacyDream.created)
+                        .atStartOfDayIn(timeZone),
+                    edited = LocalDate.parse(legacyDream.updated)
+                        .atStartOfDayIn(timeZone),
+                    dreamt = LocalDate.parse(legacyDream.created)
+                        .atStartOfDayIn(timeZone),
                     title = null,
                     description = legacyDream.description,
                     note = legacyDream.note,
                     favorite = transferFavorites && legacyDream.isFavourite,
-                    confidentiality = defaultConfidentiality.name
+                    confidentiality = defaultConfidentiality
                 )
             }
 
         val persons = root.persons
             .map { legacyPerson ->
-                PersonEntity(
+                Person(
                     id = legacyPerson.id,
                     created = now,
-                    updated = now,
+                    edited = now,
                     name = legacyPerson.name,
                     note = legacyPerson.notes
                 )
             }
 
-        dreams.forEach { dream ->
-            dreamDao.upsert(dream)
-        }
-
         persons.forEach { person ->
-            personDao.upsert(person)
+            createPerson(person)
         }
 
-        root.dreamPersonCrossref.forEach { crossref ->
-            val m2m = DreamPersonM2M(
-                dreamId = crossref.first,
-                personId = crossref.second
-            )
+        dreams.forEach { dream ->
+            val personsForDream = root.dreamPersonCrossref
+                .filter { it.first == dream.id }
+                .map { it.second }
+                .mapNotNull { personId -> persons.find { it.id == personId } }
 
-            dreamPersonM2MDao.insert(m2m)
+            val input = SaveDreamUseCase.I(
+                dream = dream,
+                persons = personsForDream,
+                emotions = emptyList()
+            )
+            createDream(input)
         }
 
         val result = ImportResult.Success.Legacy(
