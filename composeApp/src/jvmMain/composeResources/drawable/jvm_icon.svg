@@ -1,0 +1,20 @@
+<svg viewBox="0 0 512 512">
+    <rect
+            width="512"
+            height="512"
+            fill="#206487" />
+
+    <ellipse cx="53.5" cy="468" rx="17.5" ry="18" fill="white"/>
+    <ellipse cx="140.5" cy="426" rx="23.5" ry="24" fill="white"/>
+    <ellipse cx="108.5" cy="249.5" rx="72.5" ry="83.5" fill="white"/>
+    <ellipse cx="128.5" cy="149.5" rx="69.5" ry="80.5" fill="white"/>
+    <ellipse cx="208.5" cy="104" rx="67.5" ry="80" fill="white"/>
+    <ellipse cx="330" cy="78.5" rx="102" ry="71.5" fill="white"/>
+    <ellipse cx="268.5" cy="216" rx="134.5" ry="117" fill="white"/>
+    <circle cx="412.5" cy="149.5" r="71.5" fill="white"/>
+    <ellipse cx="435.5" cy="237.5" rx="76.5" ry="71.5" fill="white"/>
+    <ellipse cx="391.5" cy="308.5" rx="61.5" ry="49.5" fill="white"/>
+    <ellipse cx="317.5" cy="353" rx="61.5" ry="61" fill="white"/>
+    <ellipse cx="229.5" cy="332.5" rx="46.5" ry="49.5" fill="white"/>
+    <ellipse cx="156.5" cy="323.5" rx="46.5" ry="49.5" fill="white"/>
+</svg>

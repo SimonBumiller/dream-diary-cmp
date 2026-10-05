@@ -120,14 +120,31 @@ dependencies {
     debugImplementation(libs.compose.uiTooling)
 }
 
+//
+// App Icon On Desktop does not work.
+// See https://youtrack.jetbrains.com/projects/CMP/issues/CMP-9837/packageDeb-task-fails-to-include-custom-.desktop-files?utm_source=chatgpt.com
+//
+
+private val iconFileIco = project.file("./src/jvmMain/resources/jvm_icon.ico")
+private val iconFilePng = project.file("./src/jvmMain/resources/jvm_icon.png")
+
 compose.desktop {
     application {
         mainClass = "me.bumiller.ddcmp.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+
             packageName = "me.bumiller.ddcmp"
             packageVersion = "1.0.0"
+
+            windows {
+                iconFile.set(iconFileIco)
+            }
+
+            linux {
+                iconFile.set(iconFilePng)
+            }
         }
     }
 }
