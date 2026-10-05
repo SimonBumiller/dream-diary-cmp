@@ -1,30 +1,40 @@
 package me.bumiller.ddcmp.core.io.legacy
 
-import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.writeString
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.io.buffered
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import me.bumiller.ddcmp.domain.io.BackupExporter
+import kotlinx.serialization.json.io.encodeToSink
+import me.bumiller.ddcmp.core.io.base.ZipFileExporter
+import me.bumiller.ddcmp.core.io.model.Legacy
 import me.bumiller.ddcmp.domain.model.ExportResult
 import me.bumiller.ddcomp.core.database.dao.DreamDao
 import me.bumiller.ddcomp.core.database.dao.PersonDao
+import no.synth.kmpzip.kotlinx.asSink
+import no.synth.kmpzip.zip.ZipEntry
+import no.synth.kmpzip.zip.ZipOutputStream
 import kotlin.time.ExperimentalTime
 
+private const val FILE_NAME = "data.json"
+
+/**
+ * Backup Exporter implementation
+ */
 internal class LegacyExporter(
     private val dreamDao: DreamDao,
     private val personDao: PersonDao
-) : BackupExporter {
+) : ZipFileExporter() {
 
-    @OptIn(ExperimentalTime::class)
-    override suspend fun export(file: PlatformFile): ExportResult {
+    @OptIn(ExperimentalTime::class, ExperimentalSerializationApi::class)
+    override suspend fun aggregateZipFile(zipStream: ZipOutputStream): ExportResult {
         val timeZone = TimeZone.currentSystemDefault()
 
         val legacyDreams = dreamDao.getAll()
             .first()
             .map { dream ->
-                LegacyDream(
+                Legacy.Dream(
                     id = dream.id,
                     description = dream.description,
                     note = dream.note,
@@ -39,7 +49,7 @@ internal class LegacyExporter(
         val legacyPersons = personDao.getAll()
             .first()
             .map { person ->
-                LegacyPerson(
+                Legacy.Person(
                     id = person.id,
                     name = person.name,
                     isFavourite = false,
@@ -58,10 +68,10 @@ internal class LegacyExporter(
                 }
             }
             .map { pair ->
-                LegacyCrossref(pair.first, pair.second)
+                Legacy.Crossref(pair.first, pair.second)
             }
 
-        val root = LegacyRoot(
+        val root = Legacy.Root(
             dreams = legacyDreams,
             persons = legacyPersons,
             locations = emptyList(),
@@ -71,8 +81,11 @@ internal class LegacyExporter(
             personRelationCrossrefs = emptyList()
         )
 
-        val json = Json.encodeToString(root)
-        file.writeString(json)
+        zipStream.putNextEntry(ZipEntry(FILE_NAME))
+
+        Json.encodeToSink(root, zipStream.asSink().buffered())
+
+        zipStream.closeEntry()
 
         return ExportResult.Success
     }

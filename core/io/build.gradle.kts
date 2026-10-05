@@ -6,6 +6,10 @@ plugins {
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
+
     jvm()
 
     // Target declarations - add or remove as needed below. These define
@@ -35,12 +39,6 @@ kotlin {
     // https://developer.android.com/kotlin/multiplatform/migrate
     val xcfName = "core:ioKit"
 
-    iosX64 {
-        binaries.framework {
-            baseName = xcfName
-        }
-    }
-
     iosArm64 {
         binaries.framework {
             baseName = xcfName
@@ -67,13 +65,25 @@ kotlin {
                 implementation(libs.coroutines)
 
                 implementation(libs.serialization.json)
-                // implementation(libs.serialization.yaml)
-                // implementation(libs.serialization.xml)
+                implementation(libs.serialization.json.io)
+                implementation(libs.serialization.yaml)
+                implementation(libs.serialization.xml)
+                implementation(libs.serialization.xml.core)
+                implementation(libs.serialization.xml.io)
+
+                implementation(libs.zip)
+                implementation(libs.zip.kotlinx)
 
                 implementation(libs.kotlin.datetime)
 
                 implementation(project(":domain"))
                 implementation(project(":core:database"))
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.mockk)
             }
         }
         androidMain {

@@ -6,6 +6,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.serialization.json.Json
+import me.bumiller.ddcmp.core.io.model.Legacy
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.model.Confidentiality
 import me.bumiller.ddcmp.domain.model.ImportResult
@@ -37,16 +38,11 @@ internal class LegacyImporter(
             return ImportResult.Failure.FileAccess(0, now)
         }
 
-        println("Got text: $text")
-
         val root = try {
-            Json.decodeFromString<LegacyRoot>(text)
-        } catch (e: Exception) {
-            println("Got decode exception: $e")
+            Json.decodeFromString<Legacy.Root>(text)
+        } catch (_: Exception) {
             return ImportResult.Failure.FileFormat(0, now)
         }
-
-        println("Got root: $root")
 
         // Check data integrity
         root.dreamPersonCrossref.forEach { crossref ->
@@ -90,13 +86,9 @@ internal class LegacyImporter(
             dreamDao.upsert(dream)
         }
 
-        println("Inserted dreams")
-
         persons.forEach { person ->
             personDao.upsert(person)
         }
-
-        println("Inserted persons")
 
         root.dreamPersonCrossref.forEach { crossref ->
             val m2m = DreamPersonM2M(
@@ -106,8 +98,6 @@ internal class LegacyImporter(
 
             dreamPersonM2MDao.insert(m2m)
         }
-
-        println("Inserted crossrefs")
 
         val result = ImportResult.Success.Legacy(
             dreamCount = dreams.size,

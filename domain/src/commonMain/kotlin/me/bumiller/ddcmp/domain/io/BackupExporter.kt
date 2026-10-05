@@ -9,7 +9,9 @@ import me.bumiller.ddcmp.domain.model.ExportResult
 interface BackupExporter {
 
     /**
-     * Exports the data.
+     * Exports the data into a given file.
+     *
+     * @param file The file. Must be a file with `.zip` extension.
      */
     suspend fun export(file: PlatformFile): ExportResult
 

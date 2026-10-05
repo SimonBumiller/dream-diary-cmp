@@ -25,6 +25,9 @@ enum class IOFileType(
     /**
      * Yaml files.
      */
-    Yaml("yaml", "yml")
+    Yaml("yaml", "yml");
+
+    val exportFileEx: String
+        get() = fileExtensions.first()
 
 }

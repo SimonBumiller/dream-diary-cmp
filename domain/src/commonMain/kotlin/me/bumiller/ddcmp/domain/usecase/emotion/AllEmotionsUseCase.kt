@@ -10,7 +10,7 @@ import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase.I
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 
-class AllEmotionsUseCase(
+open class AllEmotionsUseCase(
     val repo: EmotionRepository
 ) : FlowUseCase<I, List<Emotion>> {
 

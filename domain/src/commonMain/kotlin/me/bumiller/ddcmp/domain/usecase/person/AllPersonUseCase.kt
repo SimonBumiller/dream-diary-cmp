@@ -9,7 +9,7 @@ import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase.I
 
-class AllPersonUseCase(
+open class AllPersonUseCase(
     val repo: PersonRepository
 ) : FlowUseCase<I, List<Person>> {
 

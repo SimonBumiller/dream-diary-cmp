@@ -22,7 +22,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
-class AllDreamUseCase(
+open class AllDreamUseCase(
     val repo: DreamRepository,
     val emotionRepo: EmotionRepository,
     val personRepo: PersonRepository
