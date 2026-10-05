@@ -1,4 +1,4 @@
-package me.bumiller.ddcmp.core.io.legacy
+package me.bumiller.ddcmp.core.io.exporter
 
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.TimeZone
