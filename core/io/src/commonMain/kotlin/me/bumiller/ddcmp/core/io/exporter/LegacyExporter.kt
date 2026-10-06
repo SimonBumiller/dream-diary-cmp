@@ -3,6 +3,7 @@ package me.bumiller.ddcmp.core.io.exporter
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.io.IOException
 import kotlinx.io.buffered
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -84,7 +85,11 @@ internal class LegacyExporter(
 
         zipStream.putNextEntry(ZipEntry(FILE_NAME))
 
-        Json.encodeToSink(root, zipStream.asSink().buffered())
+        try {
+            Json.encodeToSink(root, zipStream.asSink().buffered())
+        }catch (_: IOException) {
+            return ExportResult.Failure.FileAccess
+        }
 
         zipStream.closeEntry()
 

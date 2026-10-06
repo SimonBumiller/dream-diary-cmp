@@ -3,6 +3,7 @@ package me.bumiller.ddcmp.core.io.exporter
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.extension
 import io.github.vinceglb.filekit.sink
+import kotlinx.io.IOException
 import kotlinx.io.buffered
 import me.bumiller.ddcmp.domain.io.BackupExporter
 import me.bumiller.ddcmp.domain.model.ExportResult
@@ -22,7 +23,11 @@ internal abstract class ZipFileExporter: BackupExporter {
 
         file.sink(append = false).buffered().use { sink ->
             ZipOutputStream(sink).use { zipStream ->
-                return aggregateZipFile(zipStream)
+                return try {
+                    aggregateZipFile(zipStream)
+                } catch (_: IOException) {
+                    ExportResult.Failure.FileAccess
+                }
             }
         }
     }
