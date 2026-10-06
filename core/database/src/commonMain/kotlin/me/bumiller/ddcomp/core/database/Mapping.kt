@@ -4,11 +4,13 @@ import me.bumiller.ddcmp.domain.model.Arousal
 import me.bumiller.ddcmp.domain.model.Confidentiality
 import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.Emotion
+import me.bumiller.ddcmp.domain.model.ExportResult
 import me.bumiller.ddcmp.domain.model.ImportResult
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.model.Valence
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
+import me.bumiller.ddcomp.core.database.entity.ExportLogEntity
 import me.bumiller.ddcomp.core.database.entity.ImportLogEntity
 import me.bumiller.ddcomp.core.database.entity.PersonEntity
 import kotlin.time.ExperimentalTime
@@ -53,6 +55,17 @@ object Mapping {
                 lastDream = (this as? ImportResult.Success)?.lastDream ?: timestamp,
                 isNormal = this is ImportResult.Success.Normal,
                 emotionCount = (this as? ImportResult.Success.Normal)?.emotionCount ?: 0
+            )
+        }
+
+        fun export(model: ExportResult) = with(model) {
+            ExportLogEntity(
+                id = id,
+                created = timestamp,
+                updated = timestamp,
+                isFileAccessFailure = this is ExportResult.Failure.FileAccess,
+                fileSize = (this as? ExportResult.Success)?.fileSize,
+                fileLocation = (this as? ExportResult.Success)?.fileLocation,
             )
         }
 
@@ -110,6 +123,16 @@ object Mapping {
             personCount = personCount,
             firstDream = firstDream,
             lastDream = lastDream,
+            id = id,
+            timestamp = created
+        )
+    }
+
+    fun export(entity: ExportLogEntity) = with(entity) {
+        if (isFileAccessFailure) ExportResult.Failure.FileAccess(id, created)
+        else ExportResult.Success(
+            fileSize = fileSize!!,
+            fileLocation = fileLocation!!,
             id = id,
             timestamp = created
         )
