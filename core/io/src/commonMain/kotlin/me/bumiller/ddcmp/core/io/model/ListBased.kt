@@ -3,8 +3,12 @@
 package me.bumiller.ddcmp.core.io.model
 
 import kotlinx.serialization.Serializable
+import me.bumiller.ddcmp.domain.model.Arousal
+import me.bumiller.ddcmp.domain.model.Confidentiality
+import me.bumiller.ddcmp.domain.model.Valence
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import me.bumiller.ddcmp.domain.model.Dream as ModelDream
 import me.bumiller.ddcmp.domain.model.Emotion as ModelEmotion
 import me.bumiller.ddcmp.domain.model.Person as ModelPerson
@@ -18,11 +22,15 @@ internal object ListBased {
         val edited: Long,
         val dreamt: Long,
         val title: String?,
-        val description: String?,
+        val description: String,
         val note: String?,
         val favorite: Boolean,
         val confidentiality: String
     ) {
+
+        fun toModel() = ModelDream(id, Instant.fromEpochMilliseconds(created), Instant.fromEpochMilliseconds(edited),
+            Instant.fromEpochMilliseconds(created), title, description, note, favorite,
+            Confidentiality.valueOf(confidentiality))
 
         companion object {
 
@@ -67,6 +75,11 @@ internal object ListBased {
             }
         }
 
+        fun toModel() = ModelEmotion(
+            id, Instant.fromEpochMilliseconds(created), Instant.fromEpochMilliseconds(edited),
+            Arousal(arousal), Valence(valence), name
+        )
+
     }
 
     @Serializable
@@ -77,6 +90,14 @@ internal object ListBased {
         val name: String,
         val note: String?
     ) {
+
+        fun toModel() = ModelPerson(
+            id,
+            Instant.fromEpochMilliseconds(created),
+            Instant.fromEpochMilliseconds(edited),
+            name,
+            note
+        )
 
         companion object {
             fun fromModel(model: ModelPerson) = model.run {

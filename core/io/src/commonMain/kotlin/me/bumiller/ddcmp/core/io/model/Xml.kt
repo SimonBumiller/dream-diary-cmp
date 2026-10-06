@@ -1,11 +1,16 @@
 package me.bumiller.ddcmp.core.io.model
 
 import kotlinx.serialization.Serializable
+import me.bumiller.ddcmp.domain.model.Arousal
+import me.bumiller.ddcmp.domain.model.Confidentiality
+import me.bumiller.ddcmp.domain.model.Valence
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import nl.adaptivity.xmlutil.serialization.XmlChildrenName
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
+import me.bumiller.ddcmp.domain.model.Dream as ModelDream
 import me.bumiller.ddcmp.domain.model.Emotion as ModelEmotion
 import me.bumiller.ddcmp.domain.model.Person as ModelPerson
 
@@ -60,7 +65,7 @@ internal object Xml {
         val title: String?,
 
         @XmlElement(true)
-        val description: String?,
+        val description: String,
 
         @XmlElement(true)
         val note: String?,
@@ -71,6 +76,18 @@ internal object Xml {
         @XmlChildrenName("emotion")
         val emotions: List<EmotionRef>,
     ) {
+
+        fun toModel() = ModelDream(
+            id,
+            Instant.fromEpochMilliseconds(created),
+            Instant.fromEpochMilliseconds(edited),
+            Instant.fromEpochMilliseconds(dreamt),
+            title,
+            description,
+            note,
+            favorite,
+            Confidentiality.valueOf(confidentiality)
+        )
 
         companion object {
             fun fromModel(model: AllDreamUseCase.O) = model.run {
@@ -121,6 +138,11 @@ internal object Xml {
         val name: String
     ) {
 
+        fun toModel() = ModelEmotion(
+            id, Instant.fromEpochMilliseconds(created), Instant.fromEpochMilliseconds(edited),
+            Arousal(arousal), Valence(valence), name
+        )
+
         companion object {
             fun fromModel(model: ModelEmotion) = model.run {
                 Emotion(
@@ -161,6 +183,14 @@ internal object Xml {
         @XmlElement(true)
         val note: String?
     ) {
+
+        fun toModel() = ModelPerson(
+            id,
+            Instant.fromEpochMilliseconds(created),
+            Instant.fromEpochMilliseconds(edited),
+            name,
+            note
+        )
 
         companion object {
             fun fromModel(model: ModelPerson) = model.run {

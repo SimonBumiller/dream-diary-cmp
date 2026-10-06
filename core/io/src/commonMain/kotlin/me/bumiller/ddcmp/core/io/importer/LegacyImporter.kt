@@ -2,10 +2,14 @@ package me.bumiller.ddcmp.core.io.importer
 
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.readString
+import io.github.vinceglb.filekit.source
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
+import kotlinx.io.buffered
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.io.decodeFromSource
 import me.bumiller.ddcmp.core.io.model.Legacy
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.model.Confidentiality
@@ -25,18 +29,12 @@ internal class LegacyImporter(
     private val createPerson: SavePersonUseCase
 ) : BackupImporter {
 
-    @OptIn(ExperimentalTime::class)
+    @OptIn(ExperimentalTime::class, ExperimentalSerializationApi::class)
     override suspend fun importBackup(file: PlatformFile): ImportResult {
         val now = Clock.System.now()
 
-        val text = try {
-            file.readString()
-        } catch (_: Exception) {
-            return ImportResult.Failure.FileAccess(0, now)
-        }
-
         val root = try {
-            Json.decodeFromString<Legacy.Root>(text)
+            Json.decodeFromSource<Legacy.Root>(file.source().buffered())
         } catch (_: Exception) {
             return ImportResult.Failure.FileFormat(0, now)
         }

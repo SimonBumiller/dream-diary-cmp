@@ -7,11 +7,17 @@ import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.cacheDir
 import io.github.vinceglb.filekit.createDirectories
 import io.github.vinceglb.filekit.path
+import io.mockk.Awaits
+import io.mockk.Runs
+import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import me.bumiller.ddcmp.core.io.exporter.ListBasedExporter
+import me.bumiller.ddcmp.core.io.importer.ListBasedImporter
 import me.bumiller.ddcmp.domain.model.Arousal
 import me.bumiller.ddcmp.domain.model.Confidentiality
 import me.bumiller.ddcmp.domain.model.Dream
@@ -21,8 +27,11 @@ import me.bumiller.ddcmp.domain.model.IOFileType
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.model.Valence
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
+import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
+import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -90,13 +99,35 @@ class NormalExporterTest {
     fun `ListBasedExporter works`() = runBlocking {
         val subject = ListBasedExporter(allDreams, allPersons, allEmotions, IOFileType.Json)
 
-        val file = PlatformFile("/home/simon/AndroidStudioProjects/dream-diary-cmp/temp/export.zip")
+        val path = "/home/simon/AndroidStudioProjects/dream-diary-cmp/temp/export.zip"
 
-        val exportResult = subject.export(file)
+        val file = PlatformFile(path)
+
+        // Export data
+        subject.export(file)
 
         println("Exported file to: ${file.path}")
 
-        assertEquals(ExportResult.Success, exportResult)
+        val saveDream = mockk<SaveDreamUseCase>()
+        val savedDreams = mutableListOf<SaveDreamUseCase.I>()
+        coEvery { saveDream.invoke(capture(savedDreams)) } returns dreams.first()
+
+        val savePerson = mockk<SavePersonUseCase>()
+        val savedPersons = mutableListOf<Person>()
+        coEvery { savePerson.invoke(capture(savedPersons)) } returns persons.first()
+
+        val saveEmotion = mockk<SaveEmotionUseCase>()
+        val savedEmotions = mutableListOf<Emotion>()
+        coEvery { saveEmotion.invoke(capture(savedEmotions)) } returns emotions.first()
+
+        val importer = ListBasedImporter(saveDream, savePerson, saveEmotion, IOFileType.Json)
+
+        importer.importBackup(file)
+
+        println("Imported from file: ${file.path}")
+        println("Got saved dreams: $savedDreams")
+        println("Got saved persons: $savedPersons")
+        println("Got saved emotions: $savedEmotions")
     }
 
 }

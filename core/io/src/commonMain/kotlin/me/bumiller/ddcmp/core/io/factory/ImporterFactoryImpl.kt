@@ -1,20 +1,22 @@
 package me.bumiller.ddcmp.core.io.factory
 
-import io.github.vinceglb.filekit.PlatformFile
 import me.bumiller.ddcmp.core.io.importer.LegacyImporter
+import me.bumiller.ddcmp.core.io.importer.ListBasedImporter
+import me.bumiller.ddcmp.core.io.importer.XmlImporter
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.io.BackupImporterFactory
+import me.bumiller.ddcmp.domain.model.IOFileType
 import me.bumiller.ddcmp.domain.model.ImportOption
-import me.bumiller.ddcmp.domain.model.ImportResult
 import me.bumiller.ddcmp.domain.model.Settings
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
-import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 internal class ImporterFactoryImpl(
     private val saveDream: SaveDreamUseCase,
-    private val savePerson: SavePersonUseCase
+    private val savePerson: SavePersonUseCase,
+    private val saveEmotion: SaveEmotionUseCase
 ) : BackupImporterFactory {
 
     @OptIn(ExperimentalTime::class)
@@ -28,12 +30,16 @@ internal class ImporterFactoryImpl(
                 createPerson = savePerson
             )
 
-            is ImportOption.Normal -> object : BackupImporter {
-                override suspend fun importBackup(file: PlatformFile): ImportResult {
-                    return ImportResult.Failure.DataConsistency(0, Clock.System.now())
-                }
+            is ImportOption.Normal -> when (options.fileType) {
+                IOFileType.Json, IOFileType.Yaml -> ListBasedImporter(
+                    saveDream,
+                    savePerson,
+                    saveEmotion,
+                    options.fileType
+                )
+
+                IOFileType.Xml -> XmlImporter(saveDream, savePerson, saveEmotion)
             }
         }
     }
-
 }
