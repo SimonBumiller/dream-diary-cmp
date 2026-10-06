@@ -2,7 +2,9 @@ package me.bumiller.ddcmp.core.io.exporter
 
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.extension
+import io.github.vinceglb.filekit.path
 import io.github.vinceglb.filekit.sink
+import io.github.vinceglb.filekit.size
 import kotlinx.io.IOException
 import kotlinx.io.buffered
 import me.bumiller.ddcmp.domain.io.BackupExporter
@@ -10,6 +12,7 @@ import me.bumiller.ddcmp.domain.model.ExportResult
 import no.synth.kmpzip.kotlinx.ZipOutputStream
 import no.synth.kmpzip.zip.ZipEntry
 import no.synth.kmpzip.zip.ZipOutputStream
+import kotlin.time.Clock
 
 private const val ZIP_EXTENSION = "zip"
 
@@ -21,15 +24,26 @@ internal abstract class ZipFileExporter: BackupExporter {
     override suspend fun export(file: PlatformFile): ExportResult {
         require(file.extension == ZIP_EXTENSION) { "Data can only be exported to a .zip file." }
 
-        file.sink(append = false).buffered().use { sink ->
+        val now = Clock.System.now()
+
+        val result = file.sink(append = false).buffered().use { sink ->
             ZipOutputStream(sink).use { zipStream ->
-                return try {
+                try {
                     aggregateZipFile(zipStream)
                 } catch (_: IOException) {
-                    ExportResult.Failure.FileAccess
+                    ExportResult.Failure.FileAccess(0, now)
                 }
             }
         }
+
+        if(result != null) return result
+
+        return ExportResult.Success(
+            id = 0,
+            timestamp = now,
+            fileSize = file.size(),
+            fileLocation = file.path
+        )
     }
 
     protected fun ZipOutputStream.entryForName(
@@ -52,6 +66,6 @@ internal abstract class ZipFileExporter: BackupExporter {
      *
      * @param zipStream The zip stream into the zip file.
      */
-    protected abstract suspend fun aggregateZipFile(zipStream: ZipOutputStream): ExportResult
+    protected abstract suspend fun aggregateZipFile(zipStream: ZipOutputStream): ExportResult?
 
 }

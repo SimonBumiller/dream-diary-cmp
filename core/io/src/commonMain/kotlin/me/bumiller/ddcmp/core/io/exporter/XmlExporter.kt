@@ -22,7 +22,7 @@ internal class XmlExporter(
 
     override suspend fun aggregateZipFile(
         zipStream: ZipOutputStream
-    ): ExportResult {
+    ): ExportResult? {
         val dreams = allDreams(AllDreamUseCase.I())
             .first()
             .map(Xml.Dream::fromModel)
@@ -41,7 +41,7 @@ internal class XmlExporter(
             writeXml(Xml.EmotionsRoot(emotions), EMOTIONS_FILE_NAME)
         }
 
-        return ExportResult.Success
+        return null
     }
 
     private inline fun <reified T : Any> ZipOutputStream.writeXml(

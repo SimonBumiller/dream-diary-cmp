@@ -1,14 +1,38 @@
 package me.bumiller.ddcmp.domain.model
 
+import me.bumiller.ddcmp.domain.model.meta.Unique
+import kotlin.time.Instant
+
 /**
  * Result when exporting data.
  */
-sealed interface ExportResult {
+sealed interface ExportResult: Unique {
+
+    override val id: Long
+
+    /**
+     * The timestamp when the import was requested.
+     */
+    val timestamp: Instant
 
     /**
      * Data was exported successfully.
      */
-    data object Success: ExportResult
+    data class Success(
+        override val id: Long,
+        override val timestamp: Instant,
+
+        /**
+         * Size of the export file in bytes.
+         */
+        val fileSize: Long,
+
+        /**
+         * The location of the export file.
+         */
+        val fileLocation: String
+
+    ): ExportResult
 
     /**
      * Failure arose when exporting.
@@ -18,7 +42,7 @@ sealed interface ExportResult {
         /**
          * The file could not be accessed.
          */
-        data object FileAccess: Failure
+        data class FileAccess(override val id: Long, override val timestamp: Instant): Failure
 
     }
 

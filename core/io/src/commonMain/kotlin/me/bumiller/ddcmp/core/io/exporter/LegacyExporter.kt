@@ -15,6 +15,7 @@ import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import no.synth.kmpzip.kotlinx.asSink
 import no.synth.kmpzip.zip.ZipEntry
 import no.synth.kmpzip.zip.ZipOutputStream
+import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 private const val FILE_NAME = "data.json"
@@ -28,7 +29,8 @@ internal class LegacyExporter(
 ) : ZipFileExporter() {
 
     @OptIn(ExperimentalTime::class, ExperimentalSerializationApi::class)
-    override suspend fun aggregateZipFile(zipStream: ZipOutputStream): ExportResult {
+    override suspend fun aggregateZipFile(zipStream: ZipOutputStream): ExportResult? {
+        val now = Clock.System.now()
         val timeZone = TimeZone.currentSystemDefault()
 
         val allDreams = allDreams(AllDreamUseCase.I())
@@ -88,11 +90,11 @@ internal class LegacyExporter(
         try {
             Json.encodeToSink(root, zipStream.asSink().buffered())
         }catch (_: IOException) {
-            return ExportResult.Failure.FileAccess
+            return ExportResult.Failure.FileAccess(0, now)
         }
 
         zipStream.closeEntry()
 
-        return ExportResult.Success
+        return null
     }
 }

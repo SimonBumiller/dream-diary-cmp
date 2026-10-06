@@ -33,7 +33,7 @@ internal class ListBasedExporter(
 
     override suspend fun aggregateZipFile(
         zipStream: ZipOutputStream
-    ): ExportResult {
+    ): ExportResult? {
         val dreams = mutableListOf<ListBased.Dream>()
         val dreamsToPersons = mutableListOf<ListBased.DreamToPersons>()
         val dreamsToEmotions = mutableListOf<ListBased.DreamToEmotion>()
@@ -66,7 +66,7 @@ internal class ListBasedExporter(
             writeListBased(dreamsToEmotions, DREAMS_TO_EMOTIONS_FILE_NAME)
         }
 
-        return ExportResult.Success
+        return null
     }
 
     private inline fun <reified T> ZipOutputStream.writeListBased(
