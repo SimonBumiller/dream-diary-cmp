@@ -5,8 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
-import me.ddcmp.feature.io.entries.configuration.ImportConfigEntry
-import me.ddcmp.feature.io.entries.result.ImportResultEntry
+import me.ddcmp.feature.io.entries.import_configuration.ImportConfigEntry
+import me.ddcmp.feature.io.entries.import_result.ImportResultEntry
 import me.ddcmp.feature.io.navigation.IORoutes
 
 /**

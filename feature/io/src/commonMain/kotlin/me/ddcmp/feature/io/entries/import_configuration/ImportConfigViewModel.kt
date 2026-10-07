@@ -1,4 +1,4 @@
-package me.ddcmp.feature.io.entries.configuration
+package me.ddcmp.feature.io.entries.import_configuration
 
 import androidx.lifecycle.viewModelScope
 import io.github.vinceglb.filekit.PlatformFile
@@ -12,8 +12,8 @@ import me.bumiller.ddcmp.domain.usecase.io.ImportUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
-import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel.UiEvent
-import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel.ViewModelEvent
+import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiEvent
+import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.ViewModelEvent
 import me.ddcmp.feature.io.model.IOOptionType
 
 internal class ImportConfigViewModel(

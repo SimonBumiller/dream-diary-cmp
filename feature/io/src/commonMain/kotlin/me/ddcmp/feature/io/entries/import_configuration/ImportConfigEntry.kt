@@ -1,4 +1,4 @@
-package me.ddcmp.feature.io.entries.configuration
+package me.ddcmp.feature.io.entries.import_configuration
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.io.generated.resources.Res
@@ -55,10 +54,10 @@ import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.ddcmp.feature.io.components.IOOptionTypeSelection
-import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel.State
-import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel.UiEvent
-import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel.UiState
-import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel.ViewModelEvent
+import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.State
+import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiEvent
+import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiState
+import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.ViewModelEvent
 import me.ddcmp.feature.io.model.IOOptionType
 import org.jetbrains.compose.resources.stringResource
 

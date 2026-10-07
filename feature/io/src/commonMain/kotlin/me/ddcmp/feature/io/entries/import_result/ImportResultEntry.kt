@@ -1,13 +1,11 @@
-package me.ddcmp.feature.io.entries.result
+package me.ddcmp.feature.io.entries.import_result
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.io.generated.resources.Res
 import dream_diary_cmp.feature.io.generated.resources.import_result_continue_label_success
@@ -25,8 +23,8 @@ import me.bumiller.ddcmp.domain.model.ImportResult
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.format.formatInstantMonthYear
 import me.bumiller.ddcmp.ui.common.text.styledText
-import me.ddcmp.feature.io.entries.result.ImportResultViewModel.UiEvent
-import me.ddcmp.feature.io.entries.result.ImportResultViewModel.ViewModelEvent
+import me.ddcmp.feature.io.entries.import_result.ImportResultViewModel.UiEvent
+import me.ddcmp.feature.io.entries.import_result.ImportResultViewModel.ViewModelEvent
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant

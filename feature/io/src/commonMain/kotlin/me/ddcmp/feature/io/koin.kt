@@ -1,7 +1,7 @@
 package me.ddcmp.feature.io
 
-import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel
-import me.ddcmp.feature.io.entries.result.ImportResultViewModel
+import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel
+import me.ddcmp.feature.io.entries.import_result.ImportResultViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 

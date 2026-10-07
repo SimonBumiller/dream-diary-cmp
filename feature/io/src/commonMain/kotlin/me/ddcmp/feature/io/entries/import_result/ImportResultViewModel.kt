@@ -1,4 +1,4 @@
-package me.ddcmp.feature.io.entries.result
+package me.ddcmp.feature.io.entries.import_result
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -13,8 +13,8 @@ import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
-import me.ddcmp.feature.io.entries.result.ImportResultViewModel.UiEvent
-import me.ddcmp.feature.io.entries.result.ImportResultViewModel.ViewModelEvent
+import me.ddcmp.feature.io.entries.import_result.ImportResultViewModel.UiEvent
+import me.ddcmp.feature.io.entries.import_result.ImportResultViewModel.ViewModelEvent
 import me.ddcmp.feature.io.navigation.IORoutes
 
 internal class ImportResultViewModel(
