@@ -3,6 +3,7 @@ package me.ddcmp.feature.io
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import me.ddcmp.feature.io.entries.configuration.ImportConfigEntry
 import me.ddcmp.feature.io.entries.result.ImportResultEntry
@@ -23,7 +24,7 @@ fun ImportEntry(
         navController = navController,
         startDestination = IORoutes.ImportConfig
     ) {
-        composable<IORoutes.ImportResult> {
+        dialog<IORoutes.ImportResult> {
             ImportResultEntry(
                 onContinue = { wasSuccess ->
                     onFinished(wasSuccess)

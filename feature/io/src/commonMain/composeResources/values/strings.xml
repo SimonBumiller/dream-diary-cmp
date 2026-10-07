@@ -23,6 +23,9 @@
     <string name="result_title_failure">Import failed</string>
     <string name="result_description_success_legacy">The import has been completed. In total, **%1$d** dreams were imported alongside **%2$s** persons. The dreams spanned a timespan from **%3$s** to **%4$s** (**%5$d** months).</string>
     <string name="result_description_success_normal">The import has been completed. In total, **%1$d** dreams, **%2$s** persons and **%3$d** emotions were added. The dreams spanned a timespan from **%4$s** to **%5$s** (**%6$d** months).</string>
-    <string name="result_continue_label_success">Finish</string>
+    <string name="result_description_failure_consistency">The data contained in the selected file did not adhere to required data consistency. This is most likely caused by invalid references.</string>
+    <string name="result_description_failure_access">The selected file could not be read. This may be caused by network problems or other file-access related issues.</string>
+    <string name="result_description_failure_format">The selected file violates the specified format. This can be caused by a corrupted file or acidental changes.</string>
+    <string name="result_continue_label_success">Continue</string>
 
 </resources>

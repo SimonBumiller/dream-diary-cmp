@@ -1,26 +1,19 @@
 package me.ddcmp.feature.io.entries.result
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.io.generated.resources.Res
 import dream_diary_cmp.feature.io.generated.resources.result_continue_label_success
+import dream_diary_cmp.feature.io.generated.resources.result_description_failure_access
+import dream_diary_cmp.feature.io.generated.resources.result_description_failure_consistency
+import dream_diary_cmp.feature.io.generated.resources.result_description_failure_format
 import dream_diary_cmp.feature.io.generated.resources.result_description_success_legacy
 import dream_diary_cmp.feature.io.generated.resources.result_description_success_normal
 import dream_diary_cmp.feature.io.generated.resources.result_title_failure
@@ -31,7 +24,6 @@ import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.ImportResult
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.format.formatInstantMonthYear
-import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.text.styledText
 import me.ddcmp.feature.io.entries.result.ImportResultViewModel.UiEvent
 import me.ddcmp.feature.io.entries.result.ImportResultViewModel.ViewModelEvent
@@ -53,8 +45,6 @@ internal fun ImportResultEntry(
     ) {
         val result by it.result.collectAsStateWithLifecycle()
 
-        println("Got result $result")
-
         if (result != null) {
             ImportResultEntry(it::onEvent, result!!)
         }
@@ -67,61 +57,51 @@ private fun ImportResultEntry(
     onEvent: (UiEvent) -> Unit,
     result: ImportResult
 ) {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    val text = if (result is ImportResult.Success) Res.string.result_title_success
-                    else Res.string.result_title_failure
-                    Text(stringResource(text))
-                }
-            )
-        }
-    ) { pv ->
-        if (result is ImportResult.Success) {
-            ResultContentSuccess(
-                modifier = Modifier
-                    .padding(pv + PaddingValues(horizontal = 16.dp))
-                    .fillMaxSize(),
-                result = result,
-                onReturn = { onEvent(UiEvent.Continue(true)) }
-            )
-        } else {
-            Box(
-                modifier = Modifier
-                    .padding(pv + PaddingValues(horizontal = 16.dp))
+    AlertDialog(
+        onDismissRequest = { onEvent(UiEvent.Continue(result is ImportResult.Success)) },
+        confirmButton = {
+            TextButton(
+                onClick = { onEvent(UiEvent.Continue(result is ImportResult.Success)) }
             ) {
-                // TODO: Here we should explicitly state why the importing did not succeed.
-                Text("Failure")
+                Text(stringResource(Res.string.result_continue_label_success))
+            }
+        },
+        title = {
+            val resource = when (result) {
+                is ImportResult.Failure -> Res.string.result_title_failure
+                is ImportResult.Success -> Res.string.result_title_success
+            }
+            Text(stringResource(resource))
+        },
+        text = {
+            when (result) {
+                is ImportResult.Failure -> DialogTextFailure(result)
+                is ImportResult.Success -> DialogTextSuccess(result)
             }
         }
+    )
+}
+
+@Composable
+private fun DialogTextFailure(
+    result: ImportResult.Failure
+) {
+    val resource = when (result) {
+        is ImportResult.Failure.DataConsistency -> Res.string.result_description_failure_consistency
+        is ImportResult.Failure.FileAccess -> Res.string.result_description_failure_access
+        is ImportResult.Failure.FileFormat -> Res.string.result_description_failure_format
     }
+
+    Text(stringResource(resource))
 }
 
 @OptIn(ExperimentalTime::class)
 @Composable
-private fun ResultContentSuccess(
-    modifier: Modifier = Modifier,
-    result: ImportResult.Success,
-    onReturn: () -> Unit
+private fun DialogTextSuccess(
+    result: ImportResult.Success
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement
-            .spacedBy(16.dp)
-    ) {
-        val text = if (result is ImportResult.Success.Normal)
-            stringResource(
-                Res.string.result_description_success_normal,
-                result.dreamCount,
-                result.personCount,
-                result.emotionCount,
-                formatInstantMonthYear(result.firstDream),
-                formatInstantMonthYear(result.lastDream),
-                monthsBetween(result.firstDream, result.lastDream)
-            )
-        else stringResource(
+    val text = when (result) {
+        is ImportResult.Success.Legacy -> stringResource(
             Res.string.result_description_success_legacy,
             result.dreamCount,
             result.personCount,
@@ -130,20 +110,20 @@ private fun ResultContentSuccess(
             monthsBetween(result.firstDream, result.lastDream)
         )
 
-        val spannedString = styledText(text)
-
-        Text(
-            text = spannedString,
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center
+        is ImportResult.Success.Normal -> stringResource(
+            Res.string.result_description_success_normal,
+            result.dreamCount,
+            result.personCount,
+            result.emotionCount,
+            formatInstantMonthYear(result.firstDream),
+            formatInstantMonthYear(result.lastDream),
+            monthsBetween(result.firstDream, result.lastDream)
         )
-
-        Button(
-            onClick = onReturn
-        ) {
-            Text(stringResource(Res.string.result_continue_label_success))
-        }
     }
+
+    val spannedString = styledText(text)
+
+    Text(spannedString)
 }
 
 @OptIn(ExperimentalTime::class)
