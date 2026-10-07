@@ -58,6 +58,7 @@ kotlin {
             implementation(project(":feature:home"))
             implementation(project(":feature:settings"))
             implementation(project(":feature:import"))
+            implementation(project(":feature:export"))
             implementation(project(":feature:stats"))
             implementation(project(":feature:onboarding"))
             implementation(project(":ui:common"))
