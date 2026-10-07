@@ -64,7 +64,7 @@ fun AppRoot(
             modifier = Modifier
                 .fillMaxSize(),
             navController = navController,
-            startDestination = initialEntry!!
+            startDestination = MainRoutes.Import
         ) {
             composable<MainRoutes.Home> {
                 HomeEntry(

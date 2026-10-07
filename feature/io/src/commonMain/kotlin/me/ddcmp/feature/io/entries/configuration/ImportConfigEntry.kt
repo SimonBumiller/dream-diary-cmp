@@ -15,8 +15,10 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -24,44 +26,40 @@ import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.io.generated.resources.Res
-import dream_diary_cmp.feature.io.generated.resources.configuration_configuration_header
 import dream_diary_cmp.feature.io.generated.resources.configuration_description
+import dream_diary_cmp.feature.io.generated.resources.configuration_file_description
 import dream_diary_cmp.feature.io.generated.resources.configuration_file_name_placeholder
 import dream_diary_cmp.feature.io.generated.resources.configuration_filetype_label
-import dream_diary_cmp.feature.io.generated.resources.configuration_pick_file_header
-import dream_diary_cmp.feature.io.generated.resources.configuration_pick_file_label
+import dream_diary_cmp.feature.io.generated.resources.configuration_options_description
 import dream_diary_cmp.feature.io.generated.resources.configuration_timezone_label
 import dream_diary_cmp.feature.io.generated.resources.configuration_title
 import dream_diary_cmp.feature.io.generated.resources.configuration_transfer_favorites_label
 import io.github.vinceglb.filekit.dialogs.FileKitType
+import io.github.vinceglb.filekit.dialogs.compose.PickerResultLauncher
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.name
 import kotlinx.datetime.TimeZone
 import me.bumiller.ddcmp.domain.model.IOFileType
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
-import me.bumiller.ddcmp.ui.common.component.RadioSelectors
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.translation.translateName
+import me.ddcmp.feature.io.components.IOOptionTypeSelection
 import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel.State
 import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel.UiEvent
 import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel.UiState
 import me.ddcmp.feature.io.entries.configuration.ImportConfigViewModel.ViewModelEvent
 import me.ddcmp.feature.io.model.IOOptionType
-import me.ddcmp.feature.io.translation.translateDescription
-import me.ddcmp.feature.io.translation.translateName
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -146,149 +144,179 @@ private fun ImportConfigEntry(
                 style = MaterialTheme.typography.bodySmall
             )
 
-            RadioSelectors(
-                items = listOf(IOOptionType.Normal, IOOptionType.Legacy),
-                selected = uiState.type,
-                onSelect = { onEvent(UiEvent.ChangeType(it)) },
-                title = { it.translateName },
-                description = { it.translateDescription }
+            IOOptionTypeSelection(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                type = uiState.type,
+                onTypeChange = { onEvent(UiEvent.ChangeType(it)) }
             )
 
+            Text(
+                text = stringResource(Res.string.configuration_file_description),
+                style = MaterialTheme.typography.bodySmall
+            )
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = stringResource(Res.string.configuration_configuration_header),
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold
+            FilePickerSection(picker, uiState)
+
+            HorizontalDivider()
+
+            ImportOptions(uiState, onEvent)
+        }
+    }
+}
+
+@Composable
+private fun ImportOptions(
+    uiState: UiState,
+    onEvent: (UiEvent) -> Unit
+) {
+    Column {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth(),
+            text = stringResource(Res.string.configuration_options_description),
+            style = MaterialTheme.typography.bodySmall
+        )
+
+        KeepFavoriteOption(uiState, onEvent)
+
+        if (uiState.type == IOOptionType.Legacy) {
+            TimeZoneOption(uiState, onEvent)
+        }
+
+        if (uiState.type == IOOptionType.Normal) {
+            FileTypeOption(uiState, onEvent)
+        }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun FileTypeOption(
+    uiState: UiState,
+    onEvent: (UiEvent) -> Unit
+) {
+    ExposedDropdownMenuBox(
+        expanded = uiState.showTimeZoneDropdown,
+        onExpandedChange = { onEvent(UiEvent.ToggleFileTypeDropdownVisibility(!uiState.showFileTypeDropdown)) }
+    ) {
+        OutlinedTextField(
+            modifier = Modifier
+                .menuAnchor(MenuAnchorType.PrimaryEditable),
+            value = uiState.fileType.translateName,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(stringResource(Res.string.configuration_filetype_label)) }
+        )
+        ExposedDropdownMenu(
+            expanded = uiState.showFileTypeDropdown,
+            onDismissRequest = {
+                onEvent(
+                    UiEvent.ToggleFileTypeDropdownVisibility(
+                        false
                     )
                 )
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Checkbox(
-                        checked = uiState.transferFavorites,
-                        onCheckedChange = { onEvent(UiEvent.ChangeTransferFavorites(it)) }
-                    )
-                    Text(
-                        text = stringResource(Res.string.configuration_transfer_favorites_label),
-                        style = MaterialTheme.typography.labelLarge
-                    )
-                }
-
-                if (uiState.type == IOOptionType.Legacy) {
-                    ExposedDropdownMenuBox(
-                        expanded = uiState.showTimeZoneDropdown,
-                        onExpandedChange = { onEvent(UiEvent.ToggleTimeZoneDropdownVisibility(!uiState.showTimeZoneDropdown)) }
-                    ) {
-                        OutlinedTextField(
-                            modifier = Modifier
-                                .menuAnchor(MenuAnchorType.PrimaryEditable),
-                            value = uiState.timeZone.id,
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text(stringResource(Res.string.configuration_timezone_label)) }
-                        )
-                        ExposedDropdownMenu(
-                            expanded = uiState.showTimeZoneDropdown,
-                            onDismissRequest = {
-                                onEvent(
-                                    UiEvent.ToggleTimeZoneDropdownVisibility(
-                                        false
-                                    )
-                                )
-                            }
-                        ) {
-                            TimeZone.availableZoneIds.forEach { id ->
-                                DropdownMenuItem(
-                                    onClick = {
-                                        onEvent(UiEvent.ChangeTimeZone(TimeZone.of(id)))
-                                        onEvent(UiEvent.ToggleTimeZoneDropdownVisibility(false))
-                                    },
-                                    text = { Text(id) }
-                                )
-                            }
-                        }
-                    }
-                }
-
-                if (uiState.type == IOOptionType.Normal) {
-                    ExposedDropdownMenuBox(
-                        expanded = uiState.showTimeZoneDropdown,
-                        onExpandedChange = { onEvent(UiEvent.ToggleFileTypeDropdownVisibility(!uiState.showFileTypeDropdown)) }
-                    ) {
-                        OutlinedTextField(
-                            modifier = Modifier
-                                .menuAnchor(MenuAnchorType.PrimaryEditable),
-                            value = uiState.fileType.translateName,
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text(stringResource(Res.string.configuration_filetype_label)) }
-                        )
-                        ExposedDropdownMenu(
-                            expanded = uiState.showFileTypeDropdown,
-                            onDismissRequest = {
-                                onEvent(
-                                    UiEvent.ToggleFileTypeDropdownVisibility(
-                                        false
-                                    )
-                                )
-                            }
-                        ) {
-                            IOFileType.entries.forEach { filetype ->
-                                DropdownMenuItem(
-                                    onClick = {
-                                        onEvent(UiEvent.ChangeFileType(filetype))
-                                        onEvent(UiEvent.ToggleFileTypeDropdownVisibility(false))
-                                    },
-                                    text = { Text(filetype.translateName) }
-                                )
-                            }
-                        }
-                    }
-                }
             }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = stringResource(Res.string.configuration_pick_file_header),
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold
-                    )
+        ) {
+            IOFileType.entries.forEach { filetype ->
+                DropdownMenuItem(
+                    onClick = {
+                        onEvent(UiEvent.ChangeFileType(filetype))
+                        onEvent(UiEvent.ToggleFileTypeDropdownVisibility(false))
+                    },
+                    text = { Text(filetype.translateName) }
                 )
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    TextButton(
-                        onClick = { picker.launch() }
-                    ) {
-                        Text(stringResource(Res.string.configuration_pick_file_label))
-                    }
-
-                    Text(
-                        text = uiState.file?.name
-                            ?: stringResource(Res.string.configuration_file_name_placeholder),
-                        style = MaterialTheme.typography.titleSmall.copy(
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                }
             }
         }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun TimeZoneOption(
+    uiState: UiState,
+    onEvent: (UiEvent) -> Unit
+) {
+    ExposedDropdownMenuBox(
+        expanded = uiState.showTimeZoneDropdown,
+        onExpandedChange = { onEvent(UiEvent.ToggleTimeZoneDropdownVisibility(!uiState.showTimeZoneDropdown)) }
+    ) {
+        OutlinedTextField(
+            modifier = Modifier
+                .menuAnchor(MenuAnchorType.PrimaryEditable),
+            value = uiState.timeZone.id,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(stringResource(Res.string.configuration_timezone_label)) }
+        )
+        ExposedDropdownMenu(
+            expanded = uiState.showTimeZoneDropdown,
+            onDismissRequest = {
+                onEvent(
+                    UiEvent.ToggleTimeZoneDropdownVisibility(
+                        false
+                    )
+                )
+            }
+        ) {
+            TimeZone.availableZoneIds.forEach { id ->
+                DropdownMenuItem(
+                    onClick = {
+                        onEvent(UiEvent.ChangeTimeZone(TimeZone.of(id)))
+                        onEvent(UiEvent.ToggleTimeZoneDropdownVisibility(false))
+                    },
+                    text = { Text(id) }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun KeepFavoriteOption(
+    uiState: UiState,
+    onEvent: (UiEvent) -> Unit
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = uiState.transferFavorites,
+            onCheckedChange = { onEvent(UiEvent.ChangeTransferFavorites(it)) }
+        )
+        Text(
+            text = stringResource(Res.string.configuration_transfer_favorites_label),
+            style = MaterialTheme.typography.labelLarge
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun FilePickerSection(
+    picker: PickerResultLauncher,
+    uiState: UiState
+) {
+    // The ExposedDropdownMenuBox is needed so we can capture proper clicks on the TextField
+    ExposedDropdownMenuBox(
+        expanded = false,
+        onExpandedChange = { picker.launch() }
+    ) {
+        OutlinedTextField(
+            modifier = Modifier.menuAnchor(
+                type = ExposedDropdownMenuAnchorType.PrimaryNotEditable,
+                enabled = true
+            ),
+            value = uiState.file?.name ?: "",
+            readOnly = true,
+            onValueChange = { },
+            placeholder = {
+                Text(stringResource(Res.string.configuration_file_name_placeholder))
+            },
+//            label = {
+//                Text(stringResource(Res.string.configuration_pick_file_label))
+//            }
+        )
     }
 }
