@@ -10,9 +10,9 @@ sealed interface ImportOption {
     val transferFavorites: Boolean
 
     /**
-     * The matching file extensions
+     * The file extension of the backup file.
      */
-    val fileExtensions: List<String>
+    val backupFileExtension: String
 
     /**
      * Importing legacy backups.
@@ -28,8 +28,7 @@ sealed interface ImportOption {
 
     ) : ImportOption {
 
-        override val fileExtensions: List<String>
-            get() = listOf("json")
+        override val backupFileExtension = "json"
 
     }
 
@@ -39,16 +38,15 @@ sealed interface ImportOption {
     data class Normal(
 
         /**
-         * The filetype to import.
+         * The filetype that the content is represented in.
          */
-        val fileType: IOFileType,
+        val contentFileType: IOFileType,
 
         override val transferFavorites: Boolean
 
     ): ImportOption {
 
-        override val fileExtensions: List<String>
-            get() = fileType.fileExtensions.toList()
+        override val backupFileExtension = "zip"
 
     }
 

@@ -48,7 +48,6 @@ import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.name
 import kotlinx.datetime.TimeZone
 import me.bumiller.ddcmp.domain.model.IOFileType
-import me.bumiller.ddcmp.domain.model.ImportOption
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
@@ -89,13 +88,8 @@ private fun ImportConfigEntry(
     uiState: UiState,
     state: State
 ) {
-    val extension = when (state.option) {
-        is ImportOption.Legacy -> "json"
-        is ImportOption.Normal -> "zip"
-    }
-
     val picker = rememberFilePickerLauncher(
-        type = FileKitType.File(extension)
+        type = FileKitType.File(state.option.backupFileExtension)
     ) {
         onEvent(UiEvent.FileSelected(it))
     }

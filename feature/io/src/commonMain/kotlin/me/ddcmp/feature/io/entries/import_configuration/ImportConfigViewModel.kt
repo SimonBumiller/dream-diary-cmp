@@ -54,7 +54,7 @@ internal class ImportConfigViewModel(
                 transferFavorites = uiState.transferFavorites
             )
             IOOptionType.Normal -> ImportOption.Normal(
-                fileType = uiState.fileType,
+                contentFileType = uiState.fileType,
                 transferFavorites = uiState.transferFavorites
             )
         }

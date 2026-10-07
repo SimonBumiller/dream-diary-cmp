@@ -31,12 +31,12 @@ internal class ImporterFactoryImpl(
                 createPerson = savePerson
             )
 
-            is ImportOption.Normal -> when (options.fileType) {
+            is ImportOption.Normal -> when (options.contentFileType) {
                 IOFileType.Json, IOFileType.Yaml -> ListBasedImporter(
                     saveDream,
                     savePerson,
                     saveEmotion,
-                    options.fileType
+                    options.contentFileType
                 )
 
                 IOFileType.Xml -> XmlImporter(saveDream, savePerson, saveEmotion)
