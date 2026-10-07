@@ -27,6 +27,12 @@ internal sealed interface MainRoutes {
     data object Import: MainRoutes
 
     /**
+     * Navigation route for the export section of the app.
+     */
+    @Serializable
+    data object Export: MainRoutes
+
+    /**
      * Navigation route for the settings screens.
      */
     @Serializable

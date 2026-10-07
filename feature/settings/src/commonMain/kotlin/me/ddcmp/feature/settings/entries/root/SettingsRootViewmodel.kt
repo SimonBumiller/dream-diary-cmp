@@ -52,6 +52,8 @@ internal class SettingsRootViewmodel(
         UiEvent.ClickBackButton -> fireEvent(NavigateBack)
         UiEvent.ClickColorMode -> updateUiState<UiState> { it.copy(showColorModeDropdown = !it.showColorModeDropdown) }
         UiEvent.ClickDefaultConfidentiality -> updateUiState<UiState> { it.copy(showDefaultConfidentialityDropdown = !it.showDefaultConfidentialityDropdown) }
+        UiEvent.ClickExport -> fireEvent(ViewModelEvent.NavigateToExport)
+        UiEvent.ClickImport -> fireEvent(ViewModelEvent.NavigateToImport)
     }
 
     data class UiState(
@@ -61,6 +63,8 @@ internal class SettingsRootViewmodel(
 
     sealed interface UiEvent : UIE {
         data object ClickBackButton : UiEvent
+        data object ClickImport : UiEvent
+        data object ClickExport : UiEvent
         data object ClickColorMode : UiEvent
         data object ClickDefaultConfidentiality : UiEvent
         data class ChangeColorMode(val mode: ColorMode) : UiEvent
@@ -71,6 +75,8 @@ internal class SettingsRootViewmodel(
 
     sealed interface ViewModelEvent : VME {
         data object NavigateBack : ViewModelEvent
+        data object NavigateToImport : ViewModelEvent
+        data object NavigateToExport : ViewModelEvent
     }
 
 }

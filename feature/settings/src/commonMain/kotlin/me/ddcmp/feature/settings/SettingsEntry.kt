@@ -8,7 +8,9 @@ import me.ddcmp.feature.settings.entries.root.SettingsRootEntry
  */
 @Composable
 fun SettingsEntry(
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onGoToExport: () -> Unit,
+    onGoToImport: () -> Unit
 ) {
-    SettingsRootEntry(onBack)
+    SettingsRootEntry(onBack, onGoToExport, onGoToImport)
 }

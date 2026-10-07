@@ -13,4 +13,11 @@
     <string name="settings_root_confidentiality_none_description">No special protection</string>
     <string name="settings_root_confidentiality_medium_description">Content preview is hidden</string>
     <string name="settings_root_confidentiality_severe_description">Content preview and title is hidden, device unlock required</string>
+
+    <string name="settings_root_io_section_label">User Data</string>
+    <string name="settings_root_export_title">Export Data</string>
+    <string name="settings_root_export_description">Export your data into a local file</string>
+    <string name="settings_root_import_title">Import Data</string>
+    <string name="settings_root_import_description">Import data from a local file</string>
+
 </resources>

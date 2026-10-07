@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import me.bumiller.ddcmp.navigation.MainRoutes
 import me.bumiller.ddcmp.theme.AppTheme
 import me.bumiller.ddcmp.theme.systemTheme
+import me.ddcmp.feature.export.ExportEntry
 import me.ddcmp.feature.home.HomeEntry
 import me.ddcmp.feature.import.ImportEntry
 import me.ddcmp.feature.onboarding.OnboardingEntry
@@ -80,6 +81,22 @@ fun AppRoot(
                 )
             }
 
+            composable<MainRoutes.Import> {
+                ImportEntry(
+                    onFinished = {
+                        navController.popBackStack()
+                        navController.navigate(MainRoutes.Home)
+                    }
+                )
+            }
+
+            composable<MainRoutes.Export> {
+                ExportEntry(
+                    onBack = { navController.popBackStack() },
+                    onFinished = { navController.popBackStack() }
+                )
+            }
+
             composable<MainRoutes.Onboarding> {
                 OnboardingEntry(
                     onFinished = {
@@ -91,7 +108,13 @@ fun AppRoot(
 
             composable<MainRoutes.Settings> {
                 SettingsEntry(
-                    onBack = { navController.popBackStack() }
+                    onBack = { navController.popBackStack() },
+                    onGoToExport = {
+                        navController.navigate(MainRoutes.Export)
+                    },
+                    onGoToImport = {
+                        navController.navigate(MainRoutes.Import)
+                    }
                 )
             }
         }

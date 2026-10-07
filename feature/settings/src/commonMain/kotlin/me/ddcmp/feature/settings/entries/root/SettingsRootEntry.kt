@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.Upload
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -32,6 +36,11 @@ import dream_diary_cmp.feature.settings.generated.resources.settings_root_design
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_design_color_theme_description
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_design_color_theme_title
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_design_section_label
+import dream_diary_cmp.feature.settings.generated.resources.settings_root_export_description
+import dream_diary_cmp.feature.settings.generated.resources.settings_root_export_title
+import dream_diary_cmp.feature.settings.generated.resources.settings_root_import_description
+import dream_diary_cmp.feature.settings.generated.resources.settings_root_import_title
+import dream_diary_cmp.feature.settings.generated.resources.settings_root_io_section_label
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_title
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_unlock_description
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_unlock_label
@@ -57,7 +66,9 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun SettingsRootEntry(
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onGoToExport: () -> Unit,
+    onGoToImport: () -> Unit
 ) {
     val biometricState = rememberBiometricState()
 
@@ -65,6 +76,8 @@ internal fun SettingsRootEntry(
         onViewModelEvent = {
             when (it) {
                 ViewModelEvent.NavigateBack -> onBack()
+                ViewModelEvent.NavigateToExport -> onGoToExport()
+                ViewModelEvent.NavigateToImport -> onGoToImport()
             }
         }
     ) { vm ->
@@ -131,7 +144,65 @@ private fun SettingsRootEntry(
             }
 
             ConfidentialitySection(settings, uiState, biometricState, onEvent)
+
+            DisabledContent {
+                Text(
+                    text = stringResource(Res.string.settings_root_io_section_label),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            IoSection(onEvent)
         }
+    }
+}
+
+@Composable
+private fun IoSection(
+    onEvent: (UiEvent) -> Unit
+) {
+    Column {
+        ListItem(
+            modifier = Modifier.clickable {
+                onEvent(UiEvent.ClickExport)
+            },
+            headlineContent = {
+                Text(
+                    text = stringResource(Res.string.settings_root_export_title),
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            supportingContent = {
+                Text(stringResource(Res.string.settings_root_export_description))
+            },
+            leadingContent = {
+                Icon(
+                    imageVector = Icons.Outlined.Download,
+                    contentDescription = null
+                )
+            }
+        )
+        ListItem(
+            modifier = Modifier.clickable {
+                onEvent(UiEvent.ClickImport)
+            },
+            headlineContent = {
+                Text(
+                    text = stringResource(Res.string.settings_root_import_title),
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            supportingContent = {
+                Text(stringResource(Res.string.settings_root_import_description))
+            },
+            leadingContent = {
+                Icon(
+                    imageVector = Icons.Outlined.Upload,
+                    contentDescription = null
+                )
+            }
+        )
     }
 }
 
