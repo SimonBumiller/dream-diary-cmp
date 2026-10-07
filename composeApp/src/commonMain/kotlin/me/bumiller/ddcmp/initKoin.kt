@@ -5,7 +5,7 @@ import me.bumiller.ddcmp.core.io.io
 import me.bumiller.ddcmp.domain.domain
 import me.bumiller.ddcomp.core.database.database
 import me.ddcmp.feature.home.home
-import me.ddcmp.feature.import.import
+import me.ddcmp.feature.io.import
 import me.ddcmp.feature.onboarding.di.onboarding
 import me.ddcmp.feature.settings.settings
 import me.ddcmp.feature.stats.statistics

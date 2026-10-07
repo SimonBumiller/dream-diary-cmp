@@ -14,9 +14,9 @@ import kotlinx.coroutines.flow.collectLatest
 import me.bumiller.ddcmp.navigation.MainRoutes
 import me.bumiller.ddcmp.theme.AppTheme
 import me.bumiller.ddcmp.theme.systemTheme
-import me.ddcmp.feature.export.ExportEntry
 import me.ddcmp.feature.home.HomeEntry
-import me.ddcmp.feature.import.ImportEntry
+import me.ddcmp.feature.io.ExportEntry
+import me.ddcmp.feature.io.ImportEntry
 import me.ddcmp.feature.onboarding.OnboardingEntry
 import me.ddcmp.feature.settings.SettingsEntry
 import org.koin.compose.viewmodel.koinViewModel
@@ -69,15 +69,6 @@ fun AppRoot(
             composable<MainRoutes.Home> {
                 HomeEntry(
                     onGoToSettings = { navController.navigate(MainRoutes.Settings) }
-                )
-            }
-
-            composable<MainRoutes.Import> {
-                ImportEntry(
-                    onFinished = {
-                        navController.popBackStack()
-                        navController.navigate(MainRoutes.Home)
-                    }
                 )
             }
 
