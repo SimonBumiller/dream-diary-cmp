@@ -1,31 +1,31 @@
 <resources>
-    <string name="importoption_normal_name">Normal</string>
-    <string name="importoption_legacy_name">Legacy App</string>
+    <string name="iooption_type_normal_name">Normal</string>
+    <string name="iooption_type_legacy_name">Legacy App</string>
 
-    <string name="importoption_normal_description">Backup containing all important user data from the app, including emotions.</string>
-    <string name="importoption_legacy_description">Backup containing partial user data for compatibility with the legacy app.</string>
+    <string name="iooption_type_normal_description">Backup containing all important user data from the app, including emotions.</string>
+    <string name="iooption_type_legacy_description">Backup containing partial user data for compatibility with the legacy app.</string>
 
-    <string name="configuration_title">Import</string>
-    <string name="configuration_actions_back">Back</string>
-    <string name="configuration_options_description">Configure the import by setting advanced import options.</string>
-    <string name="configuration_transfer_favorites_label">Keep favorite dreams</string>
-    <string name="configuration_description">Configure your data import by selecting what type of backup you want to import. Note that your choice should depend on your export file.</string>
-    <string name="configuration_file_description">Select the file you want to import. The available files depend on the backup type you selected.</string>
-    <string name="configuration_timezone_label">Reference timezone</string>
-    <string name="configuration_filetype_label">File type</string>
-    <string name="configuration_pick_file_label">Backup File</string>
-    <string name="configuration_pick_file_header">File Selection</string>
-    <string name="configuration_file_name_placeholder">[No file selected]</string>
-    <string name="configuration_loading_label">Importing…</string>
-    <string name="configuration_start_label">Start import</string>
+    <string name="import_configuration_title">Import</string>
+    <string name="import_configuration_actions_back">Back</string>
+    <string name="import_configuration_options_description">Configure the import by setting advanced import options.</string>
+    <string name="import_configuration_transfer_favorites_label">Keep favorite dreams</string>
+    <string name="import_configuration_description">Configure your data import by selecting what type of backup you want to import. Note that your choice should depend on your export file.</string>
+    <string name="import_configuration_file_description">Select the file you want to import. The available files depend on the backup type you selected.</string>
+    <string name="import_configuration_timezone_label">Reference timezone</string>
+    <string name="import_configuration_filetype_label">File type</string>
+    <string name="import_configuration_pick_file_label">Backup File</string>
+    <string name="import_configuration_pick_file_header">File Selection</string>
+    <string name="import_configuration_file_name_placeholder">[No file selected]</string>
+    <string name="import_configuration_loading_label">Importing…</string>
+    <string name="import_configuration_start_label">Start import</string>
 
-    <string name="result_title_success">Import finished</string>
-    <string name="result_title_failure">Import failed</string>
-    <string name="result_description_success_legacy">The import has been completed. In total, **%1$d** dreams were imported alongside **%2$s** persons. The dreams spanned a timespan from **%3$s** to **%4$s** (**%5$d** months).</string>
-    <string name="result_description_success_normal">The import has been completed. In total, **%1$d** dreams, **%2$s** persons and **%3$d** emotions were added. The dreams spanned a timespan from **%4$s** to **%5$s** (**%6$d** months).</string>
-    <string name="result_description_failure_consistency">The data contained in the selected file did not adhere to required data consistency. This is most likely caused by invalid references.</string>
-    <string name="result_description_failure_access">The selected file could not be read. This may be caused by network problems or other file-access related issues.</string>
-    <string name="result_description_failure_format">The selected file violates the specified format. This can be caused by a corrupted file or acidental changes.</string>
-    <string name="result_continue_label_success">Continue</string>
+    <string name="import_result_title_success">Import finished</string>
+    <string name="import_result_title_failure">Import failed</string>
+    <string name="import_result_description_success_legacy">The import has been completed. In total, **%1$d** dreams were imported alongside **%2$s** persons. The dreams spanned a timespan from **%3$s** to **%4$s** (**%5$d** months).</string>
+    <string name="import_result_description_success_normal">The import has been completed. In total, **%1$d** dreams, **%2$s** persons and **%3$d** emotions were added. The dreams spanned a timespan from **%4$s** to **%5$s** (**%6$d** months).</string>
+    <string name="import_result_description_failure_consistency">The data contained in the selected file did not adhere to required data consistency. This is most likely caused by invalid references.</string>
+    <string name="import_result_description_failure_access">The selected file could not be read. This may be caused by network problems or other file-access related issues.</string>
+    <string name="import_result_description_failure_format">The selected file violates the specified format. This can be caused by a corrupted file or acidental changes.</string>
+    <string name="import_result_continue_label_success">Continue</string>
 
 </resources>

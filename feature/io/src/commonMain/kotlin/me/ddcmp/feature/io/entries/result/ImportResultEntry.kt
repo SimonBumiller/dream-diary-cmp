@@ -10,14 +10,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.io.generated.resources.Res
-import dream_diary_cmp.feature.io.generated.resources.result_continue_label_success
-import dream_diary_cmp.feature.io.generated.resources.result_description_failure_access
-import dream_diary_cmp.feature.io.generated.resources.result_description_failure_consistency
-import dream_diary_cmp.feature.io.generated.resources.result_description_failure_format
-import dream_diary_cmp.feature.io.generated.resources.result_description_success_legacy
-import dream_diary_cmp.feature.io.generated.resources.result_description_success_normal
-import dream_diary_cmp.feature.io.generated.resources.result_title_failure
-import dream_diary_cmp.feature.io.generated.resources.result_title_success
+import dream_diary_cmp.feature.io.generated.resources.import_result_continue_label_success
+import dream_diary_cmp.feature.io.generated.resources.import_result_description_failure_access
+import dream_diary_cmp.feature.io.generated.resources.import_result_description_failure_consistency
+import dream_diary_cmp.feature.io.generated.resources.import_result_description_failure_format
+import dream_diary_cmp.feature.io.generated.resources.import_result_description_success_legacy
+import dream_diary_cmp.feature.io.generated.resources.import_result_description_success_normal
+import dream_diary_cmp.feature.io.generated.resources.import_result_title_failure
+import dream_diary_cmp.feature.io.generated.resources.import_result_title_success
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
@@ -63,13 +63,13 @@ private fun ImportResultEntry(
             TextButton(
                 onClick = { onEvent(UiEvent.Continue(result is ImportResult.Success)) }
             ) {
-                Text(stringResource(Res.string.result_continue_label_success))
+                Text(stringResource(Res.string.import_result_continue_label_success))
             }
         },
         title = {
             val resource = when (result) {
-                is ImportResult.Failure -> Res.string.result_title_failure
-                is ImportResult.Success -> Res.string.result_title_success
+                is ImportResult.Failure -> Res.string.import_result_title_failure
+                is ImportResult.Success -> Res.string.import_result_title_success
             }
             Text(stringResource(resource))
         },
@@ -87,9 +87,9 @@ private fun DialogTextFailure(
     result: ImportResult.Failure
 ) {
     val resource = when (result) {
-        is ImportResult.Failure.DataConsistency -> Res.string.result_description_failure_consistency
-        is ImportResult.Failure.FileAccess -> Res.string.result_description_failure_access
-        is ImportResult.Failure.FileFormat -> Res.string.result_description_failure_format
+        is ImportResult.Failure.DataConsistency -> Res.string.import_result_description_failure_consistency
+        is ImportResult.Failure.FileAccess -> Res.string.import_result_description_failure_access
+        is ImportResult.Failure.FileFormat -> Res.string.import_result_description_failure_format
     }
 
     Text(stringResource(resource))
@@ -102,7 +102,7 @@ private fun DialogTextSuccess(
 ) {
     val text = when (result) {
         is ImportResult.Success.Legacy -> stringResource(
-            Res.string.result_description_success_legacy,
+            Res.string.import_result_description_success_legacy,
             result.dreamCount,
             result.personCount,
             formatInstantMonthYear(result.firstDream),
@@ -111,7 +111,7 @@ private fun DialogTextSuccess(
         )
 
         is ImportResult.Success.Normal -> stringResource(
-            Res.string.result_description_success_normal,
+            Res.string.import_result_description_success_normal,
             result.dreamCount,
             result.personCount,
             result.emotionCount,

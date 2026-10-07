@@ -2,10 +2,10 @@ package me.ddcmp.feature.io.translation
 
 import androidx.compose.runtime.Composable
 import dream_diary_cmp.feature.io.generated.resources.Res
-import dream_diary_cmp.feature.io.generated.resources.importoption_legacy_description
-import dream_diary_cmp.feature.io.generated.resources.importoption_legacy_name
-import dream_diary_cmp.feature.io.generated.resources.importoption_normal_description
-import dream_diary_cmp.feature.io.generated.resources.importoption_normal_name
+import dream_diary_cmp.feature.io.generated.resources.iooption_type_legacy_description
+import dream_diary_cmp.feature.io.generated.resources.iooption_type_legacy_name
+import dream_diary_cmp.feature.io.generated.resources.iooption_type_normal_description
+import dream_diary_cmp.feature.io.generated.resources.iooption_type_normal_name
 import me.ddcmp.feature.io.model.IOOptionType
 import org.jetbrains.compose.resources.stringResource
 
@@ -14,8 +14,8 @@ import org.jetbrains.compose.resources.stringResource
  */
 internal val IOOptionType.translateName: String
     @Composable get() = when (this) {
-        IOOptionType.Legacy -> Res.string.importoption_legacy_name
-        IOOptionType.Normal -> Res.string.importoption_normal_name
+        IOOptionType.Legacy -> Res.string.iooption_type_legacy_name
+        IOOptionType.Normal -> Res.string.iooption_type_normal_name
     }.let { stringResource(it) }
 
 /**
@@ -23,6 +23,6 @@ internal val IOOptionType.translateName: String
  */
 internal val IOOptionType.translateDescription: String
     @Composable get() = when (this) {
-        IOOptionType.Legacy -> Res.string.importoption_legacy_description
-        IOOptionType.Normal -> Res.string.importoption_normal_description
+        IOOptionType.Legacy -> Res.string.iooption_type_legacy_description
+        IOOptionType.Normal -> Res.string.iooption_type_normal_description
     }.let { stringResource(it) }

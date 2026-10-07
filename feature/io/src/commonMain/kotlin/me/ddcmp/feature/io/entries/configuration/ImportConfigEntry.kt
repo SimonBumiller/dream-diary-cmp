@@ -35,14 +35,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.io.generated.resources.Res
-import dream_diary_cmp.feature.io.generated.resources.configuration_description
-import dream_diary_cmp.feature.io.generated.resources.configuration_file_description
-import dream_diary_cmp.feature.io.generated.resources.configuration_file_name_placeholder
-import dream_diary_cmp.feature.io.generated.resources.configuration_filetype_label
-import dream_diary_cmp.feature.io.generated.resources.configuration_options_description
-import dream_diary_cmp.feature.io.generated.resources.configuration_timezone_label
-import dream_diary_cmp.feature.io.generated.resources.configuration_title
-import dream_diary_cmp.feature.io.generated.resources.configuration_transfer_favorites_label
+import dream_diary_cmp.feature.io.generated.resources.import_configuration_description
+import dream_diary_cmp.feature.io.generated.resources.import_configuration_file_description
+import dream_diary_cmp.feature.io.generated.resources.import_configuration_file_name_placeholder
+import dream_diary_cmp.feature.io.generated.resources.import_configuration_filetype_label
+import dream_diary_cmp.feature.io.generated.resources.import_configuration_options_description
+import dream_diary_cmp.feature.io.generated.resources.import_configuration_timezone_label
+import dream_diary_cmp.feature.io.generated.resources.import_configuration_title
+import dream_diary_cmp.feature.io.generated.resources.import_configuration_transfer_favorites_label
 import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.compose.PickerResultLauncher
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
@@ -107,7 +107,7 @@ private fun ImportConfigEntry(
                         .fillMaxWidth(),
                     title = {
                         Text(
-                            text = stringResource(Res.string.configuration_title)
+                            text = stringResource(Res.string.import_configuration_title)
                         )
                     },
                     actions = {
@@ -140,7 +140,7 @@ private fun ImportConfigEntry(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = stringResource(Res.string.configuration_description),
+                text = stringResource(Res.string.import_configuration_description),
                 style = MaterialTheme.typography.bodySmall
             )
 
@@ -152,7 +152,7 @@ private fun ImportConfigEntry(
             )
 
             Text(
-                text = stringResource(Res.string.configuration_file_description),
+                text = stringResource(Res.string.import_configuration_file_description),
                 style = MaterialTheme.typography.bodySmall
             )
 
@@ -174,7 +174,7 @@ private fun ImportOptions(
         Text(
             modifier = Modifier
                 .fillMaxWidth(),
-            text = stringResource(Res.string.configuration_options_description),
+            text = stringResource(Res.string.import_configuration_options_description),
             style = MaterialTheme.typography.bodySmall
         )
 
@@ -206,7 +206,7 @@ private fun FileTypeOption(
             value = uiState.fileType.translateName,
             onValueChange = {},
             readOnly = true,
-            label = { Text(stringResource(Res.string.configuration_filetype_label)) }
+            label = { Text(stringResource(Res.string.import_configuration_filetype_label)) }
         )
         ExposedDropdownMenu(
             expanded = uiState.showFileTypeDropdown,
@@ -247,7 +247,7 @@ private fun TimeZoneOption(
             value = uiState.timeZone.id,
             onValueChange = {},
             readOnly = true,
-            label = { Text(stringResource(Res.string.configuration_timezone_label)) }
+            label = { Text(stringResource(Res.string.import_configuration_timezone_label)) }
         )
         ExposedDropdownMenu(
             expanded = uiState.showTimeZoneDropdown,
@@ -286,7 +286,7 @@ private fun KeepFavoriteOption(
             onCheckedChange = { onEvent(UiEvent.ChangeTransferFavorites(it)) }
         )
         Text(
-            text = stringResource(Res.string.configuration_transfer_favorites_label),
+            text = stringResource(Res.string.import_configuration_transfer_favorites_label),
             style = MaterialTheme.typography.labelLarge
         )
     }
@@ -312,11 +312,8 @@ private fun FilePickerSection(
             readOnly = true,
             onValueChange = { },
             placeholder = {
-                Text(stringResource(Res.string.configuration_file_name_placeholder))
-            },
-//            label = {
-//                Text(stringResource(Res.string.configuration_pick_file_label))
-//            }
+                Text(stringResource(Res.string.import_configuration_file_name_placeholder))
+            }
         )
     }
 }
