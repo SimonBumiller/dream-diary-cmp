@@ -4,6 +4,7 @@ import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.path
 import kotlinx.io.Source
 import kotlinx.io.buffered
+import me.bumiller.ddcmp.core.io.common.asSeekableSource
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.model.IOFileType
 import me.bumiller.ddcmp.domain.model.ImportResult
@@ -14,7 +15,7 @@ import no.synth.kmpzip.zip.ZipFile
 internal abstract class ZipFileImporter : BackupImporter {
 
     override suspend fun importBackup(file: PlatformFile): ImportResult {
-        val seekableFile = fileSeekableSource(file.path)
+        val seekableFile = file.asSeekableSource()
 
         return ZipFile(seekableFile).use { zipFile ->
             importBackup(zipFile)

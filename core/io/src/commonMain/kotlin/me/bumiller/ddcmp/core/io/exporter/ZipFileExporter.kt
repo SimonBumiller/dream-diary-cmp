@@ -7,6 +7,7 @@ import io.github.vinceglb.filekit.sink
 import io.github.vinceglb.filekit.size
 import kotlinx.io.IOException
 import kotlinx.io.buffered
+import me.bumiller.ddcmp.core.io.common.countingSink
 import me.bumiller.ddcmp.domain.io.BackupExporter
 import me.bumiller.ddcmp.domain.model.ExportResult
 import no.synth.kmpzip.kotlinx.ZipOutputStream
@@ -26,7 +27,9 @@ internal abstract class ZipFileExporter: BackupExporter {
 
         val now = Clock.System.now()
 
-        val result = file.sink(append = false).buffered().use { sink ->
+        val rawSink = file.sink(append = false).countingSink()
+
+        val result = rawSink.buffered().use { sink ->
             ZipOutputStream(sink).use { zipStream ->
                 try {
                     aggregateZipFile(zipStream)
@@ -41,7 +44,7 @@ internal abstract class ZipFileExporter: BackupExporter {
         return ExportResult.Success(
             id = 0,
             timestamp = now,
-            fileSize = file.size(),
+            fileSize = rawSink.writtenByteCount(),
             fileLocation = file.path
         )
     }

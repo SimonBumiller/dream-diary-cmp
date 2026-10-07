@@ -19,6 +19,7 @@ import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.io.ExportUseCase
+import me.bumiller.ddcmp.domain.usecase.io.GetExportLogUsecase
 import me.bumiller.ddcmp.domain.usecase.io.GetImportLogUsecase
 import me.bumiller.ddcmp.domain.usecase.io.ImportUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
@@ -47,6 +48,7 @@ val domain = module {
     single { ImportUseCase(get(), get(), get(), get(), get(), get()) }
     single { ExportUseCase(get(), get()) }
     single { GetImportLogUsecase(get()) }
+    single { GetExportLogUsecase(get()) }
 
     single { DreamTimeFrequencyHistogram(get()) }
     single { DreamWeekdayFrequencyHistogram(get()) }
