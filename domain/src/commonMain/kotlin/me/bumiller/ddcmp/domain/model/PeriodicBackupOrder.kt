@@ -1,0 +1,52 @@
+package me.bumiller.ddcmp.domain.model
+
+import me.bumiller.ddcmp.domain.model.meta.Trackable
+import me.bumiller.ddcmp.domain.model.meta.Unique
+import kotlin.time.Duration
+import kotlin.time.Instant
+
+/**
+ * Contains instructions to specify a periodic backup.
+ */
+data class PeriodicBackupOrder(
+
+    override val id: Long,
+    override val created: Instant,
+
+    /**
+     * The destination into which the backups should be written.
+     */
+    val destination: BackupDestination,
+
+    /**
+     * Whether this backup order is currently active, i.e. being used.
+     */
+    val active: Boolean,
+
+    /**
+     * The period on which the next backup time is determined.
+     */
+    val period: Duration,
+
+    /**
+     * The timestamp when the first backup is performed.
+     */
+    val initialTime: Instant,
+
+    /**
+     * How many of the recent backups should be kept stored.
+     * Null if there is no limit.
+     */
+    val keepLast: Int?
+
+) : Unique, Trackable {
+
+    init {
+        val periodLongEnough = period.inWholeMinutes >= 30
+        require(periodLongEnough) { "BackupOrders require at least 30 minute durations." }
+
+        val keepLastInBounds = keepLast == null || keepLast > 2
+        require(keepLastInBounds) { "BackupOrders requires to keep at least 3 backups or unlimited." }
+    }
+
+}

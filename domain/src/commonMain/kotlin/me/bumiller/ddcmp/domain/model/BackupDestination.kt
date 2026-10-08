@@ -1,0 +1,32 @@
+package me.bumiller.ddcmp.domain.model
+
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.isDirectory
+import me.bumiller.ddcmp.domain.model.meta.Trackable
+import me.bumiller.ddcmp.domain.model.meta.Unique
+import kotlin.time.Instant
+
+/**
+ * Destination for periodic backups.
+ */
+sealed interface BackupDestination : Unique, Trackable {
+
+    /**
+     * Backup should be stored in a local directory.
+     */
+    data class LocalDirectory(
+
+        override val id: Long,
+        override val created: Instant,
+
+        val directory: PlatformFile
+
+    ) : BackupDestination {
+
+        init {
+            require(directory.isDirectory()) { "LocalDirectory can only wrap a directory file!" }
+        }
+
+    }
+
+}
