@@ -6,6 +6,7 @@ import kotlin.time.Instant
 /**
  * Result when exporting data.
  */
+// TODO: Add a 'ended' timestamp here, so that export time can be calculated.
 sealed interface ExportResult: Unique {
 
     override val id: Long
