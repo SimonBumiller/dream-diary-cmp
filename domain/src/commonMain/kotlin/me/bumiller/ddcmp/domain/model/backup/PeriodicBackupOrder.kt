@@ -1,5 +1,6 @@
 package me.bumiller.ddcmp.domain.model.backup
 
+import me.bumiller.ddcmp.domain.model.io.ExportOption
 import me.bumiller.ddcmp.domain.model.meta.Trackable
 import me.bumiller.ddcmp.domain.model.meta.Unique
 import kotlin.time.Duration
@@ -37,7 +38,12 @@ data class PeriodicBackupOrder(
      * How many of the recent backups should be kept stored.
      * Null if there is no limit.
      */
-    val keepLast: Int?
+    val keepLast: Int?,
+
+    /**
+     * Configuration of the export.
+     */
+    val exportOption: ExportOption
 
 ) : Unique, Trackable {
 

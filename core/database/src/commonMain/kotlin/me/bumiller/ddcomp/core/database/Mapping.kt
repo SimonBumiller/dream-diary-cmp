@@ -10,6 +10,8 @@ import me.bumiller.ddcmp.domain.model.backup.PeriodicBackup
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.emotion.Valence
+import me.bumiller.ddcmp.domain.model.io.ExportOption
+import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
 import me.bumiller.ddcomp.core.database.entity.ExportLogEntity
@@ -43,7 +45,9 @@ object Mapping {
                 active = model.active,
                 period = model.period,
                 initialTime = initialTime,
-                keepLast = keepLast
+                keepLast = keepLast,
+                legacyExport = exportOption is ExportOption.Legacy,
+                exportFileType = (exportOption as? ExportOption.Normal)?.fileType?.name
             )
         }
 
@@ -132,7 +136,11 @@ object Mapping {
             active = aggregate.backupOrder.active,
             period = aggregate.backupOrder.period,
             initialTime = aggregate.backupOrder.initialTime,
-            keepLast = aggregate.backupOrder.keepLast
+            keepLast = aggregate.backupOrder.keepLast,
+            exportOption = when(aggregate.backupOrder.legacyExport) {
+                true -> ExportOption.Legacy
+                false -> ExportOption.Normal(IOFileType.valueOf(aggregate.backupOrder.exportFileType!!))
+            }
         )
     }
 

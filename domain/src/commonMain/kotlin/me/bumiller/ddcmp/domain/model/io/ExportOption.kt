@@ -1,7 +1,5 @@
 package me.bumiller.ddcmp.domain.model.io
 
-import me.bumiller.ddcmp.domain.model.io.IOFileType
-
 /**
  * Options for exporting the data into a backup.
  */
@@ -17,11 +15,11 @@ sealed interface ExportOption {
          */
         val fileType: IOFileType
 
-    ): ExportOption
+    ) : ExportOption
 
     /**
      * Export into the legacy format
      */
-    data object Legacy: ExportOption
+    data object Legacy : ExportOption
 
 }

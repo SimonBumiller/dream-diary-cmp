@@ -38,7 +38,11 @@ data class PeriodicBackupOrderEntity(
 
     val initialTime: Instant,
 
-    val keepLast: Int?
+    val keepLast: Int?,
+
+    val legacyExport: Boolean,
+
+    val exportFileType: String?
 
 ): BaseEntity {
 

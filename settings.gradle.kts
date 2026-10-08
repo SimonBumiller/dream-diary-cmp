@@ -35,6 +35,7 @@ plugins {
 include(":composeApp")
 include(":domain")
 include(":core:database")
+include(":core:work")
 include(":core:datastore")
 include(":core:io")
 include(":feature:home")
