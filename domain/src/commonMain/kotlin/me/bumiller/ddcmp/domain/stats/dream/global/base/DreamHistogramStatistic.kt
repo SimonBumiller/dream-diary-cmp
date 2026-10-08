@@ -1,7 +1,7 @@
 package me.bumiller.ddcmp.domain.stats.dream.global.base
 
 import kotlinx.datetime.LocalDate
-import me.bumiller.ddcmp.domain.model.Dream
+import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.stats.Histogram
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 

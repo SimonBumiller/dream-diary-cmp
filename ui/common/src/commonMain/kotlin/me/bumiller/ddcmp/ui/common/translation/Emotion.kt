@@ -6,7 +6,7 @@ import dream_diary_cmp.ui.common.generated.resources.emotiontype_anger
 import dream_diary_cmp.ui.common.generated.resources.emotiontype_joy
 import dream_diary_cmp.ui.common.generated.resources.emotiontype_pleasure
 import dream_diary_cmp.ui.common.generated.resources.emotiontype_sadness
-import me.bumiller.ddcmp.domain.model.EmotionType
+import me.bumiller.ddcmp.domain.model.emotion.EmotionType
 import org.jetbrains.compose.resources.stringResource
 
 /**

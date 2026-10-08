@@ -1,7 +1,7 @@
 package me.bumiller.ddcmp.domain.io
 
 import io.github.vinceglb.filekit.PlatformFile
-import me.bumiller.ddcmp.domain.model.ImportResult
+import me.bumiller.ddcmp.domain.model.io.ImportResult
 
 /**
  * Importer for backups.

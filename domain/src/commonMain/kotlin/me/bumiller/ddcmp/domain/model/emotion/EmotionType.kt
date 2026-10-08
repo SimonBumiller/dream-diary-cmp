@@ -1,4 +1,4 @@
-package me.bumiller.ddcmp.domain.model
+package me.bumiller.ddcmp.domain.model.emotion
 
 /**
  * Groups emotions into four canonical types, based on their arousal and valence.

@@ -6,8 +6,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import me.bumiller.ddcmp.domain.model.ColorMode
-import me.bumiller.ddcmp.domain.model.ColorTheme
+import me.bumiller.ddcmp.domain.model.settings.ColorMode
+import me.bumiller.ddcmp.domain.model.settings.ColorTheme
 import me.bumiller.ddcmp.ui.common.LocalWindowSizeClass
 
 /**

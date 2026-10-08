@@ -1,7 +1,7 @@
 package me.bumiller.ddcmp.domain.usecase.emotion
 
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
-import me.bumiller.ddcmp.domain.model.Emotion
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 import kotlin.time.ExperimentalTime
 

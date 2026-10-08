@@ -1,4 +1,4 @@
-package me.bumiller.ddcmp.domain.model
+package me.bumiller.ddcmp.domain.model.emotion
 
 import kotlin.jvm.JvmInline
 

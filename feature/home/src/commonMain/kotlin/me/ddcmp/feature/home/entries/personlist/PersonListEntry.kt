@@ -27,7 +27,7 @@ import dream_diary_cmp.feature.home.generated.resources.personlist_action_add
 import dream_diary_cmp.feature.home.generated.resources.personlist_description
 import dream_diary_cmp.feature.home.generated.resources.personlist_empty_placeholder
 import dream_diary_cmp.feature.home.generated.resources.personlist_title
-import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.AppInputChip
 import me.bumiller.ddcmp.ui.common.component.BackIconButton

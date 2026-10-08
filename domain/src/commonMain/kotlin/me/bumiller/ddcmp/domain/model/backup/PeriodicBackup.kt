@@ -1,5 +1,6 @@
-package me.bumiller.ddcmp.domain.model
+package me.bumiller.ddcmp.domain.model.backup
 
+import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.model.meta.Trackable
 import me.bumiller.ddcmp.domain.model.meta.Unique
 import kotlin.time.Instant

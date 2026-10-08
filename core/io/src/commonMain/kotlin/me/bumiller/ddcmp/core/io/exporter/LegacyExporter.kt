@@ -9,7 +9,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.io.encodeToSink
 import me.bumiller.ddcmp.core.io.model.Legacy
-import me.bumiller.ddcmp.domain.model.ExportResult
+import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import no.synth.kmpzip.kotlinx.asSink

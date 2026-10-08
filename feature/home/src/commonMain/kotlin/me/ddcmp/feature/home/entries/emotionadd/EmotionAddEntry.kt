@@ -47,7 +47,7 @@ import dream_diary_cmp.feature.home.generated.resources.emotionadd_name_label
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_name_placeholder
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_title
 import kotlinx.coroutines.delay
-import me.bumiller.ddcmp.domain.model.Emotion
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.backhandler.PlatformBackHandler
 import me.bumiller.ddcmp.ui.common.component.BackIconButton

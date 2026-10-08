@@ -1,4 +1,4 @@
-package me.bumiller.ddcmp.domain.model
+package me.bumiller.ddcmp.domain.model.backup
 
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.isDirectory

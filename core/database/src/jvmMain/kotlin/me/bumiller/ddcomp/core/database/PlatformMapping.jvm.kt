@@ -1,7 +1,7 @@
 package me.bumiller.ddcomp.core.database
 
 import io.github.vinceglb.filekit.PlatformFile
-import me.bumiller.ddcmp.domain.model.BackupDestination
+import me.bumiller.ddcmp.domain.model.backup.BackupDestination
 import me.bumiller.ddcomp.core.database.entity.BackupDestinationEntity
 
 actual object PlatformMapping {

@@ -1,6 +1,7 @@
-package me.bumiller.ddcmp.domain.model
+package me.bumiller.ddcmp.domain.model.io
 
 import kotlinx.datetime.TimeZone
+import me.bumiller.ddcmp.domain.model.io.IOFileType
 
 sealed interface ImportOption {
 

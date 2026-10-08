@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dream_diary_cmp.feature.home.generated.resources.Res
 import dream_diary_cmp.feature.home.generated.resources.dreamlist_empty_placeholder
-import me.bumiller.ddcmp.domain.model.Dream
+import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import org.jetbrains.compose.resources.stringResource

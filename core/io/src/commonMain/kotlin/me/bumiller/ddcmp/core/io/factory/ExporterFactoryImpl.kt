@@ -5,8 +5,8 @@ import me.bumiller.ddcmp.core.io.exporter.ListBasedExporter
 import me.bumiller.ddcmp.core.io.exporter.XmlExporter
 import me.bumiller.ddcmp.core.io.exporter.backgroundProxy
 import me.bumiller.ddcmp.domain.io.BackupExporterFactory
-import me.bumiller.ddcmp.domain.model.ExportOption
-import me.bumiller.ddcmp.domain.model.IOFileType
+import me.bumiller.ddcmp.domain.model.io.ExportOption
+import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase

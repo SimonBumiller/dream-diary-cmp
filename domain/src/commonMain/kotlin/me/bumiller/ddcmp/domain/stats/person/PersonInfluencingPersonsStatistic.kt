@@ -1,6 +1,6 @@
 package me.bumiller.ddcmp.domain.stats.person
 
-import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamConditionalOccurrenceStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 

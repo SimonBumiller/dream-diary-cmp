@@ -3,15 +3,15 @@
 package me.bumiller.ddcmp.core.io.model
 
 import kotlinx.serialization.Serializable
-import me.bumiller.ddcmp.domain.model.Arousal
-import me.bumiller.ddcmp.domain.model.Confidentiality
-import me.bumiller.ddcmp.domain.model.Valence
+import me.bumiller.ddcmp.domain.model.emotion.Arousal
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.emotion.Valence
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
-import me.bumiller.ddcmp.domain.model.Dream as ModelDream
-import me.bumiller.ddcmp.domain.model.Emotion as ModelEmotion
-import me.bumiller.ddcmp.domain.model.Person as ModelPerson
+import me.bumiller.ddcmp.domain.model.dream.Dream as ModelDream
+import me.bumiller.ddcmp.domain.model.emotion.Emotion as ModelEmotion
+import me.bumiller.ddcmp.domain.model.dream.Person as ModelPerson
 
 internal object ListBased {
 

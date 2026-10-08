@@ -5,9 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import me.bumiller.ddcmp.domain.io.BackupExporter
-import me.bumiller.ddcmp.domain.io.BackupImporter
-import me.bumiller.ddcmp.domain.model.ExportResult
-import me.bumiller.ddcmp.domain.model.ImportResult
+import me.bumiller.ddcmp.domain.model.io.ExportResult
 
 // Proxy that switches to the Dispatchers.IO context during exporting.
 private class BackgroundExporterProxy(

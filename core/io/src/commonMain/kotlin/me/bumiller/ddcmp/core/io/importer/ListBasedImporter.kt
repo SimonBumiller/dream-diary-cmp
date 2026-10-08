@@ -6,9 +6,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.io.decodeFromSource
 import me.bumiller.ddcmp.core.io.model.ListBased
-import me.bumiller.ddcmp.domain.model.Confidentiality
-import me.bumiller.ddcmp.domain.model.IOFileType
-import me.bumiller.ddcmp.domain.model.ImportResult
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.io.IOFileType
+import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase

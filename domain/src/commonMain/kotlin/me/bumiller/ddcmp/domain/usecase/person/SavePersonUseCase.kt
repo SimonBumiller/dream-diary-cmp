@@ -1,7 +1,7 @@
 package me.bumiller.ddcmp.domain.usecase.person
 
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
-import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 import kotlin.time.ExperimentalTime
 

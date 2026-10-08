@@ -1,4 +1,4 @@
-package me.bumiller.ddcmp.domain.model
+package me.bumiller.ddcmp.domain.model.dream
 
 /**
  * Models different types of confidentiality that a dream can be.

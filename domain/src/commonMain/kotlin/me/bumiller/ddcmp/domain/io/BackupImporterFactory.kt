@@ -1,7 +1,7 @@
 package me.bumiller.ddcmp.domain.io
 
-import me.bumiller.ddcmp.domain.model.ImportOption
-import me.bumiller.ddcmp.domain.model.Settings
+import me.bumiller.ddcmp.domain.model.io.ImportOption
+import me.bumiller.ddcmp.domain.model.settings.Settings
 
 /**
  * Factory for creating backup importers.

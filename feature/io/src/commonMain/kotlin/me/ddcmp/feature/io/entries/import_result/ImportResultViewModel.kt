@@ -6,7 +6,7 @@ import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import me.bumiller.ddcmp.domain.model.ImportResult
+import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcmp.domain.usecase.io.GetImportLogUsecase
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase

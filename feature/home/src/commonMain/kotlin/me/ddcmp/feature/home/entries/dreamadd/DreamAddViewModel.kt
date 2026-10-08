@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import me.bumiller.ddcmp.domain.model.Confidentiality
-import me.bumiller.ddcmp.domain.model.Dream
-import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.dream.Dream
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
+import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase.I

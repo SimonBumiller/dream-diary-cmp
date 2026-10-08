@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import me.bumiller.ddcmp.domain.infrastructure.PeriodicBackupRepository
-import me.bumiller.ddcmp.domain.model.PeriodicBackup
+import me.bumiller.ddcmp.domain.model.backup.PeriodicBackup
 import me.bumiller.ddcomp.core.database.Mapping
 import me.bumiller.ddcomp.core.database.dao.PeriodicBackupDao
 import me.bumiller.ddcomp.core.database.dao.PeriodicBackupOrderDao

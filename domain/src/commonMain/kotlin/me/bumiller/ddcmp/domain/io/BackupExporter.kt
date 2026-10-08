@@ -1,7 +1,7 @@
 package me.bumiller.ddcmp.domain.io
 
 import io.github.vinceglb.filekit.PlatformFile
-import me.bumiller.ddcmp.domain.model.ExportResult
+import me.bumiller.ddcmp.domain.model.io.ExportResult
 
 /**
  * Exports data.

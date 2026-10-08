@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.first
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
-import me.bumiller.ddcmp.domain.model.Dream
-import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.model.dream.Dream
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
+import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 import kotlin.time.ExperimentalTime
 

@@ -47,7 +47,7 @@ import io.github.vinceglb.filekit.dialogs.compose.PickerResultLauncher
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.name
 import kotlinx.datetime.TimeZone
-import me.bumiller.ddcmp.domain.model.IOFileType
+import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator

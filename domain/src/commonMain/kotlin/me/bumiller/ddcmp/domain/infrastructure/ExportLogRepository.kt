@@ -1,8 +1,7 @@
 package me.bumiller.ddcmp.domain.infrastructure
 
 import me.bumiller.ddcmp.domain.infrastructure.meta.Repository
-import me.bumiller.ddcmp.domain.model.ExportResult
-import me.bumiller.ddcmp.domain.model.ImportResult
+import me.bumiller.ddcmp.domain.model.io.ExportResult
 
 /**
  * Interface for export results.

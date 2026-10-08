@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
-import me.bumiller.ddcmp.domain.model.Dream
+import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcomp.core.database.Mapping
 import me.bumiller.ddcomp.core.database.dao.DreamDao
 import me.bumiller.ddcomp.core.database.dao.m2m.DreamEmotionM2MDao

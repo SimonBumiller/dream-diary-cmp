@@ -48,10 +48,10 @@ import dream_diary_cmp.feature.home.generated.resources.dreamdetail_note_label
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_info
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_info_empty
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_title
-import me.bumiller.ddcmp.domain.model.Confidentiality
-import me.bumiller.ddcmp.domain.model.Dream
-import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.dream.Dream
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
+import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.biometric.BiometricContainer
 import me.bumiller.ddcmp.ui.common.component.BackIconButton

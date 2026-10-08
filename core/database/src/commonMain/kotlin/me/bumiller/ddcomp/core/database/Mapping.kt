@@ -1,15 +1,15 @@
 package me.bumiller.ddcomp.core.database
 
-import me.bumiller.ddcmp.domain.model.Arousal
-import me.bumiller.ddcmp.domain.model.Confidentiality
-import me.bumiller.ddcmp.domain.model.Dream
-import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.ExportResult
-import me.bumiller.ddcmp.domain.model.ImportResult
-import me.bumiller.ddcmp.domain.model.PeriodicBackup
-import me.bumiller.ddcmp.domain.model.PeriodicBackupOrder
-import me.bumiller.ddcmp.domain.model.Person
-import me.bumiller.ddcmp.domain.model.Valence
+import me.bumiller.ddcmp.domain.model.emotion.Arousal
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.dream.Dream
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
+import me.bumiller.ddcmp.domain.model.io.ExportResult
+import me.bumiller.ddcmp.domain.model.io.ImportResult
+import me.bumiller.ddcmp.domain.model.backup.PeriodicBackup
+import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
+import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.model.emotion.Valence
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
 import me.bumiller.ddcomp.core.database.entity.ExportLogEntity

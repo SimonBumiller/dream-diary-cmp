@@ -19,7 +19,7 @@ import dream_diary_cmp.feature.io.generated.resources.import_result_title_succes
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
-import me.bumiller.ddcmp.domain.model.ImportResult
+import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.format.formatInstantMonthYear
 import me.bumiller.ddcmp.ui.common.text.styledText

@@ -1,14 +1,12 @@
 package me.bumiller.ddcmp.core.io.importer
 
 import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.path
 import kotlinx.io.Source
 import kotlinx.io.buffered
 import me.bumiller.ddcmp.core.io.common.asSeekableSource
 import me.bumiller.ddcmp.domain.io.BackupImporter
-import me.bumiller.ddcmp.domain.model.IOFileType
-import me.bumiller.ddcmp.domain.model.ImportResult
-import no.synth.kmpzip.io.fileSeekableSource
+import me.bumiller.ddcmp.domain.model.io.IOFileType
+import me.bumiller.ddcmp.domain.model.io.ImportResult
 import no.synth.kmpzip.kotlinx.asSource
 import no.synth.kmpzip.zip.ZipFile
 

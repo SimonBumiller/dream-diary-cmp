@@ -1,4 +1,4 @@
-package me.bumiller.ddcmp.domain.model
+package me.bumiller.ddcmp.domain.model.dream
 
 import me.bumiller.ddcmp.domain.model.meta.Editable
 import me.bumiller.ddcmp.domain.model.meta.Searchable

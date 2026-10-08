@@ -3,8 +3,8 @@ package me.bumiller.ddcmp.domain.usecase.emotion
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
-import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.EmotionType
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
+import me.bumiller.ddcmp.domain.model.emotion.EmotionType
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase.I

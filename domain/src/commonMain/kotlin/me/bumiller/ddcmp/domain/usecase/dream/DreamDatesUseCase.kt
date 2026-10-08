@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.usecase.dream
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
-import me.bumiller.ddcmp.domain.model.Dream
+import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase.O
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import kotlin.time.ExperimentalTime

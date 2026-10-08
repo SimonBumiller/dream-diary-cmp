@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import me.bumiller.ddcmp.domain.infrastructure.PeriodicBackupOrderRepository
-import me.bumiller.ddcmp.domain.model.PeriodicBackupOrder
+import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 import me.bumiller.ddcomp.core.database.Mapping
 import me.bumiller.ddcomp.core.database.dao.PeriodicBackupOrderDao
 import me.bumiller.ddcomp.core.database.entity.PeriodicBackupOrderEntity

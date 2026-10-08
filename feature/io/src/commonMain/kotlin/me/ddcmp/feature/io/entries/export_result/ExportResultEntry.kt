@@ -5,7 +5,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.io.generated.resources.Res
@@ -14,10 +13,8 @@ import dream_diary_cmp.feature.io.generated.resources.export_result_description
 import dream_diary_cmp.feature.io.generated.resources.export_result_description_access
 import dream_diary_cmp.feature.io.generated.resources.export_result_title_failure
 import dream_diary_cmp.feature.io.generated.resources.export_result_title_success
-import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.size
-import me.bumiller.ddcmp.domain.model.ExportResult
-import me.bumiller.ddcmp.domain.model.ImportResult
+import me.bumiller.ddcmp.domain.model.io.ExportResult
+import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.text.styledText
 import me.ddcmp.feature.io.entries.export_result.ExportResultViewModel.UiEvent

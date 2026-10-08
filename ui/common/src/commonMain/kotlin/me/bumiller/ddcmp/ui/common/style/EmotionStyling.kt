@@ -4,7 +4,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.ui.graphics.Color
 import androidx.graphics.shapes.RoundedPolygon
-import me.bumiller.ddcmp.domain.model.EmotionType
+import me.bumiller.ddcmp.domain.model.emotion.EmotionType
 
 /**
  * The color associated with the emotion type

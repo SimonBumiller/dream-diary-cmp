@@ -5,7 +5,7 @@ import dream_diary_cmp.ui.common.generated.resources.Res
 import dream_diary_cmp.ui.common.generated.resources.colormode_dark_name
 import dream_diary_cmp.ui.common.generated.resources.colormode_light_name
 import dream_diary_cmp.ui.common.generated.resources.colormode_system_name
-import me.bumiller.ddcmp.domain.model.ColorMode
+import me.bumiller.ddcmp.domain.model.settings.ColorMode
 import org.jetbrains.compose.resources.stringResource
 
 /**

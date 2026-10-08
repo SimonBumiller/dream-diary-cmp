@@ -8,10 +8,10 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.bumiller.ddcmp.domain.infrastructure.SettingsStore
-import me.bumiller.ddcmp.domain.model.ColorMode
-import me.bumiller.ddcmp.domain.model.ColorTheme
-import me.bumiller.ddcmp.domain.model.Confidentiality
-import me.bumiller.ddcmp.domain.model.Settings
+import me.bumiller.ddcmp.domain.model.settings.ColorMode
+import me.bumiller.ddcmp.domain.model.settings.ColorTheme
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.settings.Settings
 
 class DataStoreSettingsStore(private val dataStore: DataStore<Preferences>) :
     SettingsStore {

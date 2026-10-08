@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import me.bumiller.ddcmp.domain.model.Confidentiality
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.ui.common.style.icon
 import me.bumiller.ddcmp.ui.common.translation.translateName
 

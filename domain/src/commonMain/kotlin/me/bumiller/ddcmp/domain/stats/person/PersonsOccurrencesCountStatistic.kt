@@ -1,7 +1,7 @@
 package me.bumiller.ddcmp.domain.stats.person
 
 import kotlinx.datetime.LocalDate
-import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamListBasedStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic.I
 import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic.PersonWithCount

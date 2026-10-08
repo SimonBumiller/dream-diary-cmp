@@ -8,7 +8,7 @@ import dream_diary_cmp.ui.common.generated.resources.confidentiality_none_descri
 import dream_diary_cmp.ui.common.generated.resources.confidentiality_none_name
 import dream_diary_cmp.ui.common.generated.resources.confidentiality_severe_description
 import dream_diary_cmp.ui.common.generated.resources.confidentiality_severe_name
-import me.bumiller.ddcmp.domain.model.Confidentiality
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import org.jetbrains.compose.resources.stringResource
 
 /**

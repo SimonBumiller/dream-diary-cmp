@@ -4,12 +4,11 @@ import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.extension
 import io.github.vinceglb.filekit.path
 import io.github.vinceglb.filekit.sink
-import io.github.vinceglb.filekit.size
 import kotlinx.io.IOException
 import kotlinx.io.buffered
 import me.bumiller.ddcmp.core.io.common.countingSink
 import me.bumiller.ddcmp.domain.io.BackupExporter
-import me.bumiller.ddcmp.domain.model.ExportResult
+import me.bumiller.ddcmp.domain.model.io.ExportResult
 import no.synth.kmpzip.kotlinx.ZipOutputStream
 import no.synth.kmpzip.zip.ZipEntry
 import no.synth.kmpzip.zip.ZipOutputStream

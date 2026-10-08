@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalTime::class)
 
-package me.bumiller.ddcmp.domain.model
+package me.bumiller.ddcmp.domain.model.io
 
 import me.bumiller.ddcmp.domain.model.meta.Unique
 import kotlin.time.ExperimentalTime

@@ -5,7 +5,7 @@ import dream_diary_cmp.ui.common.generated.resources.Res
 import dream_diary_cmp.ui.common.generated.resources.importfiletype_json_name
 import dream_diary_cmp.ui.common.generated.resources.importfiletype_xml_name
 import dream_diary_cmp.ui.common.generated.resources.importfiletype_yaml_name
-import me.bumiller.ddcmp.domain.model.IOFileType
+import me.bumiller.ddcmp.domain.model.io.IOFileType
 import org.jetbrains.compose.resources.stringResource
 
 /**

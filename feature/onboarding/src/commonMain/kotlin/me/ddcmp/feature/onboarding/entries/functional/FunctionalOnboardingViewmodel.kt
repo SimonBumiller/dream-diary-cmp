@@ -1,10 +1,10 @@
 package me.ddcmp.feature.onboarding.entries.functional
 
 import kotlinx.coroutines.flow.asStateFlow
-import me.bumiller.ddcmp.domain.model.ColorMode
-import me.bumiller.ddcmp.domain.model.ColorTheme
-import me.bumiller.ddcmp.domain.model.Confidentiality
-import me.bumiller.ddcmp.domain.model.Settings
+import me.bumiller.ddcmp.domain.model.settings.ColorMode
+import me.bumiller.ddcmp.domain.model.settings.ColorTheme
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.settings.Settings
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel

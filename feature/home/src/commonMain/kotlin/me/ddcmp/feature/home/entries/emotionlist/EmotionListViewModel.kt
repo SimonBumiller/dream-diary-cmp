@@ -6,9 +6,9 @@ import dream_diary_cmp.feature.home.generated.resources.basic_emotions_names
 import dream_diary_cmp.feature.home.generated.resources.basic_emotions_valences
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.asStateFlow
-import me.bumiller.ddcmp.domain.model.Arousal
-import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.Valence
+import me.bumiller.ddcmp.domain.model.emotion.Arousal
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
+import me.bumiller.ddcmp.domain.model.emotion.Valence
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel

@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.usecase.person
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
-import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase

@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.usecase.io
 import io.github.vinceglb.filekit.PlatformFile
 import me.bumiller.ddcmp.domain.infrastructure.ExportLogRepository
 import me.bumiller.ddcmp.domain.io.BackupExporterFactory
-import me.bumiller.ddcmp.domain.model.ExportOption
+import me.bumiller.ddcmp.domain.model.io.ExportOption
 import me.bumiller.ddcmp.domain.usecase.io.ExportUseCase.I
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 

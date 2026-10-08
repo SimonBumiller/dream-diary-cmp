@@ -31,7 +31,7 @@ import dream_diary_cmp.feature.home.generated.resources.emotionlist_empty_placeh
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_matrix_description
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_matrix_title
 import dream_diary_cmp.feature.home.generated.resources.emotionlist_title
-import me.bumiller.ddcmp.domain.model.Emotion
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.EmotionGrid

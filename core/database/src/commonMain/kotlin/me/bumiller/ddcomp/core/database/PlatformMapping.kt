@@ -1,6 +1,6 @@
 package me.bumiller.ddcomp.core.database
 
-import me.bumiller.ddcmp.domain.model.BackupDestination
+import me.bumiller.ddcmp.domain.model.backup.BackupDestination
 import me.bumiller.ddcomp.core.database.entity.BackupDestinationEntity
 
 /**

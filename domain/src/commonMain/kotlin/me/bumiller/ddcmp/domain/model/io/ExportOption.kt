@@ -1,4 +1,6 @@
-package me.bumiller.ddcmp.domain.model
+package me.bumiller.ddcmp.domain.model.io
+
+import me.bumiller.ddcmp.domain.model.io.IOFileType
 
 /**
  * Options for exporting the data into a backup.

@@ -1,4 +1,6 @@
-package me.bumiller.ddcmp.domain.model
+package me.bumiller.ddcmp.domain.model.settings
+
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 
 /**
  * Models the settings of the app.

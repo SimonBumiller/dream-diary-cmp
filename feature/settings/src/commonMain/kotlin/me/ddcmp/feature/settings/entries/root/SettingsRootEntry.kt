@@ -44,10 +44,10 @@ import dream_diary_cmp.feature.settings.generated.resources.settings_root_io_sec
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_title
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_unlock_description
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_unlock_label
-import me.bumiller.ddcmp.domain.model.ColorMode
-import me.bumiller.ddcmp.domain.model.ColorTheme
-import me.bumiller.ddcmp.domain.model.Confidentiality
-import me.bumiller.ddcmp.domain.model.Settings
+import me.bumiller.ddcmp.domain.model.settings.ColorMode
+import me.bumiller.ddcmp.domain.model.settings.ColorTheme
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.settings.Settings
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.biometric.BiometricAuthState
 import me.bumiller.ddcmp.ui.common.biometric.BiometricContainer

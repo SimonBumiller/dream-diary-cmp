@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
 import kotlinx.coroutines.delay
-import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.EmotionType
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
+import me.bumiller.ddcmp.domain.model.emotion.EmotionType
 import me.bumiller.ddcmp.ui.common.component.AppInputChip
 import me.bumiller.ddcmp.ui.common.style.color
 import me.bumiller.ddcmp.ui.common.style.shape

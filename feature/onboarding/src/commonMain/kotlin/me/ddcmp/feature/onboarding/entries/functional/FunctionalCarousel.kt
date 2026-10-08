@@ -43,10 +43,10 @@ import dream_diary_cmp.feature.onboarding.generated.resources.theme_dynamic_desc
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_dynamic_label
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_mode_label
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_title
-import me.bumiller.ddcmp.domain.model.ColorMode
-import me.bumiller.ddcmp.domain.model.ColorTheme
-import me.bumiller.ddcmp.domain.model.Confidentiality
-import me.bumiller.ddcmp.domain.model.Settings
+import me.bumiller.ddcmp.domain.model.settings.ColorMode
+import me.bumiller.ddcmp.domain.model.settings.ColorTheme
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.settings.Settings
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.biometric.BiometricContainer
 import me.bumiller.ddcmp.ui.common.biometric.BiometricResult

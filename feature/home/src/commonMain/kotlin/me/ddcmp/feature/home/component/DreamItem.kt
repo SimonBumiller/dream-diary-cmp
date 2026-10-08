@@ -28,10 +28,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dream_diary_cmp.feature.home.generated.resources.Res
 import dream_diary_cmp.feature.home.generated.resources.dream_title
-import me.bumiller.ddcmp.domain.model.Dream
-import me.bumiller.ddcmp.domain.model.Emotion
-import me.bumiller.ddcmp.domain.model.EmotionType
-import me.bumiller.ddcmp.domain.model.Person
+import me.bumiller.ddcmp.domain.model.dream.Dream
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
+import me.bumiller.ddcmp.domain.model.emotion.EmotionType
+import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.ui.common.format.formatInstant
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import me.bumiller.ddcmp.ui.common.style.icon

@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import me.bumiller.ddcmp.domain.model.ExportOption
-import me.bumiller.ddcmp.domain.model.IOFileType
+import me.bumiller.ddcmp.domain.model.io.ExportOption
+import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.domain.usecase.io.ExportUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
