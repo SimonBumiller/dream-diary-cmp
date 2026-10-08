@@ -50,6 +50,9 @@ kotlin {
             implementation(libs.compose.material.icons)
             implementation(libs.compose.navigation)
             implementation(project(":domain"))
+            implementation(libs.filekt.core)
+            implementation(libs.filekt.dialogs)
+            implementation(libs.filekt.dialogs.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
