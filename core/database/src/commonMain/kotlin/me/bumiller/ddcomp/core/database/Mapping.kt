@@ -6,12 +6,16 @@ import me.bumiller.ddcmp.domain.model.Dream
 import me.bumiller.ddcmp.domain.model.Emotion
 import me.bumiller.ddcmp.domain.model.ExportResult
 import me.bumiller.ddcmp.domain.model.ImportResult
+import me.bumiller.ddcmp.domain.model.PeriodicBackup
+import me.bumiller.ddcmp.domain.model.PeriodicBackupOrder
 import me.bumiller.ddcmp.domain.model.Person
 import me.bumiller.ddcmp.domain.model.Valence
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
 import me.bumiller.ddcomp.core.database.entity.ExportLogEntity
 import me.bumiller.ddcomp.core.database.entity.ImportLogEntity
+import me.bumiller.ddcomp.core.database.entity.PeriodicBackupEntity
+import me.bumiller.ddcomp.core.database.entity.PeriodicBackupOrderEntity
 import me.bumiller.ddcomp.core.database.entity.PersonEntity
 import kotlin.time.ExperimentalTime
 
@@ -19,6 +23,29 @@ import kotlin.time.ExperimentalTime
 object Mapping {
 
     object Reverse {
+
+        fun periodicBackup(model: PeriodicBackup) = model.run {
+            PeriodicBackupEntity(
+                id = id,
+                created = created,
+                updated = created,
+                orderId = model.order.id,
+                exportId = model.export.id
+            )
+        }
+
+        fun backupOrder(model: PeriodicBackupOrder) = model.run {
+            PeriodicBackupOrderEntity(
+                id = id,
+                created = created,
+                updated = created,
+                backupDestinationId = model.destination.id,
+                active = model.active,
+                period = model.period,
+                initialTime = initialTime,
+                keepLast = keepLast
+            )
+        }
 
         fun person(model: Person) = with(model) {
             PersonEntity(
@@ -83,6 +110,30 @@ object Mapping {
             )
         }
 
+    }
+
+    fun periodicBackup(
+        aggregate: PeriodicBackupEntity.Aggregate,
+        orderAggregate: PeriodicBackupOrderEntity.Aggregate
+    ) = aggregate.run {
+        PeriodicBackup(
+            id = aggregate.backup.id,
+            created = aggregate.backup.created,
+            order = backupOrder(orderAggregate),
+            export = export(aggregate.export)
+        )
+    }
+
+    fun backupOrder(aggregate: PeriodicBackupOrderEntity.Aggregate) = aggregate.run {
+        PeriodicBackupOrder(
+            id = aggregate.backupOrder.id,
+            created = aggregate.backupOrder.created,
+            destination = PlatformMapping.Reverse.backupDestination(aggregate.backupDestination),
+            active = aggregate.backupOrder.active,
+            period = aggregate.backupOrder.period,
+            initialTime = aggregate.backupOrder.initialTime,
+            keepLast = aggregate.backupOrder.keepLast
+        )
     }
 
     fun person(entity: PersonEntity) = with(entity) {
