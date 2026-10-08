@@ -6,6 +6,8 @@ import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.ExportLogRepository
 import me.bumiller.ddcmp.domain.infrastructure.ImportLogRepository
+import me.bumiller.ddcmp.domain.infrastructure.PeriodicBackupOrderRepository
+import me.bumiller.ddcmp.domain.infrastructure.PeriodicBackupRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
@@ -14,6 +16,8 @@ import me.bumiller.ddcomp.core.database.repository.EmotionRepository as EmotionR
 import me.bumiller.ddcomp.core.database.repository.ImportLogRepository as ImportLogRepositoryImpl
 import me.bumiller.ddcomp.core.database.repository.ExportLogRepository as ExportLogRepositoryImpl
 import me.bumiller.ddcomp.core.database.repository.PersonRepository as PersonRepositoryImpl
+import me.bumiller.ddcomp.core.database.repository.PeriodicBackupOrderRepository as PeriodicBackupOrderRepositoryImpl
+import me.bumiller.ddcomp.core.database.repository.PeriodicBackupRepository as PeriodicBackupRepositoryImpl
 
 /**
  * Platform specific method to create the database builder
@@ -44,4 +48,6 @@ val database = module {
     single<PersonRepository> { PersonRepositoryImpl(get(), get()) }
     single<ImportLogRepository> { ImportLogRepositoryImpl(get()) }
     single<ExportLogRepository> { ExportLogRepositoryImpl(get()) }
+    single<PeriodicBackupOrderRepository> { PeriodicBackupOrderRepositoryImpl(get()) }
+    single<PeriodicBackupRepository> { PeriodicBackupRepositoryImpl(get(), get()) }
 }
