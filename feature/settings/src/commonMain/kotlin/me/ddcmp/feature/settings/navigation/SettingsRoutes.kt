@@ -17,4 +17,10 @@ internal sealed interface SettingsRoutes {
     @Serializable
     data object OrderConfig: SettingsRoutes
 
+    /**
+     * The screen for viewing orders in detail.
+     */
+    @Serializable
+    data class OrderDetail(val id: Long): SettingsRoutes
+
 }

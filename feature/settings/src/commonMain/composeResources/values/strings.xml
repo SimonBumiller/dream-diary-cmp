@@ -29,5 +29,20 @@
     <string name="order_config_options_label">Options</string>
     <string name="order_config_wizard_save_label">Save Configuration</string>
     <string name="order_config_wizard_retreat_label">Go Back</string>
+    <string name="order_config_storage_description">Select a directory to which the backup files should be saved.</string>
+    <string name="order_config_storage_description_important">The directory must only be written to by this app. The directory must be accessible when a backup is saved. If the directory is located on a network drive, the backup will fail if no internet connection is available.</string>
+    <string name="order_config_storage_directory_placeholder">Select directory</string>
+
+    <string name="order_config_schedule_period_description">Backup frequency</string>
+    <string name="order_config_schedule_period_days_label">days</string>
+    <string name="order_config_schedule_period_hours_label">hours</string>
+    <string name="order_config_schedule_initial_description">First backup</string>
+    <string name="order_config_schedule_inital_immediately">Start backup immediately</string>
+    <string name="order_config_schedule_inital_deferred">Defer by one hour</string>
+    <string name="order_config_options_filetype">Export Filetype</string>
+    <string name="order_config_options_type">Export Format</string>
+    <string name="order_config_options_keeplast">Backup Retention Policy</string>
+    <string name="order_config_options_keeplast_unlimited">Keep all backups</string>
+    <string name="order_config_options_keeplast_limited">Keep last … backups</string>
 
 </resources>

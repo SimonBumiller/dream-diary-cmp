@@ -136,7 +136,7 @@ fun <Step : WizardStep> SetupWizard(
     onFinish: () -> Unit,
     onCancel: () -> Unit,
     bottomRow: @Composable BottomRowScope<Step>.() -> Unit = { DefaultBottomRow(modifier = Modifier.fillMaxWidth()) },
-    content: @Composable ColumnScope.(Step) -> Unit
+    content: @Composable (Step) -> Unit
 ) {
     require(steps.size > 1) { "Must have at least 2 steps in a setup wizard." }
 
@@ -193,7 +193,13 @@ fun <Step : WizardStep> SetupWizard(
             )
         }
 
-        content(steps[selectedIndex])
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .weight(1F)
+        ) {
+            content(steps[selectedIndex])
+        }
 
         val bottomRowScope = object : BottomRowScope<Step> {
             override val current = steps[selectedIndex]

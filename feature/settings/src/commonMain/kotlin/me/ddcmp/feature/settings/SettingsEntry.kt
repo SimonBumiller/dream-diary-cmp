@@ -36,7 +36,7 @@ fun SettingsEntry(
             OrderConfigEntry(
                 onCancel = { navController.popBackStack() },
                 onConfigured = {
-                    // TODO: Navigate to order detail
+                    navController.navigate(SettingsRoutes.OrderDetail(it))
                 }
             )
         }

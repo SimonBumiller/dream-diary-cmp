@@ -70,6 +70,8 @@
     <string name="iooption_type_normal_description">Backup containing all important user data from the app, including emotions.</string>
     <string name="iooption_type_legacy_description">Backup containing partial user data for compatibility with the legacy app.</string>
 
+    <string name="io_file_selector_label">File Type</string>
+
     <string name="date_range_dialog_preconfigured_last_week">Last 7 days</string>
     <string name="date_range_dialog_preconfigured_last_month">Last 30 days</string>
     <string name="date_range_dialog_preconfigured_last_half_year">Last 6 months</string>
