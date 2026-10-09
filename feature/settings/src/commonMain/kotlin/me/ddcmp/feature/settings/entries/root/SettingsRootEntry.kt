@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Upload
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
@@ -27,6 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.settings.generated.resources.Res
+import dream_diary_cmp.feature.settings.generated.resources.settings_root_backup_description
+import dream_diary_cmp.feature.settings.generated.resources.settings_root_backup_title
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_confidentiality_label
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_confidentiality_medium_description
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_confidentiality_none_description
@@ -68,7 +71,8 @@ import org.jetbrains.compose.resources.stringResource
 internal fun SettingsRootEntry(
     onBack: () -> Unit,
     onGoToExport: () -> Unit,
-    onGoToImport: () -> Unit
+    onGoToImport: () -> Unit,
+    onGoToBackup: () -> Unit
 ) {
     val biometricState = rememberBiometricState()
 
@@ -78,6 +82,7 @@ internal fun SettingsRootEntry(
                 ViewModelEvent.NavigateBack -> onBack()
                 ViewModelEvent.NavigateToExport -> onGoToExport()
                 ViewModelEvent.NavigateToImport -> onGoToImport()
+                ViewModelEvent.NavigateToBackup -> onGoToBackup()
             }
         }
     ) { vm ->
@@ -199,6 +204,26 @@ private fun IoSection(
             leadingContent = {
                 Icon(
                     imageVector = Icons.Outlined.Upload,
+                    contentDescription = null
+                )
+            }
+        )
+        ListItem(
+            modifier = Modifier.clickable {
+                onEvent(UiEvent.ClickBackup)
+            },
+            headlineContent = {
+                Text(
+                    text = stringResource(Res.string.settings_root_backup_title),
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            supportingContent = {
+                Text(stringResource(Res.string.settings_root_backup_description))
+            },
+            leadingContent = {
+                Icon(
+                    imageVector = Icons.Outlined.Schedule,
                     contentDescription = null
                 )
             }

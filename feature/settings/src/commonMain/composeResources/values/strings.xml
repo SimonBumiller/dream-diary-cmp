@@ -19,5 +19,15 @@
     <string name="settings_root_export_description">Export your data into a local file</string>
     <string name="settings_root_import_title">Import Data</string>
     <string name="settings_root_import_description">Import data from a local file</string>
+    <string name="settings_root_backup_title">Periodic Backup</string>
+    <string name="settings_root_backup_description">Schedule periodic backups to save your data.</string>
+
+    <string name="order_config_title">Configure Backup</string>
+    <string name="order_config_description">Use the following setup wizard to configure the periodic export by setting the export location, backup timing and further options.</string>
+    <string name="order_config_storage_label">Storage</string>
+    <string name="order_config_schedule_label">Schedule</string>
+    <string name="order_config_options_label">Options</string>
+    <string name="order_config_wizard_save_label">Save Configuration</string>
+    <string name="order_config_wizard_retreat_label">Go Back</string>
 
 </resources>
