@@ -22,7 +22,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -42,23 +41,20 @@ import dream_diary_cmp.feature.io.generated.resources.import_configuration_optio
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_timezone_label
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_title
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_transfer_favorites_label
-import io.github.vinceglb.filekit.dialogs.FileKitType
-import io.github.vinceglb.filekit.dialogs.compose.PickerResultLauncher
-import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
-import io.github.vinceglb.filekit.name
 import kotlinx.datetime.TimeZone
 import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
+import me.bumiller.ddcmp.ui.common.component.FileSelectorTextField
+import me.bumiller.ddcmp.ui.common.component.IOOptionTypeSelection
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
+import me.bumiller.ddcmp.ui.common.model.IOOptionType
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.translation.translateName
-import me.bumiller.ddcmp.ui.common.component.IOOptionTypeSelection
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.State
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiEvent
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiState
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.ViewModelEvent
-import me.bumiller.ddcmp.ui.common.model.IOOptionType
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -88,12 +84,6 @@ private fun ImportConfigEntry(
     uiState: UiState,
     state: State
 ) {
-    val picker = rememberFilePickerLauncher(
-        type = FileKitType.File(state.option.backupFileExtension)
-    ) {
-        onEvent(UiEvent.FileSelected(it))
-    }
-
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -155,7 +145,7 @@ private fun ImportConfigEntry(
                 style = MaterialTheme.typography.bodySmall
             )
 
-            FilePickerSection(picker, uiState)
+            FilePickerSection(uiState, state)
 
             HorizontalDivider()
 
@@ -201,7 +191,7 @@ private fun FileTypeOption(
     ) {
         OutlinedTextField(
             modifier = Modifier
-                .menuAnchor(MenuAnchorType.PrimaryEditable),
+                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable),
             value = uiState.fileType.translateName,
             onValueChange = {},
             readOnly = true,
@@ -242,7 +232,7 @@ private fun TimeZoneOption(
     ) {
         OutlinedTextField(
             modifier = Modifier
-                .menuAnchor(MenuAnchorType.PrimaryEditable),
+                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable),
             value = uiState.timeZone.id,
             onValueChange = {},
             readOnly = true,
@@ -294,25 +284,15 @@ private fun KeepFavoriteOption(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FilePickerSection(
-    picker: PickerResultLauncher,
-    uiState: UiState
+    uiState: UiState,
+    state: State
 ) {
-    // The ExposedDropdownMenuBox is needed so we can capture proper clicks on the TextField
-    ExposedDropdownMenuBox(
-        expanded = false,
-        onExpandedChange = { picker.launch() }
-    ) {
-        OutlinedTextField(
-            modifier = Modifier.menuAnchor(
-                type = ExposedDropdownMenuAnchorType.PrimaryNotEditable,
-                enabled = true
-            ),
-            value = uiState.file?.name ?: "",
-            readOnly = true,
-            onValueChange = { },
-            placeholder = {
-                Text(stringResource(Res.string.import_configuration_file_name_placeholder))
-            }
-        )
-    }
+
+    FileSelectorTextField(
+        modifier = Modifier,
+        file = uiState.file,
+        onFileChanged = { UiEvent.FileSelected(it) },
+        extension = state.option.backupFileExtension,
+        placeholder = stringResource(Res.string.import_configuration_file_name_placeholder)
+    )
 }

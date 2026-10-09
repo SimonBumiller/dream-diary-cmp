@@ -45,6 +45,7 @@ import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
+import me.bumiller.ddcmp.ui.common.component.FileSaverTextField
 import me.bumiller.ddcmp.ui.common.component.IOOptionTypeSelection
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.model.IOOptionType
@@ -81,10 +82,6 @@ private fun ExportConfigEntry(
     onEvent: (UiEvent) -> Unit,
     uiState: UiState
 ) {
-    val picker = rememberFileSaverLauncher {
-        onEvent(UiEvent.FileSelected(it))
-    }
-
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -146,7 +143,7 @@ private fun ExportConfigEntry(
                 style = MaterialTheme.typography.bodySmall
             )
 
-            FilePickerSection(picker, uiState)
+            FilePickerSection(onEvent, uiState)
 
             if(uiState.type == IOOptionType.Normal) {
                 HorizontalDivider()
@@ -218,33 +215,18 @@ private fun FileTypeOption(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FilePickerSection(
-    picker: SaverResultLauncher,
+    onEvent: (UiEvent) -> Unit,
     uiState: UiState
 ) {
     val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date.toString()
     val fileNameSuggestion = stringResource(Res.string.export_suggested_filename, today)
 
-    // The ExposedDropdownMenuBox is needed so we can capture proper clicks on the TextField
-    ExposedDropdownMenuBox(
-        expanded = false,
-        onExpandedChange = {
-            picker.launch(
-                suggestedName = fileNameSuggestion,
-                extension = "zip"
-            )
-        }
-    ) {
-        OutlinedTextField(
-            modifier = Modifier.menuAnchor(
-                type = ExposedDropdownMenuAnchorType.PrimaryNotEditable,
-                enabled = true
-            ),
-            value = uiState.file?.name ?: "",
-            readOnly = true,
-            onValueChange = { },
-            placeholder = {
-                Text(stringResource(Res.string.export_configuration_file_name_placeholder))
-            }
-        )
-    }
+    FileSaverTextField(
+        modifier= Modifier,
+        file = uiState.file,
+        onFileChanged = { onEvent(UiEvent.FileSelected(it)) },
+        suggestedName = fileNameSuggestion,
+        extension = "zip",
+        placeholder = stringResource(Res.string.export_configuration_file_name_placeholder)
+    )
 }
