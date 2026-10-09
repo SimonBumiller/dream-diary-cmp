@@ -36,21 +36,19 @@ import dream_diary_cmp.feature.io.generated.resources.Res
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_description
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_file_description
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_file_name_placeholder
-import dream_diary_cmp.feature.io.generated.resources.import_configuration_filetype_label
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_options_description
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_timezone_label
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_title
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_transfer_favorites_label
 import kotlinx.datetime.TimeZone
-import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.FileSelectorTextField
+import me.bumiller.ddcmp.ui.common.component.IOFileSelector
 import me.bumiller.ddcmp.ui.common.component.IOOptionTypeSelection
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.model.IOOptionType
 import me.bumiller.ddcmp.ui.common.plus
-import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.State
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiEvent
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiState
@@ -185,39 +183,12 @@ private fun FileTypeOption(
     uiState: UiState,
     onEvent: (UiEvent) -> Unit
 ) {
-    ExposedDropdownMenuBox(
-        expanded = uiState.showTimeZoneDropdown,
-        onExpandedChange = { onEvent(UiEvent.ToggleFileTypeDropdownVisibility(!uiState.showFileTypeDropdown)) }
-    ) {
-        OutlinedTextField(
-            modifier = Modifier
-                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable),
-            value = uiState.fileType.translateName,
-            onValueChange = {},
-            readOnly = true,
-            label = { Text(stringResource(Res.string.import_configuration_filetype_label)) }
-        )
-        ExposedDropdownMenu(
-            expanded = uiState.showFileTypeDropdown,
-            onDismissRequest = {
-                onEvent(
-                    UiEvent.ToggleFileTypeDropdownVisibility(
-                        false
-                    )
-                )
-            }
-        ) {
-            IOFileType.entries.forEach { filetype ->
-                DropdownMenuItem(
-                    onClick = {
-                        onEvent(UiEvent.ChangeFileType(filetype))
-                        onEvent(UiEvent.ToggleFileTypeDropdownVisibility(false))
-                    },
-                    text = { Text(filetype.translateName) }
-                )
-            }
-        }
-    }
+    IOFileSelector(
+        showDropdown = uiState.showFileTypeDropdown,
+        toggleDropdownVisibility = { onEvent(UiEvent.ToggleFileTypeDropdownVisibility(!uiState.showFileTypeDropdown)) },
+        onTypeSelected = { onEvent(UiEvent.ChangeFileType(it)) },
+        fileType = uiState.fileType
+    )
 }
 
 @Composable

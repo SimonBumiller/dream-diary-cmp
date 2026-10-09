@@ -10,17 +10,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.ExposedDropdownMenuAnchorType
-import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
@@ -34,23 +30,18 @@ import dream_diary_cmp.feature.io.generated.resources.export_configuration_descr
 import dream_diary_cmp.feature.io.generated.resources.export_configuration_file_description
 import dream_diary_cmp.feature.io.generated.resources.export_configuration_file_name_placeholder
 import dream_diary_cmp.feature.io.generated.resources.export_configuration_filetype_description
-import dream_diary_cmp.feature.io.generated.resources.export_configuration_filetype_label
 import dream_diary_cmp.feature.io.generated.resources.export_configuration_title
 import dream_diary_cmp.feature.io.generated.resources.export_suggested_filename
-import io.github.vinceglb.filekit.dialogs.compose.SaverResultLauncher
-import io.github.vinceglb.filekit.dialogs.compose.rememberFileSaverLauncher
-import io.github.vinceglb.filekit.name
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.FileSaverTextField
+import me.bumiller.ddcmp.ui.common.component.IOFileSelector
 import me.bumiller.ddcmp.ui.common.component.IOOptionTypeSelection
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.model.IOOptionType
 import me.bumiller.ddcmp.ui.common.plus
-import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.ddcmp.feature.io.entries.export_configuration.ExportConfigViewModel.UiEvent
 import me.ddcmp.feature.io.entries.export_configuration.ExportConfigViewModel.UiState
 import me.ddcmp.feature.io.entries.export_configuration.ExportConfigViewModel.ViewModelEvent
@@ -176,39 +167,12 @@ private fun FileTypeOption(
             style = MaterialTheme.typography.bodySmall
         )
 
-        ExposedDropdownMenuBox(
-            expanded = uiState.showFileTypeDropdown,
-            onExpandedChange = { onEvent(UiEvent.ToggleFileTypeDropdownVisibility(!uiState.showFileTypeDropdown)) }
-        ) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable),
-                value = uiState.fileType.translateName,
-                onValueChange = {},
-                readOnly = true,
-                label = { Text(stringResource(Res.string.export_configuration_filetype_label)) }
-            )
-            ExposedDropdownMenu(
-                expanded = uiState.showFileTypeDropdown,
-                onDismissRequest = {
-                    onEvent(
-                        UiEvent.ToggleFileTypeDropdownVisibility(
-                            false
-                        )
-                    )
-                }
-            ) {
-                IOFileType.entries.forEach { filetype ->
-                    DropdownMenuItem(
-                        onClick = {
-                            onEvent(UiEvent.ChangeFileType(filetype))
-                            onEvent(UiEvent.ToggleFileTypeDropdownVisibility(false))
-                        },
-                        text = { Text(filetype.translateName) }
-                    )
-                }
-            }
-        }
+        IOFileSelector(
+            showDropdown = uiState.showFileTypeDropdown,
+            toggleDropdownVisibility = { onEvent(UiEvent.ToggleFileTypeDropdownVisibility(!uiState.showFileTypeDropdown)) },
+            onTypeSelected = { onEvent(UiEvent.ChangeFileType(it)) },
+            fileType = uiState.fileType
+        )
     }
 }
 

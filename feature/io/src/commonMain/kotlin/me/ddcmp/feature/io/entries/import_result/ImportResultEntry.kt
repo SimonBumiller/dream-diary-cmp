@@ -33,7 +33,6 @@ import kotlin.time.Instant
 internal fun ImportResultEntry(
     onContinue: (wasSuccess: Boolean) -> Unit
 ) {
-    println("Inside ResultEntry")
     ViewModelScope<UiEvent, ViewModelEvent, ImportResultViewModel>(
         onViewModelEvent = {
             when (it) {
