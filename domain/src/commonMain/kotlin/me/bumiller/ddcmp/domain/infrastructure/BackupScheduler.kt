@@ -21,4 +21,9 @@ interface BackupScheduler {
      */
     suspend fun cancelAll(): Int
 
+    /**
+     * Whether a backup is running at the moment
+     */
+    suspend fun isBackupRunning(): Boolean
+
 }

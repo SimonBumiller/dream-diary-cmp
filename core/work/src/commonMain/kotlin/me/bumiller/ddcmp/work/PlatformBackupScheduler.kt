@@ -46,4 +46,6 @@ internal class PlatformBackupScheduler(
         return count
     }
 
+    override suspend fun isBackupRunning(): Boolean = scheduler.getForTag(TAG).isNotEmpty()
+
 }
