@@ -58,6 +58,13 @@
 
     <string name="back_icon_button_cd">Return to previous screen.</string>
 
+    <string name="preview_wizard_first">First</string>
+    <string name="preview_wizard_second">Second</string>
+    <string name="preview_wizard_third">Third</string>
+
+    <string name="wizard_row_retreat_label">Go Back</string>
+    <string name="wizard_row_advance_label">Continue</string>
+
     <string name="date_range_dialog_preconfigured_last_week">Last 7 days</string>
     <string name="date_range_dialog_preconfigured_last_month">Last 30 days</string>
     <string name="date_range_dialog_preconfigured_last_half_year">Last 6 months</string>
