@@ -47,7 +47,8 @@ object Mapping {
                 initialTime = initialTime,
                 keepLast = keepLast,
                 legacyExport = exportOption is ExportOption.Legacy,
-                exportFileType = (exportOption as? ExportOption.Normal)?.fileType?.name
+                exportFileType = (exportOption as? ExportOption.Normal)?.fileType?.name,
+                wasActive = wasActive
             )
         }
 
@@ -140,7 +141,8 @@ object Mapping {
             exportOption = when(aggregate.backupOrder.legacyExport) {
                 true -> ExportOption.Legacy
                 false -> ExportOption.Normal(IOFileType.valueOf(aggregate.backupOrder.exportFileType!!))
-            }
+            },
+            wasActive = aggregate.backupOrder.wasActive
         )
     }
 

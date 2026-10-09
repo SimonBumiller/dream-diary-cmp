@@ -34,6 +34,8 @@ data class PeriodicBackupOrderEntity(
 
     val active: Boolean,
 
+    val wasActive: Boolean,
+
     val period: Duration,
 
     val initialTime: Instant,

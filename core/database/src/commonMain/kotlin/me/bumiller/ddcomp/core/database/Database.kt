@@ -27,7 +27,7 @@ import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
 
 const val DB_NAME = "dream_diary.db"
 
-private const val DB_VERSION = 4
+private const val DB_VERSION = 5
 
 /**
  * The relational database used to store the data of the app.

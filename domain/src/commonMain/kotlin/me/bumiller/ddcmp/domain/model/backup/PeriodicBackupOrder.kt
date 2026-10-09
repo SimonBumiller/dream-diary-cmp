@@ -25,6 +25,11 @@ data class PeriodicBackupOrder(
     val active: Boolean,
 
     /**
+     * Whether the backup order has been scheduled for backup yet.
+     */
+    val wasActive: Boolean,
+
+    /**
      * The period on which the next backup time is determined.
      */
     val period: Duration,

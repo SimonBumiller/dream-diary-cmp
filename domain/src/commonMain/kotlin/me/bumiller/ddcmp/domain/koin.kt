@@ -16,7 +16,8 @@ import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic
 import me.bumiller.ddcmp.domain.usecase.backup.CancelBackupOrdersUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.GetBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.RecordPeriodicBackupUseCase
-import me.bumiller.ddcmp.domain.usecase.backup.SetupBackupOrderUseCase
+import me.bumiller.ddcmp.domain.usecase.backup.SaveBackupOrderUseCase
+import me.bumiller.ddcmp.domain.usecase.backup.ScheduleBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
@@ -57,7 +58,8 @@ val domain = module {
     single { GetBackupOrderUseCase(get()) }
     single { RecordPeriodicBackupUseCase(get(), get()) }
     single { CancelBackupOrdersUseCase(get(), get(), get()) }
-    single { SetupBackupOrderUseCase(get(), get(), get()) }
+    single { SaveBackupOrderUseCase(get()) }
+    single { ScheduleBackupOrderUseCase(get(), get(), get()) }
 
     single { DreamTimeFrequencyHistogram(get()) }
     single { DreamWeekdayFrequencyHistogram(get()) }
