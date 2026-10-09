@@ -1,12 +1,12 @@
-package me.ddcmp.feature.io.translation
+package me.bumiller.ddcmp.ui.common.translation
 
 import androidx.compose.runtime.Composable
-import dream_diary_cmp.feature.io.generated.resources.Res
-import dream_diary_cmp.feature.io.generated.resources.iooption_type_legacy_description
-import dream_diary_cmp.feature.io.generated.resources.iooption_type_legacy_name
-import dream_diary_cmp.feature.io.generated.resources.iooption_type_normal_description
-import dream_diary_cmp.feature.io.generated.resources.iooption_type_normal_name
-import me.ddcmp.feature.io.model.IOOptionType
+import dream_diary_cmp.ui.common.generated.resources.Res
+import dream_diary_cmp.ui.common.generated.resources.iooption_type_legacy_description
+import dream_diary_cmp.ui.common.generated.resources.iooption_type_legacy_name
+import dream_diary_cmp.ui.common.generated.resources.iooption_type_normal_description
+import dream_diary_cmp.ui.common.generated.resources.iooption_type_normal_name
+import me.bumiller.ddcmp.ui.common.model.IOOptionType
 import org.jetbrains.compose.resources.stringResource
 
 /**

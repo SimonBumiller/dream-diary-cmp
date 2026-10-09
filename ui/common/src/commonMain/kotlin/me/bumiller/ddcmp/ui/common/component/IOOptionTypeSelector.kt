@@ -1,4 +1,4 @@
-package me.ddcmp.feature.io.components
+package me.bumiller.ddcmp.ui.common.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,12 +26,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import me.ddcmp.feature.io.model.IOOptionType
-import me.ddcmp.feature.io.translation.translateDescription
-import me.ddcmp.feature.io.translation.translateName
+import me.bumiller.ddcmp.ui.common.model.IOOptionType
+import me.bumiller.ddcmp.ui.common.translation.translateDescription
+import me.bumiller.ddcmp.ui.common.translation.translateName
 
 @Composable
-internal fun IOOptionTypeSelection(
+fun IOOptionTypeSelection(
     modifier: Modifier,
     type: IOOptionType,
     onTypeChange: (IOOptionType) -> Unit

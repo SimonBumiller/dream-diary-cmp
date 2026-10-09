@@ -53,12 +53,12 @@ import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.translation.translateName
-import me.ddcmp.feature.io.components.IOOptionTypeSelection
+import me.bumiller.ddcmp.ui.common.component.IOOptionTypeSelection
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.State
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiEvent
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiState
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.ViewModelEvent
-import me.ddcmp.feature.io.model.IOOptionType
+import me.bumiller.ddcmp.ui.common.model.IOOptionType
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

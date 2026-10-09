@@ -14,7 +14,7 @@ import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiEvent
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.ViewModelEvent
-import me.ddcmp.feature.io.model.IOOptionType
+import me.bumiller.ddcmp.ui.common.model.IOOptionType
 
 internal class ImportConfigViewModel(
     private val import: ImportUseCase

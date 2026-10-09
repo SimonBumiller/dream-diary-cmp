@@ -1,10 +1,4 @@
 <resources>
-    <string name="iooption_type_normal_name">Normal</string>
-    <string name="iooption_type_legacy_name">Legacy App</string>
-
-    <string name="iooption_type_normal_description">Backup containing all important user data from the app, including emotions.</string>
-    <string name="iooption_type_legacy_description">Backup containing partial user data for compatibility with the legacy app.</string>
-
     <string name="import_configuration_title">Import</string>
     <string name="import_configuration_actions_back">Back</string>
     <string name="import_configuration_options_description">Configure the import by setting advanced import options.</string>

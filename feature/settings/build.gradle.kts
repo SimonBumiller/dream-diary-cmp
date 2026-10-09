@@ -46,6 +46,9 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.compose.material.icons)
             implementation(libs.compose.navigation)
+            implementation(libs.filekt.core)
+            implementation(libs.filekt.dialogs)
+            implementation(libs.filekt.dialogs.compose)
             implementation(project(":domain"))
             implementation(project(":ui:common"))
         }

@@ -45,14 +45,14 @@ import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
+import me.bumiller.ddcmp.ui.common.component.IOOptionTypeSelection
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
+import me.bumiller.ddcmp.ui.common.model.IOOptionType
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.translation.translateName
-import me.ddcmp.feature.io.components.IOOptionTypeSelection
 import me.ddcmp.feature.io.entries.export_configuration.ExportConfigViewModel.UiEvent
 import me.ddcmp.feature.io.entries.export_configuration.ExportConfigViewModel.UiState
 import me.ddcmp.feature.io.entries.export_configuration.ExportConfigViewModel.ViewModelEvent
-import me.ddcmp.feature.io.model.IOOptionType
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 

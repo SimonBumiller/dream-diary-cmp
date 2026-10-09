@@ -65,6 +65,11 @@
     <string name="wizard_row_retreat_label">Go Back</string>
     <string name="wizard_row_advance_label">Continue</string>
 
+    <string name="iooption_type_normal_name">Normal</string>
+    <string name="iooption_type_legacy_name">Legacy App</string>
+    <string name="iooption_type_normal_description">Backup containing all important user data from the app, including emotions.</string>
+    <string name="iooption_type_legacy_description">Backup containing partial user data for compatibility with the legacy app.</string>
+
     <string name="date_range_dialog_preconfigured_last_week">Last 7 days</string>
     <string name="date_range_dialog_preconfigured_last_month">Last 30 days</string>
     <string name="date_range_dialog_preconfigured_last_half_year">Last 6 months</string>
