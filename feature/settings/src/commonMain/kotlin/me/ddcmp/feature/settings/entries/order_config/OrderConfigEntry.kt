@@ -60,6 +60,7 @@ import me.bumiller.ddcmp.ui.common.component.IOFileSelector
 import me.bumiller.ddcmp.ui.common.component.IOOptionTypeSelection
 import me.bumiller.ddcmp.ui.common.component.PersistableDirectoryTextField
 import me.bumiller.ddcmp.ui.common.component.SetupWizard
+import me.bumiller.ddcmp.ui.common.dialog.DiscardChangesDialog
 import me.bumiller.ddcmp.ui.common.model.IOOptionType
 import me.bumiller.ddcmp.ui.common.plus
 import me.ddcmp.feature.settings.entries.order_config.OrderConfigViewModel.OrderState
@@ -102,6 +103,13 @@ private fun OrderConfigEntry(
     uiState: UiState,
     onEvent: (UiEvent) -> Unit
 ) {
+    if(uiState.showCancelConfirmDialog) {
+        DiscardChangesDialog(
+            onDiscard = { onEvent(UiEvent.ClickCancel) },
+            onKeep = { onEvent(UiEvent.DismissCancel) }
+        )
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),

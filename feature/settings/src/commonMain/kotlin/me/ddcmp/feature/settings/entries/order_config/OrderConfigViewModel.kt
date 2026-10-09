@@ -64,8 +64,15 @@ internal class OrderConfigViewModel(
             )
         }
 
-        UiEvent.ClickCancel -> TODO()
+        UiEvent.ClickCancel -> {
+            updateUiState<UiState> { it.copy(showCancelConfirmDialog = !it.showCancelConfirmDialog) }
+
+            // Check inverted because we inverted it
+            if(!uiState.value.showCancelConfirmDialog) fireEvent(ViewModelEvent.Cancelled)
+            else Unit
+        }
         UiEvent.ClickSaveOrder -> saveConfig()
+        UiEvent.DismissCancel -> updateUiState<UiState> { it.copy(showCancelConfirmDialog = false) }
     }
 
     private suspend fun saveConfig() {
@@ -82,7 +89,12 @@ internal class OrderConfigViewModel(
         /**
          * Whether the io file type dropdown is visible
          */
-        val showFiletypeDropdown: Boolean = false
+        val showFiletypeDropdown: Boolean = false,
+
+        /**
+         * Whether the dialog to confirm the cancellation of the configuration should be shown.
+         */
+        val showCancelConfirmDialog: Boolean = false
 
     )
 
@@ -189,6 +201,7 @@ internal class OrderConfigViewModel(
 
         data object ClickSaveOrder : UiEvent
         data object ClickCancel : UiEvent
+        data object DismissCancel : UiEvent
     }
 
     sealed interface ViewModelEvent : VME {
