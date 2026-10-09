@@ -30,3 +30,10 @@ sealed interface BackupDestination : Unique, Trackable {
     }
 
 }
+
+/**
+ * Created a copy with varied id.
+ */
+fun <T: BackupDestination> T.copy(id: Long = this.id) = when(this) {
+    is BackupDestination.LocalDirectory -> BackupDestination.LocalDirectory(id, created, directory)
+}

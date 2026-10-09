@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import me.bumiller.ddcomp.core.database.converter.DurationConverter
 import me.bumiller.ddcomp.core.database.converter.InstantConverter
+import me.bumiller.ddcomp.core.database.dao.BackupDestinationDao
 import me.bumiller.ddcomp.core.database.dao.DreamDao
 import me.bumiller.ddcomp.core.database.dao.EmotionDao
 import me.bumiller.ddcomp.core.database.dao.ExportLogDao
@@ -61,6 +62,7 @@ abstract class RelationalDatabase : RoomDatabase() {
 
     abstract fun periodicBackupDao(): PeriodicBackupDao
     abstract fun periodicBackupOrderDao(): PeriodicBackupOrderDao
+    abstract fun backupDestinationDao(): BackupDestinationDao
 
     abstract fun dreamEmotionM2MDao(): DreamEmotionM2MDao
     abstract fun dreamPersonM2MDao(): DreamPersonM2MDao

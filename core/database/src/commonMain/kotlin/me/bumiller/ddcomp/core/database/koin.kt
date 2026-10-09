@@ -42,12 +42,15 @@ val database = module {
     single { get<RelationalDatabase>().dreamEmotionM2MDao() }
     single { get<RelationalDatabase>().importLogDao() }
     single { get<RelationalDatabase>().exportLogDao() }
+    single { get<RelationalDatabase>().periodicBackupOrderDao() }
+    single { get<RelationalDatabase>().periodicBackupDao() }
+    single { get<RelationalDatabase>().backupDestinationDao() }
 
     single<DreamRepository> { DreamRepositoryImpl(get(), get(), get()) }
     single<EmotionRepository> { EmotionRepositoryImpl(get(), get()) }
     single<PersonRepository> { PersonRepositoryImpl(get(), get()) }
     single<ImportLogRepository> { ImportLogRepositoryImpl(get()) }
     single<ExportLogRepository> { ExportLogRepositoryImpl(get()) }
-    single<PeriodicBackupOrderRepository> { PeriodicBackupOrderRepositoryImpl(get()) }
+    single<PeriodicBackupOrderRepository> { PeriodicBackupOrderRepositoryImpl(get(), get()) }
     single<PeriodicBackupRepository> { PeriodicBackupRepositoryImpl(get(), get()) }
 }
