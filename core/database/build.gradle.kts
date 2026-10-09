@@ -23,7 +23,7 @@ kotlin {
     androidLibrary {
         namespace = "me.bumiller.ddcomp.core.database"
         compileSdk = 36
-        minSdk = 24
+        minSdk = 26
 
         withHostTestBuilder {
         }

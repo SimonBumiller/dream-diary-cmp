@@ -63,7 +63,7 @@ kotlin {
 }
 
 android {
-    namespace = "me.bumiller.ddcmp"
+    namespace = "me.bumiller.ddcmp.ui.diagram"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     packaging {

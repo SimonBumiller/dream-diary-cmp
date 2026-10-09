@@ -35,6 +35,7 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+            implementation(libs.workmanager)
             implementation(libs.filekt.core)
         }
         commonMain.dependencies {
@@ -51,7 +52,6 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.compose.navigation)
             implementation(libs.compose.material3.windowsizeclass)
-            implementation(libs.workmanager)
             implementation(libs.filekt.core)
             implementation(project(":core:database"))
             implementation(project(":core:datastore"))

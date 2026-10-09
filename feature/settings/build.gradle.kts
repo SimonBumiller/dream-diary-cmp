@@ -45,6 +45,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.koin.core)
             implementation(libs.compose.material.icons)
+            implementation(libs.compose.navigation)
             implementation(project(":domain"))
             implementation(project(":ui:common"))
         }
