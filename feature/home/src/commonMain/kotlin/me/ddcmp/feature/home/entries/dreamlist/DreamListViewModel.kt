@@ -25,26 +25,12 @@ import kotlin.time.ExperimentalTime
 @OptIn(ExperimentalTime::class)
 internal class DreamListViewModel(
 
-    private val getDreams: AllDreamUseCase,
-
-    private val dreamHistogram: DreamWeeklyFrequencyStatistic
+    private val getDreams: AllDreamUseCase
 
 ) : AppViewModel<DreamListViewModel.UiEvent, DreamListViewModel.ViewModelEvent>() {
 
     init {
         registerUiState(UiState())
-
-        viewModelScope.launch {
-            val range = LocalDate(2000, 1, 1)..LocalDate(2030, 1, 1)
-            dreamHistogram(
-                DreamWeeklyFrequencyStatistic.I(
-                    range,
-                    Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-                )
-            ).collect { dreamHistogram ->
-                println(dreamHistogram)
-            }
-        }
     }
 
     /**
