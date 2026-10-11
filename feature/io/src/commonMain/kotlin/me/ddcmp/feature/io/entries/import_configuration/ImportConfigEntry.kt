@@ -143,7 +143,7 @@ private fun ImportConfigEntry(
                 style = MaterialTheme.typography.bodySmall
             )
 
-            FilePickerSection(uiState, state)
+            FilePickerSection(uiState, state, onEvent)
 
             HorizontalDivider()
 
@@ -256,13 +256,13 @@ private fun KeepFavoriteOption(
 @Composable
 private fun FilePickerSection(
     uiState: UiState,
-    state: State
+    state: State,
+    onEvent: (UiEvent) -> Unit
 ) {
-
     FileSelectorTextField(
         modifier = Modifier,
         file = uiState.file,
-        onFileChanged = { UiEvent.FileSelected(it) },
+        onFileChanged = { onEvent(UiEvent.FileSelected(it)) },
         extension = state.option.backupFileExtension,
         placeholder = stringResource(Res.string.import_configuration_file_name_placeholder)
     )
