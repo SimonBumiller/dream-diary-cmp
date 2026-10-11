@@ -50,8 +50,8 @@ internal class OrderConfigViewModel(
         is UiEvent.ChangeIOFileType -> updateUiState<OrderState> { it.copy(ioFileType = event.fileType) }
         is UiEvent.ChangeIOOption -> updateUiState<OrderState> { it.copy(ioOption = event.type) }
         is UiEvent.ChangeKeepLast -> updateUiState<OrderState> { it.copy(keepLast = event.keepLast) }
-        is UiEvent.ChangeScheduleDays -> updateUiState<OrderState> { it.copy(scheduleDays = event.scheduleDays) }
-        is UiEvent.ChangeScheduleHours -> updateUiState<OrderState> { it.copy(scheduleHours = event.scheduleHours) }
+        is UiEvent.ChangeScheduleDays -> updateUiState<OrderState> { it.copy(scheduleDays = event.scheduleDays ?: 0) }
+        is UiEvent.ChangeScheduleHours -> updateUiState<OrderState> { it.copy(scheduleHours = event.scheduleHours ?: 0) }
         is UiEvent.ChangeLimitlessRetention -> updateUiState<OrderState> {
             it.copy(
                 limitlessRetention = event.limitless
@@ -111,12 +111,12 @@ internal class OrderConfigViewModel(
         /**
          * The days part of the scheduling period.
          */
-        val scheduleDays: Int? = null,
+        val scheduleDays: Int = 1,
 
         /**
          * The hours part of the scheduling period.
          */
-        val scheduleHours: Int? = null,
+        val scheduleHours: Int = 0,
 
         /**
          * Whether the first backup should be performed immediately.
@@ -153,8 +153,8 @@ internal class OrderConfigViewModel(
         /**
          * Whether the scheduling information is valid.
          */
-        fun isScheduleValid() = scheduleDays != null && scheduleHours != null && // Schedule set
-                scheduleDays in 0..30 && scheduleHours in 0..24 && // Schedule domain valid
+        fun isScheduleValid() = scheduleDays in 0..30 &&
+                scheduleHours in 0..24 &&
                 scheduleDays + scheduleDays != 0 // At least one is non-zero
 
         /**

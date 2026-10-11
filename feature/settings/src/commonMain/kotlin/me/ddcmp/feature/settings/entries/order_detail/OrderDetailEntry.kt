@@ -173,7 +173,6 @@ fun RunningOrderInfo(
         HorizontalDivider()
 
         val recentTimestamp = orderBackups.mostRecentBackup?.created ?: order.initialTime
-
         InfoItem(
             icon = file_export,
             label = stringResource(Res.string.order_detail_next_backup),

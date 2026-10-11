@@ -103,7 +103,7 @@ private fun OrderConfigEntry(
     uiState: UiState,
     onEvent: (UiEvent) -> Unit
 ) {
-    if(uiState.showCancelConfirmDialog) {
+    if (uiState.showCancelConfirmDialog) {
         DiscardChangesDialog(
             onDiscard = { onEvent(UiEvent.ClickCancel) },
             onKeep = { onEvent(UiEvent.DismissCancel) }
@@ -191,11 +191,12 @@ private fun OptionsConfiguration(
                 fontWeight = FontWeight.Bold
             )
 
-            KeepLastSelection(
-                modifier = Modifier,
-                orderState = orderState,
-                onEvent = onEvent
-            )
+            // TODO: We disable selecting anything else than indefinite, until the logic is implemented.
+//            KeepLastSelection(
+//                modifier = Modifier,
+//                orderState = orderState,
+//                onEvent = onEvent
+//            )
         }
 
         Column(
@@ -375,7 +376,7 @@ private fun SchedulePeriodPicker(
         OutlinedTextField(
             modifier = Modifier
                 .width(64.dp),
-            value = orderState.scheduleDays?.toString() ?: "",
+            value = orderState.scheduleDays.toString(),
             onValueChange = { onEvent(UiEvent.ChangeScheduleDays(it.toIntOrNull())) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -395,7 +396,7 @@ private fun SchedulePeriodPicker(
         OutlinedTextField(
             modifier = Modifier
                 .width(64.dp),
-            value = orderState.scheduleHours?.toString() ?: "",
+            value = orderState.scheduleHours.toString(),
             onValueChange = { onEvent(UiEvent.ChangeScheduleHours(it.toIntOrNull())) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
