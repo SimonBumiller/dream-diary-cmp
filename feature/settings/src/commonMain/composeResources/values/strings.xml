@@ -69,5 +69,10 @@
     <string name="order_detail_used_storage">Used Storage</string>
     <string name="order_detail_next_backup">Next Backup</string>
     <string name="order_detail_backup_count_none">None</string>
+    <string name="order_detail_recent_backup">Last Backup</string>
+    <string name="order_detail_recent_backup_na">No last backup available</string>
 
+    <string name="export_failure_confirm">Confirm</string>
+    <string name="export_failure_title">Backup Failed</string>
+    <string name="export_failure_access_description">The backup could not be saved as the selected destination was not reachable. This could be caused by network problems, if the backup exports to a network drive, or by the deletion of the backup destination.</string>
 </resources>

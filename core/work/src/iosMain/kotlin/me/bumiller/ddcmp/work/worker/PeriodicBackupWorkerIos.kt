@@ -3,6 +3,7 @@ package me.bumiller.ddcmp.work.worker
 import dev.brewkits.kmpworkmanager.background.data.IosWorker
 import dev.brewkits.kmpworkmanager.background.domain.WorkerEnvironment
 import dev.brewkits.kmpworkmanager.background.domain.WorkerResult
+import me.bumiller.ddcmp.domain.infrastructure.ExportLogRepository
 import me.bumiller.ddcmp.domain.usecase.backup.GetBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.RecordPeriodicBackupUseCase
 import me.bumiller.ddcmp.domain.usecase.io.ExportUseCase
@@ -12,7 +13,8 @@ internal class PeriodicBackupWorkerIos(
     private val getOrder: GetBackupOrderUseCase,
     private val getExportLog: GetExportLogUsecase,
     private val recordBackup: RecordPeriodicBackupUseCase,
-    private val export: ExportUseCase
+    private val export: ExportUseCase,
+    private val exportRepo: ExportLogRepository
 ) : IosWorker {
 
     override suspend fun doWork(
@@ -22,7 +24,7 @@ internal class PeriodicBackupWorkerIos(
         val assertedInput = input ?: error("Input for the PeriodicBackupWorkerAndroid")
 
         val errorMsg =
-            periodicBackupWork(assertedInput, getOrder, getExportLog, recordBackup, export)
+            periodicBackupWork(assertedInput, getOrder, getExportLog, recordBackup, export, exportRepo)
 
         return when (errorMsg) {
             null -> WorkerResult.Success()

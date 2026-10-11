@@ -4,9 +4,11 @@ import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.absoluteFile
 import io.github.vinceglb.filekit.createDirectories
 import io.github.vinceglb.filekit.div
+import io.github.vinceglb.filekit.exists
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import me.bumiller.ddcmp.domain.infrastructure.ExportLogRepository
 import me.bumiller.ddcmp.domain.io.createChildFile
 import me.bumiller.ddcmp.domain.model.backup.BackupDestination
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
@@ -37,7 +39,8 @@ internal suspend fun periodicBackupWork(
     getOrder: GetBackupOrderUseCase,
     getExportLog: GetExportLogUsecase,
     recordBackup: RecordPeriodicBackupUseCase,
-    export: ExportUseCase
+    export: ExportUseCase,
+    exportLogRepo: ExportLogRepository
 ): String? {
     val input = Json.decodeFromString<PeriodicBackupWorkInput>(inputString)
     val query = GetBackupOrderUseCase.I(id = input.backupOrderId, active = false)
@@ -47,14 +50,25 @@ internal suspend fun periodicBackupWork(
         ?: error("Order with id ${input.backupOrderId} was not found for ongoing backup.")
 
     val backupFileName = order.createBackupFileName(Clock.System.now())
-    val backupOutputFile = order.destinationAsFile().createChildFile(backupFileName)
+    val backupDirectory = order.destinationAsFile()
 
-    // Reconstructing the export options for the export.
-    val exportConfig = ExportUseCase.I(
-        destination = backupOutputFile,
-        options = order.exportOption
-    )
-    val exportResultId = export(exportConfig)
+    val exportResultId = if(!backupDirectory.exists()) {
+        ExportResult.Failure.FileAccess(
+            id = 0,
+            timestamp = Clock.System.now()
+        ).let { exportLogRepo.save(it) }
+    } else {
+        val backupOutputFile = order.destinationAsFile().createChildFile(backupFileName)
+
+        // Reconstructing the export options for the export.
+        val exportConfig = ExportUseCase.I(
+            destination = backupOutputFile,
+            options = order.exportOption
+        )
+
+        export(exportConfig)
+
+    }
     val exportResult = getExportLog(exportResultId) ?: error("Export log for just finished export not found.")
 
     RecordPeriodicBackupUseCase.I(

@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.FolderOpen
+import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Storage
+import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -20,6 +23,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -45,10 +50,13 @@ import dream_diary_cmp.feature.settings.generated.resources.order_detail_filetyp
 import dream_diary_cmp.feature.settings.generated.resources.order_detail_keeplast
 import dream_diary_cmp.feature.settings.generated.resources.order_detail_location
 import dream_diary_cmp.feature.settings.generated.resources.order_detail_next_backup
+import dream_diary_cmp.feature.settings.generated.resources.order_detail_recent_backup
+import dream_diary_cmp.feature.settings.generated.resources.order_detail_recent_backup_na
 import dream_diary_cmp.feature.settings.generated.resources.order_detail_schedule
 import dream_diary_cmp.feature.settings.generated.resources.order_detail_title
 import dream_diary_cmp.feature.settings.generated.resources.order_detail_used_storage
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
+import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.usecase.backup.GetBackupsForOrderUseCase.BackupsForOrder
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
@@ -58,6 +66,7 @@ import me.bumiller.ddcmp.ui.common.icons.file_export
 import me.bumiller.ddcmp.ui.common.plus
 import me.ddcmp.feature.settings.entries.order_detail.OrderDetailViewModel.UiEvent
 import me.ddcmp.feature.settings.entries.order_detail.OrderDetailViewModel.ViewModelEvent
+import me.ddcmp.feature.settings.entries.order_detail.components.ExportFailureDialog
 import me.ddcmp.feature.settings.entries.order_detail.model.OrderState
 import me.ddcmp.feature.settings.entries.order_detail.model.state
 import org.jetbrains.compose.resources.stringResource
@@ -77,9 +86,10 @@ internal fun OrderDetailEntry(
     ) { vm ->
         val order by vm.order.collectAsStateWithLifecycle()
         val orderBackups by vm.orderBackups.collectAsStateWithLifecycle()
+        val uiState by vm.uiState.collectAsStateWithLifecycle()
 
         if (order != null && orderBackups != null) {
-            OrderDetailEntry(order!!, orderBackups!!, vm::onEvent)
+            OrderDetailEntry(order!!, orderBackups!!, uiState!!, vm::onEvent)
         }
     }
 }
@@ -89,8 +99,17 @@ internal fun OrderDetailEntry(
 private fun OrderDetailEntry(
     order: PeriodicBackupOrder,
     orderBackups: BackupsForOrder,
+    uiState: OrderDetailViewModel.UiState,
     onEvent: (UiEvent) -> Unit
 ) {
+    val recentFailure = orderBackups.mostRecentBackup?.export as? ExportResult.Failure
+    if(recentFailure != null && uiState.recentBackupErrorDialogVisible) {
+        ExportFailureDialog(
+            exportFailure = recentFailure,
+            onDismissRequest = { onEvent(UiEvent.ToggleRecentBackupErrorDialog) }
+        )
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -142,7 +161,8 @@ private fun OrderDetailEntry(
                     modifier = Modifier
                         .fillMaxWidth(),
                     order = order,
-                    orderBackups = orderBackups
+                    orderBackups = orderBackups,
+                    onEvent = onEvent
                 )
             }
 
@@ -151,10 +171,11 @@ private fun OrderDetailEntry(
 }
 
 @Composable
-fun RunningOrderInfo(
+private fun RunningOrderInfo(
     modifier: Modifier,
     order: PeriodicBackupOrder,
-    orderBackups: BackupsForOrder
+    orderBackups: BackupsForOrder,
+    onEvent: (UiEvent) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -178,12 +199,45 @@ fun RunningOrderInfo(
             label = stringResource(Res.string.order_detail_next_backup),
             value = recentTimestamp.plus(order.period).let(::formatInstantDayTime)
         )
-//        HorizontalDivider()
-//        InfoItem(
-//            icon = database,
-//            label = stringResource(Res.string.order_detail_keeplast),
-//            value = order.keepLast.translateKeepLast()
-//        )
+
+        HorizontalDivider()
+        InfoItem(
+            icon = Icons.Outlined.History,
+            label = stringResource(Res.string.order_detail_recent_backup),
+            value = orderBackups.mostRecentBackup?.created?.let(::formatInstantDayTime)
+                ?: stringResource(Res.string.order_detail_recent_backup_na)
+        ) {
+            RecentBackupStateButton(
+                recentBackupExportResult = orderBackups.mostRecentBackup?.export,
+                onErrorClick = { onEvent(UiEvent.ToggleRecentBackupErrorDialog) }
+            )
+        }
+    }
+}
+
+@Composable
+private fun RecentBackupStateButton(
+    recentBackupExportResult: ExportResult?,
+    onErrorClick: () -> Unit
+) {
+    when (recentBackupExportResult) {
+        is ExportResult.Failure.FileAccess -> IconButton(
+            onClick = onErrorClick
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Warning,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.error
+            )
+        }
+
+        is ExportResult.Success -> Icon(
+            imageVector = Icons.Outlined.Check,
+            contentDescription = null,
+            tint = Color(0xFF74c365)
+        )
+
+        null -> {}
     }
 }
 
@@ -277,7 +331,8 @@ private fun InfoItem(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     label: String,
-    value: String
+    value: String,
+    trailing: (@Composable () -> Unit)? = null
 ) {
     ListItem(
         modifier = modifier,
@@ -290,7 +345,8 @@ private fun InfoItem(
                 maxLines = 1,
                 overflow = TextOverflow.MiddleEllipsis
             )
-        }
+        },
+        trailingContent = trailing?.let { { it() } }
     )
 }
 

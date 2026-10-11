@@ -24,10 +24,6 @@ sealed interface BackupDestination : Unique, Trackable {
 
     ) : BackupDestination {
 
-        init {
-            require(directory.isDirectory()) { "LocalDirectory can only wrap a directory file!" }
-        }
-
         override fun toString() = directory.path
 
     }
