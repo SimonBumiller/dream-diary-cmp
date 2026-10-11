@@ -8,10 +8,12 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaDayOfWeek
 import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toJavaLocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
+import kotlin.time.Instant
 
 @RequiresApi(Build.VERSION_CODES.O)
 actual fun formatLocalDate(date: LocalDate): String {
@@ -45,6 +47,6 @@ actual fun formatLocalDateYearIndependent(date: LocalDate): String {
 
 @RequiresApi(Build.VERSION_CODES.O)
 actual fun formatLocalDateTime(dateTime: LocalDateTime): String {
-    val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
+    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
     return formatter.format(dateTime.toJavaLocalDateTime())
 }
