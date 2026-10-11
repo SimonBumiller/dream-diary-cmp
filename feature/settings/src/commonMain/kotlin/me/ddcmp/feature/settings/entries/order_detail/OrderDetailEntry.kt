@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Storage
@@ -50,12 +49,10 @@ import dream_diary_cmp.feature.settings.generated.resources.order_detail_schedul
 import dream_diary_cmp.feature.settings.generated.resources.order_detail_title
 import dream_diary_cmp.feature.settings.generated.resources.order_detail_used_storage
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
-import me.bumiller.ddcmp.domain.usecase.backup.GetBackupsForOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.GetBackupsForOrderUseCase.BackupsForOrder
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.format.formatDataAmount
-import me.bumiller.ddcmp.ui.common.format.formatInstant
 import me.bumiller.ddcmp.ui.common.format.formatInstantDayTime
 import me.bumiller.ddcmp.ui.common.icons.file_export
 import me.bumiller.ddcmp.ui.common.plus
@@ -75,12 +72,13 @@ internal fun OrderDetailEntry(
             when (it) {
                 ViewModelEvent.NavigateBack -> onGoBack()
                 ViewModelEvent.NavigateToFreshSetup -> onFreshSetup()
-            } }
+            }
+        }
     ) { vm ->
         val order by vm.order.collectAsStateWithLifecycle()
         val orderBackups by vm.orderBackups.collectAsStateWithLifecycle()
 
-        if(order != null && orderBackups != null) {
+        if (order != null && orderBackups != null) {
             OrderDetailEntry(order!!, orderBackups!!, vm::onEvent)
         }
     }
@@ -139,6 +137,7 @@ private fun OrderDetailEntry(
                         .fillMaxWidth(),
                     order = order
                 )
+
                 OrderState.Running, OrderState.Canceled -> RunningOrderInfo(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -172,11 +171,13 @@ fun RunningOrderInfo(
             value = orderBackups.totalSize.formatDataAmount()
         )
         HorizontalDivider()
+
+        val recentTimestamp = orderBackups.mostRecentBackup?.created ?: order.initialTime
+
         InfoItem(
             icon = file_export,
             label = stringResource(Res.string.order_detail_next_backup),
-            value = orderBackups.mostRecentBackup?.created?.plus(order.period)
-                ?.let(::formatInstantDayTime) ?: ""
+            value = recentTimestamp.plus(order.period).let(::formatInstantDayTime)
         )
 //        HorizontalDivider()
 //        InfoItem(
