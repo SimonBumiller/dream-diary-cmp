@@ -4,6 +4,7 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toJavaDayOfWeek
 import kotlinx.datetime.toJavaLocalDate
+import kotlinx.datetime.toJavaLocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
@@ -36,4 +37,9 @@ actual fun formatDayOfWeek(dayOfWeek: DayOfWeek): String {
 actual fun formatLocalDateYearIndependent(date: LocalDate): String {
     return date.toJavaLocalDate()
         .format(DateTimeFormatter.ofPattern("dd MMMM", Locale.getDefault()))
+}
+
+actual fun formatLocalDateTime(dateTime: kotlinx.datetime.LocalDateTime): String {
+    val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
+    return formatter.format(dateTime.toJavaLocalDateTime())
 }

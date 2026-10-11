@@ -45,4 +45,29 @@
     <string name="order_config_options_keeplast_unlimited">Keep all backups</string>
     <string name="order_config_options_keeplast_limited">Keep last … backups</string>
 
+    <string name="order_detail_title">Periodic Backup</string>
+    <string name="order_detail_state_running_title">Backup configured</string>
+    <string name="order_detail_state_running_description">Backups are being saved in the background, also when the app is closed.</string>
+    <string name="order_detail_state_running_negative_action_label">Stop configuration</string>
+    <string name="order_detail_state_canceled_title">Backup canceled</string>
+    <string name="order_detail_state_canceled_description">The configuration has been stopped. No further backups will be created.</string>
+    <string name="order_detail_state_saved_title">Backup not started</string>
+    <string name="order_detail_state_saved_description">A configuration has been saved, but not yet started.</string>
+    <string name="order_detail_state_saved_positive_action_label">Start configuration</string>
+    <string name="order_detail_state_saved_negative_action_label">Delete configuration</string>
+    <string name="order_detail_filetype_legacy">Json (Legacy App)</string>
+    <string name="order_detail_keeplast_limited">Keep last %1$d backups</string>
+    <string name="order_detail_keeplast_unlimited">Keep all backups</string>
+    <string name="order_detail_location">Location</string>
+    <string name="order_detail_schedule">Schedule</string>
+    <string name="order_detail_schedule_value">Every %1$d days, %2$d hours</string>
+    <string name="order_detail_schedule_value_days">Every %1$d days</string>
+    <string name="order_detail_schedule_value_hours">Every %1$d hours</string>
+    <string name="order_detail_filetype">Filetype</string>
+    <string name="order_detail_keeplast">Retention</string>
+    <string name="order_detail_backup_count">Backup Count</string>
+    <string name="order_detail_used_storage">Used Storage</string>
+    <string name="order_detail_next_backup">Next Backup</string>
+    <string name="order_detail_backup_count_none">None</string>
+
 </resources>

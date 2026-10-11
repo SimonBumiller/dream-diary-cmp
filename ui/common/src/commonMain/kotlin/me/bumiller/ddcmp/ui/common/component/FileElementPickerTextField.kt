@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
 import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.dialogs.compose.rememberFileSaverLauncher
@@ -46,7 +47,10 @@ fun FileSaverTextField(
     extension: String,
     placeholder: String
 ) {
-    val launcher = rememberFileSaverLauncher(onResult = onFileChanged)
+    val launcher = rememberFileSaverLauncher(
+        dialogSettings = FileKitDialogSettings.createDefault(),
+        onResult = onFileChanged
+    )
 
     FileElementPickerTextField(
         modifier = modifier,

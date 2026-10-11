@@ -16,6 +16,7 @@ import dream_diary_cmp.feature.io.generated.resources.export_result_title_succes
 import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.format.formatDataAmount
 import me.bumiller.ddcmp.ui.common.text.styledText
 import me.ddcmp.feature.io.entries.export_result.ExportResultViewModel.UiEvent
 import me.ddcmp.feature.io.entries.export_result.ExportResultViewModel.ViewModelEvent
@@ -89,19 +90,10 @@ private fun DialogTextFailure(
 private fun DialogTextSuccess(
     result: ExportResult.Success
 ) {
-    val (count, unit) =
-        when {
-            result.fileSize < 1_000L -> result.fileSize to "B"
-            result.fileSize < 1_000_000L -> result.fileSize / 1_000L to "KB"
-            result.fileSize < 1_000_000_000L -> result.fileSize / 1_000_000L to "MB"
-            else -> result.fileSize / 1_000_000_000L to "GB"
-        }
-
     val text = stringResource(
         Res.string.export_result_description,
         result.fileLocation,
-        count,
-        unit
+        result.fileSize.formatDataAmount()
     )
 
     val spannedString = styledText(text)

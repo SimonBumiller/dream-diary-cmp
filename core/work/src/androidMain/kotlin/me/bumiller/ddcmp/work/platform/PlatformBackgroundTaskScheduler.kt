@@ -15,7 +15,6 @@ actual class PlatformBackgroundTaskScheduler(
         id: String,
         inputJson: String,
         interval: Duration,
-        flex: Duration,
         initialDelay: Duration,
         workerClassName: String,
         tags: Set<String>
@@ -23,7 +22,6 @@ actual class PlatformBackgroundTaskScheduler(
         id = id,
         trigger = TaskTrigger.Periodic(
             intervalMs = interval.inWholeMilliseconds,
-            flexMs = flex.inWholeMilliseconds,
             initialDelayMs = initialDelay.inWholeMilliseconds
         ),
         workerClassName = workerClassName,

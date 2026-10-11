@@ -39,8 +39,6 @@ internal class DreamViewModel(
     val lengthHistogram = dateRangeReactive {
         val query = MarkedDreamLengthFrequencyHistogram.I(it, dreamId)
         lengthHistogramUc(query)
-    }.onEach {
-        println("Found length histogram: $it")
     }
         .stateIn(null)
 

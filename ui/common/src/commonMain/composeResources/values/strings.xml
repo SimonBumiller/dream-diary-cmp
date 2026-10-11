@@ -72,6 +72,11 @@
 
     <string name="io_file_selector_label">File Type</string>
 
+    <string name="data_amount_byte">%1$d B</string>
+    <string name="data_amount_kilobyte">%1$d KB</string>
+    <string name="data_amount_megabyte">%1$d MB</string>
+    <string name="data_amount_gigabyte">%1$d GB</string>
+
     <string name="date_range_dialog_preconfigured_last_week">Last 7 days</string>
     <string name="date_range_dialog_preconfigured_last_month">Last 30 days</string>
     <string name="date_range_dialog_preconfigured_last_half_year">Last 6 months</string>

@@ -2,6 +2,7 @@ package me.bumiller.ddcmp.domain.model.backup
 
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.isDirectory
+import io.github.vinceglb.filekit.path
 import me.bumiller.ddcmp.domain.model.meta.Trackable
 import me.bumiller.ddcmp.domain.model.meta.Unique
 import kotlin.time.Instant
@@ -26,6 +27,8 @@ sealed interface BackupDestination : Unique, Trackable {
         init {
             require(directory.isDirectory()) { "LocalDirectory can only wrap a directory file!" }
         }
+
+        override fun toString() = directory.path
 
     }
 

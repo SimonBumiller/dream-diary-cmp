@@ -2,6 +2,7 @@ package me.bumiller.ddcmp.ui.common.format
 
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.number
 import platform.Foundation.NSCalendar
 import platform.Foundation.NSCalendarUnitDay
@@ -12,7 +13,7 @@ import platform.Foundation.NSDateFormatter
 import platform.Foundation.NSLocale
 import platform.Foundation.currentLocale
 
-internal actual fun formatLocalDate(date: LocalDate): String {
+actual fun formatLocalDate(date: LocalDate): String {
     val day = date.day
     val month = date.month.number
     val year = date.year
@@ -92,4 +93,15 @@ actual fun formatLocalDateYearIndependent(date: LocalDate): String {
     }
 
     return formatter.stringFromDate(date)
+}
+
+actual fun formatLocalDateTime(dateTime: LocalDateTime): String {
+    val day = dateTime.date.day
+    val month = dateTime.date.month.number
+    val year = dateTime.date.year
+
+    val hour = dateTime.time.hour
+    val minute = dateTime.time.minute
+
+    return "$day.$month.$year, $hour:$minute"
 }

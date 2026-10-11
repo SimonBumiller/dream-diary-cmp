@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import me.bumiller.ddcmp.domain.common.combineSafe
 import me.bumiller.ddcmp.domain.infrastructure.PeriodicBackupRepository
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackup
 import me.bumiller.ddcomp.core.database.Mapping
@@ -28,7 +29,7 @@ class PeriodicBackupRepository(
                 }
             }
 
-            combine(backupsWithOrderFlows) { it.toList() }
+            combineSafe(backupsWithOrderFlows) { it.toList() }
         }
 
     fun Flow<List<Pair<PeriodicBackupEntity.Aggregate, PeriodicBackupOrderEntity.Aggregate?>>>.mapToBackups() =

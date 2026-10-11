@@ -7,7 +7,6 @@ actual class PlatformBackgroundTaskScheduler {
         id: String,
         inputJson: String,
         interval: Duration,
-        flex: Duration,
         initialDelay: Duration,
         workerClassName: String,
         tags: Set<String>

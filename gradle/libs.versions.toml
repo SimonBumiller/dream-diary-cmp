@@ -1,6 +1,6 @@
 [versions]
-agp = "8.11.2"
-android-compileSdk = "36"
+agp = "9.1.0"
+android-compileSdk = "37"
 android-minSdk = "26"
 android-targetSdk = "36"
 androidx-activity = "1.12.2"
@@ -30,7 +30,7 @@ biometric = "1.1.0"
 datetime = "0.7.1"
 icons = "1.7.3"
 backhandler = "1.1.1"
-filekt = "0.12.0"
+filekt = "0.16.0"
 serialization_json = "1.11.0"
 serialization_yaml = "0.13.0"
 serialization_xml = "1.0.2.1"
@@ -38,6 +38,7 @@ zip = "1.0.0"
 mockk = "1.14.11"
 apache_io = "2.22.0"
 workmanager = "3.5.0"
+documentfile = "1.1.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -93,6 +94,7 @@ zip-kotlinx = { module = "no.synth:kmp-zip-kotlinx", version.ref = "zip" }
 mockk = { module = "io.mockk:mockk-jvm", version.ref = "mockk" }
 apache-io = { module = "commons-io:commons-io", version.ref = "apache_io" }
 workmanager = { module = "dev.brewkits:kmpworkmanager", version.ref = "workmanager" }
+androidx-documentfile = { group = "androidx.documentfile", name = "documentfile", version.ref = "documentfile" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

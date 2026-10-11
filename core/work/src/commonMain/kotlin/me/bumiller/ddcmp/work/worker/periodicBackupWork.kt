@@ -1,9 +1,13 @@
 package me.bumiller.ddcmp.work.worker
 
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.absoluteFile
+import io.github.vinceglb.filekit.createDirectories
+import io.github.vinceglb.filekit.div
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import me.bumiller.ddcmp.domain.io.createChildFile
 import me.bumiller.ddcmp.domain.model.backup.BackupDestination
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 import me.bumiller.ddcmp.domain.model.io.ExportResult
@@ -11,6 +15,7 @@ import me.bumiller.ddcmp.domain.usecase.backup.GetBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.RecordPeriodicBackupUseCase
 import me.bumiller.ddcmp.domain.usecase.io.ExportUseCase
 import me.bumiller.ddcmp.domain.usecase.io.GetExportLogUsecase
+import kotlin.time.Clock
 
 @Serializable
 internal data class PeriodicBackupWorkInput(
@@ -41,9 +46,12 @@ internal suspend fun periodicBackupWork(
     val order = getOrder(query).first()
         ?: error("Order with id ${input.backupOrderId} was not found for ongoing backup.")
 
+    val backupFileName = order.createBackupFileName(Clock.System.now())
+    val backupOutputFile = order.destinationAsFile().createChildFile(backupFileName)
+
     // Reconstructing the export options for the export.
     val exportConfig = ExportUseCase.I(
-        destination = order.destinationAsFile(),
+        destination = backupOutputFile,
         options = order.exportOption
     )
     val exportResultId = export(exportConfig)

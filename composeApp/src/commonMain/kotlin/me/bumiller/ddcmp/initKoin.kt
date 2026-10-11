@@ -3,6 +3,7 @@ package me.bumiller.ddcmp
 import me.bumiller.ddcmp.core.datastore.datastore
 import me.bumiller.ddcmp.core.io.io
 import me.bumiller.ddcmp.domain.domain
+import me.bumiller.ddcmp.work.work
 import me.bumiller.ddcomp.core.database.database
 import me.ddcmp.feature.home.home
 import me.ddcmp.feature.io.import
@@ -31,7 +32,7 @@ fun initKoin(config: KoinApplication.() -> Unit = {}) {
         config()
 
         modules(app, database, datastore, domain, onboarding, home, import, io, statistics,
-            settings
+            settings, work
         )
     }
 }

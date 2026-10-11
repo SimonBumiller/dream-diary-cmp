@@ -42,5 +42,10 @@ kotlin {
                 implementation(libs.filekt.core)
             }
         }
+        androidMain {
+            dependencies {
+                implementation(libs.androidx.documentfile)
+            }
+        }
     }
 }

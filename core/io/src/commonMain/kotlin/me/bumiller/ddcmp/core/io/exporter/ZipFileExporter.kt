@@ -8,6 +8,7 @@ import kotlinx.io.IOException
 import kotlinx.io.buffered
 import me.bumiller.ddcmp.core.io.common.countingSink
 import me.bumiller.ddcmp.domain.io.BackupExporter
+import me.bumiller.ddcmp.domain.io.asSinkFixed
 import me.bumiller.ddcmp.domain.model.io.ExportResult
 import no.synth.kmpzip.kotlinx.ZipOutputStream
 import no.synth.kmpzip.zip.ZipEntry
@@ -26,7 +27,7 @@ internal abstract class ZipFileExporter: BackupExporter {
 
         val now = Clock.System.now()
 
-        val rawSink = file.sink(append = false).countingSink()
+        val rawSink = file.asSinkFixed().countingSink()
 
         val result = rawSink.buffered().use { sink ->
             ZipOutputStream(sink).use { zipStream ->

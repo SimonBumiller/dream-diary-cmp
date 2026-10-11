@@ -1,5 +1,8 @@
 package me.bumiller.ddcmp.domain.model.backup
 
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.io.ExportOption
 import me.bumiller.ddcmp.domain.model.meta.Trackable
 import me.bumiller.ddcmp.domain.model.meta.Unique
@@ -51,6 +54,20 @@ data class PeriodicBackupOrder(
     val exportOption: ExportOption
 
 ) : Unique, Trackable {
+
+    /**
+     * Creates a filename for a backup for this order.
+     *
+     * TODO: Make this dynamic.
+     *
+     * @param timestamp The timestamp on when the backup is performed.
+     */
+    fun createBackupFileName(timestamp: Instant) = "Backup-$id-${
+        timestamp.toLocalDateTime(TimeZone.currentSystemDefault()).toBackupFilenameRepresentation()
+    }.zip"
+
+    private fun LocalDateTime.toBackupFilenameRepresentation() =
+        "${date.day}-${date.month.ordinal}-${date.year}_${time.hour}-${time.minute}-${time.second}"
 
     init {
         val periodLongEnough = period.inWholeMinutes >= 30
