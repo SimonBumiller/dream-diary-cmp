@@ -1,10 +1,13 @@
 package me.ddcmp.feature.settings.entries.root
 
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.settings.ColorMode
 import me.bumiller.ddcmp.domain.model.settings.ColorTheme
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.settings.Settings
+import me.bumiller.ddcmp.domain.usecase.backup.GetBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
@@ -16,11 +19,19 @@ import me.ddcmp.feature.settings.entries.root.SettingsRootViewmodel.ViewModelEve
 
 internal class SettingsRootViewmodel(
     getSettings: GetSettingsUseCase,
-    private val setSettings: SetSettingsUseCase
+    private val setSettings: SetSettingsUseCase,
+    getBackupOrder: GetBackupOrderUseCase
 ) : AppViewModel<UiEvent, ViewModelEvent>() {
+
+    private var activeOrderId: Long? = null
 
     init {
         registerUiState(UiState())
+
+        viewModelScope.launch {
+            getBackupOrder(GetBackupOrderUseCase.I(id = null, active = true))
+                .collect { activeOrderId = it?.id ?: -1 }
+        }
     }
 
     /**
@@ -54,7 +65,11 @@ internal class SettingsRootViewmodel(
         UiEvent.ClickDefaultConfidentiality -> updateUiState<UiState> { it.copy(showDefaultConfidentialityDropdown = !it.showDefaultConfidentialityDropdown) }
         UiEvent.ClickExport -> fireEvent(ViewModelEvent.NavigateToExport)
         UiEvent.ClickImport -> fireEvent(ViewModelEvent.NavigateToImport)
-        UiEvent.ClickBackup -> fireEvent(ViewModelEvent.NavigateToBackup)
+        UiEvent.ClickBackup -> {
+            if(activeOrderId == -1L) fireEvent(ViewModelEvent.NavigateToOrderConfig)
+            else if(activeOrderId != null) fireEvent(ViewModelEvent.NavigateToOrderDetail(activeOrderId!!))
+            else Unit
+        }
     }
 
     data class UiState(
@@ -79,7 +94,8 @@ internal class SettingsRootViewmodel(
         data object NavigateBack : ViewModelEvent
         data object NavigateToImport : ViewModelEvent
         data object NavigateToExport : ViewModelEvent
-        data object NavigateToBackup : ViewModelEvent
+        data object NavigateToOrderConfig : ViewModelEvent
+        data class NavigateToOrderDetail(val id: Long): ViewModelEvent
     }
 
 }

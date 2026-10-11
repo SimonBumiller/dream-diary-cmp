@@ -47,9 +47,9 @@ import dream_diary_cmp.feature.settings.generated.resources.settings_root_io_sec
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_title
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_unlock_description
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_unlock_label
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.settings.ColorMode
 import me.bumiller.ddcmp.domain.model.settings.ColorTheme
-import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.settings.Settings
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.biometric.BiometricAuthState
@@ -72,7 +72,8 @@ internal fun SettingsRootEntry(
     onBack: () -> Unit,
     onGoToExport: () -> Unit,
     onGoToImport: () -> Unit,
-    onGoToBackup: () -> Unit
+    onGoToOrderConfig: () -> Unit,
+    onGoToOrder: (Long) -> Unit
 ) {
     val biometricState = rememberBiometricState()
 
@@ -82,7 +83,8 @@ internal fun SettingsRootEntry(
                 ViewModelEvent.NavigateBack -> onBack()
                 ViewModelEvent.NavigateToExport -> onGoToExport()
                 ViewModelEvent.NavigateToImport -> onGoToImport()
-                ViewModelEvent.NavigateToBackup -> onGoToBackup()
+                ViewModelEvent.NavigateToOrderConfig -> onGoToOrderConfig()
+                is ViewModelEvent.NavigateToOrderDetail -> onGoToOrder(it.id)
             }
         }
     ) { vm ->
