@@ -160,7 +160,8 @@ fun HomeEntry(
                     },
                     onGoToDreamDetail = {
                         navController.navigate(HomeRoutes.DreamDetail(it))
-                    }
+                    },
+                    onGoToTags = {}
                 )
             }
 

@@ -20,6 +20,7 @@ import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.G
 import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.GoToPersons
 import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.GoToSettings
 import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.GoToStatistics
+import me.ddcmp.feature.home.entries.overview.OverviewViewModel.ViewModelEvent.GoToTags
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.days
 import kotlin.time.ExperimentalTime
@@ -41,6 +42,7 @@ internal class OverviewViewModel(
         UiEvent.GoToSettings -> fireEvent(GoToSettings)
         UiEvent.GoToStatistics -> fireEvent(GoToStatistics)
         UiEvent.AddDream -> fireEvent(AddDream)
+        UiEvent.GoToTags -> fireEvent(GoToTags)
     }
 
     private val recentDreamsQuery = AllDreamUseCase.I(
@@ -80,6 +82,7 @@ internal class OverviewViewModel(
 
     sealed interface UiEvent: UIE {
         data object GoToPersons: UiEvent
+        data object GoToTags: UiEvent
         data object GoToSettings: UiEvent
         data object GoToEmotions: UiEvent
         data object GoToDreams: UiEvent
@@ -94,6 +97,7 @@ internal class OverviewViewModel(
         data object GoToSettings: ViewModelEvent
         data object GoToEmotions: ViewModelEvent
         data object GoToDreams: ViewModelEvent
+        data object GoToTags: ViewModelEvent
         data object GoToStatistics: ViewModelEvent
         data class GoToDream(val dreamId: Long): ViewModelEvent
         data object AddDream : ViewModelEvent

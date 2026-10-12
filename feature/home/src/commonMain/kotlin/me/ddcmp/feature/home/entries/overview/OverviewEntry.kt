@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Label
 import androidx.compose.material.icons.automirrored.outlined.Article
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Label
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -60,6 +62,7 @@ internal fun OverviewEntry(
     onGoToStats: () -> Unit,
     onGoToPersons: () -> Unit,
     onGoToDreams: () -> Unit,
+    onGoToTags: () -> Unit,
     onGoToDreamDetail: (id: Long) -> Unit
 ) {
     ViewModelScope<UiEvent, ViewModelEvent, OverviewViewModel>(
@@ -72,6 +75,7 @@ internal fun OverviewEntry(
                 ViewModelEvent.GoToSettings -> onGoToSettings()
                 ViewModelEvent.GoToStatistics -> onGoToStats()
                 ViewModelEvent.AddDream -> onAddDream()
+                ViewModelEvent.GoToTags -> onGoToTags()
             }
         }
     ) { vm ->
@@ -123,6 +127,11 @@ private fun OverviewEntry(
                                 label = stringResource(Res.string.overview_actions_settings),
                                 icon = Icons.Default.Settings,
                                 handler = { onEvent(UiEvent.GoToSettings) }
+                            ),
+                            AppBarAction(
+                                label = stringResource(Res.string.overview_actions_tags),
+                                icon = Icons.AutoMirrored.Filled.Label,
+                                handler = { onEvent(UiEvent.GoToTags) }
                             )
                         )
                     )

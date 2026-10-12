@@ -84,6 +84,7 @@
 
     <string name="overview_title">Dream Diary</string>
     <string name="overview_actions_settings">Settings</string>
+    <string name="overview_actions_tags">Tags</string>
     <string name="overview_feature_persons_title">Persons:</string>
     <string name="overview_feature_emotions_title">Emotions:</string>
     <string name="overview_feature_dreams_title">Dreams:</string>
