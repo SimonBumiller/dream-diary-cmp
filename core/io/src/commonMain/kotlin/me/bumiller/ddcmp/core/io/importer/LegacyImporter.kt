@@ -68,15 +68,18 @@ internal class LegacyImporter(
                 )
             }
 
+        // TODO: Also transfer relations as groups here.
         val persons = root.persons
             .map { legacyPerson ->
-                Person(
+                val person = Person(
                     id = legacyPerson.id,
                     created = now,
                     edited = now,
                     name = legacyPerson.name,
                     note = legacyPerson.notes
                 )
+
+                SavePersonUseCase.I(person, emptyList())
             }
 
         persons.forEach { person ->
@@ -87,7 +90,8 @@ internal class LegacyImporter(
             val personsForDream = root.dreamPersonCrossref
                 .filter { it.first == dream.id }
                 .map { it.second }
-                .mapNotNull { personId -> persons.find { it.id == personId } }
+                .mapNotNull { personId -> persons.find { it.person.id == personId } }
+                .map { it.person }
 
             val input = SaveDreamUseCase.I(
                 dream = dream,

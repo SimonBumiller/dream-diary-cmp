@@ -1,6 +1,7 @@
 package me.bumiller.ddcmp.domain.model.dream
 
 import me.bumiller.ddcmp.domain.model.meta.Editable
+import me.bumiller.ddcmp.domain.model.meta.Searchable
 import me.bumiller.ddcmp.domain.model.meta.Trackable
 import me.bumiller.ddcmp.domain.model.meta.Unique
 import kotlin.time.Instant
@@ -31,4 +32,8 @@ data class Tag(
      */
     val color: Long
 
-): Unique, Trackable, Editable
+): Unique, Trackable, Editable, Searchable {
+
+    override val searchableFields = listOfNotNull(name, description)
+
+}

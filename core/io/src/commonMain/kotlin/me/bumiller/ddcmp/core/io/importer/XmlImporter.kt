@@ -18,6 +18,7 @@ private const val DREAMS_FILE_NAME = "dreams"
 private const val PERSONS_FILE_NAME = "persons"
 private const val EMOTIONS_FILE_NAME = "emotions"
 
+// TODO: Also include tags here
 internal class XmlImporter(
     private val saveDream: SaveDreamUseCase,
     private val savePerson: SavePersonUseCase,
@@ -61,7 +62,8 @@ internal class XmlImporter(
         //
 
         persons.forEach { person ->
-            savePerson(person.toModel())
+            val input = SavePersonUseCase.I(person.toModel(), emptyList())
+            savePerson(input)
         }
         emotions.forEach { emotion ->
             saveEmotion(emotion.toModel())

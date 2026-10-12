@@ -23,6 +23,7 @@ private const val EMOTIONS_FILE_NAME = "emotions"
 private const val DREAMS_TO_EMOTIONS_FILE_NAME = "dreams_emotions"
 private const val DREAMS_TO_PERSONS_FILE_NAME = "dreams_persons"
 
+// TODO: Also include tags
 internal class ListBasedImporter(
     private val saveDream: SaveDreamUseCase,
     private val savePerson: SavePersonUseCase,
@@ -78,7 +79,8 @@ internal class ListBasedImporter(
         // Saving the data
         //
         persons.forEach { person ->
-            savePerson(person.toModel())
+            val input = SavePersonUseCase.I(person.toModel(), emptyList())
+            savePerson(input)
         }
         emotions.forEach { emotion ->
             saveEmotion(emotion.toModel())

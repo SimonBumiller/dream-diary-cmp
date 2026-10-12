@@ -53,6 +53,7 @@
     <string name="personadd_confirm_label_add">Add</string>
     <string name="personadd_confirm_label_edit">Save</string>
     <string name="personadd_cancel_label">Cancel</string>
+    <string name="personadd_tags_label">Tags</string>
 
     <string name="dreamdetail_action_stats">Dream statistics</string>
     <string name="dreamdetail_action_favorite">Mark as favorite</string>

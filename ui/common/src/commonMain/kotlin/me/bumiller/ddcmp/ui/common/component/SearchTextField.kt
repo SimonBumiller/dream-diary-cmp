@@ -13,6 +13,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalFocusManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,27 +27,32 @@ fun <Item> SearchTextField(
     name: (Item) -> String,
     onSelect: (Item) -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
     var exposed by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
         modifier = modifier,
         expanded = exposed,
         onExpandedChange = {
-            exposed = it
+
         }
     ) {
         OutlinedTextField(
             modifier = Modifier
-                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable),
+                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable)
+                .onFocusChanged { state ->
+                    exposed = state.hasFocus
+                },
             value = query,
             onValueChange = onQueryChange,
             label = label,
             colors = ExposedDropdownMenuDefaults.textFieldColors()
         )
-        if(exposed) {
+        if (exposed && values.isNotEmpty()) {
             ExposedDropdownMenu(
                 expanded = exposed,
                 onDismissRequest = {
+                    focusManager.clearFocus()
                     exposed = false
                 }
             ) {
@@ -53,7 +60,6 @@ fun <Item> SearchTextField(
                     DropdownMenuItem(
                         onClick = {
                             onSelect(value)
-                            exposed = false
                         },
                         text = { Text(name(value)) }
                     )

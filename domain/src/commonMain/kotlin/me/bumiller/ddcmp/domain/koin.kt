@@ -48,7 +48,7 @@ val domain = module {
     single { SaveEmotionUseCase(get()) }
 
     single { AllPersonUseCase(get(), get()) }
-    single { SavePersonUseCase(get()) }
+    single { SavePersonUseCase(get(), get()) }
 
     single { GetSettingsUseCase(get()) }
     single { SetSettingsUseCase(get()) }

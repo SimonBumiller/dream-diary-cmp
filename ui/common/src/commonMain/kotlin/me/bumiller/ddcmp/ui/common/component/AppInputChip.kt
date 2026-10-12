@@ -43,7 +43,9 @@ fun AppTagInputChip(
         trailingIcon = trailingIcon,
         shape = shape,
         colors = InputChipDefaults.inputChipColors(
-            labelColor = Color(tag.color)
+            labelColor = Color(tag.color),
+            leadingIconColor = Color(tag.color),
+            trailingIconColor = Color(tag.color),
         ),
         elevation = elevation,
         border = InputChipDefaults.inputChipBorder(
