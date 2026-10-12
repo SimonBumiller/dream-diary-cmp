@@ -28,20 +28,20 @@ internal class XmlImporter(
 ) : ZipFileImporter() {
 
     override suspend fun importBackup(zipFile: ZipFile): ImportResult {
-        val now = Clock.System.now()
-        val fileFormatError = ImportResult.Failure.FileFormat(0, now)
+        val startedTimestamp = Clock.System.now()
+        fun fileFormatError() = ImportResult.Failure.FileFormat(0, startedTimestamp, Clock.System.now())
 
         //
         // Reading the data
         //
 
         val dreams =
-            zipFile.decode<Xml.DreamsRoot>(DREAMS_FILE_NAME)?.dreams ?: return fileFormatError
+            zipFile.decode<Xml.DreamsRoot>(DREAMS_FILE_NAME)?.dreams ?: return fileFormatError()
         val emotions =
-            zipFile.decode<Xml.EmotionsRoot>(EMOTIONS_FILE_NAME)?.emotions ?: return fileFormatError
+            zipFile.decode<Xml.EmotionsRoot>(EMOTIONS_FILE_NAME)?.emotions ?: return fileFormatError()
         val persons =
-            zipFile.decode<Xml.PersonsRoot>(PERSONS_FILE_NAME)?.persons ?: return fileFormatError
-        val tags = zipFile.decode<Xml.TagsRoot>(TAGS_FILE_NAME)?.tags ?: return fileFormatError
+            zipFile.decode<Xml.PersonsRoot>(PERSONS_FILE_NAME)?.persons ?: return fileFormatError()
+        val tags = zipFile.decode<Xml.TagsRoot>(TAGS_FILE_NAME)?.tags ?: return fileFormatError()
 
         //
         // Verifying the data
@@ -71,7 +71,7 @@ internal class XmlImporter(
             .all { confid -> Confidentiality.entries.any { it.name == confid } }
 
         if (!emotionIdsValid || !personIdsValid || !confidsValid || !tagIdsValid)
-            return ImportResult.Failure.DataConsistency(0, now)
+            return ImportResult.Failure.DataConsistency(0, startedTimestamp, Clock.System.now())
 
         //
         // Saving the data
@@ -123,7 +123,8 @@ internal class XmlImporter(
             firstDream = dreams.minOf { it.dreamt }.let(Instant::fromEpochMilliseconds),
             lastDream = dreams.maxOf { it.dreamt }.let(Instant::fromEpochMilliseconds),
             id = 0,
-            timestamp = now
+            started = startedTimestamp,
+            ended = Clock.System.now()
         )
     }
 

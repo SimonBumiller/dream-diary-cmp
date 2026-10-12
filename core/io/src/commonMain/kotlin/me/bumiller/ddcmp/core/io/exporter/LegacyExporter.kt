@@ -30,7 +30,7 @@ internal class LegacyExporter(
 
     @OptIn(ExperimentalTime::class, ExperimentalSerializationApi::class)
     override suspend fun aggregateZipFile(zipStream: ZipOutputStream): ExportResult? {
-        val now = Clock.System.now()
+        val startTimestamp = Clock.System.now()
         val timeZone = TimeZone.currentSystemDefault()
 
         val allDreams = allDreams(AllDreamUseCase.I())
@@ -90,8 +90,12 @@ internal class LegacyExporter(
 
         try {
             Json.encodeToSink(root, zipStream.asSink().buffered())
-        }catch (_: IOException) {
-            return ExportResult.Failure.FileAccess(0, now)
+        } catch (_: IOException) {
+            return ExportResult.Failure.FileAccess(
+                id = 0,
+                started = startTimestamp,
+                ended = Clock.System.now()
+            )
         }
 
         zipStream.closeEntry()

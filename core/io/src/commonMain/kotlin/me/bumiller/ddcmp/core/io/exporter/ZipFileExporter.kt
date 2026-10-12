@@ -3,7 +3,6 @@ package me.bumiller.ddcmp.core.io.exporter
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.extension
 import io.github.vinceglb.filekit.path
-import io.github.vinceglb.filekit.sink
 import kotlinx.io.IOException
 import kotlinx.io.buffered
 import me.bumiller.ddcmp.core.io.common.countingSink
@@ -25,7 +24,7 @@ internal abstract class ZipFileExporter: BackupExporter {
     override suspend fun export(file: PlatformFile): ExportResult {
         require(file.extension == ZIP_EXTENSION) { "Data can only be exported to a .zip file." }
 
-        val now = Clock.System.now()
+        val startTimestamp = Clock.System.now()
 
         val rawSink = file.asSinkFixed().countingSink()
 
@@ -34,7 +33,7 @@ internal abstract class ZipFileExporter: BackupExporter {
                 try {
                     aggregateZipFile(zipStream)
                 } catch (_: IOException) {
-                    ExportResult.Failure.FileAccess(0, now)
+                    ExportResult.Failure.FileAccess(0, startTimestamp, Clock.System.now())
                 }
             }
         }
@@ -43,9 +42,10 @@ internal abstract class ZipFileExporter: BackupExporter {
 
         return ExportResult.Success(
             id = 0,
-            timestamp = now,
+            started = startTimestamp,
             fileSize = rawSink.writtenByteCount(),
-            fileLocation = file.path
+            fileLocation = file.path,
+            ended = Clock.System.now()
         )
     }
 

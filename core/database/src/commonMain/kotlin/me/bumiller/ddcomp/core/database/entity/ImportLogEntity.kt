@@ -22,6 +22,8 @@ data class ImportLogEntity (
 
     override val updated: Instant,
 
+    val ended: Instant,
+
     /**
      * Whether failed due to file access
      */

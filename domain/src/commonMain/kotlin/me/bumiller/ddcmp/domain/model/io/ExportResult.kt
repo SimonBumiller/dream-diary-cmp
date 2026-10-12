@@ -1,27 +1,23 @@
 package me.bumiller.ddcmp.domain.model.io
 
+import me.bumiller.ddcmp.domain.model.meta.ProcessResult
 import me.bumiller.ddcmp.domain.model.meta.Unique
 import kotlin.time.Instant
 
 /**
  * Result when exporting data.
  */
-// TODO: Add a 'ended' timestamp here, so that export time can be calculated.
-sealed interface ExportResult: Unique {
+sealed interface ExportResult: Unique, ProcessResult {
 
     override val id: Long
-
-    /**
-     * The timestamp when the import was requested.
-     */
-    val timestamp: Instant
 
     /**
      * Data was exported successfully.
      */
     data class Success(
         override val id: Long,
-        override val timestamp: Instant,
+        override val started: Instant,
+        override val ended: Instant,
 
         /**
          * Size of the export file in bytes.
@@ -43,7 +39,8 @@ sealed interface ExportResult: Unique {
         /**
          * The file could not be accessed.
          */
-        data class FileAccess(override val id: Long, override val timestamp: Instant): Failure
+        data class FileAccess(override val id: Long, override val started: Instant,
+                              override val ended: Instant): Failure
 
     }
 

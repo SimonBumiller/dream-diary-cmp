@@ -2,6 +2,7 @@
 
 package me.bumiller.ddcmp.domain.model.io
 
+import me.bumiller.ddcmp.domain.model.meta.ProcessResult
 import me.bumiller.ddcmp.domain.model.meta.Unique
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
@@ -9,14 +10,9 @@ import kotlin.time.Instant
 /**
  * Result that gets created when importing a backup.
  */
-sealed interface ImportResult : Unique {
+sealed interface ImportResult : Unique, ProcessResult {
 
     override val id: Long
-
-    /**
-     * The timestamp when the import was requested.
-     */
-    val timestamp: Instant
 
     /**
      * The import failed.
@@ -26,19 +22,22 @@ sealed interface ImportResult : Unique {
         /**
          * A problem occurred reading the file.
          */
-        data class FileAccess(override val id: Long, override val timestamp: Instant) : Failure
+        data class FileAccess(override val id: Long, override val started: Instant,
+                              override val ended: Instant) : Failure
 
         /**
          * The file did not adhere to the data format specified.
          */
-        data class FileFormat(override val id: Long, override val timestamp: Instant) : Failure
+        data class FileFormat(override val id: Long, override val started: Instant,
+                              override val ended: Instant) : Failure
 
         /**
          * Data consistency was not present, e.g. invalid references.
          */
         data class DataConsistency(
             override val id: Long,
-            override val timestamp: Instant
+            override val started: Instant,
+            override val ended: Instant
         ) : Failure
 
     }
@@ -83,7 +82,8 @@ sealed interface ImportResult : Unique {
             override val firstDream: Instant,
             override val lastDream: Instant,
             override val id: Long,
-            override val timestamp: Instant
+            override val started: Instant,
+            override val ended: Instant
 
         ) : Success
 
@@ -96,7 +96,8 @@ sealed interface ImportResult : Unique {
             override val firstDream: Instant,
             override val lastDream: Instant,
             override val id: Long,
-            override val timestamp: Instant
+            override val started: Instant,
+            override val ended: Instant
         ) : Success
 
     }

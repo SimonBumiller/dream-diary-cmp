@@ -34,12 +34,12 @@ internal class LegacyImporter(
 
     @OptIn(ExperimentalTime::class, ExperimentalSerializationApi::class)
     override suspend fun importBackup(file: PlatformFile): ImportResult {
-        val now = Clock.System.now()
+        val startedTimestamp = Clock.System.now()
 
         val root = try {
             Json.decodeFromSource<Legacy.Root>(file.source().buffered())
         } catch (_: Exception) {
-            return ImportResult.Failure.FileFormat(0, now)
+            return ImportResult.Failure.FileFormat(0, startedTimestamp, Clock.System.now())
         }
 
         // Check data integrity
@@ -51,7 +51,7 @@ internal class LegacyImporter(
             val personExists = root.persons.any { it.id == personId }
 
             if (!dreamExists || !personExists)
-                return ImportResult.Failure.DataConsistency(0, now)
+                return ImportResult.Failure.DataConsistency(0, startedTimestamp, Clock.System.now())
         }
         root.personRelationCrossrefs.forEach { crossref ->
             val personId = crossref.first
@@ -61,7 +61,7 @@ internal class LegacyImporter(
             val relationExists = root.relations.any { it.id == relationId }
 
             if (!relationExists || !personExists)
-                return ImportResult.Failure.DataConsistency(0, now)
+                return ImportResult.Failure.DataConsistency(0, startedTimestamp, Clock.System.now())
         }
 
         val dreams = root.dreams
@@ -98,8 +98,8 @@ internal class LegacyImporter(
             .map { legacyPerson ->
                 Person(
                     id = legacyPerson.id,
-                    created = now,
-                    edited = now,
+                    created = startedTimestamp,
+                    edited = startedTimestamp,
                     name = legacyPerson.name,
                     note = legacyPerson.notes
                 )
@@ -143,7 +143,8 @@ internal class LegacyImporter(
             firstDream = dreams.minOf { it.dreamt },
             lastDream = dreams.maxOf { it.dreamt },
             id = 0,
-            timestamp = now
+            started = startedTimestamp,
+            ended = Clock.System.now()
         )
 
         return result

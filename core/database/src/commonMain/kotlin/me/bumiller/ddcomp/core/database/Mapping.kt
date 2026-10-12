@@ -89,28 +89,30 @@ object Mapping {
         fun import(model: ImportResult) = with(model) {
             ImportLogEntity(
                 id = id,
-                created = timestamp,
-                updated = timestamp,
+                created = started,
+                updated = started,
                 isFileAccessFailure = this is ImportResult.Failure.FileAccess,
                 isDataConsistencyFailure = this is ImportResult.Failure.DataConsistency,
                 isFileFormatFailure = this is ImportResult.Failure.FileFormat,
                 dreamCount = (this as? ImportResult.Success)?.dreamCount ?: 0,
                 personCount = (this as? ImportResult.Success)?.personCount ?: 0,
-                firstDream = (this as? ImportResult.Success)?.firstDream ?: timestamp,
-                lastDream = (this as? ImportResult.Success)?.lastDream ?: timestamp,
+                firstDream = (this as? ImportResult.Success)?.firstDream ?: started,
+                lastDream = (this as? ImportResult.Success)?.lastDream ?: started,
                 isNormal = this is ImportResult.Success.Normal,
-                emotionCount = (this as? ImportResult.Success.Normal)?.emotionCount ?: 0
+                emotionCount = (this as? ImportResult.Success.Normal)?.emotionCount ?: 0,
+                ended = ended
             )
         }
 
         fun export(model: ExportResult) = with(model) {
             ExportLogEntity(
                 id = id,
-                created = timestamp,
-                updated = timestamp,
+                created = started,
+                updated = started,
                 isFileAccessFailure = this is ExportResult.Failure.FileAccess,
                 fileSize = (this as? ExportResult.Success)?.fileSize,
                 fileLocation = (this as? ExportResult.Success)?.fileLocation,
+                ended = ended
             )
         }
 
@@ -192,9 +194,9 @@ object Mapping {
     }
 
     fun import(entity: ImportLogEntity) = with(entity) {
-        if (isFileAccessFailure) ImportResult.Failure.FileAccess(id, created)
-        else if (isFileFormatFailure) ImportResult.Failure.FileFormat(id, created)
-        else if (isDataConsistencyFailure) ImportResult.Failure.DataConsistency(id, created)
+        if (isFileAccessFailure) ImportResult.Failure.FileAccess(id, created, ended)
+        else if (isFileFormatFailure) ImportResult.Failure.FileFormat(id, created, ended)
+        else if (isDataConsistencyFailure) ImportResult.Failure.DataConsistency(id, created, ended)
         else if (isNormal) ImportResult.Success.Normal(
             emotionCount = emotionCount,
             dreamCount = dreamCount,
@@ -202,24 +204,27 @@ object Mapping {
             firstDream = firstDream,
             lastDream = lastDream,
             id = id,
-            timestamp = created
+            started = created,
+            ended = ended
         ) else ImportResult.Success.Legacy(
             dreamCount = dreamCount,
             personCount = personCount,
             firstDream = firstDream,
             lastDream = lastDream,
             id = id,
-            timestamp = created
+            started = created,
+            ended = ended
         )
     }
 
     fun export(entity: ExportLogEntity) = with(entity) {
-        if (isFileAccessFailure) ExportResult.Failure.FileAccess(id, created)
+        if (isFileAccessFailure) ExportResult.Failure.FileAccess(id, created, ended)
         else ExportResult.Success(
             fileSize = fileSize!!,
             fileLocation = fileLocation!!,
             id = id,
-            timestamp = created
+            started = created,
+            ended = ended
         )
     }
 

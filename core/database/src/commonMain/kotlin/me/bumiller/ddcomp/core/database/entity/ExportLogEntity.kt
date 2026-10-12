@@ -19,8 +19,12 @@ data class ExportLogEntity (
     override val id: Long,
 
     override val created: Instant,
-
     override val updated: Instant,
+
+    /**
+     * When the export was finished.
+     */
+    val ended: Instant,
 
     /**
      * Whether failed due to file access

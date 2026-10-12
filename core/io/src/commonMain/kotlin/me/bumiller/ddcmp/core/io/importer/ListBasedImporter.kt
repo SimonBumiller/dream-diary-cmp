@@ -40,30 +40,30 @@ internal class ListBasedImporter(
     }
 
     override suspend fun importBackup(zipFile: ZipFile): ImportResult {
-        val now = Clock.System.now()
+        val startTimestamp = Clock.System.now()
 
         //
         // Reading the data
         //
 
-        val fileFormatError = ImportResult.Failure.FileFormat(0, now)
+        fun fileFormatError() = ImportResult.Failure.FileFormat(0, startTimestamp, Clock.System.now())
 
-        val dreams = zipFile.decode<ListBased.Dream>(DREAMS_FILE_NAME) ?: return fileFormatError
-        val persons = zipFile.decode<ListBased.Person>(PERSONS_FILE_NAME) ?: return fileFormatError
-        val tags = zipFile.decode<ListBased.Tag>(TAGS_FILE_NAME) ?: return fileFormatError
+        val dreams = zipFile.decode<ListBased.Dream>(DREAMS_FILE_NAME) ?: return fileFormatError()
+        val persons = zipFile.decode<ListBased.Person>(PERSONS_FILE_NAME) ?: return fileFormatError()
+        val tags = zipFile.decode<ListBased.Tag>(TAGS_FILE_NAME) ?: return fileFormatError()
         val emotions =
-            zipFile.decode<ListBased.Emotion>(EMOTIONS_FILE_NAME) ?: return fileFormatError
+            zipFile.decode<ListBased.Emotion>(EMOTIONS_FILE_NAME) ?: return fileFormatError()
         val dreamsToPersons = zipFile.decode<ListBased.DreamToPersons>(DREAMS_TO_PERSONS_FILE_NAME)
-            ?: return fileFormatError
+            ?: return fileFormatError()
         val dreamsToEmotions =
             zipFile.decode<ListBased.DreamToEmotion>(DREAMS_TO_EMOTIONS_FILE_NAME)
-                ?: return fileFormatError
+                ?: return fileFormatError()
         val dreamsToTags =
             zipFile.decode<ListBased.DreamToTag>(DREAMS_TO_TAGS_FILE_NAME)
-                ?: return fileFormatError
+                ?: return fileFormatError()
         val personsToTags =
             zipFile.decode<ListBased.PersonToTag>(PERSONS_TO_TAGS_FILE_NAME)
-                ?: return fileFormatError
+                ?: return fileFormatError()
 
         //
         // Checking data integrity
@@ -84,8 +84,9 @@ internal class ListBasedImporter(
             referencedConfids.all { confid -> Confidentiality.entries.any { it.name == confid } }
 
         if (!dreamsValid || !emotionsValid || !personsValid || !confidsValid || !tagsValid) return ImportResult.Failure.DataConsistency(
-            0,
-            now
+            id = 0,
+            started = startTimestamp,
+            ended = Clock.System.now()
         )
 
         //
@@ -140,7 +141,8 @@ internal class ListBasedImporter(
             firstDream = dreams.minOf { it.dreamt }.let(Instant::fromEpochMilliseconds),
             lastDream = dreams.maxOf { it.dreamt }.let(Instant::fromEpochMilliseconds),
             id = 0,
-            timestamp = now
+            started = startTimestamp,
+            ended = Clock.System.now()
         )
     }
 

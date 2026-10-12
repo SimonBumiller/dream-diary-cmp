@@ -1,9 +1,6 @@
 package me.bumiller.ddcmp.work.worker
 
 import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.absoluteFile
-import io.github.vinceglb.filekit.createDirectories
-import io.github.vinceglb.filekit.div
 import io.github.vinceglb.filekit.exists
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.Serializable
@@ -42,6 +39,8 @@ internal suspend fun periodicBackupWork(
     export: ExportUseCase,
     exportLogRepo: ExportLogRepository
 ): String? {
+    val startTimestamp = Clock.System.now()
+
     val input = Json.decodeFromString<PeriodicBackupWorkInput>(inputString)
     val query = GetBackupOrderUseCase.I(id = input.backupOrderId, active = false)
 
@@ -55,7 +54,8 @@ internal suspend fun periodicBackupWork(
     val exportResultId = if(!backupDirectory.exists()) {
         ExportResult.Failure.FileAccess(
             id = 0,
-            timestamp = Clock.System.now()
+            started = startTimestamp,
+            ended = Clock.System.now()
         ).let { exportLogRepo.save(it) }
     } else {
         val backupOutputFile = order.destinationAsFile().createChildFile(backupFileName)
