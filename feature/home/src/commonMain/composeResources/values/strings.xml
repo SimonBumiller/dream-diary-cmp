@@ -92,6 +92,12 @@
     <string name="overview_dreams_label">Recent Dreams</string>
     <string name="overview_record_dream">Record Dream</string>
 
+    <string name="tag_list_title">Tags</string>
+    <string name="tag_list_add">Add Tag</string>
+    <string name="tag_list_empty_placeholder">There are currently no tags present. Use the '+' button to add new persons.</string>
+    <string name="tag_list_description">Below is a list of all tags added by you. Tags are used to add metadata or group together persons and dreams.</string>
+    <string name="tag_list_long_press_label">Long-press to edit</string>
+
     <string name="person_detail_title">Person Info</string>
     <string name="person_detail_associated_persons_title">Related Persons</string>
     <string name="person_detail_associated_persons_description">This statistic shows what persons are related to %1$s. Related persons are those that occur more frequently in a dream when %1$s is present.</string>

@@ -18,6 +18,7 @@ import me.ddcmp.feature.home.entries.overview.OverviewEntry
 import me.ddcmp.feature.home.entries.personadd.PersonAddEntry
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailEntry
 import me.ddcmp.feature.home.entries.personlist.PersonListEntry
+import me.ddcmp.feature.home.entries.taglist.TagListEntry
 import me.ddcmp.feature.home.navigation.HomeRoutes
 import me.ddcmp.feature.stats.StatsEntry
 import kotlin.time.ExperimentalTime
@@ -99,6 +100,19 @@ fun HomeEntry(
                     }
                 )
             }
+            composable<HomeRoutes.TagList> {
+                TagListEntry(
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onAdd = {
+                        navController.navigate(HomeRoutes.AddTag())
+                    },
+                    onEdit = {
+                        navController.navigate(HomeRoutes.AddTag(it))
+                    }
+                )
+            }
             composable<HomeRoutes.AddEmotion> {
                 EmotionAddEntry(
                     onBack = {
@@ -161,7 +175,9 @@ fun HomeEntry(
                     onGoToDreamDetail = {
                         navController.navigate(HomeRoutes.DreamDetail(it))
                     },
-                    onGoToTags = {}
+                    onGoToTags = {
+                        navController.navigate(HomeRoutes.TagList)
+                    }
                 )
             }
 

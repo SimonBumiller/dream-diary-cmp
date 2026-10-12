@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.home.generated.resources.Res
 import dream_diary_cmp.feature.home.generated.resources.overview_actions_settings
+import dream_diary_cmp.feature.home.generated.resources.overview_actions_tags
 import dream_diary_cmp.feature.home.generated.resources.overview_dreams_label
 import dream_diary_cmp.feature.home.generated.resources.overview_feature_dreams_title
 import dream_diary_cmp.feature.home.generated.resources.overview_feature_emotions_title
