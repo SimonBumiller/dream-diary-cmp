@@ -40,10 +40,11 @@ internal class ImporterFactoryImpl(
                     saveDream,
                     savePerson,
                     saveEmotion,
+                    saveTag,
                     options.contentFileType
                 )
 
-                IOFileType.Xml -> XmlImporter(saveDream, savePerson, saveEmotion)
+                IOFileType.Xml -> XmlImporter(saveDream, savePerson, saveEmotion, saveTag)
             }
         }.backgroundProxy()
     }
