@@ -25,6 +25,11 @@ sealed interface ImportOption {
          */
         val timeZone: TimeZone,
 
+        /**
+         * Whether relations should also be transferred.
+         */
+        val transferRelations: Boolean,
+
         override val transferFavorites: Boolean
 
     ) : ImportOption {

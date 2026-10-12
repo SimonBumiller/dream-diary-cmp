@@ -15,17 +15,21 @@ import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
+import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 internal class LegacyImporter(
     private val timeZone: TimeZone,
     private val transferFavorites: Boolean,
+    private val transferRelations: Boolean,
     private val defaultConfidentiality: Confidentiality,
     private val createDream: SaveDreamUseCase,
-    private val createPerson: SavePersonUseCase
+    private val createPerson: SavePersonUseCase,
+    private val createTag: SaveTagUseCase
 ) : BackupImporter {
 
     @OptIn(ExperimentalTime::class, ExperimentalSerializationApi::class)
@@ -49,6 +53,16 @@ internal class LegacyImporter(
             if (!dreamExists || !personExists)
                 return ImportResult.Failure.DataConsistency(0, now)
         }
+        root.personRelationCrossrefs.forEach { crossref ->
+            val personId = crossref.first
+            val relationId = crossref.second
+
+            val personExists = root.persons.any { it.id == personId }
+            val relationExists = root.relations.any { it.id == relationId }
+
+            if (!relationExists || !personExists)
+                return ImportResult.Failure.DataConsistency(0, now)
+        }
 
         val dreams = root.dreams
             .map { legacyDream ->
@@ -68,30 +82,52 @@ internal class LegacyImporter(
                 )
             }
 
-        // TODO: Also transfer relations as groups here.
+        val tagsFromRelations = root.relations
+            .map { relation ->
+                Tag(
+                    id = relation.id,
+                    created = Clock.System.now(),
+                    edited = Clock.System.now(),
+                    name = relation.name,
+                    description = relation.notes.ifBlank { null },
+                    color = relation.color
+                )
+            }
+
         val persons = root.persons
             .map { legacyPerson ->
-                val person = Person(
+                Person(
                     id = legacyPerson.id,
                     created = now,
                     edited = now,
                     name = legacyPerson.name,
                     note = legacyPerson.notes
                 )
-
-                SavePersonUseCase.I(person, emptyList())
             }
 
+        if(transferRelations) {
+            tagsFromRelations.forEach { tag ->
+                val input = SaveTagUseCase.I(tag)
+                createTag(input)
+            }
+        }
+
         persons.forEach { person ->
-            createPerson(person)
+            val tags = root.personRelationCrossrefs
+                .filter { it.first == person.id }
+                .map { it.second }
+                .map { tagsFromRelations.find { tag -> tag.id == it }!! }
+                .let { if(transferRelations) it else emptyList() }
+
+            val input = SavePersonUseCase.I(person, tags)
+            createPerson(input)
         }
 
         dreams.forEach { dream ->
             val personsForDream = root.dreamPersonCrossref
                 .filter { it.first == dream.id }
                 .map { it.second }
-                .mapNotNull { personId -> persons.find { it.person.id == personId } }
-                .map { it.person }
+                .mapNotNull { personId -> persons.find { it.id == personId } }
 
             val input = SaveDreamUseCase.I(
                 dream = dream,

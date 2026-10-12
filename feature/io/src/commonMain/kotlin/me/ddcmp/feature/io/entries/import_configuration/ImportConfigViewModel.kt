@@ -9,16 +9,18 @@ import kotlinx.datetime.TimeZone
 import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.domain.model.io.ImportOption
 import me.bumiller.ddcmp.domain.usecase.io.ImportUseCase
+import me.bumiller.ddcmp.domain.usecase.io.ImportUseCase.I
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
+import me.bumiller.ddcmp.ui.common.model.IOOptionType
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.UiEvent
 import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.ViewModelEvent
-import me.bumiller.ddcmp.ui.common.model.IOOptionType
+import me.ddcmp.feature.io.entries.import_configuration.ImportConfigViewModel.ViewModelEvent.Finished
 
 internal class ImportConfigViewModel(
     private val import: ImportUseCase
-): AppViewModel<UiEvent, ViewModelEvent>() {
+) : AppViewModel<UiEvent, ViewModelEvent>() {
 
     init {
         registerUiState(UiState())
@@ -35,6 +37,7 @@ internal class ImportConfigViewModel(
     data class UiState(
         val type: IOOptionType = IOOptionType.Normal,
         val transferFavorites: Boolean = true,
+        val transferRelations: Boolean = true,
         val timeZone: TimeZone = TimeZone.currentSystemDefault(),
         val fileType: IOFileType = IOFileType.Json,
         val showTimeZoneDropdown: Boolean = false,
@@ -51,8 +54,10 @@ internal class ImportConfigViewModel(
         option = when (uiState.type) {
             IOOptionType.Legacy -> ImportOption.Legacy(
                 timeZone = uiState.timeZone,
-                transferFavorites = uiState.transferFavorites
+                transferFavorites = uiState.transferFavorites,
+                transferRelations = uiState.transferRelations
             )
+
             IOOptionType.Normal -> ImportOption.Normal(
                 contentFileType = uiState.fileType,
                 transferFavorites = uiState.transferFavorites
@@ -60,31 +65,38 @@ internal class ImportConfigViewModel(
         }
     )
 
-    override suspend fun handleEvent(event: UiEvent) = when (event) {
+    override suspend fun handleEvent(event: UiEvent): Unit = when (event) {
         is UiEvent.ChangeFileType -> updateUiState<UiState> {
             it.copy(fileType = event.fileType)
         }
+
         is UiEvent.ChangeTimeZone -> updateUiState<UiState> {
             it.copy(timeZone = event.timeZone)
         }
+
         is UiEvent.ChangeTransferFavorites -> updateUiState<UiState> {
             it.copy(transferFavorites = event.transferFavorites)
         }
+
         is UiEvent.ChangeType -> updateUiState<UiState> {
             it.copy(type = event.type)
         }
+
         is UiEvent.Return -> fireEvent(ViewModelEvent.GoBack)
         is UiEvent.ToggleTimeZoneDropdownVisibility -> updateUiState<UiState> {
             it.copy(showTimeZoneDropdown = event.show)
         }
+
         is UiEvent.ToggleFileTypeDropdownVisibility -> updateUiState<UiState> {
             it.copy(showFileTypeDropdown = event.show)
         }
+
         is UiEvent.FileSelected -> {
             updateUiState<UiState> {
                 it.copy(file = event.file)
             }
         }
+
         UiEvent.StartImport -> {
             val file = uiState.value.file ?: return
             val options = state.value.option
@@ -94,9 +106,9 @@ internal class ImportConfigViewModel(
                     it.copy(importing = true)
                 }
 
-                val resultId = import(ImportUseCase.I(file, options))
+                val resultId = import(I(file, options))
 
-                fireEvent(ViewModelEvent.Finished(resultId))
+                fireEvent(Finished(resultId))
 
                 updateUiState<UiState> {
                     it.copy(importing = false)
@@ -105,23 +117,28 @@ internal class ImportConfigViewModel(
 
             Unit
         }
+
+        is UiEvent.ChangeTransferRelations -> updateUiState<UiState> {
+            it.copy(transferRelations = !it.transferRelations)
+        }
     }
 
-    sealed interface UiEvent: UIE {
-        data class ChangeType(val type: IOOptionType): UiEvent
-        data class ChangeTransferFavorites(val transferFavorites: Boolean): UiEvent
-        data class ChangeTimeZone(val timeZone: TimeZone): UiEvent
-        data class ChangeFileType(val fileType: IOFileType): UiEvent
-        data class ToggleTimeZoneDropdownVisibility(val show: Boolean): UiEvent
-        data class ToggleFileTypeDropdownVisibility(val show: Boolean): UiEvent
-        data object Return: UiEvent
-        data object StartImport: UiEvent
-        data class FileSelected(val file: PlatformFile?): UiEvent
+    sealed interface UiEvent : UIE {
+        data class ChangeType(val type: IOOptionType) : UiEvent
+        data class ChangeTransferFavorites(val transferFavorites: Boolean) : UiEvent
+        data class ChangeTransferRelations(val transferRelations: Boolean) : UiEvent
+        data class ChangeTimeZone(val timeZone: TimeZone) : UiEvent
+        data class ChangeFileType(val fileType: IOFileType) : UiEvent
+        data class ToggleTimeZoneDropdownVisibility(val show: Boolean) : UiEvent
+        data class ToggleFileTypeDropdownVisibility(val show: Boolean) : UiEvent
+        data object Return : UiEvent
+        data object StartImport : UiEvent
+        data class FileSelected(val file: PlatformFile?) : UiEvent
     }
 
-    sealed interface ViewModelEvent: VME {
-        data class Finished(val resultId: Long): ViewModelEvent
-        data object GoBack: ViewModelEvent
+    sealed interface ViewModelEvent : VME {
+        data class Finished(val resultId: Long) : ViewModelEvent
+        data object GoBack : ViewModelEvent
     }
 
 }

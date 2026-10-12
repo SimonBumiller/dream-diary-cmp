@@ -40,6 +40,7 @@ import dream_diary_cmp.feature.io.generated.resources.import_configuration_optio
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_timezone_label
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_title
 import dream_diary_cmp.feature.io.generated.resources.import_configuration_transfer_favorites_label
+import dream_diary_cmp.feature.io.generated.resources.import_configuration_transfer_relations_label
 import kotlinx.datetime.TimeZone
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
@@ -168,6 +169,7 @@ private fun ImportOptions(
         KeepFavoriteOption(uiState, onEvent)
 
         if (uiState.type == IOOptionType.Legacy) {
+            TransferRelationsOption(uiState, onEvent)
             TimeZoneOption(uiState, onEvent)
         }
 
@@ -247,6 +249,26 @@ private fun KeepFavoriteOption(
         )
         Text(
             text = stringResource(Res.string.import_configuration_transfer_favorites_label),
+            style = MaterialTheme.typography.labelLarge
+        )
+    }
+}
+
+@Composable
+private fun TransferRelationsOption(
+    uiState: UiState,
+    onEvent: (UiEvent) -> Unit
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = uiState.transferRelations,
+            onCheckedChange = { onEvent(UiEvent.ChangeTransferRelations(it)) }
+        )
+        Text(
+            text = stringResource(Res.string.import_configuration_transfer_relations_label),
             style = MaterialTheme.typography.labelLarge
         )
     }

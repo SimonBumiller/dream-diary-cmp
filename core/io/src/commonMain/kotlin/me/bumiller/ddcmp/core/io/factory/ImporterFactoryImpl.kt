@@ -12,12 +12,14 @@ import me.bumiller.ddcmp.domain.model.settings.Settings
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
+import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase
 import kotlin.time.ExperimentalTime
 
 internal class ImporterFactoryImpl(
     private val saveDream: SaveDreamUseCase,
     private val savePerson: SavePersonUseCase,
-    private val saveEmotion: SaveEmotionUseCase
+    private val saveEmotion: SaveEmotionUseCase,
+    private val saveTag: SaveTagUseCase
 ) : BackupImporterFactory {
 
     @OptIn(ExperimentalTime::class)
@@ -26,9 +28,11 @@ internal class ImporterFactoryImpl(
             is ImportOption.Legacy -> LegacyImporter(
                 timeZone = options.timeZone,
                 transferFavorites = options.transferFavorites,
+                transferRelations = options.transferRelations,
                 defaultConfidentiality = settings.defaultConfidentiality,
                 createDream = saveDream,
-                createPerson = savePerson
+                createPerson = savePerson,
+                createTag = saveTag
             )
 
             is ImportOption.Normal -> when (options.contentFileType) {

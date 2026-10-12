@@ -47,7 +47,7 @@ internal object Legacy {
     internal data class Relation(
         val id: Long,
         val name: String,
-        val color: Double,
+        val color: Long,
         val notes: String
     )
 

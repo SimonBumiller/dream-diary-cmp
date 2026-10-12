@@ -3,6 +3,7 @@
     <string name="import_configuration_actions_back">Back</string>
     <string name="import_configuration_options_description">Configure the import by setting advanced import options.</string>
     <string name="import_configuration_transfer_favorites_label">Keep favorite dreams</string>
+    <string name="import_configuration_transfer_relations_label">Create tags for relations</string>
     <string name="import_configuration_description">Configure your data import by selecting what type of backup you want to import. Note that your choice should depend on your export file.</string>
     <string name="import_configuration_file_description">Select the file you want to import. The available files depend on the backup type you selected.</string>
     <string name="import_configuration_timezone_label">Reference timezone</string>
