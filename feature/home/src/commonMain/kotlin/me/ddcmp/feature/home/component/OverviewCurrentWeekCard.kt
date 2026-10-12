@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dream_diary_cmp.feature.home.generated.resources.Res
@@ -39,6 +40,7 @@ internal fun OverviewCurrentWeekCard(
 ) {
     ElevatedCard(
         modifier = modifier
+            .clip(CardDefaults.elevatedShape)
             .clickable(onClick = onClick),
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
@@ -61,14 +63,20 @@ private fun NoDataDisplay(
 ) {
     Column(
         modifier = modifier
+            .padding(
+                start = 8.dp,
+                top = 4.dp,
+                bottom = 6.dp
+            )
     ) {
         Text(
             text = stringResource(Res.string.overview_current_week_title_nodata),
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
         )
         Text(
             text = stringResource(Res.string.overview_current_week_description_nodata),
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodySmall
         )
     }
 }
