@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -68,6 +69,7 @@ import me.bumiller.ddcmp.domain.stats.person.PersonOccurrenceStatistic.PersonOcc
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.component.AppTagInputChip
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.bumiller.ddcmp.ui.common.format.formatInstant
@@ -182,7 +184,7 @@ private fun PersonDetailEntry(
                 .padding(pv + PaddingValues(horizontal = 8.dp)),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Header(person.person)
+            Header(person)
 
             TabRow(
                 selected = uiState.selectedTab,
@@ -387,17 +389,31 @@ private fun TabRow(
 
 @Composable
 private fun Header(
-    person: Person
+    person: AllPersonUseCase.O
 ) {
     Column {
         Text(
-            text = person.name,
+            text = person.person.name,
             style = MaterialTheme.typography.headlineMedium
         )
 
-        when (person.note) {
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            person.tags.forEach { tag ->
+                AppTagInputChip(
+                    selected = false,
+                    tag = tag,
+                    onClick = {}
+                )
+            }
+        }
+
+        when (person.person.note) {
             null -> NoNote()
-            else -> Note(person.note!!)
+            else -> Note(person.person.note!!)
         }
     }
 }
