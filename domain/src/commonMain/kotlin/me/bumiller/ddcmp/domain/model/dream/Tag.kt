@@ -29,6 +29,6 @@ data class Tag(
     /**
      * The color in argb mode.
      */
-    val color: Int
+    val color: Long
 
 ): Unique, Trackable, Editable

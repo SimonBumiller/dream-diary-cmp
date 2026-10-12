@@ -98,6 +98,16 @@
     <string name="tag_list_description">Below is a list of all tags added by you. Tags are used to add metadata or group together persons and dreams.</string>
     <string name="tag_list_long_press_label">Long-press to edit</string>
 
+    <string name="tag_add_title_add">Add Tag</string>
+    <string name="tag_add_title_edit">Edit Tag</string>
+    <string name="tag_add_name_placeholder">Enter name of tag…</string>
+    <string name="tag_add_name_label">Tag name</string>
+    <string name="tag_add_note_placeholder">Enter description…</string>
+    <string name="tag_add_note_label">Tag description (optional)</string>
+    <string name="tag_add_confirm_label_add">Add</string>
+    <string name="tag_add_confirm_label_edit">Save</string>
+    <string name="tag_add_cancel_label">Cancel</string>
+
     <string name="person_detail_title">Person Info</string>
     <string name="person_detail_associated_persons_title">Related Persons</string>
     <string name="person_detail_associated_persons_description">This statistic shows what persons are related to %1$s. Related persons are those that occur more frequently in a dream when %1$s is present.</string>

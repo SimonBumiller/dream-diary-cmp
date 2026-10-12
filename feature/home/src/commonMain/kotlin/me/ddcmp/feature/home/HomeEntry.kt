@@ -18,6 +18,7 @@ import me.ddcmp.feature.home.entries.overview.OverviewEntry
 import me.ddcmp.feature.home.entries.personadd.PersonAddEntry
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailEntry
 import me.ddcmp.feature.home.entries.personlist.PersonListEntry
+import me.ddcmp.feature.home.entries.tagadd.TagAddEntry
 import me.ddcmp.feature.home.entries.taglist.TagListEntry
 import me.ddcmp.feature.home.navigation.HomeRoutes
 import me.ddcmp.feature.stats.StatsEntry
@@ -183,6 +184,13 @@ fun HomeEntry(
 
             dialog<HomeRoutes.AddPerson> {
                 PersonAddEntry(
+                    onCloseDialog = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+            dialog<HomeRoutes.AddTag> {
+                TagAddEntry(
                     onCloseDialog = {
                         navController.popBackStack()
                     }

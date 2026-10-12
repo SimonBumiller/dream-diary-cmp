@@ -31,7 +31,7 @@ data class TagEntity(
 
     val description: String?,
 
-    val color: Int
+    val color: Long
 
 ) : BaseEntity {
 
