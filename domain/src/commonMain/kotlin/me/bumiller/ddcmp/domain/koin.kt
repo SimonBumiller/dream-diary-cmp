@@ -53,7 +53,7 @@ val domain = module {
     single { GetSettingsUseCase(get()) }
     single { SetSettingsUseCase(get()) }
 
-    single { ImportUseCase(get(), get(), get(), get(), get(), get()) }
+    single { ImportUseCase(get(), get(), get(), get(), get(), get(), get()) }
     single { ExportUseCase(get(), get()) }
     single { GetImportLogUsecase(get()) }
     single { GetExportLogUsecase(get()) }

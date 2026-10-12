@@ -7,6 +7,7 @@ import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.ImportLogRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import me.bumiller.ddcmp.domain.infrastructure.SettingsStore
+import me.bumiller.ddcmp.domain.infrastructure.TagRepository
 import me.bumiller.ddcmp.domain.io.BackupImporterFactory
 import me.bumiller.ddcmp.domain.model.io.ImportOption
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
@@ -18,6 +19,7 @@ class ImportUseCase(
     private val personRepository: PersonRepository,
     private val dreamRepository: DreamRepository,
     private val emotionRepository: EmotionRepository,
+    private val tagRepository: TagRepository,
     private val importerFactory: BackupImporterFactory,
     private val settingsStore: SettingsStore,
     private val importRepository: ImportLogRepository
@@ -27,6 +29,7 @@ class ImportUseCase(
         personRepository.deleteAll()
         dreamRepository.deleteAll()
         emotionRepository.deleteAll()
+        tagRepository.deleteAll()
 
         val settings = settingsStore.settings.first()
 

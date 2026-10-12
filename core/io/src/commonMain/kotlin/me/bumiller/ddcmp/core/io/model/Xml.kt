@@ -1,18 +1,21 @@
 package me.bumiller.ddcmp.core.io.model
 
 import kotlinx.serialization.Serializable
-import me.bumiller.ddcmp.domain.model.emotion.Arousal
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.emotion.Arousal
 import me.bumiller.ddcmp.domain.model.emotion.Valence
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
+import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 import nl.adaptivity.xmlutil.serialization.XmlChildrenName
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 import me.bumiller.ddcmp.domain.model.dream.Dream as ModelDream
-import me.bumiller.ddcmp.domain.model.emotion.Emotion as ModelEmotion
 import me.bumiller.ddcmp.domain.model.dream.Person as ModelPerson
+import me.bumiller.ddcmp.domain.model.dream.Tag as ModelTag
+import me.bumiller.ddcmp.domain.model.emotion.Emotion as ModelEmotion
 
 @OptIn(ExperimentalTime::class)
 internal object Xml {
@@ -28,6 +31,14 @@ internal object Xml {
     @Serializable
     @XmlSerialName("emotion")
     data class EmotionRef(
+
+        @XmlElement(false)
+        val ref: Long
+    )
+
+    @Serializable
+    @XmlSerialName("tag")
+    data class TagRef(
 
         @XmlElement(false)
         val ref: Long
@@ -75,6 +86,9 @@ internal object Xml {
 
         @XmlChildrenName("emotion")
         val emotions: List<EmotionRef>,
+
+        @XmlChildrenName("tag")
+        val tags: List<TagRef>
     ) {
 
         fun toModel() = ModelDream(
@@ -103,6 +117,7 @@ internal object Xml {
                     dream.note,
                     persons.map { PersonRef(it.id) },
                     emotions.map { EmotionRef(it.id) },
+                    tags.map { TagRef(it.id) }
                 )
             }
         }
@@ -181,7 +196,11 @@ internal object Xml {
         val name: String,
 
         @XmlElement(true)
-        val note: String?
+        val note: String?,
+
+        @XmlChildrenName("tag")
+        val tags: List<TagRef>
+
     ) {
 
         fun toModel() = ModelPerson(
@@ -193,8 +212,67 @@ internal object Xml {
         )
 
         companion object {
-            fun fromModel(model: ModelPerson) = model.run {
-                Person(id, created.toEpochMilliseconds(), edited.toEpochMilliseconds(), name, note)
+            fun fromModel(model: AllPersonUseCase.O) = model.run {
+                Person(
+                    person.id,
+                    person.created.toEpochMilliseconds(),
+                    person.edited.toEpochMilliseconds(),
+                    person.name,
+                    person.note,
+                    tags.map { TagRef(it.id) })
+            }
+        }
+
+    }
+
+    @Serializable
+    @XmlSerialName("tags")
+    data class TagsRoot(
+        val tags: List<Xml.Tag>
+    )
+
+    @Serializable
+    @XmlSerialName("tag")
+    data class Tag(
+
+        @XmlElement(false)
+        val id: Long,
+
+        @XmlElement(false)
+        val created: Long,
+
+        @XmlElement(false)
+        val edited: Long,
+
+        @XmlElement(true)
+        val name: String,
+
+        @XmlElement(true)
+        val description: String?,
+
+        @XmlElement(true)
+        val color: Long
+    ) {
+
+        fun toModel() = ModelTag(
+            id,
+            Instant.fromEpochMilliseconds(created),
+            Instant.fromEpochMilliseconds(edited),
+            name,
+            description,
+            color
+        )
+
+        companion object {
+            fun fromModel(model: AllTagUseCase.O) = model.run {
+                Tag(
+                    tag.id,
+                    tag.created.toEpochMilliseconds(),
+                    tag.edited.toEpochMilliseconds(),
+                    tag.name,
+                    tag.description,
+                    tag.color
+                )
             }
         }
 

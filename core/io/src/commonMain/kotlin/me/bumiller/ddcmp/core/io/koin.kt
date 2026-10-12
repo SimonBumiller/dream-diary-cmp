@@ -12,5 +12,5 @@ import org.koin.dsl.module
 val io = module {
     single<BackupImporterFactory> { ImporterFactoryImpl(get(), get(), get(), get()) }
 
-    single<BackupExporterFactory> { ExporterFactoryImpl(get(), get(), get()) }
+    single<BackupExporterFactory> { ExporterFactoryImpl(get(), get(), get(), get()) }
 }

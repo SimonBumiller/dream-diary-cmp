@@ -10,11 +10,13 @@ import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
+import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 
 internal class ExporterFactoryImpl(
     private val allDreams: AllDreamUseCase,
     private val allPersons: AllPersonUseCase,
-    private val allEmotions: AllEmotionsUseCase
+    private val allEmotions: AllEmotionsUseCase,
+    private val allTags: AllTagUseCase
 ) : BackupExporterFactory {
 
     override fun createImporter(options: ExportOption) = when (options) {
@@ -24,10 +26,11 @@ internal class ExporterFactoryImpl(
                 allDreams,
                 allPersons,
                 allEmotions,
+                allTags,
                 options.fileType
             )
 
-            IOFileType.Xml -> XmlExporter(allDreams, allPersons, allEmotions)
+            IOFileType.Xml -> XmlExporter(allDreams, allPersons, allEmotions, allTags)
         }
     }.backgroundProxy()
 
