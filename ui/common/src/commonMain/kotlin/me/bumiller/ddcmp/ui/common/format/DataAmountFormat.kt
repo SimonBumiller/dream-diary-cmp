@@ -13,7 +13,7 @@ import org.jetbrains.compose.resources.stringResource
  */
 @Composable
 fun Long.formatDataAmount(): String =
-    if(this < 1_000) stringResource(Res.string.data_amount_byte, this)
-    else if(this < 1_000_000) stringResource(Res.string.data_amount_kilobyte, this / 1000)
-    else if(this < 1_000_000_000) stringResource(Res.string.data_amount_megabyte, this / 1000_000)
+    if(this < 5_000) stringResource(Res.string.data_amount_byte, this)
+    else if(this < 5_000_000) stringResource(Res.string.data_amount_kilobyte, this / 1000)
+    else if(this < 5_000_000_000) stringResource(Res.string.data_amount_megabyte, this / 1000_000)
     else stringResource(Res.string.data_amount_gigabyte, this / 1000_000_000)

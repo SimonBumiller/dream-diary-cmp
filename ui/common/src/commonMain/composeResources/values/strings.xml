@@ -11,6 +11,13 @@
     <string name="colormode_dark_name">Dark</string>
     <string name="colormode_system_name">System</string>
 
+    <string name="duration_days">%1$d days</string>
+    <string name="duration_hours">%1$d hours</string>
+    <string name="duration_minutes">%1$d minutes</string>
+    <string name="duration_seconds">%1$d seconds</string>
+    <string name="duration_millis">%1$d milliseconds</string>
+    <string name="duration_nanos">%1$d nanoseconds</string>
+
     <string name="emotiontype_joy">Joy</string>
     <string name="emotiontype_pleasure">Pleasure</string>
     <string name="emotiontype_anger">Anger</string>

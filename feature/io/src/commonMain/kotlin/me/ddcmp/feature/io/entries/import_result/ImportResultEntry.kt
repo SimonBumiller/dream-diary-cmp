@@ -21,6 +21,7 @@ import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcmp.ui.common.ViewModelScope
+import me.bumiller.ddcmp.ui.common.format.formatDurationLength
 import me.bumiller.ddcmp.ui.common.format.formatInstantMonthYear
 import me.bumiller.ddcmp.ui.common.text.styledText
 import me.ddcmp.feature.io.entries.import_result.ImportResultViewModel.UiEvent
@@ -104,7 +105,8 @@ private fun DialogTextSuccess(
             result.personCount,
             formatInstantMonthYear(result.firstDream),
             formatInstantMonthYear(result.lastDream),
-            monthsBetween(result.firstDream, result.lastDream)
+            monthsBetween(result.firstDream, result.lastDream),
+            result.processLength.formatDurationLength()
         )
 
         is ImportResult.Success.Normal -> stringResource(
@@ -114,7 +116,8 @@ private fun DialogTextSuccess(
             result.emotionCount,
             formatInstantMonthYear(result.firstDream),
             formatInstantMonthYear(result.lastDream),
-            monthsBetween(result.firstDream, result.lastDream)
+            monthsBetween(result.firstDream, result.lastDream),
+            result.processLength.formatDurationLength()
         )
     }
 

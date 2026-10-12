@@ -16,18 +16,18 @@
 
     <string name="import_result_title_success">Import finished</string>
     <string name="import_result_title_failure">Import failed</string>
-    <string name="import_result_description_success_legacy">The import has been completed. In total, **%1$d** dreams were imported alongside **%2$s** persons. The dreams spanned a timespan from **%3$s** to **%4$s** (**%5$d** months).</string>
-    <string name="import_result_description_success_normal">The import has been completed. In total, **%1$d** dreams, **%2$s** persons and **%3$d** emotions were added. The dreams spanned a timespan from **%4$s** to **%5$s** (**%6$d** months).</string>
+    <string name="import_result_description_success_legacy">The import has been completed. In total, **%1$d** dreams were imported alongside **%2$s** persons. The dreams spanned a timespan from **%3$s** to **%4$s** (**%5$d** months). The import took **%6$s** to complete.</string>
+    <string name="import_result_description_success_normal">The import has been completed. In total, **%1$d** dreams, **%2$s** persons and **%3$d** emotions were added. The dreams spanned a timespan from **%4$s** to **%5$s** (**%6$d** months). The import took **%7$s** to complete.</string>
     <string name="import_result_description_failure_consistency">The data contained in the selected file did not adhere to required data consistency. This is most likely caused by invalid references.</string>
     <string name="import_result_description_failure_access">The selected file could not be read. This may be caused by network problems or other file-access related issues.</string>
-    <string name="import_result_description_failure_format">The selected file violates the specified format. This can be caused by a corrupted file or acidental changes.</string>
+    <string name="import_result_description_failure_format">The selected file violates the specified format. This can be caused by a corrupted file or accidental changes.</string>
     <string name="import_result_continue_label_success">Continue</string>
 
     <string name="export_result_continue_label_success">Continue</string>
     <string name="export_result_title_success">Export finished</string>
     <string name="export_result_title_failure">Export failed</string>
     <string name="export_result_description_access">The selected file destination could not be read to. This may be caused by network problems.</string>
-    <string name="export_result_description">Saved the backup file to **%1$s**. In total, the backup occupies **%2$s** storage space.</string>
+    <string name="export_result_description">Saved the backup file to **%1$s**. In total, the backup occupies **%2$s** storage space and took **%2$s** to complete.</string>
 
     <string name="export_configuration_title">Export</string>
     <string name="export_configuration_description">Configure your data import by selecting what type of backup you want to create.</string>

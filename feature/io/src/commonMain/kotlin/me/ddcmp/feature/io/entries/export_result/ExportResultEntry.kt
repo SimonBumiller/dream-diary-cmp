@@ -17,6 +17,7 @@ import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.format.formatDataAmount
+import me.bumiller.ddcmp.ui.common.format.formatDurationLength
 import me.bumiller.ddcmp.ui.common.text.styledText
 import me.ddcmp.feature.io.entries.export_result.ExportResultViewModel.UiEvent
 import me.ddcmp.feature.io.entries.export_result.ExportResultViewModel.ViewModelEvent
@@ -93,7 +94,8 @@ private fun DialogTextSuccess(
     val text = stringResource(
         Res.string.export_result_description,
         result.fileLocation,
-        result.fileSize.formatDataAmount()
+        result.fileSize.formatDataAmount(),
+        result.processLength.formatDurationLength()
     )
 
     val spannedString = styledText(text)
