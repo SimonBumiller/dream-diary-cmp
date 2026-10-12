@@ -68,6 +68,12 @@
         <item quantity="one">In total, there is one person taking part in this dream.</item>
         <item quantity="other">In total, there are %1$d persons taking part in this dream.</item>
     </plurals>
+    <string name="dreamdetail_tags_title">Tags</string>
+    <string name="dreamdetail_tags_info_empty">This dream does not have any associated tags.</string>
+    <plurals name="dreamdetail_tags_info">
+        <item quantity="one">In total, there is one tag applied to this dream.</item>
+        <item quantity="other">In total, there are %1$d tags applied to this dream.</item>
+    </plurals>
     <string name="dreamdetail_emotions_title">Emotions</string>
     <string name="dreamdetail_emotions_info_empty">This dream does not have any associated emotions.</string>
     <plurals name="dreamdetail_emotions_info">

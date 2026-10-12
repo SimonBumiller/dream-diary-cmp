@@ -48,12 +48,17 @@ import dream_diary_cmp.feature.home.generated.resources.dreamdetail_note_label
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_info
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_info_empty
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_title
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_tags_info
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_tags_info_empty
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_tags_title
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.biometric.BiometricContainer
+import me.bumiller.ddcmp.ui.common.component.AppTagInputChip
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.MultiStyleText
 import me.bumiller.ddcmp.ui.common.component.TextStyleWithCallback
@@ -118,9 +123,9 @@ internal fun DreamDetailEntry(
         )
 
         if (state != null && (uiState.authenticated || !requireAuth)) {
-            val (dream, emotions, persons) = state!!
+            val (dream, emotions, persons, tags) = state!!
 
-            DreamDetailEntry(vm::onEvent, dream, emotions, persons)
+            DreamDetailEntry(vm::onEvent, dream, emotions, tags, persons)
         }
     }
 }
@@ -134,6 +139,7 @@ private fun DreamDetailEntry(
     onEvent: (UiEvent) -> Unit,
     dream: Dream,
     emotions: List<Emotion>,
+    tags: List<Tag>,
     persons: List<Person>
 ) {
     Scaffold(
@@ -232,6 +238,47 @@ private fun DreamDetailEntry(
                                 selected = false,
                                 onClick = { onEvent(UiEvent.ClickPerson(person)) },
                                 label = { Text(person.name) }
+                            )
+                        }
+                    }
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 8.dp,
+                            end = 8.dp,
+                            top = 4.dp,
+                            bottom = 12.dp
+                        ),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(Res.string.dreamdetail_tags_title),
+                        style = MaterialTheme.typography.titleMediumEmphasized
+                    )
+
+                    Text(
+                        text = if (tags.isNotEmpty()) pluralStringResource(
+                            Res.plurals.dreamdetail_tags_info,
+                            tags.size,
+                            tags.size
+                        )
+                        else stringResource(Res.string.dreamdetail_tags_info_empty),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                    FlowRow(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        tags.forEach { tag ->
+                            AppTagInputChip(
+                                selected = false,
+                                tag = tag,
+                                onClick = {  }
                             )
                         }
                     }
