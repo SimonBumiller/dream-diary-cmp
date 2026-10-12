@@ -13,8 +13,11 @@ import me.bumiller.ddcomp.core.database.dao.ImportLogDao
 import me.bumiller.ddcomp.core.database.dao.PeriodicBackupDao
 import me.bumiller.ddcomp.core.database.dao.PeriodicBackupOrderDao
 import me.bumiller.ddcomp.core.database.dao.PersonDao
+import me.bumiller.ddcomp.core.database.dao.TagDao
 import me.bumiller.ddcomp.core.database.dao.m2m.DreamEmotionM2MDao
 import me.bumiller.ddcomp.core.database.dao.m2m.DreamPersonM2MDao
+import me.bumiller.ddcomp.core.database.dao.m2m.DreamTagM2MDao
+import me.bumiller.ddcomp.core.database.dao.m2m.PersonTagM2MDao
 import me.bumiller.ddcomp.core.database.entity.BackupDestinationEntity
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
@@ -23,12 +26,15 @@ import me.bumiller.ddcomp.core.database.entity.ImportLogEntity
 import me.bumiller.ddcomp.core.database.entity.PeriodicBackupEntity
 import me.bumiller.ddcomp.core.database.entity.PeriodicBackupOrderEntity
 import me.bumiller.ddcomp.core.database.entity.PersonEntity
+import me.bumiller.ddcomp.core.database.entity.TagEntity
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamEmotionM2M
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
+import me.bumiller.ddcomp.core.database.entity.m2m.DreamTagM2M
+import me.bumiller.ddcomp.core.database.entity.m2m.PersonTagM2M
 
 const val DB_NAME = "dream_diary.db"
 
-private const val DB_VERSION = 5
+private const val DB_VERSION = 6
 
 /**
  * The relational database used to store the data of the app.
@@ -45,10 +51,13 @@ private const val DB_VERSION = 5
         DreamPersonM2M::class,
         PeriodicBackupEntity::class,
         PeriodicBackupOrderEntity::class,
-        BackupDestinationEntity::class
+        BackupDestinationEntity::class,
+        DreamTagM2M::class,
+        PersonTagM2M::class,
+        TagEntity::class
     ]
 )
-@TypeConverters(InstantConverter::class, DurationConverter::class )
+@TypeConverters(InstantConverter::class, DurationConverter::class)
 abstract class RelationalDatabase : RoomDatabase() {
 
     abstract fun dreamDao(): DreamDao
@@ -56,6 +65,8 @@ abstract class RelationalDatabase : RoomDatabase() {
     abstract fun emotionDao(): EmotionDao
 
     abstract fun personDao(): PersonDao
+
+    abstract fun tagDao(): TagDao
 
     abstract fun importLogDao(): ImportLogDao
     abstract fun exportLogDao(): ExportLogDao
@@ -66,6 +77,8 @@ abstract class RelationalDatabase : RoomDatabase() {
 
     abstract fun dreamEmotionM2MDao(): DreamEmotionM2MDao
     abstract fun dreamPersonM2MDao(): DreamPersonM2MDao
+    abstract fun dreamTagM2MDao(): DreamTagM2MDao
+    abstract fun personTagM2MDao(): PersonTagM2MDao
 
 }
 

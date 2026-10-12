@@ -1,17 +1,18 @@
 package me.bumiller.ddcomp.core.database
 
-import me.bumiller.ddcmp.domain.model.emotion.Arousal
-import me.bumiller.ddcmp.domain.model.dream.Confidentiality
-import me.bumiller.ddcmp.domain.model.dream.Dream
-import me.bumiller.ddcmp.domain.model.emotion.Emotion
-import me.bumiller.ddcmp.domain.model.io.ExportResult
-import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackup
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.model.dream.Tag
+import me.bumiller.ddcmp.domain.model.emotion.Arousal
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.emotion.Valence
 import me.bumiller.ddcmp.domain.model.io.ExportOption
+import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.model.io.IOFileType
+import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
 import me.bumiller.ddcomp.core.database.entity.ExportLogEntity
@@ -19,6 +20,7 @@ import me.bumiller.ddcomp.core.database.entity.ImportLogEntity
 import me.bumiller.ddcomp.core.database.entity.PeriodicBackupEntity
 import me.bumiller.ddcomp.core.database.entity.PeriodicBackupOrderEntity
 import me.bumiller.ddcomp.core.database.entity.PersonEntity
+import me.bumiller.ddcomp.core.database.entity.TagEntity
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
@@ -33,6 +35,17 @@ object Mapping {
                 updated = created,
                 orderId = model.order.id,
                 exportId = model.export.id
+            )
+        }
+
+        fun tag(model: Tag) = model.run {
+            TagEntity(
+                id = id,
+                created = created,
+                updated = edited,
+                name = name,
+                description = description,
+                color = color
             )
         }
 
@@ -129,6 +142,17 @@ object Mapping {
         )
     }
 
+    fun tag(entity: TagEntity) = entity.run {
+        Tag(
+            id = id,
+            created = created,
+            edited = updated,
+            name = name,
+            description = description,
+            color = color
+        )
+    }
+
     fun backupOrder(aggregate: PeriodicBackupOrderEntity.Aggregate) = aggregate.run {
         PeriodicBackupOrder(
             id = aggregate.backupOrder.id,
@@ -138,7 +162,7 @@ object Mapping {
             period = aggregate.backupOrder.period,
             initialTime = aggregate.backupOrder.initialTime,
             keepLast = aggregate.backupOrder.keepLast,
-            exportOption = when(aggregate.backupOrder.legacyExport) {
+            exportOption = when (aggregate.backupOrder.legacyExport) {
                 true -> ExportOption.Legacy
                 false -> ExportOption.Normal(IOFileType.valueOf(aggregate.backupOrder.exportFileType!!))
             },

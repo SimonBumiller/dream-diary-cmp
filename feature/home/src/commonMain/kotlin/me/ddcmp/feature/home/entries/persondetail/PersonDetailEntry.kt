@@ -66,6 +66,7 @@ import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamConditionalOccurrenceStatistic.ConditionalOccurrenceInfo
 import me.bumiller.ddcmp.domain.stats.person.PersonOccurrenceStatistic.PersonOccurrenceInfo
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.StatCard
@@ -148,7 +149,7 @@ internal fun PersonDetailEntry(
 @Composable
 private fun PersonDetailEntry(
     onEvent: (UiEvent) -> Unit,
-    person: Person?,
+    person: AllPersonUseCase.O?,
     associatedEmotions: Stat<List<ConditionalOccurrenceInfo<Emotion>>>?,
     associatedPersons: Stat<List<ConditionalOccurrenceInfo<Person>>>?,
     dreams: List<AllDreamUseCase.O>?,
@@ -181,7 +182,7 @@ private fun PersonDetailEntry(
                 .padding(pv + PaddingValues(horizontal = 8.dp)),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Header(person)
+            Header(person.person)
 
             TabRow(
                 selected = uiState.selectedTab,
@@ -220,7 +221,7 @@ private fun StatisticsTab(
     occurrence: Stat<PersonOccurrenceInfo>,
     dreams: List<AllDreamUseCase.O>?,
     associatedPersons: Stat<List<ConditionalOccurrenceInfo<Person>>>?,
-    person: Person,
+    person: AllPersonUseCase.O,
     onEvent: (UiEvent) -> Unit,
     associatedEmotions: Stat<List<ConditionalOccurrenceInfo<Emotion>>>?,
     timeFrequency: Stat<Histogram<LocalDate, DatePeriod, Int>>?
@@ -239,7 +240,7 @@ private fun StatisticsTab(
                 title = stringResource(Res.string.person_detail_associated_persons_title),
                 description = stringResource(
                     Res.string.person_detail_associated_persons_description,
-                    person.name
+                    person.person.name
                 )
             ) { persons ->
                 Column(
@@ -262,11 +263,11 @@ private fun StatisticsTab(
                 stat = associatedEmotions,
                 title = stringResource(
                     Res.string.person_detail_associated_emotions_title,
-                    person.name
+                    person.person.name
                 ),
                 description = stringResource(
                     Res.string.person_detail_associated_emotions_description,
-                    person.name
+                    person.person.name
                 )
             ) { emotion ->
                 Column(
@@ -290,7 +291,7 @@ private fun StatisticsTab(
                 title = stringResource(Res.string.person_detail_time_frequency_title),
                 description = stringResource(
                     Res.string.person_detail_time_frequency_description,
-                    person.name
+                    person.person.name
                 )
             ) { histogram ->
                 val maxPeriodStart = histogram

@@ -27,6 +27,9 @@
     <string name="sort_dream_dreamt">Date</string>
     <string name="sort_dream_length">Length</string>
 
+    <string name="sort_tag_color">Color</string>
+    <string name="sort_tag_name">Name</string>
+
     <string name="emotion_grid_high_valence">High Valence</string>
     <string name="emotion_grid_low_valence">Low Valence</string>
     <string name="emotion_grid_arousal_low">Low</string>

@@ -228,6 +228,7 @@ internal class DreamAddViewModel(
                 allPersons(AllPersonUseCase.I())
                     .map { persons ->
                         persons
+                            .map { it.person }
                             .search(uiState.personQuery)
                             .filter { person -> dreamState.persons.all { it.id != person.id } }
                     }

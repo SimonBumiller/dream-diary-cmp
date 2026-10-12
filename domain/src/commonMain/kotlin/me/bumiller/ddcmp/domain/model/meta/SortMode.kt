@@ -20,6 +20,14 @@ sealed interface SortMode {
     }
 
     /**
+     * Sort modes for tags.
+     */
+    sealed interface TagSort : SortMode {
+        data object Color: TagSort
+        data object Name: TagSort
+    }
+
+    /**
      * Sort modes for emotions.
      */
     sealed interface EmotionSort : SortMode {

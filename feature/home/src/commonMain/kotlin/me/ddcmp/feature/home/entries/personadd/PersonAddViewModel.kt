@@ -44,7 +44,7 @@ internal class PersonAddViewModel(
                 val existing = if (isAdd) null
                 else allPersons(AllPersonUseCase.I(id = navRoute.personId))
                     .map {
-                        it.singleOrNull()
+                        it.singleOrNull()?.person
                     }
                     .firstOrNull()
 
@@ -74,7 +74,7 @@ internal class PersonAddViewModel(
             viewModelScope.launch {
                 val person = if (isAdd) null
                 else allPersons(AllPersonUseCase.I(id = navRoute.personId))
-                    .map { it.singleOrNull() }
+                    .map { it.singleOrNull()?.person }
                     .firstOrNull() ?: return@launch
 
                 updateUiState<PersonState> {

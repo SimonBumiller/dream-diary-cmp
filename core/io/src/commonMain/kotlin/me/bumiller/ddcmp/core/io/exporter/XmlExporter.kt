@@ -33,6 +33,7 @@ internal class XmlExporter(
 
         val persons = allPersons(AllPersonUseCase.I())
             .first()
+            .map { it.person }
             .map(Xml.Person::fromModel)
 
         zipStream.apply {

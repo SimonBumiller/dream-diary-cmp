@@ -9,6 +9,7 @@ import me.bumiller.ddcmp.domain.model.dream.Person
  */
 interface PersonRepository : Repository<Person> {
 
-    fun getForDream(dreamId: Long): Flow<List<Person>?>
+    fun getForDream(dreamId: Long): Flow<List<Person>>
+    fun getForTag(tagId: Long): Flow<List<Person>>
 
 }

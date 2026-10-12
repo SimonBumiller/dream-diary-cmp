@@ -17,5 +17,7 @@ interface DreamRepository : Repository<Dream> {
     suspend fun removePersonFrom(dreamId: Long, personId: Long)
     fun getForPerson(personId: Long): Flow<List<Dream>>
 
+    fun getForTag(tagId: Long): Flow<List<Dream>>
+
 
 }

@@ -7,6 +7,9 @@ import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcomp.core.database.Mapping
 import me.bumiller.ddcomp.core.database.dao.DreamDao
+import me.bumiller.ddcomp.core.database.dao.EmotionDao
+import me.bumiller.ddcomp.core.database.dao.PersonDao
+import me.bumiller.ddcomp.core.database.dao.TagDao
 import me.bumiller.ddcomp.core.database.dao.m2m.DreamEmotionM2MDao
 import me.bumiller.ddcomp.core.database.dao.m2m.DreamPersonM2MDao
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamEmotionM2M
@@ -14,6 +17,9 @@ import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
 
 class DreamRepository(
     private val dreamDao: DreamDao,
+    private val personDao: PersonDao,
+    private val emotionDao: EmotionDao,
+    private val tagDao: TagDao,
     private val dreamPersonM2MDao: DreamPersonM2MDao,
     private val dreamEmotionM2MDao: DreamEmotionM2MDao
 ) : DreamRepository {
@@ -47,14 +53,8 @@ class DreamRepository(
         dreamEmotionM2MDao.delete(dreamId, emotionId)
     }
 
-    override fun getForEmotion(emotionId: Long): Flow<List<Dream>> =
-        dreamDao.getAllAggregate()
-            .map { aggregates ->
-                aggregates.filter { aggregate ->
-                    aggregate.emotions.any { it.id == emotionId }
-                }
-                    .map { Mapping.dream(it.dream) }
-            }
+    override fun getForEmotion(emotionId: Long): Flow<List<Dream>> = emotionDao
+        .getByIdAggregate(emotionId).map { it?.dreams?.map(Mapping::dream) ?: emptyList() }
 
     override suspend fun addPersonTo(dreamId: Long, personId: Long) {
         dreamPersonM2MDao.insert(DreamPersonM2M(dreamId, personId))
@@ -64,13 +64,11 @@ class DreamRepository(
         dreamPersonM2MDao.delete(dreamId, personId)
     }
 
-    override fun getForPerson(personId: Long): Flow<List<Dream>> = dreamDao.getAllAggregate()
-        .map { aggregates ->
-            aggregates.filter { aggregate ->
-                aggregate.persons.any { it.id == personId }
-            }
-                .map { Mapping.dream(it.dream) }
-        }
+    override fun getForPerson(personId: Long): Flow<List<Dream>> = personDao
+        .getByIdAggregate(personId).map { it?.dreams?.map(Mapping::dream) ?: emptyList() }
+
+    override fun getForTag(tagId: Long): Flow<List<Dream>> = tagDao
+        .getByIdAggregate(tagId).map { it?.dreams?.map(Mapping::dream) ?: emptyList() }
 
 
 }

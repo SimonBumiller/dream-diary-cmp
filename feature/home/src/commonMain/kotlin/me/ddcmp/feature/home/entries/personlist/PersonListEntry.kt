@@ -28,6 +28,7 @@ import dream_diary_cmp.feature.home.generated.resources.personlist_description
 import dream_diary_cmp.feature.home.generated.resources.personlist_empty_placeholder
 import dream_diary_cmp.feature.home.generated.resources.personlist_title
 import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.AppInputChip
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
@@ -68,7 +69,7 @@ internal fun PersonListEntry(
 @Composable
 private fun PersonListEntry(
     onEvent: (UiEvent) -> Unit,
-    persons: List<Person>
+    persons: List<AllPersonUseCase.O>
 ) {
     Scaffold(
         modifier = Modifier
@@ -130,10 +131,10 @@ private fun PersonListEntry(
                         modifier = Modifier
                             .padding(horizontal = 6.dp),
                         label = {
-                            Text(person.name)
+                            Text(person.person.name)
                         },
-                        onClick = { onEvent(UiEvent.GoToPerson(person.id)) },
-                        onLongClick = { onEvent(UiEvent.EditPerson(person.id)) },
+                        onClick = { onEvent(UiEvent.GoToPerson(person.person.id)) },
+                        onLongClick = { onEvent(UiEvent.EditPerson(person.person.id)) },
                         selected = false
                     )
                 }

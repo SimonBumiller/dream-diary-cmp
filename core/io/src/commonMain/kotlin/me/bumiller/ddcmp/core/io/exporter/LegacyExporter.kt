@@ -52,6 +52,7 @@ internal class LegacyExporter(
 
         val legacyPersons = allPersons(AllPersonUseCase.I())
             .first()
+            .map { it.person }
             .map { person ->
                 Legacy.Person(
                     id = person.id,

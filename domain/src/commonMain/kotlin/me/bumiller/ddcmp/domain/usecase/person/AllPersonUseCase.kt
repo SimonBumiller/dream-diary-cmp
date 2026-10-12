@@ -1,41 +1,84 @@
 package me.bumiller.ddcmp.domain.usecase.person
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import me.bumiller.ddcmp.domain.common.combineSafe
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
+import me.bumiller.ddcmp.domain.infrastructure.TagRepository
 import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase.I
+import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase.O
 
 open class AllPersonUseCase(
-    val repo: PersonRepository
-) : FlowUseCase<I, List<Person>> {
+    val repo: PersonRepository,
+    val tagRepo: TagRepository
+) : FlowUseCase<I, List<O>> {
 
-    override fun invoke(i: I): Flow<List<Person>> =
+    override fun invoke(i: I): Flow<List<O>> =
         base(i)
+            .aggregate()
             .map {
-                it.applyFilter(i).applySort(i.sortMode, i.sortDirection)
+                it.applyFilter(i)
+                    .applySort(i)
             }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun Flow<List<Person>>.aggregate(): Flow<List<O>> = flatMapLatest { persons ->
+        val outputFlows = persons.map { person ->
+            val tagFlow = tagRepo.getForPerson(person.id)
+                .map { it ?: emptyList() }
+
+            tagFlow.map { tags ->
+                O(person, tags)
+            }
+        }
+
+        combineSafe(outputFlows) { it.toList() }
+    }
 
     private fun base(i: I) =
         if (i.dreamId == null) repo.all
         else repo.getForDream(i.dreamId)
-                .map { it ?: emptyList() }
+            .map { it ?: emptyList() }
 
-    private fun List<Person>.applySort(mode: SortMode.PersonSort, direction: SortDirection) =
+    private fun List<O>.applySort(i: I) =
         sortedWith { one, two ->
-            when (mode) {
-                SortMode.PersonSort.Name -> one.name.compareTo(two.name)
+            when (i.sortMode) {
+                SortMode.PersonSort.Name -> one.person.name.compareTo(two.person.name)
             }
         }.let {
-            if (direction == SortDirection.Descending) it.reversed()
+            if (i.sortDirection == SortDirection.Descending) it.reversed()
             else it
         }
 
-    private fun List<Person>.applyFilter(i: I) =
-        filter { person -> i.id?.let { person.id == it } ?: true }
+    private fun List<O>.applyFilter(i: I) =
+        filter { o ->
+            i.id?.let { o.person.id == it } ?: true &&
+                    i.tagIds?.any { it in o.tags.map(Tag::id) } ?: true
+        }
+
+    /**
+     * Data class for the usecase output.
+     */
+    data class O(
+
+        /**
+         * The person
+         */
+        val person: Person,
+
+        /**
+         * The tags for the person.
+         */
+        val tags: List<Tag>
+
+    )
 
     /**
      * Input type
@@ -56,6 +99,11 @@ open class AllPersonUseCase(
          * The id of the dream of which to get the emotions.
          */
         val dreamId: Long? = null,
+
+        /**
+         * The tag-ids to filter for.
+         */
+        val tagIds: Set<Long>? = null,
 
         /**
          * The id to search for.

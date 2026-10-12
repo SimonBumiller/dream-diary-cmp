@@ -32,20 +32,22 @@ import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
+import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
+import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase
 import org.koin.dsl.module
 
 /**
  * The Koin module for the domain component
  */
 val domain = module {
-    single { AllDreamUseCase(get(), get(), get()) }
+    single { AllDreamUseCase(get(), get(), get(), get()) }
     single { DreamDatesUseCase(get()) }
     single { SaveDreamUseCase(get(), get(), get()) }
 
     single { AllEmotionsUseCase(get()) }
     single { SaveEmotionUseCase(get()) }
 
-    single { AllPersonUseCase(get()) }
+    single { AllPersonUseCase(get(), get()) }
     single { SavePersonUseCase(get()) }
 
     single { GetSettingsUseCase(get()) }
@@ -62,6 +64,9 @@ val domain = module {
     single { CancelBackupOrdersUseCase(get(), get(), get()) }
     single { SaveBackupOrderUseCase(get()) }
     single { ScheduleBackupOrderUseCase(get(), get(), get()) }
+
+    single { AllTagUseCase(get(), get(), get()) }
+    single { SaveTagUseCase(get(), get(), get()) }
 
     single { DreamTimeFrequencyHistogram(get()) }
     single { DreamWeekdayFrequencyHistogram(get()) }

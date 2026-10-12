@@ -9,9 +9,11 @@ import me.bumiller.ddcmp.domain.common.combineSafe
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
+import me.bumiller.ddcmp.domain.infrastructure.TagRepository
 import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.emotion.Valence
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode.DreamSort
@@ -25,7 +27,8 @@ import kotlin.time.Instant
 open class AllDreamUseCase(
     val repo: DreamRepository,
     val emotionRepo: EmotionRepository,
-    val personRepo: PersonRepository
+    val personRepo: PersonRepository,
+    val tagRepo: TagRepository
 ) : FlowUseCase<I, List<O>> {
 
     override fun invoke(i: I): Flow<List<O>> = repo.all
@@ -54,9 +57,15 @@ open class AllDreamUseCase(
                 .map { it ?: emptyList() }
             val personFlow = personRepo.getForDream(dream.id)
                 .map { it ?: emptyList() }
+            val tagFlow = tagRepo.getForDream(dream.id)
+                .map { it ?: emptyList() }
 
-            emotionFlow.combine(personFlow) { emotions, persons ->
-                O(dream, emotions, persons)
+            combine(
+                flow = emotionFlow,
+                flow2 = personFlow,
+                flow3 = tagFlow
+            ) { emotions, persons, tags ->
+                O(dream, emotions, persons, tags)
             }
         }
 
@@ -74,6 +83,7 @@ open class AllDreamUseCase(
             o.dream.dreamt in i.timeRange &&
                     i.emotionIds?.any { it in o.emotions.map(Emotion::id) } ?: true &&
                     i.personIds?.any { it in o.persons.map(Person::id) } ?: true &&
+                    i.tagIds?.any { it in o.tags.map(Tag::id) } ?: true &&
                     (!i.onlyFavorite || o.dream.favorite) &&
                     i.id?.let { o.dream.id == it } ?: true
         }
@@ -87,7 +97,9 @@ open class AllDreamUseCase(
 
         val emotions: List<Emotion>,
 
-        val persons: List<Person>
+        val persons: List<Person>,
+
+        val tags: List<Tag>
 
     )
 
@@ -121,6 +133,11 @@ open class AllDreamUseCase(
          * For which person-ids to filter.
          */
         val personIds: Set<Long>? = null,
+
+        /**
+         * For which tag-ids to filter.
+         */
+        val tagIds: Set<Long>? = null,
 
         /**
          * Whether to only include favorite dreams.

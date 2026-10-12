@@ -52,6 +52,7 @@ internal class ListBasedExporter(
 
         val persons = allPersons(AllPersonUseCase.I())
             .first()
+            .map { it.person }
             .map(ListBased.Person::fromModel)
 
         val emotions = allEmotions(AllEmotionsUseCase.I())

@@ -8,6 +8,7 @@ import androidx.room.Relation
 import me.bumiller.ddcomp.core.database.entity.base.BaseEntity
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamEmotionM2M
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
+import me.bumiller.ddcomp.core.database.entity.m2m.DreamTagM2M
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
@@ -66,7 +67,18 @@ data class DreamEntity(
                 entityColumn = "emotionId"
             )
         )
-        val emotions: List<EmotionEntity>
+        val emotions: List<EmotionEntity>,
+
+        @Relation(
+            parentColumn = "id",
+            entityColumn = "id",
+            associateBy = Junction(
+                value = DreamTagM2M::class,
+                parentColumn = "dreamId",
+                entityColumn = "tagId"
+            )
+        )
+        val tags: List<TagEntity>
 
     )
 

@@ -12,6 +12,8 @@ import dream_diary_cmp.ui.common.generated.resources.sort_dream_name
 import dream_diary_cmp.ui.common.generated.resources.sort_dream_valence
 import dream_diary_cmp.ui.common.generated.resources.sort_emotion_name
 import dream_diary_cmp.ui.common.generated.resources.sort_person_name
+import dream_diary_cmp.ui.common.generated.resources.sort_tag_color
+import dream_diary_cmp.ui.common.generated.resources.sort_tag_name
 import dream_diary_cmp.ui.common.generated.resources.sort_updated
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode
@@ -31,6 +33,8 @@ val SortMode.translateName: String
         SortMode.PersonSort.Name -> Res.string.sort_person_name
         SortMode.Updated -> Res.string.sort_updated
         SortMode.DreamSort.Length -> Res.string.sort_dream_length
+        SortMode.TagSort.Color -> Res.string.sort_tag_color
+        SortMode.TagSort.Name -> Res.string.sort_tag_name
     }.let { stringResource(it) }
 
 /**
