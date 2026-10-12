@@ -15,12 +15,15 @@ import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.model.dream.Tag
+import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase.I
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
+import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 import me.bumiller.ddcmp.domain.util.search
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
@@ -37,6 +40,7 @@ internal class DreamAddViewModel(
     savedStateHandle: SavedStateHandle,
     val allEmotions: AllEmotionsUseCase,
     val allPersons: AllPersonUseCase,
+    val allTags: AllTagUseCase,
     val allDreams: AllDreamUseCase,
     val saveDream: SaveDreamUseCase,
     val settings: GetSettingsUseCase
@@ -64,6 +68,10 @@ internal class DreamAddViewModel(
 
         is UiEvent.ChangePersonQuery -> updateUiState<UiState> {
             it.copy(personQuery = event.personQuery)
+        }
+
+        is UiEvent.ChangeTagQuery -> updateUiState<UiState> {
+            it.copy(tagQuery = event.tagQuery)
         }
 
         is UiEvent.SelectEmotion -> {
@@ -131,7 +139,8 @@ internal class DreamAddViewModel(
                 I(
                     dream = dream,
                     persons = state.persons,
-                    emotions = state.emotions
+                    emotions = state.emotions,
+                    tags = state.tags
                 ).let { saveDream(it) }
             }
 
@@ -170,6 +179,13 @@ internal class DreamAddViewModel(
         is UiEvent.ChangeDreamtDate -> updateUiState<DreamState> {
             it.copy(dreamt = event.date)
         }
+
+        is UiEvent.SelectTag -> updateUiState<DreamState> {
+            it.copy(tags = it.tags + event.tag)
+        }
+        is UiEvent.UnselectTag -> updateUiState<DreamState> {
+            it.copy(tags = it.tags - event.tag)
+        }
     }
 
     init {
@@ -200,6 +216,7 @@ internal class DreamAddViewModel(
                             note = dream.dream.note ?: "",
                             persons = dream.persons,
                             emotions = dream.emotions,
+                            tags = dream.tags,
                             confidentiality = dream.dream.confidentiality,
                             dreamt = dream.dream.dreamt
                         )
@@ -218,7 +235,24 @@ internal class DreamAddViewModel(
     private var initialDreamState: DreamState = DreamState()
 
     /**
-     * State that contains all selectable persons.
+     * State that contains all selectable tags.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val tagState =
+        uiState<UiState>()
+            .combine(uiState<DreamState>()) { uiState, dreamState -> uiState to dreamState }
+            .flatMapLatest { (uiState, dreamState) ->
+                allTags(AllTagUseCase.I(sortMode = SortMode.TagSort.Name))
+                    .map { tags ->
+                        tags
+                            .map { it.tag }
+                            .search(uiState.tagQuery)
+                            .filter { person -> dreamState.tags.all { it.id != person.id } }
+                    }
+            }.stateIn(emptyList())
+
+    /**
+     * State that contains all selectable tags.
      */
     @OptIn(ExperimentalCoroutinesApi::class)
     val personsState =
@@ -282,6 +316,8 @@ internal class DreamAddViewModel(
 
         val emotions: List<Emotion> = emptyList(),
 
+        val tags: List<Tag> = emptyList(),
+
         val confidentiality: Confidentiality = Confidentiality.None,
 
         val dreamt: Instant = Clock.System.now()
@@ -295,6 +331,8 @@ internal class DreamAddViewModel(
         val personQuery: String = "",
 
         val emotionQuery: String = "",
+
+        val tagQuery: String = "",
 
         val showDiscardDialog: Boolean = false,
 
@@ -310,8 +348,11 @@ internal class DreamAddViewModel(
         data class ChangeNote(val note: String) : UiEvent
         data class ChangeTitle(val title: String) : UiEvent
         data class ChangePersonQuery(val personQuery: String) : UiEvent
+        data class ChangeTagQuery(val tagQuery: String) : UiEvent
         data class ChangeEmotionQuery(val emotionQuery: String) : UiEvent
         data class SelectPerson(val person: Person) : UiEvent
+        data class SelectTag(val tag: Tag) : UiEvent
+        data class UnselectTag(val tag: Tag) : UiEvent
         data class UnSelectPerson(val person: Person) : UiEvent
         data class SelectEmotion(val emotion: Emotion) : UiEvent
         data class UnSelectEmotion(val emotion: Emotion) : UiEvent

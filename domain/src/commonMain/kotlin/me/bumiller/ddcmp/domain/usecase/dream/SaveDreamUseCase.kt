@@ -4,9 +4,11 @@ import kotlinx.coroutines.flow.first
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
+import me.bumiller.ddcmp.domain.infrastructure.TagRepository
 import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 import kotlin.time.ExperimentalTime
 
@@ -14,7 +16,8 @@ import kotlin.time.ExperimentalTime
 class SaveDreamUseCase(
     val dreamRepo: DreamRepository,
     val emotionRepo: EmotionRepository,
-    val personRepo: PersonRepository
+    val personRepo: PersonRepository,
+    val tagRepo: TagRepository
 ) : UseCase<SaveDreamUseCase.I, Dream> {
 
     override suspend fun invoke(i: I ): Dream {
@@ -24,12 +27,14 @@ class SaveDreamUseCase(
         }
 
         val existingEmotions = emotionRepo.getForDream(dream.id).first() ?: emptyList()
-        val existingPersons = personRepo.getForDream(dream.id).first() ?: emptyList()
+        val existingPersons = personRepo.getForDream(dream.id).first()
+        val existingTags = tagRepo.getForDream(dream.id).first() ?: emptyList()
 
-        // Adding new emotions and persons
+        // Adding new emotions and persons and tags
 
         val toAddEmotions = i.emotions.filter { it.id !in existingEmotions.map(Emotion::id) }
         val toAddPersons = i.persons.filter { it.id !in existingPersons.map(Person::id) }
+        val toAddTags = i.tags.filter { it.id !in existingTags.map(Tag::id) }
 
         toAddEmotions.forEach { emotion ->
             dreamRepo.addEmotionTo(dream.id, emotion.id)
@@ -37,17 +42,24 @@ class SaveDreamUseCase(
         toAddPersons.forEach { person ->
             dreamRepo.addPersonTo(dream.id, person.id)
         }
+        toAddTags.forEach { tag ->
+            tagRepo.addDreamTo(tag.id, dream.id)
+        }
 
-        // Removing old emotions and persons
+        // Removing old emotions and persons and tags
 
         val toRemoveEmotions = existingEmotions.filter { it.id !in i.emotions.map(Emotion::id) }
         val toRemovePersons = existingPersons.filter { it.id !in i.persons.map(Person::id) }
+        val toRemoveTags = existingTags.filter { it.id !in i.tags.map(Tag::id) }
 
         toRemoveEmotions.forEach { emotion ->
             dreamRepo.removeEmotionFrom(dream.id, emotion.id)
         }
         toRemovePersons.forEach { person ->
             dreamRepo.removePersonFrom(dream.id, person.id)
+        }
+        toRemoveTags.forEach { tag ->
+            tagRepo.removeDreamFrom(tag.id, dream.id)
         }
 
         return dream
@@ -71,7 +83,12 @@ class SaveDreamUseCase(
         /**
          * The emotions that should be saved for the dream.
          */
-        val emotions: List<Emotion> = emptyList()
+        val emotions: List<Emotion> = emptyList(),
+
+        /**
+         * The tags that should be saved for the dream.
+         */
+        val tags: List<Tag> = emptyList()
 
     )
 

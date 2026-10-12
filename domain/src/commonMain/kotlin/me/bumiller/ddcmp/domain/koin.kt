@@ -42,7 +42,7 @@ import org.koin.dsl.module
 val domain = module {
     single { AllDreamUseCase(get(), get(), get(), get()) }
     single { DreamDatesUseCase(get()) }
-    single { SaveDreamUseCase(get(), get(), get()) }
+    single { SaveDreamUseCase(get(), get(), get(), get()) }
 
     single { AllEmotionsUseCase(get()) }
     single { SaveEmotionUseCase(get()) }

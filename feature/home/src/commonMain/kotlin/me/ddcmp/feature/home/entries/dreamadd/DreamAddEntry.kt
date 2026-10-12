@@ -59,6 +59,9 @@ import dream_diary_cmp.feature.home.generated.resources.dreamadd_note_label
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_persons_info
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_persons_label
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_persons_title
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_tags_info
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_tags_label
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_tags_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_title_info
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_title_label
@@ -67,9 +70,11 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.util.search
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.backhandler.PlatformBackHandler
+import me.bumiller.ddcmp.ui.common.component.AppTagInputChip
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.ConfidentialitySelector
 import me.bumiller.ddcmp.ui.common.component.SearchTextField
@@ -101,9 +106,10 @@ internal fun DreamAddEntry(
         val dreamState by vm.dreamState.collectAsStateWithLifecycle()
         val canSave by vm.canSave.collectAsStateWithLifecycle()
         val persons by vm.personsState.collectAsStateWithLifecycle()
+        val tags by vm.tagState.collectAsStateWithLifecycle()
         val emotions by vm.emotionsState.collectAsStateWithLifecycle()
 
-        DreamAddEntry(vm::onEvent, uiState, dreamState, canSave, persons, emotions)
+        DreamAddEntry(vm::onEvent, uiState, dreamState, canSave, persons, tags, emotions)
     }
 }
 
@@ -129,6 +135,7 @@ private fun DreamAddEntry(
     dreamState: DreamAddViewModel.DreamState,
     canSave: Boolean,
     persons: List<Person>,
+    tags: List<Tag>,
     emotions: List<Emotion>
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -238,7 +245,7 @@ private fun DreamAddEntry(
                     .fillMaxWidth(),
                 doColumn = { it.widthSizeClass != WindowWidthSizeClass.Expanded },
                 first = {
-                    MainMetaSection(dreamState, onEvent, uiState, persons, emotions)
+                    MainMetaSection(dreamState, onEvent, uiState, persons, tags, emotions)
                 },
                 second = {
                     OptionalSection(dreamState, onEvent)
@@ -307,6 +314,7 @@ private fun MainMetaSection(
     onEvent: (UiEvent) -> Unit,
     uiState: DreamAddViewModel.UiState,
     persons: List<Person>,
+    tags: List<Tag>,
     emotions: List<Emotion>
 ) {
     Card(
@@ -356,6 +364,51 @@ private fun MainMetaSection(
                 values = persons.search(uiState.personQuery),
                 name = Person::name,
                 onSelect = { onEvent(SelectPerson(it)) }
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp,
+                    top = 4.dp,
+                    bottom = 12.dp
+                ),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.dreamadd_tags_title),
+                style = MaterialTheme.typography.titleMediumEmphasized
+            )
+
+            Text(
+                text = stringResource(Res.string.dreamadd_tags_info),
+                style = MaterialTheme.typography.bodySmall
+            )
+
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                dreamState.tags.forEach { tag ->
+                    AppTagInputChip(
+                        selected = false,
+                        tag = tag,
+                        onClick = { onEvent(UiEvent.UnselectTag(tag)) }
+                    )
+                }
+            }
+
+            SearchTextField(
+                query = uiState.tagQuery,
+                onQueryChange = { UiEvent.ChangeTagQuery(it) },
+                label = { Text(stringResource(Res.string.dreamadd_tags_label)) },
+                values = tags.search(uiState.tagQuery),
+                name = Tag::name,
+                onSelect = { onEvent(UiEvent.SelectTag(it)) }
             )
         }
 

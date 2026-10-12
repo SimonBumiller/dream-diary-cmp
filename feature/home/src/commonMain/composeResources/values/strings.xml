@@ -18,6 +18,9 @@
     <string name="dreamadd_emotions_title">Emotions</string>
     <string name="dreamadd_emotions_info">Here you can select emotions to be associated with the dream. Add emotions that you felt during the dream or describe your mood after waking up.</string>
     <string name="dreamadd_emotions_label">Emotion</string>
+    <string name="dreamadd_tags_title">Tags</string>
+    <string name="dreamadd_tags_info">Here you can select tags to be associated with the dream.</string>
+    <string name="dreamadd_tags_label">Tag</string>
     <string name="dreamadd_title_info">Set a custom title for the dream, or keep the default one that shows the date.</string>
     <string name="dreamadd_title_label">Title (optional)</string>
     <string name="dreamadd_note_info">Set a note to capture additional information, e.g. bedtime routine or ingested food.</string>
