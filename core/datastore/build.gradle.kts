@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidKotlinMultiplatformLibrary)
-    alias(libs.plugins.androidLint)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.android.library)
+    alias(libs.plugins.android.lint)
 }
 
 kotlin {
@@ -54,8 +54,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.koin.core)
-                implementation(libs.androidx.datastore)
+                implementation(libs.koin)
+                implementation(libs.android.datastore)
                 implementation(libs.androidx.datastore.preferences)
 
                 implementation(project(":domain"))

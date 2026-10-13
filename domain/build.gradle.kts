@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidKotlinMultiplatformLibrary)
-    alias(libs.plugins.androidLint)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.android.library)
+    alias(libs.plugins.android.lint)
 }
 kotlin {
     jvm {
@@ -34,8 +34,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.coroutines)
-                implementation(libs.koin.core)
+                implementation(libs.kotlin.coroutines)
+                implementation(libs.koin)
                 implementation(libs.kotlin.datetime)
                 implementation(libs.filekt.core)
             }

@@ -1,12 +1,12 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidKotlinMultiplatformLibrary)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.android.library)
+    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.serialization)
-    alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.compose.hotreload)
 }
 
 kotlin {
@@ -37,23 +37,21 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.activity.compose)
+            implementation(libs.android.activity.compose)
             implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
+            implementation(libs.material)
             implementation(libs.compose.ui)
-            implementation(libs.compose.components.resources)
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(libs.koin.core)
-            implementation(libs.compose.material.icons)
-            implementation(libs.backhandler.compose)
-            implementation(libs.compose.material3.windowsizeclass)
+            implementation(libs.compose.resources)
+            implementation(libs.android.compose.viewmodel)
+            implementation(libs.android.compose.lifecycle)
+            implementation(libs.koin)
+            implementation(libs.material.icons)
+            implementation(libs.compose.backhandler)
+            implementation(libs.material.windowsizeclass)
             implementation(libs.compose.navigation)
             implementation(libs.kotlin.datetime)
             implementation(project(":domain"))
@@ -67,7 +65,7 @@ kotlin {
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutinesSwing)
+            implementation(libs.kotlin.coroutines.swing)
         }
     }
 }

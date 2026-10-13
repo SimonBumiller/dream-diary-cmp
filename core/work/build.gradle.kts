@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidKotlinMultiplatformLibrary)
-    alias(libs.plugins.androidLint)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.android.library)
+    alias(libs.plugins.android.lint)
     alias(libs.plugins.serialization)
 }
 
@@ -55,11 +55,11 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.koin.core)
+                implementation(libs.koin)
 
                 implementation(libs.serialization.json)
 
-                implementation(libs.coroutines)
+                implementation(libs.kotlin.coroutines)
                 implementation(libs.filekt.core)
 
                 implementation(project(":domain"))
@@ -73,7 +73,7 @@ kotlin {
         }
         iosMain {
             dependencies {
-                implementation(libs.koin.core)
+                implementation(libs.koin)
                 implementation(libs.workmanager)
             }
         }

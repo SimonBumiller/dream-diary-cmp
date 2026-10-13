@@ -1,10 +1,9 @@
 import com.android.build.api.dsl.ApplicationExtension
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
 }
 
 extensions.configure<ApplicationExtension> {
@@ -52,10 +51,10 @@ extensions.configure<ApplicationExtension> {
 
 dependencies {
     implementation(project(":composeApp"))
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.material3.windowsizeclass)
-    implementation(libs.koin.core)
+    implementation(libs.android.activity.compose)
+    implementation(libs.material)
+    implementation(libs.material.windowsizeclass)
+    implementation(libs.koin)
     implementation(libs.koin.android)
     implementation(libs.workmanager)
 
