@@ -52,9 +52,10 @@ open class LibraryPlugin : DdcmpConventionPlugin() {
         sourceSets.commonMain.get().applyBundles(project, commonMainBundles)
         sourceSets.commonTest.get().applyBundles(project, commonTestBundles)
         sourceSets.androidMain.get().applyBundles(project, androidMainBundles)
+        sourceSets.jvmMain.get().applyBundles(project, jvmMainBundles)
     }
 
-    private fun KotlinSourceSet.applyBundles(project: Project, bundles: List<String>) {
+    private fun KotlinSourceSet.applyBundles(project: Project, bundles: Set<String>) {
         val versions = project.versionCatalog()
 
         bundles
@@ -73,17 +74,22 @@ open class LibraryPlugin : DdcmpConventionPlugin() {
     /**
      * Dependency bundles to apply to 'commonMain'
      */
-    open val commonMainBundles = listOf("library.common-main")
+    open val commonMainBundles = setOf("library.common.main")
 
     /**
      * Dependency bundles to apply to 'commonTest'
      */
-    open val commonTestBundles = listOf("library.common.test")
+    open val commonTestBundles = setOf("library.common.test")
 
     /**
      * Dependency bundles to apply to 'androidMain'
      */
-    open val androidMainBundles = listOf("library.android.main")
+    open val androidMainBundles = setOf("library.android.main")
+
+    /**
+     * Dependency bundles to apply to 'jvmMain'
+     */
+    open val jvmMainBundles = emptySet<String>()
 
     override val pluginCatalogNames = listOf(
         "kotlin.multiplatform",

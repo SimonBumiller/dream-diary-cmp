@@ -10,6 +10,10 @@ gradlePlugin {
             id = "ddcmp.library"
             implementationClass = "LibraryPlugin"
         }
+        register("compose-library-plugin") {
+            id = "ddcmp.library.compose"
+            implementationClass = "ComposeLibraryPlugin"
+        }
     }
 }
 

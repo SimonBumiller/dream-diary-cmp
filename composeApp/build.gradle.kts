@@ -1,63 +1,16 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.kotlin.android.library)
-    alias(libs.plugins.compose.multiplatform)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.compose.hotreload)
+    id("ddcmp.library.compose")
     alias(libs.plugins.serialization)
-    alias(libs.plugins.android.lint)
 }
 
 kotlin {
-    android {
-        namespace = "me.bumiller.ddcmp.compose_app"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-
-        androidResources {
-            enable = true
-        }
-    }
-    
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-    
-    jvm()
-    
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.android.activity.compose)
-            implementation(libs.koin.android)
             implementation(libs.workmanager)
-            implementation(libs.filekt.core)
         }
         commonMain.dependencies {
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.foundation)
-            implementation(libs.material)
-            implementation(libs.compose.ui)
-            implementation(libs.compose.resources)
-            implementation(libs.android.compose.viewmodel)
-            implementation(libs.android.compose.lifecycle)
-            implementation(libs.koin)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
-            implementation(libs.compose.navigation)
-            implementation(libs.material.windowsizeclass)
-            implementation(libs.filekt.core)
             implementation(project(":core:database"))
             implementation(project(":core:datastore"))
             implementation(project(":core:io"))
@@ -70,13 +23,6 @@ kotlin {
             implementation(project(":feature:onboarding"))
             implementation(project(":ui:common"))
             implementation(project(":ui:diagram"))
-        }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
-        jvmMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlin.coroutines.swing)
         }
     }
 }

@@ -120,6 +120,25 @@ library-common-main = ["kotlin-coroutines", "koin", "kotlin-datetime", "filekt-c
 library-common-test = ["kotlin-test"]
 library-android-main = ["koin-android"]
 
+compose-common-main = [
+    "compose-runtime",
+    "compose-foundation",
+    "compose-ui",
+    "compose-resources",
+    "material",
+    "material-windowsizeclass",
+    "material-icons",
+    "koin-compose",
+    "koin-compose-viewmodel",
+    "android-compose-viewmodel",
+    "android-compose-lifecycle",
+    "compose-navigation",
+    "filekt-dialogs",
+    "filekt-dialogs-compose",
+]
+compose-android-main = ["android-activity-compose"]
+compose-jvm-main = ["kotlin-coroutines-swing"]
+
 [plugins]
 
 #
