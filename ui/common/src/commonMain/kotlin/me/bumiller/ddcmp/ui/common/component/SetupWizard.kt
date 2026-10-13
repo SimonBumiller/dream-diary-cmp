@@ -276,38 +276,3 @@ enum class PreviewStep(
     Third(Res.string.preview_wizard_third),
 
 }
-
-@Preview
-@Composable
-fun SetupWizardPreview() {
-    SetupWizard(
-        modifier = Modifier
-            .width(400.dp),
-        steps = PreviewStep.entries,
-        onFinish = {},
-        onCancel = {}
-    ) { step ->
-        when (step) {
-            PreviewStep.First -> Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .background(Color.Blue)
-            )
-
-            PreviewStep.Second -> Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .background(Color.Red)
-            )
-
-            PreviewStep.Third -> Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .background(Color.Green)
-            )
-        }
-    }
-}

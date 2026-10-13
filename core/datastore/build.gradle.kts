@@ -54,7 +54,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
                 implementation(libs.androidx.datastore)
                 implementation(libs.androidx.datastore.preferences)

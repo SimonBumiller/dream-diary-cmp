@@ -1,8 +1,13 @@
 package me.bumiller.ddcmp.work
 
+import me.bumiller.ddcmp.work.platform.PlatformBackgroundTaskScheduler
 import org.koin.core.module.Module
 
 
+actual fun Module.providePlatformBackgroundTaskScheduler() {
+    single<PlatformBackgroundTaskScheduler> { PlatformBackgroundTaskScheduler() }
+}
+
 actual fun Module.provideWorkers() {
-    // Don't provide a worker, because there is none
+    // No workers on jvm
 }
