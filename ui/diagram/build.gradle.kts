@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android.library)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.android.lint)
     alias(libs.plugins.compose.hotreload)
 }
 

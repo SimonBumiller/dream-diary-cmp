@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose.hotreload)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.android.lint)
 }
 
 kotlin {
