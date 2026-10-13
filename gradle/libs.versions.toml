@@ -108,6 +108,18 @@ zip-kotlinx = { module = "no.synth:kmp-zip-kotlinx", version.ref = "zip" }
 mockk = { module = "io.mockk:mockk-jvm", version.ref = "mockk" }
 workmanager = { module = "dev.brewkits:kmpworkmanager", version.ref = "workmanager" }
 
+#
+# Build plugins
+#
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+
+[bundles]
+# Bundles libraries that extend the domain of the app.
+library-common-main = ["kotlin-coroutines", "koin", "kotlin-datetime", "filekt-core"]
+library-common-test = ["kotlin-test"]
+library-android-main = ["koin-android"]
+
 [plugins]
 
 #

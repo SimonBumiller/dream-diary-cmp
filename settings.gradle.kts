@@ -2,6 +2,8 @@ rootProject.name = "dream-diary-cmp"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
+    includeBuild("build-logic")
+
     repositories {
         google {
             mavenContent {
@@ -12,6 +14,10 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+    }
+
+    plugins {
+        id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
     }
 }
 
@@ -26,10 +32,6 @@ dependencyResolutionManagement {
         }
         mavenCentral()
     }
-}
-
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 include(":composeApp")
