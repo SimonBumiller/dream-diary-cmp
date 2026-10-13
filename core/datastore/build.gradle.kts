@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
@@ -10,18 +12,16 @@ kotlin {
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-    androidLibrary {
-        namespace = "me.bumiller.ddcomp.core.datastore"
-        compileSdk = 36
-        minSdk = 26
+    android {
+        namespace = "me.bumiller.ddcmp.core.datastore"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
 
-        withHostTestBuilder {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
         }
 
-        withDeviceTestBuilder {
-            sourceSetTreeName = "test"
-        }.configure {
-            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        androidResources {
+            enable = true
         }
     }
 
