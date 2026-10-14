@@ -3,7 +3,6 @@ package me.bumiller.ddcmp
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -43,6 +42,7 @@ fun AppRoot(
     // If the state is not yet present, or the backstack is still empty, we simply show nothing.
     // Works because splash screen should be visible atm.
     val state = _state ?: return
+
     if (initialEntry == null) return
     else if(initialEntry == MainRoutes.Onboarding) onScreenReady()
 

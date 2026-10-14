@@ -28,6 +28,9 @@ internal class AppViewmodel(
     internal interface UiEvent: UIE
     internal interface ViewModelEvent: VME
 
+    private val _initialEntry = MutableStateFlow<MainRoutes?>(null)
+    val initialEntry = _initialEntry.asStateFlow()
+
     init {
         viewModelScope.launch {
             val settings = getSettings(Unit).first()
@@ -37,9 +40,6 @@ internal class AppViewmodel(
             _initialEntry.value = initialEntry
         }
     }
-
-    private val _initialEntry = MutableStateFlow<MainRoutes?>(null)
-    val initialEntry = _initialEntry.asStateFlow()
 
     /**
      * The current state of the app.
