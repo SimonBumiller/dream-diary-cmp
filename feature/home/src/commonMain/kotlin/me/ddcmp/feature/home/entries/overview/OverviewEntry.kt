@@ -64,7 +64,8 @@ internal fun OverviewEntry(
     onGoToPersons: () -> Unit,
     onGoToDreams: () -> Unit,
     onGoToTags: () -> Unit,
-    onGoToDreamDetail: (id: Long) -> Unit
+    onGoToDreamDetail: (id: Long) -> Unit,
+    onLoaded: () -> Unit
 ) {
     ViewModelScope<UiEvent, ViewModelEvent, OverviewViewModel>(
         onViewModelEvent = {
@@ -90,6 +91,7 @@ internal fun OverviewEntry(
             .all { it != null }
 
         if (allNotNull) {
+            onLoaded()
             OverviewEntry(
                 onEvent = vm::onEvent,
                 recentDreams = recentDreams!!,

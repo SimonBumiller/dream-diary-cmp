@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.koin)
     implementation(libs.koin.android)
     implementation(libs.workmanager)
+    implementation(libs.android.splashscreen)
 
     implementation(project(":core:work"))
 }

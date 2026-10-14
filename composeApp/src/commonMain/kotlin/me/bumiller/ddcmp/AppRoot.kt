@@ -37,15 +37,6 @@ fun AppRoot(
     val viewmodel = koinViewModel<AppViewmodel>()
     val navController = rememberNavController()
 
-    // Wait until the state is available
-    LaunchedEffect(Unit) {
-        viewmodel.state.collectLatest { state ->
-            if (state != null) {
-                onScreenReady()
-            }
-        }
-    }
-
     val _state by viewmodel.state.collectAsState()
     val initialEntry by viewmodel.initialEntry.collectAsState()
 
@@ -53,6 +44,7 @@ fun AppRoot(
     // Works because splash screen should be visible atm.
     val state = _state ?: return
     if (initialEntry == null) return
+    else if(initialEntry == MainRoutes.Onboarding) onScreenReady()
 
     AppTheme(
         mode = state.settings.colorMode,
@@ -68,7 +60,8 @@ fun AppRoot(
         ) {
             composable<MainRoutes.Home> {
                 HomeEntry(
-                    onGoToSettings = { navController.navigate(MainRoutes.Settings) }
+                    onGoToSettings = { navController.navigate(MainRoutes.Settings) },
+                    onLoaded = onScreenReady
                 )
             }
 

@@ -30,6 +30,7 @@ zip = "1.0.0"
 mockk = "1.14.11"
 workmanager = "3.5.0"
 documentfile = "1.1.0"
+splashscreen = "1.2.0"
 
 [libraries]
 
@@ -54,6 +55,7 @@ android-datastore = { module = "androidx.datastore:datastore", version.ref = "da
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 android-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 androidx-documentfile = { group = "androidx.documentfile", name = "documentfile", version.ref = "documentfile" }
+android-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
 
 #
 # Compose libraries

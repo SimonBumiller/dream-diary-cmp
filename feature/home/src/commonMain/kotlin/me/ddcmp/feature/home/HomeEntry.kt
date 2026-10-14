@@ -24,10 +24,10 @@ import me.ddcmp.feature.home.navigation.HomeRoutes
 import me.ddcmp.feature.stats.StatsEntry
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 @Composable
 fun HomeEntry(
-    onGoToSettings: () -> Unit
+    onGoToSettings: () -> Unit,
+    onLoaded: () -> Unit
 ) {
     val navController = rememberNavController()
 
@@ -178,7 +178,8 @@ fun HomeEntry(
                     },
                     onGoToTags = {
                         navController.navigate(HomeRoutes.TagList)
-                    }
+                    },
+                    onLoaded = onLoaded
                 )
             }
 
