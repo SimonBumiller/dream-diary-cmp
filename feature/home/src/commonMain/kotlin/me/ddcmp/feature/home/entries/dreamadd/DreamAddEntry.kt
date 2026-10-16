@@ -126,8 +126,8 @@ val transparentTextFieldColors: TextFieldColors
     )
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class,
-    ExperimentalTime::class, ExperimentalComposeUiApi::class
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3ExpressiveApi::class
 )
 @Composable
 private fun DreamAddEntry(
@@ -144,9 +144,11 @@ private fun DreamAddEntry(
 
     LaunchedEffect(Unit) {
         delay(300L.milliseconds)
-        keyboardController?.run {
-            show()
-            focusRequester.requestFocus()
+        if(!uiState.isEdit) {
+            keyboardController?.run {
+                show()
+                focusRequester.requestFocus()
+            }
         }
     }
 

@@ -35,7 +35,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase.I as DreamsQuery
 
-@OptIn(ExperimentalTime::class)
 internal class DreamAddViewModel(
     savedStateHandle: SavedStateHandle,
     val allEmotions: AllEmotionsUseCase,
@@ -195,6 +194,7 @@ internal class DreamAddViewModel(
         val isAdd = navRoute.dreamId == null
 
         viewModelScope.launch {
+            updateUiState<UiState> { it.copy(isEdit = !isAdd) }
             if(isAdd) { // If dream is new, we set the default confidentiality to the one saved in the settings
                 val defaultConf = settings(Unit).first().defaultConfidentiality
                 updateUiState<DreamState> {
@@ -327,6 +327,8 @@ internal class DreamAddViewModel(
      * State that holds other ui-related values.
      */
     data class UiState(
+
+        val isEdit: Boolean = false,
 
         val personQuery: String = "",
 

@@ -10,3 +10,4 @@ Note: Changes in *italic* are changes not visible to users.
 
 ## Major Changes
 - Fixed emotion/tag/person query change in dream-add not registered
+- Fixed keyboard opening when editing a dream
