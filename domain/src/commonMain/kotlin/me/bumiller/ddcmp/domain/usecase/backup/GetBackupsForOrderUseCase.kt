@@ -41,7 +41,7 @@ class GetBackupsForOrderUseCase(
          */
         val mostRecentBackup: PeriodicBackup?
             get() = backups
-                .minByOrNull(PeriodicBackup::created)
+                .maxByOrNull(PeriodicBackup::created)
 
     }
 
