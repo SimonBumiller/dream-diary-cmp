@@ -85,7 +85,7 @@ fun <T : EmotionCoordinate> EmotionGrid(
                             val x = (relX.value + 1) / 2 * size.width
                             val y = (1 - (relY.value + 1) / 2) * size.height
 
-                            if(special) {
+                            if (special) {
                                 val size = 32F
                                 val center = Offset(x, y)
 
@@ -121,13 +121,14 @@ fun <T : EmotionCoordinate> EmotionGrid(
                             val dif = sqrt(xDif.pow(2) + yDif.pow(2))
                             it to dif
                         }
-                        .minBy { (_, dif) -> dif }
+                        .minByOrNull { (_, dif) -> dif } ?: (null to null)
 
                     val emotionCoordinate = object : EmotionCoordinate {
                         override val valence = Valence(valence)
                         override val arousal = Arousal(arousal)
                     }
-                    val actualDistance = minOf(size.width, size.height) / 2 * relDistance
+                    val actualDistance =
+                        relDistance?.let { minOf(size.width, size.height) / 2 * relDistance } ?: 0F
 
                     if (actualDistance <= minimumInteractiveSize)
                         onClickClosest(emotionCoordinate, closest)
