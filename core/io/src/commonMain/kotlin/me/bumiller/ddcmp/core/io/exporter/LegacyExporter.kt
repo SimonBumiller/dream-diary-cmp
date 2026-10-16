@@ -9,6 +9,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.io.encodeToSink
 import me.bumiller.ddcmp.core.io.model.Legacy
+import me.bumiller.ddcmp.domain.error.captureException
 import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
@@ -90,7 +91,8 @@ internal class LegacyExporter(
 
         try {
             Json.encodeToSink(root, zipStream.asSink().buffered())
-        } catch (_: IOException) {
+        } catch (e: IOException) {
+            captureException(e)
             return ExportResult.Failure.FileAccess(
                 id = 0,
                 started = startTimestamp,

@@ -10,6 +10,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.io.decodeFromSource
 import me.bumiller.ddcmp.core.io.model.Legacy
+import me.bumiller.ddcmp.domain.error.captureException
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.dream.Dream
@@ -32,13 +33,14 @@ internal class LegacyImporter(
     private val createTag: SaveTagUseCase
 ) : BackupImporter {
 
-    @OptIn(ExperimentalTime::class, ExperimentalSerializationApi::class)
+    @OptIn(ExperimentalSerializationApi::class)
     override suspend fun importBackup(file: PlatformFile): ImportResult {
         val startedTimestamp = Clock.System.now()
 
         val root = try {
             Json.decodeFromSource<Legacy.Root>(file.source().buffered())
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            captureException(e)
             return ImportResult.Failure.FileFormat(0, startedTimestamp, Clock.System.now())
         }
 

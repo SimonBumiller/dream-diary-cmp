@@ -6,6 +6,7 @@ import io.github.vinceglb.filekit.path
 import kotlinx.io.IOException
 import kotlinx.io.buffered
 import me.bumiller.ddcmp.core.io.common.countingSink
+import me.bumiller.ddcmp.domain.error.captureException
 import me.bumiller.ddcmp.domain.io.BackupExporter
 import me.bumiller.ddcmp.domain.io.asSinkFixed
 import me.bumiller.ddcmp.domain.model.io.ExportResult
@@ -32,7 +33,8 @@ internal abstract class ZipFileExporter: BackupExporter {
             ZipOutputStream(sink).use { zipStream ->
                 try {
                     aggregateZipFile(zipStream)
-                } catch (_: IOException) {
+                } catch (e: IOException) {
+                    captureException(e)
                     ExportResult.Failure.FileAccess(0, startTimestamp, Clock.System.now())
                 }
             }

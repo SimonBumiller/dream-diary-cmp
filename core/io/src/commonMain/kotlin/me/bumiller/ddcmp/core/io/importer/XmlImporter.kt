@@ -1,6 +1,5 @@
 package me.bumiller.ddcmp.core.io.importer
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import me.bumiller.ddcmp.core.io.model.Xml
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.io.IOFileType
@@ -128,7 +127,6 @@ internal class XmlImporter(
         )
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     private inline fun <reified T> ZipFile.decode(name: String): T? {
         val source = sourceForName(name, IOFileType.Xml) ?: return null
 
