@@ -43,7 +43,7 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
 
             packageName = "me.bumiller.ddcmp"
-            packageVersion = "1.0.0"
+            packageVersion = libs.versions.app.version.name.get()
 
             windows {
                 iconFile.set(iconFileIco)
