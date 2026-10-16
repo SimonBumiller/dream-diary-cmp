@@ -109,7 +109,7 @@ internal class DreamListViewModel(
 
         val sortMode: DreamSort = DreamSort.Dreamt,
 
-        val sortDirection: SortDirection = SortDirection.Ascending,
+        val sortDirection: SortDirection = SortDirection.Descending,
 
         val selectedDream: Dream? = null
 
