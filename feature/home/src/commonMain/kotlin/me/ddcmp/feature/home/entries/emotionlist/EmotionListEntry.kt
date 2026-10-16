@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -104,7 +106,8 @@ private fun EmotionListEntry(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(pv + PaddingValues(horizontal = 12.dp)),
+                .padding(pv + PaddingValues(horizontal = 12.dp))
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             if (emotions.isEmpty()) {
