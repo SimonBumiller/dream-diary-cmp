@@ -4,6 +4,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.sentry)
 }
 
 extensions.configure<ApplicationExtension> {
@@ -25,7 +26,7 @@ extensions.configure<ApplicationExtension> {
     }
 
     signingConfigs {
-        val keystorePropertiesFile = rootProject.file("keystore.properties")
+        val keystorePropertiesFile = rootProject.file("build.properties")
         val keystoreProperties = Properties()
 
         if (keystorePropertiesFile.exists()) {
@@ -62,6 +63,22 @@ extensions.configure<ApplicationExtension> {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+
+sentry {
+    includeSourceContext = true
+
+    org = "simon-bumiller"
+    projectName = "kotlin"
+
+    val buildPropertiesFile = rootProject.file("build.properties")
+    val buildProperties = Properties()
+
+    if (buildPropertiesFile.exists()) {
+        buildProperties.load(buildPropertiesFile.inputStream())
+    }
+
+    authToken = buildProperties.getProperty("sentryAuthToken")
 }
 
 dependencies {

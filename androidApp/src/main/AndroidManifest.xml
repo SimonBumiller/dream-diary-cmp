@@ -19,6 +19,17 @@
             android:supportsRtl="true"
             android:name=".AndroidApplication"
             android:theme="@style/Theme.App.Starting">
+
+        <meta-data
+                android:name="io.sentry.dsn"
+                android:value="https://0f2b29c70bf4f918dd2d2840956e5e44@o4512264943632384.ingest.de.sentry.io/4512264952807504" />
+        <meta-data
+                android:name="io.sentry.debug"
+                android:value="true" />
+        <meta-data
+                android:name="io.sentry.data-collection.user-info"
+                android:value="false" />
+
         <activity
                 android:exported="true"
                 android:theme="@style/Theme.App.Starting"

@@ -7,6 +7,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.androidx.documentfile)
+                implementation(libs.sentry)
             }
         }
     }

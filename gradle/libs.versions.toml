@@ -31,6 +31,8 @@ mockk = "1.14.11"
 workmanager = "3.5.0"
 documentfile = "1.1.0"
 splashscreen = "1.2.0"
+sentry = "6.23.0"
+sentry_sdk = "8.58.0"
 
 [libraries]
 
@@ -110,6 +112,7 @@ zip-kotlinx = { module = "no.synth:kmp-zip-kotlinx", version.ref = "zip" }
 #
 mockk = { module = "io.mockk:mockk-jvm", version.ref = "mockk" }
 workmanager = { module = "dev.brewkits:kmpworkmanager", version.ref = "workmanager" }
+sentry = { module = "io.sentry:sentry-android", version.ref = "sentry_sdk" }
 
 #
 # Build plugins
@@ -170,3 +173,4 @@ kotlin-android-library = { id = "com.android.kotlin.multiplatform.library", vers
 #
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+sentry = { id = "io.sentry.android.gradle", version.ref = "sentry" }
