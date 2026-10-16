@@ -89,6 +89,7 @@ import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.ChangeDe
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.SelectPerson
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 
 @Composable
@@ -142,7 +143,7 @@ private fun DreamAddEntry(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
-        delay(300L)
+        delay(300L.milliseconds)
         keyboardController?.run {
             show()
             focusRequester.requestFocus()
@@ -257,7 +258,6 @@ private fun DreamAddEntry(
     }
 }
 
-@OptIn(ExperimentalTime::class)
 @Composable
 private fun OptionalSection(
     dreamState: DreamAddViewModel.DreamState,
@@ -359,7 +359,7 @@ private fun MainMetaSection(
 
             SearchTextField(
                 query = uiState.personQuery,
-                onQueryChange = { UiEvent.ChangePersonQuery(it) },
+                onQueryChange = { onEvent(UiEvent.ChangePersonQuery(it)) },
                 label = { Text(stringResource(Res.string.dreamadd_persons_label)) },
                 values = persons.search(uiState.personQuery),
                 name = Person::name,
@@ -404,7 +404,7 @@ private fun MainMetaSection(
 
             SearchTextField(
                 query = uiState.tagQuery,
-                onQueryChange = { UiEvent.ChangeTagQuery(it) },
+                onQueryChange = { onEvent(UiEvent.ChangeTagQuery(it)) },
                 label = { Text(stringResource(Res.string.dreamadd_tags_label)) },
                 values = tags.search(uiState.tagQuery),
                 name = Tag::name,
@@ -449,7 +449,7 @@ private fun MainMetaSection(
 
             SearchTextField(
                 query = uiState.emotionQuery,
-                onQueryChange = { UiEvent.ChangeEmotionQuery(it) },
+                onQueryChange = { onEvent(UiEvent.ChangeEmotionQuery(it)) },
                 label = { Text(stringResource(Res.string.dreamadd_emotions_label)) },
                 values = emotions.search(uiState.emotionQuery),
                 name = Emotion::name,

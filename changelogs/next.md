@@ -9,3 +9,4 @@ Note: Changes in *italic* are changes not visible to users.
 - *Added sentry and added explicit captures for im- and exporters*
 
 ## Major Changes
+- Fixed emotion/tag/person query change in dream-add not registered
