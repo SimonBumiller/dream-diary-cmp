@@ -7,6 +7,7 @@ Note: Changes in *italic* are changes not visible to users.
 - Fixed keyboard opening when editing a dream
 - Fixed dream-list default sort not being dreamt/desc
 - Fixed emotion-list not being scrollable
+- Fixed overview not showing **very** recent dreams
 
 ## Minor Changes
 - Added navigation link between person-detail and person-edit
