@@ -136,6 +136,7 @@
     <string name="person_detail_time_frequency_description">This statistics shows in what time ranges %1$s has occurred in dreams.</string>
     <string name="person_detail_time_frequency_period_label">Most prominent period:</string>
     <string name="person_detail_time_frequency_period">%1$s – %2$s</string>
+    <string name="person_detail_edit">Edit</string>
 
     <string-array name="basic_emotions_names">
         <item>Happiness</item>

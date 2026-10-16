@@ -44,7 +44,6 @@ internal class PersonDetailViewModel(
     /**
      * The state containing the person to display.
      */
-    @OptIn(ExperimentalTime::class)
     val personState = allPersons(AllPersonUseCase.I(id = personId))
         .map { it.singleOrNull() }
         .stateIn(null)

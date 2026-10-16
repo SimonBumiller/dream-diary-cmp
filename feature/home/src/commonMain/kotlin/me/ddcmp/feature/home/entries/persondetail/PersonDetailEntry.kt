@@ -21,6 +21,8 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -47,6 +49,7 @@ import dream_diary_cmp.feature.home.generated.resources.person_detail_associated
 import dream_diary_cmp.feature.home.generated.resources.person_detail_associated_persons_description
 import dream_diary_cmp.feature.home.generated.resources.person_detail_associated_persons_title
 import dream_diary_cmp.feature.home.generated.resources.person_detail_dream_occurence_label
+import dream_diary_cmp.feature.home.generated.resources.person_detail_edit
 import dream_diary_cmp.feature.home.generated.resources.person_detail_first_occurence_label
 import dream_diary_cmp.feature.home.generated.resources.person_detail_last_occurence_label
 import dream_diary_cmp.feature.home.generated.resources.person_detail_no_info_placeholder
@@ -74,6 +77,8 @@ import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.bumiller.ddcmp.ui.common.format.formatInstant
 import me.bumiller.ddcmp.ui.common.format.formatLocalDate
+import me.bumiller.ddcmp.ui.common.layout.AppBarAction
+import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
@@ -171,7 +176,16 @@ private fun PersonDetailEntry(
             ) {
                 CenterAlignedTopAppBar(
                     title = { Text(stringResource(Res.string.person_detail_title)) },
-                    navigationIcon = { BackIconButton { onEvent(GoBack) } }
+                    navigationIcon = { BackIconButton { onEvent(GoBack) } },
+                    actions = {
+                        AppBarActions(
+                            actions = listOf(AppBarAction(
+                                label = stringResource(Res.string.person_detail_edit),
+                                icon = Icons.Default.Edit,
+                                handler = { onEvent(UiEvent.Edit) }
+                            ))
+                        )
+                    }
                 )
             }
         }
