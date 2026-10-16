@@ -86,7 +86,6 @@ private fun DialogTextFailure(
     Text(stringResource(resource))
 }
 
-@OptIn(ExperimentalTime::class)
 @Composable
 private fun DialogTextSuccess(
     result: ExportResult.Success

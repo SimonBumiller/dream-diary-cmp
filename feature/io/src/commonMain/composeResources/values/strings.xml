@@ -27,7 +27,7 @@
     <string name="export_result_title_success">Export finished</string>
     <string name="export_result_title_failure">Export failed</string>
     <string name="export_result_description_access">The selected file destination could not be read to. This may be caused by network problems.</string>
-    <string name="export_result_description">Saved the backup file to **%1$s**. In total, the backup occupies **%2$s** storage space and took **%2$s** to complete.</string>
+    <string name="export_result_description">Saved the backup file to **%1$s**. In total, the backup occupies **%2$s** storage space and took **%3$s** to complete.</string>
 
     <string name="export_configuration_title">Export</string>
     <string name="export_configuration_description">Configure your data import by selecting what type of backup you want to create.</string>
