@@ -20,8 +20,6 @@ kotlin {
 
                 implementation(libs.zip)
                 implementation(libs.zip.kotlinx)
-
-                implementation(project(":domain"))
             }
         }
         jvmTest {

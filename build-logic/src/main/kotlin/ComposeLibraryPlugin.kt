@@ -16,4 +16,7 @@ class ComposeLibraryPlugin : LibraryPlugin() {
     override val jvmMainBundles =
         super.jvmMainBundles + listOf("compose.jvm.main")
 
+    override val commonMainProjectDependencies =
+        super.commonMainProjectDependencies + setOf(":ui:common")
+
 }

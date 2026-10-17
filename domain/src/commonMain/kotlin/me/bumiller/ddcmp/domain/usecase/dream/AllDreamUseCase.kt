@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import me.bumiller.ddcmp.domain.common.combineSafe
+import me.bumiller.ddcmp.common.combineSafe
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
@@ -20,10 +20,8 @@ import me.bumiller.ddcmp.domain.model.meta.SortMode.DreamSort
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase.I
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase.O
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
-@OptIn(ExperimentalTime::class)
 open class AllDreamUseCase(
     val repo: DreamRepository,
     val emotionRepo: EmotionRepository,

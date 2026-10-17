@@ -37,6 +37,7 @@ dependencyResolutionManagement {
 include(":composeApp")
 include(":androidApp")
 include(":domain")
+include(":common")
 include(":core:database")
 include(":core:work")
 include(":core:datastore")

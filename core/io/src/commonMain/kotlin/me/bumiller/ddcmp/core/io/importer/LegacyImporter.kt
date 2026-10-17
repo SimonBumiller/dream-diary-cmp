@@ -10,7 +10,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.io.decodeFromSource
 import me.bumiller.ddcmp.core.io.model.Legacy
-import me.bumiller.ddcmp.domain.error.captureException
+import me.bumiller.ddcmp.common.captureException
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.dream.Dream
@@ -21,7 +21,6 @@ import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 internal class LegacyImporter(
     private val timeZone: TimeZone,

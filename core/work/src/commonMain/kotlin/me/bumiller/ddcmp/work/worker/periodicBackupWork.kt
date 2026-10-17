@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import me.bumiller.ddcmp.domain.infrastructure.ExportLogRepository
-import me.bumiller.ddcmp.domain.io.createChildFile
+import me.bumiller.ddcmp.common.createChildFile
 import me.bumiller.ddcmp.domain.model.backup.BackupDestination
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 import me.bumiller.ddcmp.domain.model.io.ExportResult

@@ -53,6 +53,15 @@ open class LibraryPlugin : DdcmpConventionPlugin() {
         sourceSets.commonTest.get().applyBundles(project, commonTestBundles)
         sourceSets.androidMain.get().applyBundles(project, androidMainBundles)
         sourceSets.jvmMain.get().applyBundles(project, jvmMainBundles)
+
+        for (dependency in commonMainProjectDependencies) {
+            // We don't allow self-referencing dependencies
+            if(dependency == project.path) continue
+
+            sourceSets.commonMain.dependencies {
+                implementation(project(dependency))
+            }
+        }
     }
 
     private fun KotlinSourceSet.applyBundles(project: Project, bundles: Set<String>) {
@@ -85,6 +94,11 @@ open class LibraryPlugin : DdcmpConventionPlugin() {
      * Dependency bundles to apply to 'androidMain'
      */
     open val androidMainBundles = setOf("library.android.main")
+
+    /**
+     * Dependencies added to 'commonMain' that are dependencies to this project.
+     */
+    open val commonMainProjectDependencies = setOf(":domain", ":common")
 
     /**
      * Dependency bundles to apply to 'jvmMain'

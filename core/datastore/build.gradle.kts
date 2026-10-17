@@ -8,7 +8,6 @@ kotlin {
             dependencies {
                 implementation(libs.android.datastore)
                 implementation(libs.androidx.datastore.preferences)
-                implementation(project(":domain"))
             }
         }
     }
