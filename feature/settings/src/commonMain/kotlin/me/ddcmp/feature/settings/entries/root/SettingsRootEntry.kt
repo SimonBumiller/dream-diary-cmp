@@ -210,26 +210,29 @@ private fun IoSection(
                 )
             }
         )
-        ListItem(
-            modifier = Modifier.clickable {
-                onEvent(UiEvent.ClickBackup)
-            },
-            headlineContent = {
-                Text(
-                    text = stringResource(Res.string.settings_root_backup_title),
-                    fontWeight = FontWeight.Bold
-                )
-            },
-            supportingContent = {
-                Text(stringResource(Res.string.settings_root_backup_description))
-            },
-            leadingContent = {
-                Icon(
-                    imageVector = Icons.Outlined.Schedule,
-                    contentDescription = null
-                )
-            }
-        )
+
+        if(PlatformFeatures.supportsPeriodicBackups) {
+            ListItem(
+                modifier = Modifier.clickable {
+                    onEvent(UiEvent.ClickBackup)
+                },
+                headlineContent = {
+                    Text(
+                        text = stringResource(Res.string.settings_root_backup_title),
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+                supportingContent = {
+                    Text(stringResource(Res.string.settings_root_backup_description))
+                },
+                leadingContent = {
+                    Icon(
+                        imageVector = Icons.Outlined.Schedule,
+                        contentDescription = null
+                    )
+                }
+            )
+        }
     }
 }
 
