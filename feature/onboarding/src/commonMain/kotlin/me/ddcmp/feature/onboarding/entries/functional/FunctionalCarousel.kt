@@ -22,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -43,6 +42,7 @@ import dream_diary_cmp.feature.onboarding.generated.resources.theme_dynamic_desc
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_dynamic_label
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_mode_label
 import dream_diary_cmp.feature.onboarding.generated.resources.theme_title
+import me.bumiller.ddcmp.domain.model.PlatformFeatures
 import me.bumiller.ddcmp.domain.model.settings.ColorMode
 import me.bumiller.ddcmp.domain.model.settings.ColorTheme
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
@@ -50,10 +50,8 @@ import me.bumiller.ddcmp.domain.model.settings.Settings
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.biometric.BiometricContainer
 import me.bumiller.ddcmp.ui.common.biometric.BiometricResult
-import me.bumiller.ddcmp.ui.common.biometric.biometricAvailable
 import me.bumiller.ddcmp.ui.common.biometric.rememberBiometricState
 import me.bumiller.ddcmp.ui.common.component.RadioSelectors
-import me.bumiller.ddcmp.ui.common.style.dynamicColorAvailable
 import me.bumiller.ddcmp.ui.common.translation.translateDescription
 import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.ddcmp.feature.onboarding.entries.functional.FunctionalOnboardingViewmodel.UiEvent
@@ -96,12 +94,11 @@ private fun FunctionalCarousel(
     onContinue: () -> Unit
 ) {
     val screens = FunctionalScreens.entries.toList().let {
-        if (!biometricAvailable()) it - FunctionalScreens.Lock
+        if (!PlatformFeatures.supportsBiometricAuth) it - FunctionalScreens.Lock
         else it
     }
 
     val pager = rememberPagerState { screens.size }
-    val scope = rememberCoroutineScope()
 
     OnboardingPager(
         modifier = Modifier
@@ -311,7 +308,7 @@ private fun ThemeScreen(
                     }
                 }
 
-                if (dynamicColorAvailable()) {
+                if (PlatformFeatures.supportsDynamicTheming) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {

@@ -47,6 +47,7 @@ import dream_diary_cmp.feature.settings.generated.resources.settings_root_io_sec
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_title
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_unlock_description
 import dream_diary_cmp.feature.settings.generated.resources.settings_root_unlock_label
+import me.bumiller.ddcmp.domain.model.PlatformFeatures
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.settings.ColorMode
 import me.bumiller.ddcmp.domain.model.settings.ColorTheme
@@ -55,7 +56,6 @@ import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.biometric.BiometricAuthState
 import me.bumiller.ddcmp.ui.common.biometric.BiometricContainer
 import me.bumiller.ddcmp.ui.common.biometric.BiometricResult
-import me.bumiller.ddcmp.ui.common.biometric.biometricAvailable
 import me.bumiller.ddcmp.ui.common.biometric.rememberBiometricState
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.plus
@@ -289,7 +289,7 @@ private fun ConfidentialitySection(
 
         HorizontalDivider()
 
-        if (biometricAvailable()) {
+        if (PlatformFeatures.supportsBiometricAuth) {
             ListItem(
                 modifier = Modifier.clickable {
                     if (settings.unlock)

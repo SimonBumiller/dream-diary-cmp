@@ -16,3 +16,25 @@ data class PlatformInfo (
     val dynamicTheming: Boolean
 
 )
+
+/**
+ * Declaration of what features a platform supports.
+ */
+expect object PlatformFeatures {
+
+    /**
+     * Whether the platform supports biometric authentication.
+     */
+    val supportsBiometricAuth: Boolean
+
+    /**
+     * Whether the platform supports periodic backups.
+     */
+    val supportsPeriodicBackups: Boolean
+
+    /**
+     * Whether the platform supports dynamic theming.
+     */
+    val supportsDynamicTheming: Boolean
+
+}
