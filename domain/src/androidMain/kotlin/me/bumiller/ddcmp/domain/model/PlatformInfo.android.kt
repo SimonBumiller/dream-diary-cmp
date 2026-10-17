@@ -1,5 +1,7 @@
 package me.bumiller.ddcmp.domain.model
 
+import android.os.Build
+
 actual object PlatformFeatures {
     actual val supportsBiometricAuth = true
     actual val supportsPeriodicBackups = true
