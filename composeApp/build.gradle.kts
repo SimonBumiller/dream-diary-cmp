@@ -24,6 +24,9 @@ kotlin {
             implementation(project(":ui:common"))
             implementation(project(":ui:diagram"))
         }
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
+        }
     }
 }
 
