@@ -15,7 +15,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -48,6 +50,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.home.generated.resources.Res
 import dream_diary_cmp.feature.home.generated.resources.dream_title
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_actions_add_attachment
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_actions_save
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_confidentiality_info
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_confidentiality_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_description_placeholder
@@ -82,6 +86,8 @@ import me.bumiller.ddcmp.ui.common.dialog.DDCDatePickerDialog
 import me.bumiller.ddcmp.ui.common.dialog.DiscardChangesDialog
 import me.bumiller.ddcmp.ui.common.format.formatInstant
 import me.bumiller.ddcmp.ui.common.format.formatLocalDate
+import me.bumiller.ddcmp.ui.common.layout.AppBarAction
+import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.layout.ColumnOrRow
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent
@@ -195,20 +201,21 @@ private fun DreamAddEntry(
                         }
                     },
                     actions = {
-                        FilledIconButton(
-                            onClick = { onEvent(UiEvent.Save) },
-                            modifier = Modifier
-                                .minimumInteractiveComponentSize()
-                                .size(IconButtonDefaults.extraSmallContainerSize(IconButtonDefaults.IconButtonWidthOption.Wide)),
-                            enabled = canSave
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Check,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(IconButtonDefaults.extraSmallIconSize)
+                        AppBarActions(
+                            actions = listOf(
+                                AppBarAction(
+                                    label = stringResource(Res.string.dreamadd_actions_add_attachment),
+                                    icon = Icons.Default.AttachFile,
+                                    handler = {  }
+                                ),
+                                AppBarAction(
+                                    label = stringResource(Res.string.dreamadd_actions_save),
+                                    icon = Icons.Default.Save,
+                                    handler = { onEvent(UiEvent.Save) },
+                                    enabled = canSave
+                                ),
                             )
-                        }
+                        )
                     },
                     navigationIcon = {
                         BackIconButton { onEvent(UiEvent.NavigateBack) }

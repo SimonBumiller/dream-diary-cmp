@@ -24,7 +24,8 @@ import org.jetbrains.compose.resources.stringResource
 data class AppBarAction(
     val label: String,
     val icon: ImageVector,
-    val handler: () -> Unit
+    val handler: () -> Unit,
+    val enabled: Boolean = true
 )
 
 @Composable
@@ -44,7 +45,8 @@ fun RowScope.AppBarActions(
 
     explicit.forEach { action ->
         IconButton(
-            onClick = action.handler
+            onClick = action.handler,
+            enabled = action.enabled
         ) {
             Icon(
                 imageVector = action.icon,
@@ -78,7 +80,8 @@ fun RowScope.AppBarActions(
                             imageVector = action.icon,
                             contentDescription = action.label
                         )
-                    }
+                    },
+                    enabled = action.enabled
                 )
             }
         }

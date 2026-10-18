@@ -25,6 +25,8 @@
     <string name="dreamadd_title_label">Title (optional)</string>
     <string name="dreamadd_note_info">Set a note to capture additional information, e.g. bedtime routine or ingested food.</string>
     <string name="dreamadd_note_label">Note (optional)</string>
+    <string name="dreamadd_actions_add_attachment">Add Attachment</string>
+    <string name="dreamadd_actions_save">Save</string>
 
     <string name="emotionlist_title">Emotions</string>
     <string name="emotionlist_action_add">Add Emotion</string>
