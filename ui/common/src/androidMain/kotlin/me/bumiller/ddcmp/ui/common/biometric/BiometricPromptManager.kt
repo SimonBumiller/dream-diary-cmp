@@ -1,6 +1,7 @@
 package me.bumiller.ddcmp.ui.common.biometric
 
 import android.os.Build
+import androidx.activity.compose.LocalActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
@@ -9,6 +10,7 @@ import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -78,10 +80,9 @@ class BiometricPromptManager(
 
 @Composable
 fun rememberBiometricPromptManager(): BiometricPromptManager {
-    val context = LocalContext.current
-    val activity = context as FragmentActivity
+    val context = LocalActivity.current as FragmentActivity
 
-    return remember(activity) {
-        BiometricPromptManager(activity)
+    return remember(context) {
+        BiometricPromptManager(context)
     }
 }
