@@ -1,7 +1,6 @@
 package me.ddcmp.feature.home.entries.emotionadd
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,6 +12,7 @@ import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.emotion.EmotionCoordinate
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
+import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
@@ -21,11 +21,11 @@ import me.ddcmp.feature.home.navigation.HomeRoutes
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 internal class EmotionAddViewModel(
     savedStateHandle: SavedStateHandle,
     val allEmotions: AllEmotionsUseCase,
-    val saveEmotion: SaveEmotionUseCase
+    val saveEmotion: SaveEmotionUseCase,
+    private val appScope: AppCoroutineScope
 ) :
     AppViewModel<EmotionAddViewModel.UiEvent, EmotionAddViewModel.ViewModelEvent>() {
 
@@ -35,7 +35,7 @@ internal class EmotionAddViewModel(
         is UiEvent.Save -> {
             val state = uiState<EmotionState>().value
 
-            viewModelScope.launch {
+            appScope.launch {
                 val existingEmotion = if (navRoute.emotionId == null) null
                 else allEmotions(AllEmotionsUseCase.I(id = navRoute.emotionId))
                     .map { it.singleOrNull() }
@@ -95,7 +95,7 @@ internal class EmotionAddViewModel(
 
         val isAdd = navRoute.emotionId == null
 
-        viewModelScope.launch {
+        appScope.launch {
             if (!isAdd) { // If the emotion exists, we update the state to reflect the existing emotion
                 val emotion = allEmotions(AllEmotionsUseCase.I(id = navRoute.emotionId))
                     .map { it.firstOrNull() }

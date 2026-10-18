@@ -34,12 +34,15 @@ import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase
+import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import org.koin.dsl.module
 
 /**
  * The Koin module for the domain component
  */
 val domain = module {
+    single { AppCoroutineScope() }
+
     single { AllDreamUseCase(get(), get(), get(), get()) }
     single { DreamDatesUseCase(get()) }
     single { SaveDreamUseCase(get(), get(), get(), get()) }

@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase
+import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
@@ -23,7 +24,8 @@ import kotlin.time.ExperimentalTime
 internal class TagAddViewModel(
     private val allTags: AllTagUseCase,
     private val saveTag: SaveTagUseCase,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val appScope: AppCoroutineScope,
 ) : AppViewModel<UiEvent, ViewModelEvent>() {
 
     private val tagId = savedStateHandle.toRoute<HomeRoutes.AddTag>().tagId
@@ -44,7 +46,7 @@ internal class TagAddViewModel(
 
         UiEvent.Cancel -> fireEvent(CloseDialog)
         UiEvent.Save -> {
-            viewModelScope.launch {
+            appScope.launch {
                 val existing = if (isAdd) null
                 else allTags(AllTagUseCase.I(id = tagId))
                     .map {

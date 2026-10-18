@@ -10,6 +10,7 @@ import me.bumiller.ddcmp.domain.model.io.ImportResult
 import me.bumiller.ddcmp.domain.usecase.io.GetImportLogUsecase
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
+import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
@@ -22,6 +23,7 @@ internal class ImportResultViewModel(
     getImportLog: GetImportLogUsecase,
     private val setSettings: SetSettingsUseCase,
     private val settings: GetSettingsUseCase,
+    private val appScope: AppCoroutineScope
 ) : AppViewModel<UiEvent, ViewModelEvent>() {
 
     val result = MutableStateFlow<ImportResult?>(null)
@@ -39,7 +41,7 @@ internal class ImportResultViewModel(
     override suspend fun handleEvent(event: UiEvent) = when (event) {
         is UiEvent.Continue -> {
             if(event.wasSuccess) {
-                viewModelScope.launch {
+                appScope.launch {
                     val settings = settings(Unit).first()
                     setSettings(settings.copy(onboardingFinished = true))
                 }

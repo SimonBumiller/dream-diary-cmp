@@ -24,6 +24,7 @@ import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
+import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.domain.util.search
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
@@ -42,7 +43,8 @@ internal class DreamAddViewModel(
     val allTags: AllTagUseCase,
     val allDreams: AllDreamUseCase,
     val saveDream: SaveDreamUseCase,
-    val settings: GetSettingsUseCase
+    val settings: GetSettingsUseCase,
+    val appScope: AppCoroutineScope
 ) :
     AppViewModel<DreamAddViewModel.UiEvent, DreamAddViewModel.ViewModelEvent>() {
 
@@ -114,7 +116,7 @@ internal class DreamAddViewModel(
         is UiEvent.Save -> {
             val state = uiState<DreamState>().value
 
-            viewModelScope.launch {
+            appScope.launch {
                 val existing = if (navRoute.dreamId == null) null
                 else allDreams(DreamsQuery(id = navRoute.dreamId))
                     .map { it.singleOrNull() }
@@ -193,7 +195,7 @@ internal class DreamAddViewModel(
 
         val isAdd = navRoute.dreamId == null
 
-        viewModelScope.launch {
+        appScope.launch {
             updateUiState<UiState> { it.copy(isEdit = !isAdd) }
             if(isAdd) { // If dream is new, we set the default confidentiality to the one saved in the settings
                 val defaultConf = settings(Unit).first().defaultConfidentiality

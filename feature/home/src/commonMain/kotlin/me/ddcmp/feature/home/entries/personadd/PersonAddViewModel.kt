@@ -16,6 +16,7 @@ import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
+import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.domain.util.search
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
@@ -31,6 +32,7 @@ internal class PersonAddViewModel(
     private val allPersons: AllPersonUseCase,
     private val savePerson: SavePersonUseCase,
     private val allTags: AllTagUseCase,
+    private val appScope: AppCoroutineScope,
     savedStateHandle: SavedStateHandle
 ) : AppViewModel<UiEvent, ViewModelEvent>() {
 
@@ -96,7 +98,7 @@ internal class PersonAddViewModel(
 
         UiEvent.Cancel -> fireEvent(CloseDialog)
         UiEvent.Save -> {
-            viewModelScope.launch {
+            appScope.launch {
                 val existing = if (isAdd) null
                 else allPersons(AllPersonUseCase.I(id = navRoute.personId))
                     .map {

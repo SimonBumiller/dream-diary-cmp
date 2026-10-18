@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.io.ExportOption
 import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.domain.usecase.io.ExportUseCase
+import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
@@ -15,7 +16,8 @@ import me.ddcmp.feature.io.entries.export_configuration.ExportConfigViewModel.Vi
 import me.bumiller.ddcmp.ui.common.model.IOOptionType
 
 internal class ExportConfigViewModel(
-    private val export: ExportUseCase
+    private val export: ExportUseCase,
+    private val appScope: AppCoroutineScope
 ) : AppViewModel<UiEvent, ViewModelEvent>() {
 
     init {
@@ -64,7 +66,7 @@ internal class ExportConfigViewModel(
             val file = uiState.value.file ?: return
             val options = createExportOptions(uiState.value)
 
-            viewModelScope.launch {
+            appScope.launch {
                 updateUiState<UiState> {
                     it.copy(exporting = true)
                 }
@@ -72,7 +74,6 @@ internal class ExportConfigViewModel(
                 val resultId = export(ExportUseCase.I(file, options))
 
                 fireEvent(ViewModelEvent.Finished(resultId))
-
                 updateUiState<UiState> {
                     it.copy(exporting = false)
                 }
