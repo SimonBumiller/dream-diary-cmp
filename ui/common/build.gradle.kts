@@ -1,5 +1,6 @@
 plugins {
     id("ddcmp.library.compose")
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -8,7 +9,7 @@ kotlin {
             implementation(libs.android.biometric)
         }
         commonMain.dependencies {
-            implementation(project(":domain"))
+            implementation(libs.serialization.json)
         }
     }
 }

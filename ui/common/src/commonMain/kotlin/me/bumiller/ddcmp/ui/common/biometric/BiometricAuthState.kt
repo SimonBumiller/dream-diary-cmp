@@ -7,10 +7,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 
 class BiometricAuthState {
 
-    private val _authRequests = MutableSharedFlow<Unit>(
-        replay = 0,
-        extraBufferCapacity = 1
-    )
+    private val _authRequests = MutableSharedFlow<Unit>(1)
     val authRequests: Flow<Unit> = _authRequests
 
     fun requestAuth() {
