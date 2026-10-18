@@ -5,6 +5,7 @@ import io.github.vinceglb.filekit.exists
 import kotlinx.coroutines.flow.first
 import me.bumiller.ddcmp.common.createChildFile
 import me.bumiller.ddcmp.domain.infrastructure.ExportLogRepository
+import me.bumiller.ddcmp.domain.io.BackupExporterFactory
 import me.bumiller.ddcmp.domain.model.backup.BackupDestination
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 import me.bumiller.ddcmp.domain.model.io.ExportResult
@@ -25,6 +26,7 @@ class PerformBackupOrderUseCase(
     private val getExportLog: GetExportLogUsecase,
     private val recordBackup: RecordPeriodicBackupUseCase,
     private val export: ExportUseCase,
+    private val exporterFactory: BackupExporterFactory,
     private val exportLogRepo: ExportLogRepository
 ): UseCase<I, Boolean> {
 
@@ -47,8 +49,17 @@ class PerformBackupOrderUseCase(
         )
         recordBackup(backupRecord)
 
+        enforceKeepMax(order)
+
         // Backup is exactly then successful if the export was successful.
         return exportResult is ExportResult.Success
+    }
+
+    private suspend fun enforceKeepMax(order: PeriodicBackupOrder) {
+        if(order.keepLast == null) return
+
+        val exporter = exporterFactory.createImporter(order.exportOption)
+        exporter.ensureMaxBackupCount(order.destinationAsFile(), order.keepLast)
     }
 
     private suspend fun createExportResult(order: PeriodicBackupOrder, started: Instant): Long {
