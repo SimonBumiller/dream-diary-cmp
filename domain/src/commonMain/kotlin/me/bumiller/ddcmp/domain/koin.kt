@@ -16,6 +16,7 @@ import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic
 import me.bumiller.ddcmp.domain.usecase.backup.CancelBackupOrdersUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.GetBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.GetBackupsForOrderUseCase
+import me.bumiller.ddcmp.domain.usecase.backup.PerformBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.RecordPeriodicBackupUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.SaveBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.ScheduleBackupOrderUseCase
@@ -67,6 +68,7 @@ val domain = module {
     single { CancelBackupOrdersUseCase(get(), get(), get()) }
     single { SaveBackupOrderUseCase(get()) }
     single { ScheduleBackupOrderUseCase(get(), get(), get()) }
+    single { PerformBackupOrderUseCase(get(), get(), get(), get(), get()) }
 
     single { AllTagUseCase(get(), get(), get()) }
     single { SaveTagUseCase(get(), get(), get()) }
