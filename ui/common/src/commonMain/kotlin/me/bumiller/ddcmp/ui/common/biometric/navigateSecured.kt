@@ -8,13 +8,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.composable
-import kotlinx.coroutines.delay
+import androidx.navigation.compose.dialog
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import me.bumiller.ddcmp.domain.model.PlatformFeatures
-import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Route used for the biometric-check composable.
@@ -64,7 +63,8 @@ internal const val SecureNavigationStateKey = "secure_navigation_state"
 internal inline fun <reified T : Any> NavGraphBuilder.setRouteSecurable(controller: NavController) {
     val checkRoute = BiometricCheck(T::class.qualifiedName!!)
 
-    composable(checkRoute.routeName) {
+    // We use dialog so it is displayed over the currently visible content
+    dialog(checkRoute.routeName) {
         val state = rememberBiometricState()
         LaunchedEffect(Unit) {
             state.requestAuth()
@@ -72,7 +72,9 @@ internal inline fun <reified T : Any> NavGraphBuilder.setRouteSecurable(controll
 
         BiometricContainer(
             state = state
-        ) {
+        ) { result ->
+            if(result !is BiometricResult.AuthenticationSuccess) return@BiometricContainer
+
             val securedState = controller.currentBackStackEntry
                 ?.savedStateHandle
                 ?.get<String>(SecureNavigationStateKey)
