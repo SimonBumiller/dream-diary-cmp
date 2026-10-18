@@ -4,6 +4,7 @@ import me.bumiller.ddcmp.core.io.factory.ExporterFactoryImpl
 import me.bumiller.ddcmp.core.io.factory.ImporterFactoryImpl
 import me.bumiller.ddcmp.domain.io.BackupExporterFactory
 import me.bumiller.ddcmp.domain.io.BackupImporterFactory
+import me.bumiller.ddcmp.domain.io.DirectoryTruncator
 import org.koin.dsl.module
 
 /**
@@ -11,6 +12,8 @@ import org.koin.dsl.module
  */
 val io = module {
     single<BackupImporterFactory> { ImporterFactoryImpl(get(), get(), get(), get()) }
+
+    single<DirectoryTruncator> { DirectoryTruncatorImpl() }
 
     single<BackupExporterFactory> { ExporterFactoryImpl(get(), get(), get(), get()) }
 }
