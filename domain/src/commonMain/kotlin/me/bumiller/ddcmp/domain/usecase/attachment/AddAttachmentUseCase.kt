@@ -26,7 +26,8 @@ class AddAttachmentUseCase(
             originalFilename = i.originalFileName,
             mimeType = i.mimeType,
             description = i.description,
-            fileSize = -1
+            fileSize = -1,
+            dreamId = i.dreamId
         ).let {
             val id = attachmentMetaRepo.save(it)
             it.copy(id = id)
