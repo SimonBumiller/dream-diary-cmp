@@ -52,14 +52,14 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun DreamListEntry(
     onAddDream: () -> Unit,
-    onGoToDreamDetail: (id: Long) -> Unit,
+    onGoToDreamDetail: (id: Long, secured: Boolean) -> Unit,
     goBack: () -> Unit
 ) {
     ViewModelScope<UiEvent, ViewModelEvent, DreamListViewModel>(
         onViewModelEvent = {
             when (it) {
                 GoToAddDream -> onAddDream()
-                is GoToDreamDetail -> onGoToDreamDetail(it.dreamId)
+                is GoToDreamDetail -> onGoToDreamDetail(it.dreamId, it.secured)
                 ViewModelEvent.GoBack -> goBack()
             }
         }

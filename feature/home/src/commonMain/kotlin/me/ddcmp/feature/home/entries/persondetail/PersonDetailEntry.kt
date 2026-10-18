@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalTime::class)
-
 package me.ddcmp.feature.home.entries.persondetail
 
 import androidx.compose.foundation.clickable
@@ -99,7 +97,7 @@ import kotlin.time.ExperimentalTime
 internal fun PersonDetailEntry(
     onBack: () -> Unit,
     onEdit: (id: Long) -> Unit,
-    onGoToDream: (Long) -> Unit,
+    onGoToDream: (Long, Boolean) -> Unit,
     onGoToPerson: (Long) -> Unit,
     onGoToEmotion: (Long) -> Unit,
 ) {
@@ -111,7 +109,7 @@ internal fun PersonDetailEntry(
             when (it) {
                 ViewModelEvent.GoBack -> onBack()
                 is ViewModelEvent.Edit -> onEdit(it.personId)
-                is ViewModelEvent.GoToDream -> onGoToDream(it.dreamId)
+                is ViewModelEvent.GoToDream -> onGoToDream(it.dreamId, it.secured)
                 is ViewModelEvent.GoToEmotion -> onGoToEmotion(it.emotionId)
                 is ViewModelEvent.GoToPerson -> onGoToPerson(it.personId)
                 is ViewModelEvent.GoToPage -> {
@@ -377,7 +375,7 @@ private fun DreamsTab(
         modifier = Modifier
             .fillMaxWidth(),
         dreams = dreams,
-        onClick = { onEvent(UiEvent.GoToDream(it.id)) }
+        onClick = { onEvent(UiEvent.GoToDream(it)) }
     )
 }
 

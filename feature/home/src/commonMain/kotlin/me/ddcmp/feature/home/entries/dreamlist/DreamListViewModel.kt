@@ -74,7 +74,7 @@ internal class DreamListViewModel(
             }
         }
 
-        is UiEvent.ClickDream -> fireEvent(GoToDreamDetail(event.dream.id))
+        is UiEvent.ClickDream -> fireEvent(GoToDreamDetail(event.dream.id, event.dream.confidentiality.locked))
         UiEvent.AddDream -> fireEvent(GoToAddDream)
         UiEvent.GoBack -> fireEvent(ViewModelEvent.GoBack)
     }
@@ -99,7 +99,7 @@ internal class DreamListViewModel(
         data object GoToAddDream : ViewModelEvent
         data object GoBack : ViewModelEvent
 
-        data class GoToDreamDetail(val dreamId: Long) : ViewModelEvent
+        data class GoToDreamDetail(val dreamId: Long, val secured: Boolean) : ViewModelEvent
 
     }
 

@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import me.bumiller.ddcmp.ui.common.biometric.navigateSecured
+import me.bumiller.ddcmp.ui.common.biometric.securableComposable
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddEntry
 import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailEntry
 import me.ddcmp.feature.home.entries.dreamlist.DreamListEntry
@@ -22,7 +24,6 @@ import me.ddcmp.feature.home.entries.tagadd.TagAddEntry
 import me.ddcmp.feature.home.entries.taglist.TagListEntry
 import me.ddcmp.feature.home.navigation.HomeRoutes
 import me.ddcmp.feature.stats.StatsEntry
-import kotlin.time.ExperimentalTime
 
 @Composable
 fun HomeEntry(
@@ -44,8 +45,8 @@ fun HomeEntry(
                     onAddDream = {
                         navController.navigate(HomeRoutes.AddDream())
                     },
-                    onGoToDreamDetail = {
-                        navController.navigate(HomeRoutes.DreamDetail(it))
+                    onGoToDreamDetail = { id, secured ->
+                        navController.navigateSecured(HomeRoutes.DreamDetail(id), secured)
                     },
                     goBack = {
                         navController.popBackStack()
@@ -121,7 +122,7 @@ fun HomeEntry(
                     }
                 )
             }
-            composable<HomeRoutes.DreamDetail> {
+            securableComposable<HomeRoutes.DreamDetail>(navController) {
                 DreamDetailEntry(
                     onEdit = {
                         navController.navigate(HomeRoutes.AddDream(it))
@@ -144,8 +145,8 @@ fun HomeEntry(
                     onEdit = {
                         navController.navigate(HomeRoutes.AddPerson(it))
                     },
-                    onGoToDream = {
-                        navController.navigate(HomeRoutes.DreamDetail(it))
+                    onGoToDream = { id, secured ->
+                        navController.navigateSecured(HomeRoutes.DreamDetail(id), secured)
                     },
                     onGoToPerson = {
                         navController.navigate(HomeRoutes.PersonDetail(it))
@@ -173,8 +174,8 @@ fun HomeEntry(
                     onGoToDreams = {
                         navController.navigate(HomeRoutes.DreamList)
                     },
-                    onGoToDreamDetail = {
-                        navController.navigate(HomeRoutes.DreamDetail(it))
+                    onGoToDreamDetail = { id, secured ->
+                        navController.navigateSecured(HomeRoutes.DreamDetail(id), secured)
                     },
                     onGoToTags = {
                         navController.navigate(HomeRoutes.TagList)

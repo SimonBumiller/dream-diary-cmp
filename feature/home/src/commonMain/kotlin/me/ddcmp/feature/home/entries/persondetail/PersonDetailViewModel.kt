@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
+import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
@@ -100,7 +101,7 @@ internal class PersonDetailViewModel(
 
         override suspend fun handleEvent(event: UiEvent) = when (event) {
             UiEvent.Edit -> fireEvent(Edit(personId))
-            is UiEvent.GoToDream -> fireEvent(GoToDream(event.dreamId))
+            is UiEvent.GoToDream -> fireEvent(GoToDream(event.dream.id, event.dream.confidentiality.locked))
             UiEvent.GoBack -> fireEvent(GoBack)
             is UiEvent.ClickEmotion -> fireEvent(GoToEmotion(event.emotion.id))
             is UiEvent.ClickPerson -> fireEvent(GoToPerson(event.person.id))
@@ -120,7 +121,7 @@ internal class PersonDetailViewModel(
     )
 
     sealed interface UiEvent : UIE {
-        data class GoToDream(val dreamId: Long) : UiEvent
+        data class GoToDream(val dream: Dream) : UiEvent
         data class ClickPerson(val person: Person) : UiEvent
         data class ClickEmotion(val emotion: Emotion) : UiEvent
         data class ChangeTab(val tab: PersonDetailTabs) : UiEvent
@@ -129,7 +130,7 @@ internal class PersonDetailViewModel(
     }
 
     sealed interface ViewModelEvent : VME {
-        data class GoToDream(val dreamId: Long) : ViewModelEvent
+        data class GoToDream(val dreamId: Long, val secured: Boolean) : ViewModelEvent
         data class GoToPerson(val personId: Long) : ViewModelEvent
         data class GoToEmotion(val emotionId: Long) : ViewModelEvent
         data class Edit(val personId: Long) : ViewModelEvent

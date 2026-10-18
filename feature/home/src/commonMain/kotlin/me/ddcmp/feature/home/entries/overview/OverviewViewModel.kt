@@ -3,6 +3,7 @@ package me.ddcmp.feature.home.entries.overview
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
@@ -26,7 +27,6 @@ import kotlin.time.Duration.Companion.days
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
-@OptIn(ExperimentalTime::class)
 internal class OverviewViewModel(
     allDreams: AllDreamUseCase,
     allPersons: AllPersonUseCase,
@@ -35,7 +35,7 @@ internal class OverviewViewModel(
 ): AppViewModel<UiEvent, ViewModelEvent>() {
 
     override suspend fun handleEvent(event: UiEvent) = when (event) {
-        is UiEvent.GoToDream -> fireEvent(GoToDream(event.dreamId))
+        is UiEvent.GoToDream -> fireEvent(GoToDream(event.dream.id, event.dream.confidentiality.locked))
         UiEvent.GoToDreams -> fireEvent(GoToDreams)
         UiEvent.GoToEmotions -> fireEvent(GoToEmotions)
         UiEvent.GoToPersons -> fireEvent(GoToPersons)
@@ -89,7 +89,7 @@ internal class OverviewViewModel(
         data object GoToStatistics: UiEvent
         data object AddDream : UiEvent
 
-        data class GoToDream(val dreamId: Long): UiEvent
+        data class GoToDream(val dream: Dream): UiEvent
     }
 
     sealed interface ViewModelEvent: VME {
@@ -99,7 +99,7 @@ internal class OverviewViewModel(
         data object GoToDreams: ViewModelEvent
         data object GoToTags: ViewModelEvent
         data object GoToStatistics: ViewModelEvent
-        data class GoToDream(val dreamId: Long): ViewModelEvent
+        data class GoToDream(val dreamId: Long, val secured: Boolean): ViewModelEvent
         data object AddDream : ViewModelEvent
     }
 

@@ -96,33 +96,7 @@ internal fun DreamDetailEntry(
         if(state == null)
             return@ViewModelScope
 
-        val requireAuth = state!!.dream.confidentiality.locked
-        val uiState by vm.uiState.collectAsStateWithLifecycle()
-        val biometricAuthState = vm.biometricAuthState
-
-        val lifecycleOwner = LocalLifecycleOwner.current
-
-        DisposableEffect(lifecycleOwner) {
-            val observer = LifecycleEventObserver { _, event ->
-                if (event in listOf(ON_STOP) && requireAuth) {
-                    vm.onEvent(UiEvent.Unauthenticate)
-                } else if (event == ON_RESUME && requireAuth) {
-                    vm.onEvent(UiEvent.Authenticate)
-                }
-            }
-            lifecycleOwner.lifecycle.addObserver(observer)
-
-            onDispose {
-                lifecycleOwner.lifecycle.removeObserver(observer)
-            }
-        }
-
-        BiometricContainer(
-            state = biometricAuthState,
-            onResult = { vm.onEvent(UiEvent.OnBiometricAuthResult(it)) }
-        )
-
-        if (state != null && (uiState.authenticated || !requireAuth)) {
+        if (state != null) {
             val (dream, emotions, persons, tags) = state!!
 
             DreamDetailEntry(vm::onEvent, dream, emotions, tags, persons)
@@ -131,7 +105,7 @@ internal fun DreamDetailEntry(
 }
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalTime::class,
+    ExperimentalMaterial3Api::class,
     ExperimentalMaterial3ExpressiveApi::class
 )
 @Composable

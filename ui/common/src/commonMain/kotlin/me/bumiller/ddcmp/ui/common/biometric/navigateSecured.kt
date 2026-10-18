@@ -106,12 +106,15 @@ inline fun <reified T : Any> NavGraphBuilder.securableComposable(
  *
  * The biometric authentication is only required of [PlatformFeatures.supportsBiometricAuth] is true.
  * Otherwise, this function is equivalent to [NavController.navigate].
+ *
+ * @param secured Whether the navigation should be performed secured. If false, equivalent to [NavController.navigate].
  */
 inline fun <reified T : Any> NavController.navigateSecured(
     route: T,
+    secured: Boolean = true,
     noinline builder: (NavOptionsBuilder.() -> Unit)? = null
 ) {
-    if (!PlatformFeatures.supportsBiometricAuth) {
+    if (!PlatformFeatures.supportsBiometricAuth || !secured) {
         navigate(route, builder ?: {})
         return
     }

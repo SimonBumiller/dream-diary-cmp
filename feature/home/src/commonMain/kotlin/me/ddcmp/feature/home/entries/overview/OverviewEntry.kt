@@ -64,13 +64,13 @@ internal fun OverviewEntry(
     onGoToPersons: () -> Unit,
     onGoToDreams: () -> Unit,
     onGoToTags: () -> Unit,
-    onGoToDreamDetail: (id: Long) -> Unit,
+    onGoToDreamDetail: (id: Long, secured: Boolean) -> Unit,
     onLoaded: () -> Unit
 ) {
     ViewModelScope<UiEvent, ViewModelEvent, OverviewViewModel>(
         onViewModelEvent = {
             when (it) {
-                is ViewModelEvent.GoToDream -> onGoToDreamDetail(it.dreamId)
+                is ViewModelEvent.GoToDream -> onGoToDreamDetail(it.dreamId, it.secured)
                 ViewModelEvent.GoToDreams -> onGoToDreams()
                 ViewModelEvent.GoToEmotions -> onGoToEmotions()
                 ViewModelEvent.GoToPersons -> onGoToPersons()
@@ -220,7 +220,7 @@ private fun OverviewEntry(
                     .fillMaxWidth()
                     .padding(top = 8.dp),
                 dreams = recentDreams,
-                onClick = { onEvent(UiEvent.GoToDream(it.id)) },
+                onClick = { onEvent(UiEvent.GoToDream(it)) },
                 emptyPlaceholder = {
                     stringResource(Res.string.overview_no_recent_dreams)
                 }
