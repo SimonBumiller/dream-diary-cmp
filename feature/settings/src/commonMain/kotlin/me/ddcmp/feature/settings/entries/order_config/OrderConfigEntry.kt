@@ -191,12 +191,11 @@ private fun OptionsConfiguration(
                 fontWeight = FontWeight.Bold
             )
 
-            // TODO: We disable selecting anything else than indefinite, until the logic is implemented.
-//            KeepLastSelection(
-//                modifier = Modifier,
-//                orderState = orderState,
-//                onEvent = onEvent
-//            )
+            KeepLastSelection(
+                modifier = Modifier,
+                orderState = orderState,
+                onEvent = onEvent
+            )
         }
 
         Column(
