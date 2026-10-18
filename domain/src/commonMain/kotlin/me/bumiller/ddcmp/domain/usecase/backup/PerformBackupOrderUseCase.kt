@@ -5,6 +5,7 @@ import io.github.vinceglb.filekit.exists
 import kotlinx.coroutines.flow.first
 import me.bumiller.ddcmp.common.createChildFile
 import me.bumiller.ddcmp.domain.infrastructure.ExportLogRepository
+import me.bumiller.ddcmp.domain.io.DirectoryTruncator
 import me.bumiller.ddcmp.domain.model.backup.BackupDestination
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 import me.bumiller.ddcmp.domain.model.io.ExportResult
@@ -25,7 +26,8 @@ class PerformBackupOrderUseCase(
     private val getExportLog: GetExportLogUsecase,
     private val recordBackup: RecordPeriodicBackupUseCase,
     private val export: ExportUseCase,
-    private val exportLogRepo: ExportLogRepository
+    private val exportLogRepo: ExportLogRepository,
+    private val directoryTruncator: DirectoryTruncator
 ): UseCase<I, Boolean> {
 
     override suspend fun invoke(i: I): Boolean {
@@ -39,6 +41,10 @@ class PerformBackupOrderUseCase(
         // Creating the backup and getting the export result.
         val exportResultId = createExportResult(order, startTimestamp)
         val exportResult = getExportLog(exportResultId) ?: error("Export log for just finished export not found.")
+
+        if(order.keepLast != null) {
+            directoryTruncator.ensureMaxFileCount(order.destinationAsFile(), order.keepLast)
+        }
 
         // Recording the backup.
         val backupRecord = RecordPeriodicBackupUseCase.I(
