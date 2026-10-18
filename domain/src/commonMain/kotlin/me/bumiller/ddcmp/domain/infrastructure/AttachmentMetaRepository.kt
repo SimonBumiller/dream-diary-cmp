@@ -14,4 +14,6 @@ interface AttachmentMetaRepository: Repository<AttachmentMeta> {
      */
     fun getForDream(dreamId: Long): Flow<List<AttachmentMeta>?>
 
+    fun deleteForDream(dreamId: Long)
+
 }

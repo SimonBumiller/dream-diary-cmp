@@ -6,13 +6,11 @@ import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import me.bumiller.ddcmp.domain.infrastructure.TagRepository
 import me.bumiller.ddcmp.domain.model.dream.Dream
-import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.dream.Tag
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 class SaveDreamUseCase(
     val dreamRepo: DreamRepository,
     val emotionRepo: EmotionRepository,
@@ -20,11 +18,12 @@ class SaveDreamUseCase(
     val tagRepo: TagRepository
 ) : UseCase<SaveDreamUseCase.I, Dream> {
 
-    override suspend fun invoke(i: I ): Dream {
+    override suspend fun invoke(i: I): Dream {
         val dream = dreamRepo.save(i.dream).let {
-            if(it == -1L) i.dream
+            if (it == -1L) i.dream
             else i.dream.copy(id = it)
         }
+
 
         val existingEmotions = emotionRepo.getForDream(dream.id).first() ?: emptyList()
         val existingPersons = personRepo.getForDream(dream.id).first()

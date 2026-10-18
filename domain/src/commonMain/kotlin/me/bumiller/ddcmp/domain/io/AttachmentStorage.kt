@@ -14,13 +14,18 @@ interface AttachmentStorage {
      * @param source Where the bytes are taken from
      * @return The total byte count
      */
-    fun save(id: Long, source: Source): Long
+    suspend fun save(id: Long, source: Source): Long
+
+    /**
+     * Deletes the bytes from the storage.
+     */
+    suspend fun delete(id: Long): Boolean
 
     /**
      * Gets the source for an attachment for a specific id
      *
      * @return The source, or null if not found
      */
-    fun get(id: Long): Source?
+    suspend fun get(id: Long): Source?
 
 }

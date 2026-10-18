@@ -6,14 +6,16 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import me.bumiller.ddcmp.common.combineSafe
+import me.bumiller.ddcmp.domain.infrastructure.AttachmentMetaRepository
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import me.bumiller.ddcmp.domain.infrastructure.TagRepository
+import me.bumiller.ddcmp.domain.model.attachment.AttachmentMeta
 import me.bumiller.ddcmp.domain.model.dream.Dream
-import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.dream.Tag
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.emotion.Valence
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode.DreamSort
@@ -26,7 +28,8 @@ open class AllDreamUseCase(
     val repo: DreamRepository,
     val emotionRepo: EmotionRepository,
     val personRepo: PersonRepository,
-    val tagRepo: TagRepository
+    val tagRepo: TagRepository,
+    val attachmentMetaRepo: AttachmentMetaRepository
 ) : FlowUseCase<I, List<O>> {
 
     override fun invoke(i: I): Flow<List<O>> = repo.all
@@ -54,16 +57,19 @@ open class AllDreamUseCase(
             val emotionFlow = emotionRepo.getForDream(dream.id)
                 .map { it ?: emptyList() }
             val personFlow = personRepo.getForDream(dream.id)
-                .map { it ?: emptyList() }
+                .map { it }
             val tagFlow = tagRepo.getForDream(dream.id)
+                .map { it ?: emptyList() }
+            val attachmentMetaFlow = attachmentMetaRepo.getForDream(dream.id)
                 .map { it ?: emptyList() }
 
             combine(
                 flow = emotionFlow,
                 flow2 = personFlow,
-                flow3 = tagFlow
-            ) { emotions, persons, tags ->
-                O(dream, emotions, persons, tags)
+                flow3 = tagFlow,
+                flow4 = attachmentMetaFlow
+            ) { emotions, persons, tags, attachmentMetas ->
+                O(dream, emotions, persons, tags, attachmentMetas)
             }
         }
 
@@ -97,7 +103,9 @@ open class AllDreamUseCase(
 
         val persons: List<Person>,
 
-        val tags: List<Tag>
+        val tags: List<Tag>,
+
+        val attachmentMetas: List<AttachmentMeta>
 
     )
 

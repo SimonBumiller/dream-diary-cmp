@@ -1,7 +1,5 @@
 package me.bumiller.ddcmp.domain.model.attachment
 
-import io.github.vinceglb.filekit.mimeType.MimeType
-import kotlinx.io.Sink
 import me.bumiller.ddcmp.domain.model.meta.Editable
 import me.bumiller.ddcmp.domain.model.meta.Trackable
 import me.bumiller.ddcmp.domain.model.meta.Unique
@@ -19,7 +17,7 @@ data class AttachmentMeta(
     /**
      * The filename the user picked.
      */
-    val originalFilename: MimeType,
+    val originalFilename: String,
 
     /**
      * The mimetype provided by the system.
@@ -34,7 +32,12 @@ data class AttachmentMeta(
     /**
      * Number of bytes the file occupies.
      */
-    val fileSize: Sink
+    val fileSize: Long,
+
+    /**
+     * The id of the dream it belongs to.
+     */
+    val dreamId: Long
 
 
-): Unique, Trackable, Editable
+) : Unique, Trackable, Editable

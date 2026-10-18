@@ -8,7 +8,6 @@ import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase.O
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 class DreamDatesUseCase(
     private val repo: DreamRepository
 ) : FlowUseCase<Unit, O?> {

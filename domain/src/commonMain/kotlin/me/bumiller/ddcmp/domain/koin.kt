@@ -13,6 +13,9 @@ import me.bumiller.ddcmp.domain.stats.person.PersonInfluencingPersonsStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonOccurrenceStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonTimeFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic
+import me.bumiller.ddcmp.domain.usecase.attachment.AddAttachmentUseCase
+import me.bumiller.ddcmp.domain.usecase.attachment.GetAttachmentsUseCase
+import me.bumiller.ddcmp.domain.usecase.attachment.RemoveAttachmentUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.CancelBackupOrdersUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.GetBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.GetBackupsForOrderUseCase
@@ -44,9 +47,13 @@ import org.koin.dsl.module
 val domain = module {
     single { AppCoroutineScope() }
 
-    single { AllDreamUseCase(get(), get(), get(), get()) }
+    single { AllDreamUseCase(get(), get(), get(), get(), get()) }
     single { DreamDatesUseCase(get()) }
     single { SaveDreamUseCase(get(), get(), get(), get()) }
+
+    single { AddAttachmentUseCase(get(), get()) }
+    single { GetAttachmentsUseCase(get(), get()) }
+    single { RemoveAttachmentUseCase(get(), get()) }
 
     single { AllEmotionsUseCase(get()) }
     single { SaveEmotionUseCase(get()) }
