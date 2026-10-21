@@ -281,11 +281,12 @@ private fun DreamAddEntry(
                 AttachmentItem(
                     modifier = Modifier
                         .widthIn(min = 350.dp)
+                        .padding(horizontal = 8.dp)
                         .animateItem(),
                     meta = attachment,
                     onClick = { onEvent(UiEvent.ClickAttachment(attachment)) },
                     onRemove = { onEvent(UiEvent.RemoveAttachment(attachment)) },
-                    isNew = attachment is DreamAddViewModel.UiAttachment.Draft
+                    isNew = attachment is DreamAddViewModel.ViewModelAttachment.Draft
                 )
             }
 

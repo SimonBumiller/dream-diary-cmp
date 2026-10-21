@@ -29,10 +29,17 @@ import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import me.bumiller.ddcmp.ui.common.translation.mimeTypeIcon
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel
 
+internal interface UiAttachment {
+    val name: String
+    val mimeType: String
+    val size: Long
+    val fileName: String
+}
+
 @Composable
 internal fun AttachmentItem(
     modifier: Modifier = Modifier,
-    meta: DreamAddViewModel.UiAttachment,
+    meta: UiAttachment,
     onClick: () -> Unit,
     onRemove: (() -> Unit)? = null,
     onDownload: (() -> Unit)? = null,

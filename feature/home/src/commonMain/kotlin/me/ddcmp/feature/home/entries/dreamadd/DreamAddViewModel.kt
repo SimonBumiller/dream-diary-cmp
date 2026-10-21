@@ -37,6 +37,7 @@ import me.bumiller.ddcmp.domain.util.search
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
+import me.ddcmp.feature.home.component.UiAttachment
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.ViewModelEvent.GoBack
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.ViewModelEvent.ShowAttachment
 import me.ddcmp.feature.home.navigation.HomeRoutes
@@ -175,11 +176,11 @@ internal class DreamAddViewModel(
 
         UiEvent.ClickAddAttachment -> fireEvent(ViewModelEvent.LaunchAttachmentPicker)
         is UiEvent.RemoveAttachment -> when (event.attachment) {
-            is UiAttachment.Draft -> updateUiState<DreamState> {
+            is ViewModelAttachment.Draft -> updateUiState<DreamState> {
                 it.copy(attachments = it.attachments - event.attachment)
             }
 
-            is UiAttachment.Saved -> updateUiState<DreamState> {
+            is ViewModelAttachment.Saved -> updateUiState<DreamState> {
                 it.copy(
                     attachments = it.attachments - event.attachment,
                     removedAttachments = it.removedAttachments + event.attachment
@@ -193,8 +194,8 @@ internal class DreamAddViewModel(
 
         is UiEvent.ClickAttachment -> {
             val file = when (event.attachment) {
-                is UiAttachment.Draft -> event.attachment.file
-                is UiAttachment.Saved -> {
+                is ViewModelAttachment.Draft -> event.attachment.file
+                is ViewModelAttachment.Saved -> {
                     val query = GetAttachmentsUseCase.I(id = event.attachment.meta.id)
                     getAttachment(query).first().singleOrNull()?.file ?: error("Didn't find attachment file.")
                 }
@@ -239,7 +240,7 @@ internal class DreamAddViewModel(
 
             // Save new attachments
             state.attachments
-                .filterIsInstance<UiAttachment.Draft>()
+                .filterIsInstance<ViewModelAttachment.Draft>()
                 .forEach { draft ->
                     val input = AddAttachmentUseCase.I(
                         dreamId = dream.id,
@@ -254,7 +255,7 @@ internal class DreamAddViewModel(
 
             // Delete removed attachments
             state.removedAttachments
-                .map(UiAttachment.Saved::meta)
+                .map(ViewModelAttachment.Saved::meta)
                 .forEach { meta ->
                     removeAttachment(meta.id)
                 }
@@ -294,7 +295,7 @@ internal class DreamAddViewModel(
                             emotions = dream.emotions,
                             tags = dream.tags,
                             attachments = dream.attachmentMetas.map { meta ->
-                                UiAttachment.Saved(
+                                ViewModelAttachment.Saved(
                                     meta
                                 )
                             },
@@ -399,27 +400,27 @@ internal class DreamAddViewModel(
 
         val tags: List<Tag> = emptyList(),
 
-        val attachments: List<UiAttachment> = emptyList(),
+        val attachments: List<ViewModelAttachment> = emptyList(),
 
-        val removedAttachments: Set<UiAttachment.Saved> = emptySet(),
+        val removedAttachments: Set<ViewModelAttachment.Saved> = emptySet(),
 
         val confidentiality: Confidentiality = Confidentiality.None,
 
         val dreamt: Instant = Clock.System.now()
     )
 
-    sealed interface UiAttachment {
-        val name: String
+    sealed interface ViewModelAttachment: UiAttachment {
+        override val name: String
+        override val fileName: String
+        override val mimeType: String
+        override val size: Long
         val description: String?
-        val fileName: String
-        val mimeType: String
-        val size: Long
 
         data class Draft(
             override val name: String,
             override val description: String?,
             val file: PlatformFile
-        ) : UiAttachment {
+        ) : ViewModelAttachment {
             override val fileName = file.name
             override val mimeType = file.mimeType()?.toString() ?: "*/*"
             override val size = file.size()
@@ -427,7 +428,7 @@ internal class DreamAddViewModel(
 
         data class Saved(
             val meta: AttachmentMeta
-        ) : UiAttachment {
+        ) : ViewModelAttachment {
             override val description = meta.description
             override val name = meta.name
             override val fileName = meta.originalFilename
@@ -475,10 +476,10 @@ internal class DreamAddViewModel(
         data class UnSelectEmotion(val emotion: Emotion) : UiEvent
         data class SetConfidentiality(val confidentiality: Confidentiality) : UiEvent
         data class ChangeDreamtDate(val date: Instant) : UiEvent
-        data class AddAttachmentDraft(val draft: UiAttachment.Draft) : UiEvent
+        data class AddAttachmentDraft(val draft: ViewModelAttachment.Draft) : UiEvent
         data class SelectAttachmentFile(val file: PlatformFile?) : UiEvent
-        data class RemoveAttachment(val attachment: UiAttachment) : UiEvent
-        data class ClickAttachment(val attachment: UiAttachment) : UiEvent
+        data class RemoveAttachment(val attachment: ViewModelAttachment) : UiEvent
+        data class ClickAttachment(val attachment: ViewModelAttachment) : UiEvent
         data object Save : UiEvent
         data object ClickAddAttachment : UiEvent
         data object NavigateBack : UiEvent
@@ -488,7 +489,7 @@ internal class DreamAddViewModel(
 
     sealed interface ViewModelEvent : VME {
         data object LaunchAttachmentPicker : ViewModelEvent
-        data class ShowAttachment(val file: PlatformFile, val attachment: UiAttachment) : ViewModelEvent
+        data class ShowAttachment(val file: PlatformFile, val attachment: ViewModelAttachment) : ViewModelEvent
         data object GoBack : ViewModelEvent
     }
 

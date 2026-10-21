@@ -150,14 +150,14 @@ abstract class AppViewModel<UiEvent : UIE, ViewModelEvent : VME> : ViewModel() {
  */
 @Composable
 inline fun <ScreenEvent : UIE, Event : VME, reified ViewModel : AppViewModel<ScreenEvent, Event>> ViewModelScope(
-    noinline onViewModelEvent: suspend (Event) -> Unit = {},
+    noinline onViewModelEvent: suspend ViewModel.(Event) -> Unit = {},
     crossinline content: @Composable (ViewModel) -> Unit
 ) {
     val viewModel = koinViewModel<ViewModel>()
 
     LaunchedEffect(Unit) {
         viewModel.events
-            .collectLatest(onViewModelEvent)
+            .collectLatest { viewModel.onViewModelEvent(it) }
     }
 
     content(viewModel)

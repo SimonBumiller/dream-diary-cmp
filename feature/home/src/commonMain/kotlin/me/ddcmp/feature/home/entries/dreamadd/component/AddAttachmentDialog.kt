@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.InputChip
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -23,17 +21,15 @@ import dream_diary_cmp.feature.home.generated.resources.attachment_add_name_plac
 import dream_diary_cmp.feature.home.generated.resources.attachment_add_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_attachmentadd_description
 import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.mimeType
 import io.github.vinceglb.filekit.name
 import me.bumiller.ddcmp.ui.common.text.styledText
-import me.bumiller.ddcmp.ui.common.translation.mimeTypeIcon
-import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiAttachment
+import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.ViewModelAttachment
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun AddAttachmentDialog(
     file: PlatformFile,
-    onSave: (UiAttachment.Draft?) -> Unit
+    onSave: (ViewModelAttachment.Draft?) -> Unit
 ) {
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -43,7 +39,7 @@ internal fun AddAttachmentDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    val draft = UiAttachment.Draft(name, description, file)
+                    val draft = ViewModelAttachment.Draft(name, description, file)
                     onSave(draft)
                 },
                 enabled = name.isNotBlank()

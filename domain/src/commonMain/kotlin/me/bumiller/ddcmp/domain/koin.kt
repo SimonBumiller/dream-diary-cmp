@@ -14,6 +14,7 @@ import me.bumiller.ddcmp.domain.stats.person.PersonOccurrenceStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonTimeFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic
 import me.bumiller.ddcmp.domain.usecase.attachment.AddAttachmentUseCase
+import me.bumiller.ddcmp.domain.usecase.attachment.DownloadAttachmentUseCase
 import me.bumiller.ddcmp.domain.usecase.attachment.GetAttachmentsUseCase
 import me.bumiller.ddcmp.domain.usecase.attachment.RemoveAttachmentUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.CancelBackupOrdersUseCase
@@ -54,6 +55,7 @@ val domain = module {
     single { AddAttachmentUseCase(get(), get()) }
     single { GetAttachmentsUseCase(get(), get()) }
     single { RemoveAttachmentUseCase(get(), get()) }
+    single { DownloadAttachmentUseCase(get()) }
 
     single { AllEmotionsUseCase(get()) }
     single { SaveEmotionUseCase(get()) }

@@ -68,6 +68,8 @@
     <string name="personadd_tags_label">Tags</string>
 
     <string name="dreamdetail_action_stats">Dream statistics</string>
+    <string name="dreamdetail_downloaded_snackbar">Downloaded attachment</string>
+    <string name="dreamdetail_downloaded_snackbar_action">Show</string>
     <string name="dreamdetail_action_favorite">Mark as favorite</string>
     <string name="dreamdetail_action_edit">Edit</string>
     <string name="dreamdetail_note_label">Contextual Note: </string>
