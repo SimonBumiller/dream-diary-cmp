@@ -1,5 +1,6 @@
 package me.bumiller.ddcmp.domain.io
 
+import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.io.RawSource
 import kotlinx.io.Source
 
@@ -27,6 +28,6 @@ interface AttachmentStorage {
      *
      * @return The source, or null if not found
      */
-    suspend fun get(id: Long): Source?
+    suspend fun get(id: Long): PlatformFile?
 
 }

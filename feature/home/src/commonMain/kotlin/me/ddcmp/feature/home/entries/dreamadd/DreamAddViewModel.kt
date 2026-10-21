@@ -23,6 +23,7 @@ import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.usecase.attachment.AddAttachmentUseCase
+import me.bumiller.ddcmp.domain.usecase.attachment.GetAttachmentsUseCase
 import me.bumiller.ddcmp.domain.usecase.attachment.RemoveAttachmentUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
@@ -37,6 +38,7 @@ import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.ViewModelEvent.GoBack
+import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.ViewModelEvent.ShowAttachment
 import me.ddcmp.feature.home.navigation.HomeRoutes
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -52,7 +54,8 @@ internal class DreamAddViewModel(
     val settings: GetSettingsUseCase,
     val appScope: AppCoroutineScope,
     private val addAttachment: AddAttachmentUseCase,
-    private val removeAttachment: RemoveAttachmentUseCase
+    private val removeAttachment: RemoveAttachmentUseCase,
+    private val getAttachment: GetAttachmentsUseCase
 ) :
     AppViewModel<DreamAddViewModel.UiEvent, DreamAddViewModel.ViewModelEvent>() {
 
@@ -188,7 +191,17 @@ internal class DreamAddViewModel(
             it.copy(unfinishedAttachment = event.file)
         }
 
-        UiEvent.ClickAttachment -> TODO()
+        is UiEvent.ClickAttachment -> {
+            val file = when (event.attachment) {
+                is UiAttachment.Draft -> event.attachment.file
+                is UiAttachment.Saved -> {
+                    val query = GetAttachmentsUseCase.I(id = event.attachment.meta.id)
+                    getAttachment(query).first().singleOrNull()?.file ?: error("Didn't find attachment file.")
+                }
+            }
+
+            fireEvent(ShowAttachment(file, event.attachment))
+        }
     }
 
     private suspend fun save() {
@@ -465,8 +478,8 @@ internal class DreamAddViewModel(
         data class AddAttachmentDraft(val draft: UiAttachment.Draft) : UiEvent
         data class SelectAttachmentFile(val file: PlatformFile?) : UiEvent
         data class RemoveAttachment(val attachment: UiAttachment) : UiEvent
+        data class ClickAttachment(val attachment: UiAttachment) : UiEvent
         data object Save : UiEvent
-        data object ClickAttachment : UiEvent
         data object ClickAddAttachment : UiEvent
         data object NavigateBack : UiEvent
         data object HideDiscardDialog : UiEvent
@@ -474,8 +487,9 @@ internal class DreamAddViewModel(
     }
 
     sealed interface ViewModelEvent : VME {
-        data object GoBack : ViewModelEvent
         data object LaunchAttachmentPicker : ViewModelEvent
+        data class ShowAttachment(val file: PlatformFile, val attachment: UiAttachment) : ViewModelEvent
+        data object GoBack : ViewModelEvent
     }
 
 }

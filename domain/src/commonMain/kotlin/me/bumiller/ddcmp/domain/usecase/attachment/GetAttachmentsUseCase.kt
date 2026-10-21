@@ -1,5 +1,6 @@
 package me.bumiller.ddcmp.domain.usecase.attachment
 
+import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.io.Source
@@ -15,9 +16,9 @@ import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 class GetAttachmentsUseCase(
     private val attachmentMetaRepo: AttachmentMetaRepository,
     private val attachmentStorage: AttachmentStorage
-) : FlowUseCase<I, Unit> {
+) : FlowUseCase<I, List<GetAttachmentsUseCase.O>> {
 
-    override fun invoke(i: I): Flow<Unit> = metasBase(i)
+    override fun invoke(i: I): Flow<List<O>> = metasBase(i)
         .map { metas ->
             metas.associateWith {
                 attachmentStorage.get(it.id)
@@ -60,12 +61,12 @@ class GetAttachmentsUseCase(
         /**
          * The meta.
          */
-        private val meta: AttachmentMeta,
+        val meta: AttachmentMeta,
 
         /**
-         * The byte source.
+         * The file.
          */
-        private val source: Source
+        val file: PlatformFile
 
     )
 

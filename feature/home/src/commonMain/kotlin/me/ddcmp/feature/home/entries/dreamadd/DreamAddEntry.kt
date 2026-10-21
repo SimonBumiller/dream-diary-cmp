@@ -85,6 +85,7 @@ import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.layout.ColumnOrRow
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
+import me.bumiller.ddcmp.ui.common.viewFile
 import me.ddcmp.feature.home.component.AttachmentItem
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.ChangeDescription
@@ -105,6 +106,9 @@ internal fun DreamAddEntry(
             when (it) {
                 DreamAddViewModel.ViewModelEvent.GoBack -> onBack()
                 DreamAddViewModel.ViewModelEvent.LaunchAttachmentPicker -> attachmentPickerLauncher?.launch()
+                is DreamAddViewModel.ViewModelEvent.ShowAttachment -> {
+                    viewFile(it.file, it.attachment.mimeType)
+                }
             }
         }
     ) { vm ->
@@ -279,7 +283,7 @@ private fun DreamAddEntry(
                         .widthIn(min = 350.dp)
                         .animateItem(),
                     meta = attachment,
-                    onClick = { onEvent(UiEvent.ClickAttachment) },
+                    onClick = { onEvent(UiEvent.ClickAttachment(attachment)) },
                     onRemove = { onEvent(UiEvent.RemoveAttachment(attachment)) },
                     isNew = attachment is DreamAddViewModel.UiAttachment.Draft
                 )

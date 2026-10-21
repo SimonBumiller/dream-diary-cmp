@@ -45,15 +45,6 @@ internal class AttachmentStorageImpl : AttachmentStorage {
         }
     }
 
-    override suspend fun get(id: Long): Source? {
-        val file = PlatformFile(directory, id.toString())
-
-        return try {
-            file.source().buffered()
-        } catch (e: Exception) {
-            captureException(e)
-            null
-        }
-    }
+    override suspend fun get(id: Long) = PlatformFile(directory, id.toString())
 
 }

@@ -30,6 +30,6 @@ interface AttachmentMetaDao : BaseDao<AttachmentMetaEntity> {
     fun getAllForDream(dreamId: Long): Flow<List<AttachmentMetaEntity>>
 
     @Query("DELETE FROM attachment_metas WHERE dreamId = :dreamId")
-    fun deleteForDream(dreamId: Long): Int
+    suspend fun deleteForDream(dreamId: Long): Int
 
 }
