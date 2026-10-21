@@ -10,6 +10,7 @@ import me.bumiller.ddcmp.domain.infrastructure.PeriodicBackupOrderRepository
 import me.bumiller.ddcmp.domain.infrastructure.PeriodicBackupRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import me.bumiller.ddcmp.domain.infrastructure.TagRepository
+import me.bumiller.ddcmp.domain.infrastructure.AttachmentMetaRepository
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 import me.bumiller.ddcomp.core.database.repository.DreamRepository as DreamRepositoryImpl
@@ -20,6 +21,7 @@ import me.bumiller.ddcomp.core.database.repository.PersonRepository as PersonRep
 import me.bumiller.ddcomp.core.database.repository.PeriodicBackupOrderRepository as PeriodicBackupOrderRepositoryImpl
 import me.bumiller.ddcomp.core.database.repository.PeriodicBackupRepository as PeriodicBackupRepositoryImpl
 import me.bumiller.ddcomp.core.database.repository.TagRepository as TagRepositoryImpl
+import me.bumiller.ddcomp.core.database.repository.AttachmentMetaRepository as AttachmentMetaRepositoryImpl
 
 /**
  * Platform specific method to create the database builder
@@ -50,6 +52,7 @@ val database = module {
     single { get<RelationalDatabase>().dreamTagM2MDao() }
     single { get<RelationalDatabase>().personTagM2MDao() }
     single { get<RelationalDatabase>().tagDao() }
+    single { get<RelationalDatabase>().attachmentMetaDao() }
 
     single<DreamRepository> { DreamRepositoryImpl(get(), get(), get(), get(), get(), get()) }
     single<EmotionRepository> { EmotionRepositoryImpl(get(), get()) }
@@ -59,4 +62,5 @@ val database = module {
     single<PeriodicBackupOrderRepository> { PeriodicBackupOrderRepositoryImpl(get(), get()) }
     single<PeriodicBackupRepository> { PeriodicBackupRepositoryImpl(get(), get()) }
     single<TagRepository> { TagRepositoryImpl(get(), get(), get(), get(), get()) }
+    single<AttachmentMetaRepository> { AttachmentMetaRepositoryImpl(get()) }
 }

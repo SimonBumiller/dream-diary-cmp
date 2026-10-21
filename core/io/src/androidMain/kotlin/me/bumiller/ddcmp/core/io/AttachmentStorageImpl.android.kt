@@ -13,4 +13,5 @@ internal actual fun attachmentDirectory(): PlatformFile {
 
     val filesDir: File = context.filesDir
     val attachmentsDir = File(filesDir, AttachmentsDirectoryName)
+    return PlatformFile(attachmentsDir)
 }

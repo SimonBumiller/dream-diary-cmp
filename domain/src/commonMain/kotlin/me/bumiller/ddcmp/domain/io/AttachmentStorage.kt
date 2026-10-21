@@ -1,5 +1,6 @@
 package me.bumiller.ddcmp.domain.io
 
+import kotlinx.io.RawSource
 import kotlinx.io.Source
 
 /**
@@ -14,7 +15,7 @@ interface AttachmentStorage {
      * @param source Where the bytes are taken from
      * @return The total byte count
      */
-    suspend fun save(id: Long, source: Source): Long
+    suspend fun save(id: Long, source: RawSource): Long
 
     /**
      * Deletes the bytes from the storage.

@@ -10,20 +10,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AttachFile
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -33,13 +28,11 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -69,12 +62,14 @@ import dream_diary_cmp.feature.home.generated.resources.dreamadd_tags_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_title_info
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_title_label
+import io.github.vinceglb.filekit.dialogs.compose.PickerResultLauncher
+import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import kotlinx.coroutines.delay
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.dream.Tag
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.util.search
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.backhandler.PlatformBackHandler
@@ -90,22 +85,26 @@ import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.layout.ColumnOrRow
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
+import me.ddcmp.feature.home.component.AttachmentItem
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.ChangeDescription
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent.SelectPerson
+import me.ddcmp.feature.home.entries.dreamadd.component.AddAttachmentDialog
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.ExperimentalTime
 
 @Composable
 internal fun DreamAddEntry(
     onBack: () -> Unit
 ) {
+    var attachmentPickerLauncher: PickerResultLauncher? = null
+
     ViewModelScope<UiEvent, DreamAddViewModel.ViewModelEvent, DreamAddViewModel>(
         onViewModelEvent = {
             when (it) {
                 DreamAddViewModel.ViewModelEvent.GoBack -> onBack()
+                DreamAddViewModel.ViewModelEvent.LaunchAttachmentPicker -> attachmentPickerLauncher?.launch()
             }
         }
     ) { vm ->
@@ -115,6 +114,22 @@ internal fun DreamAddEntry(
         val persons by vm.personsState.collectAsStateWithLifecycle()
         val tags by vm.tagState.collectAsStateWithLifecycle()
         val emotions by vm.emotionsState.collectAsStateWithLifecycle()
+
+        attachmentPickerLauncher = rememberFilePickerLauncher {
+            it?.let { vm.onEvent(UiEvent.SelectAttachmentFile(it)) }
+        }
+
+        uiState.unfinishedAttachment?.let { unfinishedFile ->
+            AddAttachmentDialog(
+                file = unfinishedFile,
+                onSave = { draft ->
+                    vm.onEvent(UiEvent.SelectAttachmentFile(null))
+                    if (draft != null) {
+                        vm.onEvent(UiEvent.AddAttachmentDraft(draft))
+                    }
+                }
+            )
+        }
 
         DreamAddEntry(vm::onEvent, uiState, dreamState, canSave, persons, tags, emotions)
     }
@@ -150,7 +165,7 @@ private fun DreamAddEntry(
 
     LaunchedEffect(Unit) {
         delay(300L.milliseconds)
-        if(!uiState.isEdit) {
+        if (!uiState.isEdit) {
             keyboardController?.run {
                 show()
                 focusRequester.requestFocus()
@@ -206,7 +221,7 @@ private fun DreamAddEntry(
                                 AppBarAction(
                                     label = stringResource(Res.string.dreamadd_actions_add_attachment),
                                     icon = Icons.Default.AttachFile,
-                                    handler = {  }
+                                    handler = { onEvent(UiEvent.ClickAddAttachment) }
                                 ),
                                 AppBarAction(
                                     label = stringResource(Res.string.dreamadd_actions_save),
@@ -224,45 +239,70 @@ private fun DreamAddEntry(
             }
         }
     ) { pv ->
-        if(!uiState.finishedLoading) return@Scaffold
+        if (!uiState.finishedLoading) return@Scaffold
 
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .padding(pv)
                 .fillMaxSize()
-                .imePadding()
-                .verticalScroll(rememberScrollState()),
+                .imePadding(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            TextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(focusRequester),
-                value = dreamState.description,
-                onValueChange = { onEvent(ChangeDescription(it)) },
-                placeholder = { Text(stringResource(Res.string.dreamadd_description_placeholder)) },
-                keyboardOptions = KeyboardOptions().copy(
-                    capitalization = KeyboardCapitalization.Sentences,
-                    autoCorrectEnabled = true
+            item(
+                key = "oisdoijfjoi44g"
+            ) {
+                TextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester),
+                    value = dreamState.description,
+                    onValueChange = { onEvent(ChangeDescription(it)) },
+                    placeholder = { Text(stringResource(Res.string.dreamadd_description_placeholder)) },
+                    keyboardOptions = KeyboardOptions().copy(
+                        capitalization = KeyboardCapitalization.Sentences,
+                        autoCorrectEnabled = true
 
-                ),
-                minLines = 4,
-                colors = transparentTextFieldColors
-            )
+                    ),
+                    minLines = 4,
+                    colors = transparentTextFieldColors
+                )
+            }
 
-            ColumnOrRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                doColumn = { it.widthSizeClass != WindowWidthSizeClass.Expanded },
-                first = {
-                    MainMetaSection(dreamState, onEvent, uiState, persons, tags, emotions)
-                },
-                second = {
-                    OptionalSection(dreamState, onEvent)
-                },
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            )
+            items(
+                count = dreamState.attachments.size,
+                key = { dreamState.attachments[it].size } // Size is approximately unique enough
+            ) {
+                val attachment = dreamState.attachments[it]
+
+                AttachmentItem(
+                    modifier = Modifier
+                        .widthIn(min = 350.dp)
+                        .animateItem(),
+                    meta = attachment,
+                    onClick = { onEvent(UiEvent.ClickAttachment) },
+                    onRemove = { onEvent(UiEvent.RemoveAttachment(attachment)) },
+                    isNew = attachment is DreamAddViewModel.UiAttachment.Draft
+                )
+            }
+
+            item(
+                key = "oifjgodgijdofigj"
+            ) {
+                ColumnOrRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animateItem(),
+                    doColumn = { it.widthSizeClass != WindowWidthSizeClass.Expanded },
+                    first = {
+                        MainMetaSection(dreamState, onEvent, uiState, persons, tags, emotions)
+                    },
+                    second = {
+                        OptionalSection(dreamState, onEvent)
+                    },
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                )
+            }
         }
     }
 }

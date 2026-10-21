@@ -1,5 +1,6 @@
 package me.bumiller.ddcomp.core.database
 
+import me.bumiller.ddcmp.domain.model.attachment.AttachmentMeta
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackup
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
@@ -13,6 +14,7 @@ import me.bumiller.ddcmp.domain.model.io.ExportOption
 import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.domain.model.io.ImportResult
+import me.bumiller.ddcomp.core.database.entity.AttachmentMetaEntity
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
 import me.bumiller.ddcomp.core.database.entity.ExportLogEntity
@@ -21,9 +23,7 @@ import me.bumiller.ddcomp.core.database.entity.PeriodicBackupEntity
 import me.bumiller.ddcomp.core.database.entity.PeriodicBackupOrderEntity
 import me.bumiller.ddcomp.core.database.entity.PersonEntity
 import me.bumiller.ddcomp.core.database.entity.TagEntity
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 object Mapping {
 
     object Reverse {
@@ -35,6 +35,20 @@ object Mapping {
                 updated = created,
                 orderId = model.order.id,
                 exportId = model.export.id
+            )
+        }
+
+        fun attachmentMeta(model: AttachmentMeta) = model.run {
+            AttachmentMetaEntity(
+                id,
+                created,
+                edited,
+                originalFilename,
+                mimeType,
+                description,
+                name,
+                fileSize,
+                dreamId
             )
         }
 
@@ -130,6 +144,12 @@ object Mapping {
             )
         }
 
+    }
+
+    fun attachmentMeta(
+        entity: AttachmentMetaEntity
+    ) = entity.run {
+        AttachmentMeta(id, created, updated, fileName, mimeType, description, name, size, dreamId)
     }
 
     fun periodicBackup(

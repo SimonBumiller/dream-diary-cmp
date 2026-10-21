@@ -1,5 +1,6 @@
 package me.bumiller.ddcmp.domain.usecase.attachment
 
+import kotlinx.io.RawSource
 import kotlinx.io.Source
 import me.bumiller.ddcmp.domain.infrastructure.AttachmentMetaRepository
 import me.bumiller.ddcmp.domain.io.AttachmentStorage
@@ -27,7 +28,8 @@ class AddAttachmentUseCase(
             mimeType = i.mimeType,
             description = i.description,
             fileSize = -1,
-            dreamId = i.dreamId
+            dreamId = i.dreamId,
+            name = i.name
         ).let {
             val id = attachmentMetaRepo.save(it)
             it.copy(id = id)
@@ -54,7 +56,7 @@ class AddAttachmentUseCase(
         /**
          * The byte source.
          */
-        val source: Source,
+        val source: RawSource,
 
         /**
          * The name of the file the user selected.

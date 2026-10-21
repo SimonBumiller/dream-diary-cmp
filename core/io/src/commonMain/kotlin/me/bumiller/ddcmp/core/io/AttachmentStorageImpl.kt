@@ -6,6 +6,7 @@ import io.github.vinceglb.filekit.delete
 import io.github.vinceglb.filekit.exists
 import io.github.vinceglb.filekit.sink
 import io.github.vinceglb.filekit.source
+import kotlinx.io.RawSource
 import kotlinx.io.Source
 import kotlinx.io.buffered
 import me.bumiller.ddcmp.common.captureException
@@ -26,10 +27,10 @@ internal class AttachmentStorageImpl : AttachmentStorage {
         }
     }
 
-    override suspend fun save(id: Long, source: Source): Long {
+    override suspend fun save(id: Long, source: RawSource): Long {
         val file = PlatformFile(directory, id.toString())
 
-        return source.transferTo(file.sink())
+        return source.buffered().transferTo(file.sink())
     }
 
     override suspend fun delete(id: Long): Boolean {

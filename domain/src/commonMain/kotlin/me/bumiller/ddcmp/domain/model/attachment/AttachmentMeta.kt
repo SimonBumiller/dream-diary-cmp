@@ -30,6 +30,11 @@ data class AttachmentMeta(
     val description: String?,
 
     /**
+     * Name of the attachment
+     */
+    val name: String,
+
+    /**
      * Number of bytes the file occupies.
      */
     val fileSize: Long,

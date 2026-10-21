@@ -28,8 +28,7 @@ fun ColumnOrRow(
 
     if (doColumn(sizeClass)) {
         Column(
-            modifier = modifier
-                .fillMaxSize(),
+            modifier = modifier,
             verticalArrangement = verticalArrangement,
             horizontalAlignment = horizontalAlignment
         ) {
@@ -42,8 +41,7 @@ fun ColumnOrRow(
         }
     } else {
         Row(
-            modifier = modifier
-                .fillMaxSize(),
+            modifier = modifier,
             horizontalArrangement = horizontalArrangement,
             verticalAlignment = verticalAlignment
         ) {

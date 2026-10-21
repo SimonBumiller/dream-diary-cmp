@@ -27,6 +27,13 @@
     <string name="dreamadd_note_label">Note (optional)</string>
     <string name="dreamadd_actions_add_attachment">Add Attachment</string>
     <string name="dreamadd_actions_save">Save</string>
+    <string name="dreamadd_attachmentadd_description">You selected the file _%1$s_ as an attachment for the dream. Enter a short name to quickly identify the attachment.</string>
+
+    <string name="attachment_add_confirm">Add</string>
+    <string name="attachment_add_dismiss">Cancel</string>
+    <string name="attachment_add_title">Attach File</string>
+    <string name="attachment_add_name_placeholder">Enter Attachment name…</string>
+    <string name="attachment_add_name_label">Name</string>
 
     <string name="emotionlist_title">Emotions</string>
     <string name="emotionlist_action_add">Add Emotion</string>

@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import me.bumiller.ddcomp.core.database.converter.DurationConverter
 import me.bumiller.ddcomp.core.database.converter.InstantConverter
+import me.bumiller.ddcomp.core.database.dao.AttachmentMetaDao
 import me.bumiller.ddcomp.core.database.dao.BackupDestinationDao
 import me.bumiller.ddcomp.core.database.dao.DreamDao
 import me.bumiller.ddcomp.core.database.dao.EmotionDao
@@ -18,6 +19,7 @@ import me.bumiller.ddcomp.core.database.dao.m2m.DreamEmotionM2MDao
 import me.bumiller.ddcomp.core.database.dao.m2m.DreamPersonM2MDao
 import me.bumiller.ddcomp.core.database.dao.m2m.DreamTagM2MDao
 import me.bumiller.ddcomp.core.database.dao.m2m.PersonTagM2MDao
+import me.bumiller.ddcomp.core.database.entity.AttachmentMetaEntity
 import me.bumiller.ddcomp.core.database.entity.BackupDestinationEntity
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
@@ -34,7 +36,7 @@ import me.bumiller.ddcomp.core.database.entity.m2m.PersonTagM2M
 
 const val DB_NAME = "dream_diary.db"
 
-private const val DB_VERSION = 7
+private const val DB_VERSION = 8
 
 /**
  * The relational database used to store the data of the app.
@@ -54,7 +56,8 @@ private const val DB_VERSION = 7
         BackupDestinationEntity::class,
         DreamTagM2M::class,
         PersonTagM2M::class,
-        TagEntity::class
+        TagEntity::class,
+        AttachmentMetaEntity::class
     ]
 )
 @TypeConverters(InstantConverter::class, DurationConverter::class)
@@ -67,6 +70,8 @@ abstract class RelationalDatabase : RoomDatabase() {
     abstract fun personDao(): PersonDao
 
     abstract fun tagDao(): TagDao
+
+    abstract fun attachmentMetaDao(): AttachmentMetaDao
 
     abstract fun importLogDao(): ImportLogDao
     abstract fun exportLogDao(): ExportLogDao

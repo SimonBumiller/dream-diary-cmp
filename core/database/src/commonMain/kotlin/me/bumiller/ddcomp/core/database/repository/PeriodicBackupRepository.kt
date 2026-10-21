@@ -40,7 +40,6 @@ class PeriodicBackupRepository(
             }
         }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     override fun forOrder(orderId: Long): Flow<List<PeriodicBackup>> =
         backupDao.getAllAggregateForOrder(orderId)
             .aggregateWithOrders()
