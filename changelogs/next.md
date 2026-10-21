@@ -2,7 +2,8 @@
 
 Note: Changes in *italic* are changes not visible to users.
 
-## Bug Fixes
+## Features
+- Enabled users to add attachments in the form of files to dreams.
 
 ## Minor Changes
 - *Added common project-level dependencies to convention-plugins* 
