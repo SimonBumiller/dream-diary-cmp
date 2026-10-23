@@ -9,6 +9,7 @@ import no.synth.kmpzip.io.SeekableSource
 import no.synth.kmpzip.io.fileSeekableSource
 import org.koin.core.context.GlobalContext
 import java.io.File
+import kotlin.use
 
 private class TempFileSeekableSource(
     private val file: File,
