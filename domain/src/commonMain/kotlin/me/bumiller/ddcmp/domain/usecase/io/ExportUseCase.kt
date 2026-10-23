@@ -13,7 +13,7 @@ class ExportUseCase(
 ): UseCase<I, Long> {
 
     override suspend fun invoke(i: I): Long {
-        val exporter = exporterFactory.createImporter(i.options)
+        val exporter = exporterFactory.createExporter(i.options)
 
         val result = exporter.export(i.destination)
         val id = exportRepo.save(result)

@@ -23,7 +23,7 @@ internal class ExporterFactoryImpl(
     @Suppress("UnusedReceiverParameter")
     private fun ExportOption.isZipBased() = true
 
-    override fun createImporter(options: ExportOption) =
+    override fun createExporter(options: ExportOption) =
         when (options.isZipBased()) {
             false -> throw IllegalArgumentException("Non-zip based exports are not supported.")
             true -> when (options) {

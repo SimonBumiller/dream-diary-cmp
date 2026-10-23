@@ -10,6 +10,6 @@ interface BackupExporterFactory {
     /**
      * Creates a new backup exporter based on import options.
      */
-    fun createImporter(options: ExportOption): BackupExporter
+    fun createExporter(options: ExportOption): BackupExporter
 
 }
