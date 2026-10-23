@@ -14,8 +14,6 @@ import no.synth.kmpzip.kotlinx.ZipOutputStream
 import no.synth.kmpzip.zip.ZipOutputStream
 import kotlin.time.Clock
 
-private const val ZIP_EXTENSION = "zip"
-
 /**
  * Base class for any exporter that exports the data into a zip file of several other files.
  */
@@ -48,6 +46,10 @@ internal abstract class ZipFileExporter: BackupExporter {
             fileLocation = file.path,
             ended = Clock.System.now()
         )
+    }
+
+    companion object {
+        private const val ZIP_EXTENSION = "zip"
     }
 
     /**
