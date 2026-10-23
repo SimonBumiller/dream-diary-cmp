@@ -3,6 +3,7 @@ package me.bumiller.ddcmp.core.io.exporter
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import me.bumiller.ddcmp.core.io.common.configureEntry
 import me.bumiller.ddcmp.core.io.model.ListBased
 import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.model.io.IOFileType
@@ -98,7 +99,7 @@ internal class ListBasedExporter(
         list: List<T>,
         fileName: String
     ) {
-        entryForName(fileName, fileType.exportFileEx) {
+        configureEntry(fileName, fileType.exportFileEx) {
             encodeWrite(list)
         }
     }

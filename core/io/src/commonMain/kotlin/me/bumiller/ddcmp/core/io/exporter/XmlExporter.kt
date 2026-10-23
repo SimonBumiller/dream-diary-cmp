@@ -1,6 +1,7 @@
 package me.bumiller.ddcmp.core.io.exporter
 
 import kotlinx.coroutines.flow.first
+import me.bumiller.ddcmp.core.io.common.configureEntry
 import me.bumiller.ddcmp.core.io.model.Xml
 import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.model.io.IOFileType
@@ -56,7 +57,7 @@ internal class XmlExporter(
         root: T,
         fileName: String
     ) {
-        entryForName(fileName, IOFileType.Xml.exportFileEx) {
+        configureEntry(fileName, IOFileType.Xml.exportFileEx) {
             XML.v1.encodeToString(root)
                 .encodeToByteArray()
                 .let(::write)

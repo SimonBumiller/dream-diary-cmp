@@ -11,7 +11,6 @@ import me.bumiller.ddcmp.domain.io.BackupExporter
 import me.bumiller.ddcmp.common.asSinkFixed
 import me.bumiller.ddcmp.domain.model.io.ExportResult
 import no.synth.kmpzip.kotlinx.ZipOutputStream
-import no.synth.kmpzip.zip.ZipEntry
 import no.synth.kmpzip.zip.ZipOutputStream
 import kotlin.time.Clock
 
@@ -49,21 +48,6 @@ internal abstract class ZipFileExporter: BackupExporter {
             fileLocation = file.path,
             ended = Clock.System.now()
         )
-    }
-
-    protected fun ZipOutputStream.entryForName(
-        name: String,
-        extension: String,
-        block: ZipOutputStream.() -> Unit
-    ) {
-        val entry = ZipEntry("$name.$extension")
-
-        putNextEntry(entry)
-        try {
-            block()
-        } finally {
-            closeEntry()
-        }
     }
 
     /**
