@@ -13,7 +13,6 @@ import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 import net.mamoe.yamlkt.Yaml
 import no.synth.kmpzip.zip.ZipOutputStream
-import kotlin.time.ExperimentalTime
 
 private const val DREAMS_FILE_NAME = "dreams"
 private const val PERSONS_FILE_NAME = "persons"
@@ -24,7 +23,6 @@ private const val DREAMS_TO_PERSONS_FILE_NAME = "dreams_persons"
 private const val DREAMS_TO_TAGS_FILE_NAME = "dreams_tags"
 private const val PERSONS_TO_TAGS_FILE_NAME = "persons_tags"
 
-@OptIn(ExperimentalTime::class)
 internal class ListBasedExporter(
     private val allDreams: AllDreamUseCase,
     private val allPersons: AllPersonUseCase,
@@ -104,7 +102,6 @@ internal class ListBasedExporter(
         }
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     private inline fun <reified T> ZipOutputStream.encodeWrite(
         items: T
     ) {
