@@ -1,5 +1,6 @@
 package me.bumiller.ddcomp.core.database
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -58,6 +59,9 @@ private const val DB_VERSION = 8
         PersonTagM2M::class,
         TagEntity::class,
         AttachmentMetaEntity::class
+    ],
+    autoMigrations = [
+        AutoMigration(from = 7, to = 8) // Migration for release 1.0.0|1.0.1|1.0.2 -> 1.1.0|1.1.1
     ]
 )
 @TypeConverters(InstantConverter::class, DurationConverter::class)
