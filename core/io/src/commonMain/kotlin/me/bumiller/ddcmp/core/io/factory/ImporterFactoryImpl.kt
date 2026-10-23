@@ -1,9 +1,9 @@
 package me.bumiller.ddcmp.core.io.factory
 
+import me.bumiller.ddcmp.core.io.importer.BackgroundImporterProxy
 import me.bumiller.ddcmp.core.io.importer.LegacyImporter
 import me.bumiller.ddcmp.core.io.importer.ListBasedImporter
 import me.bumiller.ddcmp.core.io.importer.XmlImporter
-import me.bumiller.ddcmp.core.io.importer.backgroundProxy
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.io.BackupImporterFactory
 import me.bumiller.ddcmp.domain.model.io.IOFileType
@@ -22,7 +22,6 @@ internal class ImporterFactoryImpl(
     private val saveTag: SaveTagUseCase
 ) : BackupImporterFactory {
 
-    @OptIn(ExperimentalTime::class)
     override fun createImporter(options: ImportOption, settings: Settings): BackupImporter {
         return when (options) {
             is ImportOption.Legacy -> LegacyImporter(
@@ -46,6 +45,6 @@ internal class ImporterFactoryImpl(
 
                 IOFileType.Xml -> XmlImporter(saveDream, savePerson, saveEmotion, saveTag)
             }
-        }.backgroundProxy()
+        }.let(::BackgroundImporterProxy)
     }
 }

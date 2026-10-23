@@ -8,7 +8,7 @@ import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.model.io.ImportResult
 
 // Proxy that switches to the Dispatchers.IO context during importing.
-private class BackgroundImporterProxy(
+internal class BackgroundImporterProxy(
     private val delegate: BackupImporter
 ) : BackupImporter {
     override suspend fun importBackup(file: PlatformFile): ImportResult =
@@ -16,5 +16,3 @@ private class BackgroundImporterProxy(
             delegate.importBackup(file)
         }
 }
-
-internal fun BackupImporter.backgroundProxy(): BackupImporter = BackgroundImporterProxy(this)

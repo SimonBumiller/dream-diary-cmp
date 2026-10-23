@@ -1,9 +1,9 @@
 package me.bumiller.ddcmp.core.io.factory
 
+import me.bumiller.ddcmp.core.io.exporter.BackgroundExporterProxy
 import me.bumiller.ddcmp.core.io.exporter.LegacyExporter
 import me.bumiller.ddcmp.core.io.exporter.ListBasedExporter
 import me.bumiller.ddcmp.core.io.exporter.XmlExporter
-import me.bumiller.ddcmp.core.io.exporter.backgroundProxy
 import me.bumiller.ddcmp.domain.io.BackupExporterFactory
 import me.bumiller.ddcmp.domain.model.io.ExportOption
 import me.bumiller.ddcmp.domain.model.io.IOFileType
@@ -32,6 +32,6 @@ internal class ExporterFactoryImpl(
 
             IOFileType.Xml -> XmlExporter(allDreams, allPersons, allEmotions, allTags)
         }
-    }.backgroundProxy()
+    }.let(::BackgroundExporterProxy)
 
 }

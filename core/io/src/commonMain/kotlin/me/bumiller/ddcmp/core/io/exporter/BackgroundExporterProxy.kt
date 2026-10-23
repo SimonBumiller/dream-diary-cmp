@@ -8,14 +8,11 @@ import me.bumiller.ddcmp.domain.io.BackupExporter
 import me.bumiller.ddcmp.domain.model.io.ExportResult
 
 // Proxy that switches to the Dispatchers.IO context during exporting.
-private class BackgroundExporterProxy(
+internal class BackgroundExporterProxy(
     private val delegate: BackupExporter
 ) : BackupExporter {
     override suspend fun export(file: PlatformFile): ExportResult
     = withContext(Dispatchers.IO) {
         delegate.export(file)
     }
-
 }
-
-internal fun BackupExporter.backgroundProxy(): BackupExporter = BackgroundExporterProxy(this)
