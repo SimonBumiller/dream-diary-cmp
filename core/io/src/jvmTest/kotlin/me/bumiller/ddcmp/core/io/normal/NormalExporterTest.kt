@@ -10,7 +10,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
-import me.bumiller.ddcmp.core.io.exporter.ListBasedExporter
+import me.bumiller.ddcmp.core.io.exporter.strategy.ListBasedExportStrategy
 import me.bumiller.ddcmp.core.io.importer.ListBasedImporter
 import me.bumiller.ddcmp.domain.model.emotion.Arousal
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
@@ -89,7 +89,7 @@ class NormalExporterTest {
 
     @Test
     fun `ListBasedExporter works`() = runBlocking {
-        val subject = ListBasedExporter(allDreams, allPersons, allEmotions, IOFileType.Json)
+        val subject = ListBasedExportStrategy(allDreams, allPersons, allEmotions, IOFileType.Json)
 
         val path = "/home/simon/AndroidStudioProjects/dream-diary-cmp/temp/export.zip"
 

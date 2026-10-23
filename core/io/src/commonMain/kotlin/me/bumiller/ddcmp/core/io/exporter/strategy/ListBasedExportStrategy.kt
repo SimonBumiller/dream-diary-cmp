@@ -1,11 +1,12 @@
-package me.bumiller.ddcmp.core.io.exporter
+package me.bumiller.ddcmp.core.io.exporter.strategy
 
 import kotlinx.coroutines.flow.first
-import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.io.IOException
 import kotlinx.serialization.json.Json
+import me.bumiller.ddcmp.common.captureException
 import me.bumiller.ddcmp.core.io.common.configureEntry
+import me.bumiller.ddcmp.core.io.exporter.ZipFileExporter.DataExportStrategy
 import me.bumiller.ddcmp.core.io.model.ListBased
-import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
@@ -14,30 +15,21 @@ import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 import net.mamoe.yamlkt.Yaml
 import no.synth.kmpzip.zip.ZipOutputStream
 
-private const val DREAMS_FILE_NAME = "dreams"
-private const val PERSONS_FILE_NAME = "persons"
-private const val EMOTIONS_FILE_NAME = "emotions"
-private const val TAGS_FILE_NAME = "tags"
-private const val DREAMS_TO_EMOTIONS_FILE_NAME = "dreams_emotions"
-private const val DREAMS_TO_PERSONS_FILE_NAME = "dreams_persons"
-private const val DREAMS_TO_TAGS_FILE_NAME = "dreams_tags"
-private const val PERSONS_TO_TAGS_FILE_NAME = "persons_tags"
-
-internal class ListBasedExporter(
+internal class ListBasedExportStrategy(
     private val allDreams: AllDreamUseCase,
     private val allPersons: AllPersonUseCase,
     private val allEmotions: AllEmotionsUseCase,
     private val allTags: AllTagUseCase,
     private val fileType: IOFileType
-) : ZipFileExporter() {
+) : DataExportStrategy {
 
     init {
         require(fileType in setOf(IOFileType.Json, IOFileType.Yaml))
     }
 
-    override suspend fun aggregateZipFile(
+    override suspend fun writeDataInto(
         zipStream: ZipOutputStream
-    ): ExportResult? {
+    ): DataExportStrategy.DataResult {
         val dreams = mutableListOf<ListBased.Dream>()
 
         val dreamsToPersons = mutableListOf<ListBased.DreamToPersons>()
@@ -79,20 +71,36 @@ internal class ListBasedExporter(
             .first()
             .map(ListBased.Tag::fromModel)
 
-        zipStream.apply {
-            writeListBased(dreams, DREAMS_FILE_NAME)
-            writeListBased(emotions, EMOTIONS_FILE_NAME)
-            writeListBased(persons, PERSONS_FILE_NAME)
-            writeListBased(tags, TAGS_FILE_NAME)
-            writeListBased(dreamsToPersons, DREAMS_TO_PERSONS_FILE_NAME)
-            writeListBased(dreamsToEmotions, DREAMS_TO_EMOTIONS_FILE_NAME)
-            writeListBased(dreamsToTags, DREAMS_TO_TAGS_FILE_NAME)
-            writeListBased(personsToTags, PERSONS_TO_TAGS_FILE_NAME)
+        try {
+            zipStream.apply {
+                writeListBased(dreams, DREAMS_FILE_NAME)
+                writeListBased(emotions, EMOTIONS_FILE_NAME)
+                writeListBased(persons, PERSONS_FILE_NAME)
+                writeListBased(tags, TAGS_FILE_NAME)
+                writeListBased(dreamsToPersons, DREAMS_TO_PERSONS_FILE_NAME)
+                writeListBased(dreamsToEmotions, DREAMS_TO_EMOTIONS_FILE_NAME)
+                writeListBased(dreamsToTags, DREAMS_TO_TAGS_FILE_NAME)
+                writeListBased(personsToTags, PERSONS_TO_TAGS_FILE_NAME)
+            }
+        } catch(e: IOException) {
+            captureException(e)
+            return DataExportStrategy.DataResult.WriteError(e)
         }
 
-        return null
+        return DataExportStrategy.DataResult.Success
     }
 
+
+    companion object {
+        private const val DREAMS_FILE_NAME = "dreams"
+        private const val PERSONS_FILE_NAME = "persons"
+        private const val EMOTIONS_FILE_NAME = "emotions"
+        private const val TAGS_FILE_NAME = "tags"
+        private const val DREAMS_TO_EMOTIONS_FILE_NAME = "dreams_emotions"
+        private const val DREAMS_TO_PERSONS_FILE_NAME = "dreams_persons"
+        private const val DREAMS_TO_TAGS_FILE_NAME = "dreams_tags"
+        private const val PERSONS_TO_TAGS_FILE_NAME = "persons_tags"
+    }
     private inline fun <reified T> ZipOutputStream.writeListBased(
         list: List<T>,
         fileName: String

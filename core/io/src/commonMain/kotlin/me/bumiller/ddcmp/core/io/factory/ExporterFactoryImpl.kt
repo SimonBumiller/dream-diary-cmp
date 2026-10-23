@@ -1,9 +1,9 @@
 package me.bumiller.ddcmp.core.io.factory
 
-import me.bumiller.ddcmp.core.io.exporter.BackgroundExporterProxy
-import me.bumiller.ddcmp.core.io.exporter.LegacyExporter
-import me.bumiller.ddcmp.core.io.exporter.ListBasedExporter
-import me.bumiller.ddcmp.core.io.exporter.XmlExporter
+import me.bumiller.ddcmp.core.io.exporter.ZipFileExporter
+import me.bumiller.ddcmp.core.io.exporter.strategy.LegacyExportStrategy
+import me.bumiller.ddcmp.core.io.exporter.strategy.ListBasedExportStrategy
+import me.bumiller.ddcmp.core.io.exporter.strategy.XmlExportStrategy
 import me.bumiller.ddcmp.domain.io.BackupExporterFactory
 import me.bumiller.ddcmp.domain.model.io.ExportOption
 import me.bumiller.ddcmp.domain.model.io.IOFileType
@@ -19,19 +19,26 @@ internal class ExporterFactoryImpl(
     private val allTags: AllTagUseCase
 ) : BackupExporterFactory {
 
-    override fun createImporter(options: ExportOption) = when (options) {
-        ExportOption.Legacy -> LegacyExporter(allDreams, allPersons)
-        is ExportOption.Normal -> when (options.fileType) {
-            IOFileType.Json, IOFileType.Yaml -> ListBasedExporter(
-                allDreams,
-                allPersons,
-                allEmotions,
-                allTags,
-                options.fileType
-            )
+    // Exists for further expansion of ExportOption.
+    @Suppress("UnusedReceiverParameter")
+    private fun ExportOption.isZipBased() = true
 
-            IOFileType.Xml -> XmlExporter(allDreams, allPersons, allEmotions, allTags)
+    override fun createImporter(options: ExportOption) =
+        when (options.isZipBased()) {
+            false -> throw IllegalArgumentException("Non-zip based exports are not supported.")
+            true -> when (options) {
+                ExportOption.Legacy -> LegacyExportStrategy(allDreams, allPersons)
+                is ExportOption.Normal -> when (options.fileType) {
+                    IOFileType.Json, IOFileType.Yaml -> ListBasedExportStrategy(
+                        allDreams,
+                        allPersons,
+                        allEmotions,
+                        allTags,
+                        options.fileType
+                    )
+
+                    IOFileType.Xml -> XmlExportStrategy(allDreams, allPersons, allEmotions, allTags)
+                }
+            }.let(::ZipFileExporter)
         }
-    }.let(::BackgroundExporterProxy)
-
 }

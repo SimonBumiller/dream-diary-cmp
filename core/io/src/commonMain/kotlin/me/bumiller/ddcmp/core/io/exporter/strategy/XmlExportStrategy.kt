@@ -1,9 +1,11 @@
-package me.bumiller.ddcmp.core.io.exporter
+package me.bumiller.ddcmp.core.io.exporter.strategy
 
 import kotlinx.coroutines.flow.first
+import kotlinx.io.IOException
+import me.bumiller.ddcmp.common.captureException
 import me.bumiller.ddcmp.core.io.common.configureEntry
+import me.bumiller.ddcmp.core.io.exporter.ZipFileExporter.DataExportStrategy
 import me.bumiller.ddcmp.core.io.model.Xml
-import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
@@ -12,21 +14,16 @@ import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 import nl.adaptivity.xmlutil.serialization.XML
 import no.synth.kmpzip.zip.ZipOutputStream
 
-private const val DREAMS_FILE_NAME = "dreams"
-private const val PERSONS_FILE_NAME = "persons"
-private const val EMOTIONS_FILE_NAME = "emotions"
-private const val TAGS_FILE_NAME = "tags"
-
-internal class XmlExporter(
+internal class XmlExportStrategy(
     private val allDreams: AllDreamUseCase,
     private val allPersons: AllPersonUseCase,
     private val allEmotions: AllEmotionsUseCase,
     private val allTags: AllTagUseCase
-) : ZipFileExporter() {
+) : DataExportStrategy {
 
-    override suspend fun aggregateZipFile(
+    override suspend fun writeDataInto(
         zipStream: ZipOutputStream
-    ): ExportResult? {
+    ): DataExportStrategy.DataResult {
         val dreams = allDreams(AllDreamUseCase.I())
             .first()
             .map(Xml.Dream::fromModel)
@@ -43,14 +40,26 @@ internal class XmlExporter(
             .first()
             .map(Xml.Tag::fromModel)
 
-        zipStream.apply {
-            writeXml(Xml.DreamsRoot(dreams), DREAMS_FILE_NAME)
-            writeXml(Xml.PersonsRoot(persons), PERSONS_FILE_NAME)
-            writeXml(Xml.EmotionsRoot(emotions), EMOTIONS_FILE_NAME)
-            writeXml(Xml.TagsRoot(tags), TAGS_FILE_NAME)
+        try {
+            zipStream.apply {
+                writeXml(Xml.DreamsRoot(dreams), DREAMS_FILE_NAME)
+                writeXml(Xml.PersonsRoot(persons), PERSONS_FILE_NAME)
+                writeXml(Xml.EmotionsRoot(emotions), EMOTIONS_FILE_NAME)
+                writeXml(Xml.TagsRoot(tags), TAGS_FILE_NAME)
+            }
+        } catch(e: IOException) {
+            captureException(e)
+            return DataExportStrategy.DataResult.WriteError(e)
         }
 
-        return null
+        return DataExportStrategy.DataResult.Success
+    }
+
+    companion object {
+        private const val DREAMS_FILE_NAME = "dreams"
+        private const val PERSONS_FILE_NAME = "persons"
+        private const val EMOTIONS_FILE_NAME = "emotions"
+        private const val TAGS_FILE_NAME = "tags"
     }
 
     private inline fun <reified T : Any> ZipOutputStream.writeXml(

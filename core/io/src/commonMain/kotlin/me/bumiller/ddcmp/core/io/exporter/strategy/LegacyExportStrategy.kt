@@ -1,4 +1,4 @@
-package me.bumiller.ddcmp.core.io.exporter
+package me.bumiller.ddcmp.core.io.exporter.strategy
 
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.TimeZone
@@ -9,28 +9,26 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.io.encodeToSink
 import me.bumiller.ddcmp.common.captureException
+import me.bumiller.ddcmp.core.io.exporter.ZipFileExporter.DataExportStrategy
 import me.bumiller.ddcmp.core.io.model.Legacy
-import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import no.synth.kmpzip.kotlinx.asSink
 import no.synth.kmpzip.zip.ZipEntry
 import no.synth.kmpzip.zip.ZipOutputStream
-import kotlin.time.Clock
 
 private const val FILE_NAME = "data.json"
 
 /**
  * Backup Exporter implementation
  */
-internal class LegacyExporter(
+internal class LegacyExportStrategy(
     private val allDreams: AllDreamUseCase,
     private val allPersons: AllPersonUseCase
-) : ZipFileExporter() {
+) : DataExportStrategy {
 
     @OptIn(ExperimentalSerializationApi::class)
-    override suspend fun aggregateZipFile(zipStream: ZipOutputStream): ExportResult? {
-        val startTimestamp = Clock.System.now()
+    override suspend fun writeDataInto(zipStream: ZipOutputStream): DataExportStrategy.DataResult {
         val timeZone = TimeZone.currentSystemDefault()
 
         val allDreams = allDreams(AllDreamUseCase.I())
@@ -92,15 +90,9 @@ internal class LegacyExporter(
             Json.encodeToSink(root, zipStream.asSink().buffered())
         } catch (e: IOException) {
             captureException(e)
-            return ExportResult.Failure.FileAccess(
-                id = 0,
-                started = startTimestamp,
-                ended = Clock.System.now()
-            )
+            return DataExportStrategy.DataResult.WriteError(e)
         }
 
-        zipStream.closeEntry()
-
-        return null
+        return DataExportStrategy.DataResult.Success
     }
 }
