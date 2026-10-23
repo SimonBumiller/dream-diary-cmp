@@ -11,7 +11,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import me.bumiller.ddcmp.core.io.exporter.strategy.ListBasedExportStrategy
-import me.bumiller.ddcmp.core.io.importer.ListBasedImporter
+import me.bumiller.ddcmp.core.io.importer.strategy.ListBasedImportStrategy
 import me.bumiller.ddcmp.domain.model.emotion.Arousal
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.dream.Dream
@@ -112,7 +112,7 @@ class NormalExporterTest {
         val savedEmotions = mutableListOf<Emotion>()
         coEvery { saveEmotion.invoke(capture(savedEmotions)) } returns emotions.first()
 
-        val importer = ListBasedImporter(saveDream, savePerson, saveEmotion, IOFileType.Json)
+        val importer = ListBasedImportStrategy(saveDream, savePerson, saveEmotion, IOFileType.Json)
 
         importer.importBackup(file)
 

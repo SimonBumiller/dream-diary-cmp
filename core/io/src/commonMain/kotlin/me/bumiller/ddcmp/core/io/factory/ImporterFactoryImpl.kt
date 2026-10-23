@@ -1,9 +1,9 @@
 package me.bumiller.ddcmp.core.io.factory
 
-import me.bumiller.ddcmp.core.io.importer.BackgroundImporterProxy
 import me.bumiller.ddcmp.core.io.importer.LegacyImporter
-import me.bumiller.ddcmp.core.io.importer.ListBasedImporter
-import me.bumiller.ddcmp.core.io.importer.XmlImporter
+import me.bumiller.ddcmp.core.io.importer.ZipFileImporter
+import me.bumiller.ddcmp.core.io.importer.strategy.ListBasedImportStrategy
+import me.bumiller.ddcmp.core.io.importer.strategy.XmlImportStrategy
 import me.bumiller.ddcmp.domain.io.BackupImporter
 import me.bumiller.ddcmp.domain.io.BackupImporterFactory
 import me.bumiller.ddcmp.domain.model.io.IOFileType
@@ -13,7 +13,6 @@ import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase
-import kotlin.time.ExperimentalTime
 
 internal class ImporterFactoryImpl(
     private val saveDream: SaveDreamUseCase,
@@ -22,8 +21,8 @@ internal class ImporterFactoryImpl(
     private val saveTag: SaveTagUseCase
 ) : BackupImporterFactory {
 
-    override fun createImporter(options: ImportOption, settings: Settings): BackupImporter {
-        return when (options) {
+    override fun createImporter(options: ImportOption, settings: Settings): BackupImporter =
+        when (options) {
             is ImportOption.Legacy -> LegacyImporter(
                 timeZone = options.timeZone,
                 transferFavorites = options.transferFavorites,
@@ -35,7 +34,7 @@ internal class ImporterFactoryImpl(
             )
 
             is ImportOption.Normal -> when (options.contentFileType) {
-                IOFileType.Json, IOFileType.Yaml -> ListBasedImporter(
+                IOFileType.Json, IOFileType.Yaml -> ListBasedImportStrategy(
                     saveDream,
                     savePerson,
                     saveEmotion,
@@ -43,8 +42,7 @@ internal class ImporterFactoryImpl(
                     options.contentFileType
                 )
 
-                IOFileType.Xml -> XmlImporter(saveDream, savePerson, saveEmotion, saveTag)
-            }
-        }.let(::BackgroundImporterProxy)
-    }
+                IOFileType.Xml -> XmlImportStrategy(saveDream, savePerson, saveEmotion, saveTag)
+            }.let(::ZipFileImporter)
+        }
 }
