@@ -1,5 +1,6 @@
 package me.bumiller.ddcmp.core.io.common
 
+import me.bumiller.ddcmp.common.toDosTime
 import no.synth.kmpzip.zip.ZipEntry
 import no.synth.kmpzip.zip.ZipOutputStream
 import kotlin.time.Clock
@@ -28,7 +29,7 @@ internal inline fun ZipOutputStream.configureEntry(
     block: ZipOutputStream.() -> Unit
 ) {
     val entry = ZipEntry(name).apply {
-        time = Clock.System.now().toEpochMilliseconds()
+        time = Clock.System.now().toDosTime()
     }
 
     putNextEntry(entry)
