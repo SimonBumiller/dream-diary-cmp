@@ -7,6 +7,7 @@ import me.bumiller.ddcmp.core.io.common.configureEntry
 import me.bumiller.ddcmp.core.io.exporter.ZipFileExporter.DataExportStrategy
 import me.bumiller.ddcmp.core.io.model.Xml
 import me.bumiller.ddcmp.domain.model.io.IOFileType
+import me.bumiller.ddcmp.domain.usecase.attachment.GetAttachmentsUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
@@ -18,7 +19,8 @@ internal class XmlExportStrategy(
     private val allDreams: AllDreamUseCase,
     private val allPersons: AllPersonUseCase,
     private val allEmotions: AllEmotionsUseCase,
-    private val allTags: AllTagUseCase
+    private val allTags: AllTagUseCase,
+    private val allAttachmentMetas: GetAttachmentsUseCase
 ) : DataExportStrategy {
 
     override suspend fun writeDataInto(

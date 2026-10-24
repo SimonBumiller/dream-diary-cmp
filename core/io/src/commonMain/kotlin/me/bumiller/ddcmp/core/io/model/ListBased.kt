@@ -1,20 +1,19 @@
-@file:OptIn(ExperimentalTime::class)
-
 package me.bumiller.ddcmp.core.io.model
 
 import kotlinx.serialization.Serializable
-import me.bumiller.ddcmp.domain.model.emotion.Arousal
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.emotion.Arousal
 import me.bumiller.ddcmp.domain.model.emotion.Valence
+import me.bumiller.ddcmp.domain.usecase.attachment.GetAttachmentsUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
+import me.bumiller.ddcmp.domain.model.attachment.AttachmentMeta as ModelAttachmentMeta
 import me.bumiller.ddcmp.domain.model.dream.Dream as ModelDream
-import me.bumiller.ddcmp.domain.model.emotion.Emotion as ModelEmotion
 import me.bumiller.ddcmp.domain.model.dream.Person as ModelPerson
 import me.bumiller.ddcmp.domain.model.dream.Tag as ModelTag
+import me.bumiller.ddcmp.domain.model.emotion.Emotion as ModelEmotion
 
 internal object ListBased {
 
@@ -31,9 +30,11 @@ internal object ListBased {
         val confidentiality: String
     ) {
 
-        fun toModel() = ModelDream(id, Instant.fromEpochMilliseconds(created), Instant.fromEpochMilliseconds(edited),
+        fun toModel() = ModelDream(
+            id, Instant.fromEpochMilliseconds(created), Instant.fromEpochMilliseconds(edited),
             Instant.fromEpochMilliseconds(created), title, description, note, favorite,
-            Confidentiality.valueOf(confidentiality))
+            Confidentiality.valueOf(confidentiality)
+        )
 
         companion object {
 
@@ -116,6 +117,42 @@ internal object ListBased {
     }
 
     @Serializable
+    data class AttachmentMeta(
+        val id: Long,
+        val created: Long,
+        val edited: Long,
+        val originalFilename: String,
+        val mimeType: String,
+        val description: String?,
+        val name: String,
+        val fileSize: Long,
+        val dreamId: Long
+    ) {
+
+        companion object {
+            fun fromModel(model: GetAttachmentsUseCase.O) = model.meta.run {
+                AttachmentMeta(
+                    id, created.toEpochMilliseconds(),
+                    created.toEpochMilliseconds(),
+                    originalFilename,
+                    mimeType,
+                    description,
+                    name,
+                    fileSize,
+                    dreamId
+                )
+            }
+        }
+
+        fun toModel() = ModelAttachmentMeta(
+            id, Instant.fromEpochMilliseconds(created),
+            Instant.fromEpochMilliseconds(edited),
+            originalFilename, mimeType, description, name, fileSize, dreamId
+        )
+
+    }
+
+    @Serializable
     data class Person(
         val id: Long,
         val created: Long,
@@ -134,7 +171,13 @@ internal object ListBased {
 
         companion object {
             fun fromModel(model: AllPersonUseCase.O) = model.run {
-                Person(person.id, person.created.toEpochMilliseconds(), person.edited.toEpochMilliseconds(), person.name, person.note)
+                Person(
+                    person.id,
+                    person.created.toEpochMilliseconds(),
+                    person.edited.toEpochMilliseconds(),
+                    person.name,
+                    person.note
+                )
             }
         }
 
@@ -162,6 +205,7 @@ internal object ListBased {
         companion object {
             fun fromModel(model: AllDreamUseCase.O) =
                 model.tags.map { DreamToTag(model.dream.id, it.id) }
+
             fun fromModel(model: AllTagUseCase.O) =
                 model.dreams.map { DreamToTag(it.id, model.tag.id) }
         }
@@ -177,6 +221,7 @@ internal object ListBased {
         companion object {
             fun fromModel(model: AllPersonUseCase.O) =
                 model.tags.map { PersonToTag(model.person.id, it.id) }
+
             fun fromModel(model: AllTagUseCase.O) =
                 model.persons.map { PersonToTag(it.id, model.tag.id) }
         }

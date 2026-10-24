@@ -10,14 +10,13 @@ import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 import nl.adaptivity.xmlutil.serialization.XmlChildrenName
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
+import me.bumiller.ddcmp.domain.model.attachment.AttachmentMeta as ModelAttachmentMeta
 import me.bumiller.ddcmp.domain.model.dream.Dream as ModelDream
 import me.bumiller.ddcmp.domain.model.dream.Person as ModelPerson
 import me.bumiller.ddcmp.domain.model.dream.Tag as ModelTag
 import me.bumiller.ddcmp.domain.model.emotion.Emotion as ModelEmotion
 
-@OptIn(ExperimentalTime::class)
 internal object Xml {
 
     @Serializable
@@ -88,7 +87,10 @@ internal object Xml {
         val emotions: List<EmotionRef>,
 
         @XmlChildrenName("tag")
-        val tags: List<TagRef>
+        val tags: List<TagRef>,
+
+        @XmlChildrenName("attachmentMeta")
+        val attachmentMetas: List<Xml.AttachmentMeta>
     ) {
 
         fun toModel() = ModelDream(
@@ -117,7 +119,8 @@ internal object Xml {
                     dream.note,
                     persons.map { PersonRef(it.id) },
                     emotions.map { EmotionRef(it.id) },
-                    tags.map { TagRef(it.id) }
+                    tags.map { TagRef(it.id) },
+                    attachmentMetas.map(Xml.AttachmentMeta::fromModel)
                 )
             }
         }
@@ -167,6 +170,53 @@ internal object Xml {
                     arousal.value,
                     valence.value,
                     name
+                )
+            }
+        }
+
+    }
+
+    @Serializable
+    @XmlSerialName("attachmentMeta")
+    data class AttachmentMeta(
+
+        @XmlElement(false)
+        val id: Long,
+
+        @XmlElement(false)
+        val created: Long,
+
+        @XmlElement(false)
+        val edited: Long,
+
+        @XmlElement(true)
+        val originalFilename: String,
+
+        @XmlElement(true)
+        val mimeType: String,
+
+        @XmlElement(true)
+        val description: String?,
+
+        @XmlElement(true)
+        val name: String,
+
+        @XmlElement(false)
+        val fileSize: Long
+    ) {
+
+        fun toModel(dreamId: Long) = ModelAttachmentMeta(
+            id, Instant.fromEpochMilliseconds(created), Instant.fromEpochMilliseconds(edited),
+            originalFilename, mimeType, description, name, fileSize, dreamId
+        )
+
+        companion object {
+            fun fromModel(model: ModelAttachmentMeta) = model.run {
+                AttachmentMeta(
+                    id,
+                    created.toEpochMilliseconds(),
+                    edited.toEpochMilliseconds(),
+                    originalFilename, mimeType, description, name, fileSize
                 )
             }
         }

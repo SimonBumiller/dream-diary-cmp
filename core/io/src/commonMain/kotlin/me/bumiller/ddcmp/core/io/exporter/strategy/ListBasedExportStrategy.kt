@@ -8,6 +8,7 @@ import me.bumiller.ddcmp.core.io.common.configureEntry
 import me.bumiller.ddcmp.core.io.exporter.ZipFileExporter.DataExportStrategy
 import me.bumiller.ddcmp.core.io.model.ListBased
 import me.bumiller.ddcmp.domain.model.io.IOFileType
+import me.bumiller.ddcmp.domain.usecase.attachment.GetAttachmentsUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
@@ -20,6 +21,7 @@ internal class ListBasedExportStrategy(
     private val allPersons: AllPersonUseCase,
     private val allEmotions: AllEmotionsUseCase,
     private val allTags: AllTagUseCase,
+    private val allAttachmentMetas: GetAttachmentsUseCase,
     private val fileType: IOFileType
 ) : DataExportStrategy {
 
@@ -71,12 +73,17 @@ internal class ListBasedExportStrategy(
             .first()
             .map(ListBased.Tag::fromModel)
 
+        val attachmentMetas = allAttachmentMetas(GetAttachmentsUseCase.I())
+            .first()
+            .map(ListBased.AttachmentMeta::fromModel)
+
         try {
             zipStream.apply {
                 writeListBased(dreams, DREAMS_FILE_NAME)
                 writeListBased(emotions, EMOTIONS_FILE_NAME)
                 writeListBased(persons, PERSONS_FILE_NAME)
                 writeListBased(tags, TAGS_FILE_NAME)
+                writeListBased(attachmentMetas, ATTACHMENT_METAS_FILE_NAME)
                 writeListBased(dreamsToPersons, DREAMS_TO_PERSONS_FILE_NAME)
                 writeListBased(dreamsToEmotions, DREAMS_TO_EMOTIONS_FILE_NAME)
                 writeListBased(dreamsToTags, DREAMS_TO_TAGS_FILE_NAME)
@@ -93,6 +100,7 @@ internal class ListBasedExportStrategy(
 
     companion object {
         private const val DREAMS_FILE_NAME = "dreams"
+        private const val ATTACHMENT_METAS_FILE_NAME = "attachments"
         private const val PERSONS_FILE_NAME = "persons"
         private const val EMOTIONS_FILE_NAME = "emotions"
         private const val TAGS_FILE_NAME = "tags"
