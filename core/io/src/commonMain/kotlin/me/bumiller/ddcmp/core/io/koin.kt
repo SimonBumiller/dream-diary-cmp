@@ -12,11 +12,11 @@ import org.koin.dsl.module
  * Koin module for the io module.
  */
 val io = module {
-    single<BackupImporterFactory> { ImporterFactoryImpl(get(), get(), get(), get()) }
+    single<BackupImporterFactory> { ImporterFactoryImpl(get(), get(), get(), get(), get(), get(), get()) }
 
     single<DirectoryTruncator> { DirectoryTruncatorImpl() }
 
     single<AttachmentStorage> { AttachmentStorageImpl() }
 
-    single<BackupExporterFactory> { ExporterFactoryImpl(get(), get(), get(), get()) }
+    single<BackupExporterFactory> { ExporterFactoryImpl(get(), get(), get(), get(), get()) }
 }

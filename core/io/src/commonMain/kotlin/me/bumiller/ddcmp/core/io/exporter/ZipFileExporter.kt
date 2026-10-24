@@ -72,7 +72,7 @@ internal class ZipFileExporter(
                     ?.let { ".$it" }
                     ?: "" // Extension is either the last dot-split segment with '.' or empty.
 
-                val entryName = meta.meta.id.toString() + fileEx
+                val entryName = ATTACHMENTS_DIR_NAME + meta.meta.id.toString() + fileEx
 
                 configureEntry(entryName) {
                     // Redirect file-source into zip-sink.

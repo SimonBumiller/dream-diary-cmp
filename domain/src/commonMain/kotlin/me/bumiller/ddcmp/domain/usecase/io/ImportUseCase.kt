@@ -2,12 +2,14 @@ package me.bumiller.ddcmp.domain.usecase.io
 
 import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.coroutines.flow.first
+import me.bumiller.ddcmp.domain.infrastructure.AttachmentMetaRepository
 import me.bumiller.ddcmp.domain.infrastructure.DreamRepository
 import me.bumiller.ddcmp.domain.infrastructure.EmotionRepository
 import me.bumiller.ddcmp.domain.infrastructure.ImportLogRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import me.bumiller.ddcmp.domain.infrastructure.SettingsStore
 import me.bumiller.ddcmp.domain.infrastructure.TagRepository
+import me.bumiller.ddcmp.domain.io.AttachmentStorage
 import me.bumiller.ddcmp.domain.io.BackupImporterFactory
 import me.bumiller.ddcmp.domain.model.io.ImportOption
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
@@ -22,7 +24,9 @@ class ImportUseCase(
     private val tagRepository: TagRepository,
     private val importerFactory: BackupImporterFactory,
     private val settingsStore: SettingsStore,
-    private val importRepository: ImportLogRepository
+    private val importRepository: ImportLogRepository,
+    private val attachmentMetaRepository: AttachmentMetaRepository,
+    private val attachmentStorage: AttachmentStorage
 ): UseCase<ImportUseCase.I, Long> {
 
     override suspend fun invoke(i: I): Long {
@@ -30,6 +34,8 @@ class ImportUseCase(
         dreamRepository.deleteAll()
         emotionRepository.deleteAll()
         tagRepository.deleteAll()
+        attachmentMetaRepository.deleteAll()
+        attachmentStorage.deleteAll()
 
         val settings = settingsStore.settings.first()
 

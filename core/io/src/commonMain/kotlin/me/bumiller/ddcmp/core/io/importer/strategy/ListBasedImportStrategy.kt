@@ -12,8 +12,10 @@ import me.bumiller.ddcmp.core.io.common.sourceForName
 import me.bumiller.ddcmp.core.io.importer.ZipFileImporter.DataImportStrategy
 import me.bumiller.ddcmp.core.io.importer.ZipFileImporter.DataImportStrategy.DataResult
 import me.bumiller.ddcmp.core.io.model.ListBased
+import me.bumiller.ddcmp.domain.infrastructure.AttachmentMetaRepository
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.io.IOFileType
+import me.bumiller.ddcmp.domain.usecase.attachment.AddAttachmentUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
@@ -27,6 +29,7 @@ internal class ListBasedImportStrategy(
     private val savePerson: SavePersonUseCase,
     private val saveEmotion: SaveEmotionUseCase,
     private val saveTag: SaveTagUseCase,
+    private val attachmentMetaRepo: AttachmentMetaRepository,
     private val fileType: IOFileType
 ) : DataImportStrategy {
 
@@ -45,6 +48,8 @@ internal class ListBasedImportStrategy(
             val tags = zipFile.decode<ListBased.Tag>(TAGS_FILE_NAME)
             val emotions =
                 zipFile.decode<ListBased.Emotion>(EMOTIONS_FILE_NAME)
+            val attachmentMetas =
+                zipFile.decode<ListBased.AttachmentMeta>(ATTACHMENTS_FILE_NAME)
             val dreamsToPersons =
                 zipFile.decode<ListBased.DreamToPersons>(DREAMS_TO_PERSONS_FILE_NAME)
             val dreamsToEmotions =
@@ -58,7 +63,7 @@ internal class ListBasedImportStrategy(
             // Checking data integrity
             //
             val referencedDreams =
-                (dreamsToPersons.map { it.dreamId } union dreamsToEmotions.map { it.dreamId } union dreamsToTags.map { it.dreamId }).distinct()
+                (dreamsToPersons.map { it.dreamId } union dreamsToEmotions.map { it.dreamId } union dreamsToTags.map { it.dreamId } union attachmentMetas.map { it.dreamId }).distinct()
             val referencedEmotions = dreamsToEmotions.map { it.emotionId }.distinct()
             val referencedPersons = dreamsToPersons.map { it.personId }.distinct()
             val referencedTags =
@@ -123,6 +128,10 @@ internal class ListBasedImportStrategy(
                 saveDream(input)
             }
 
+            attachmentMetas.forEach {
+                attachmentMetaRepo.save(it.toModel())
+            }
+
             return DataResult.Success(
                 emotionCount = emotions.size,
                 dreamCount = dreams.size,
@@ -143,6 +152,7 @@ internal class ListBasedImportStrategy(
         private const val DREAMS_FILE_NAME = "dreams"
         private const val PERSONS_FILE_NAME = "persons"
         private const val EMOTIONS_FILE_NAME = "emotions"
+        private const val ATTACHMENTS_FILE_NAME = "attachments"
         private const val DREAMS_TO_EMOTIONS_FILE_NAME = "dreams_emotions"
         private const val DREAMS_TO_PERSONS_FILE_NAME = "dreams_persons"
         private const val DREAMS_TO_TAGS_FILE_NAME = "dreams_tags"

@@ -6,6 +6,7 @@ import me.bumiller.ddcmp.common.captureException
 import me.bumiller.ddcmp.core.io.common.sourceForName
 import me.bumiller.ddcmp.core.io.importer.ZipFileImporter.DataImportStrategy
 import me.bumiller.ddcmp.core.io.model.Xml
+import me.bumiller.ddcmp.domain.infrastructure.AttachmentMetaRepository
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.io.IOFileType
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
@@ -26,7 +27,8 @@ internal class XmlImportStrategy(
     private val saveDream: SaveDreamUseCase,
     private val savePerson: SavePersonUseCase,
     private val saveEmotion: SaveEmotionUseCase,
-    private val saveTag: SaveTagUseCase
+    private val saveTag: SaveTagUseCase,
+    private val attachmentMetaRepository: AttachmentMetaRepository,
 ) : DataImportStrategy {
 
     override suspend fun readDataFrom(zipFile: ZipFile): DataImportStrategy.DataResult {
@@ -119,6 +121,13 @@ internal class XmlImportStrategy(
                 saveDream(input)
             }
 
+            val attachmentMetas = dreams.flatMap { dream ->
+                dream.attachmentMetas.map { it.toModel(dream.id) }
+            }
+            attachmentMetas.forEach { attachmentMeta ->
+                attachmentMetaRepository.save(attachmentMeta)
+            }
+
             return DataImportStrategy.DataResult.Success(
                 emotionCount = emotions.size,
                 dreamCount = dreams.size,
@@ -128,9 +137,11 @@ internal class XmlImportStrategy(
             )
         } catch (e: IOException) {
             captureException(e)
+            e.printStackTrace()
             return DataImportStrategy.DataResult.ReadError
         } catch (e: SerializationException) {
             captureException(e)
+            e.printStackTrace()
             return DataImportStrategy.DataResult.DataFormat
         }
     }

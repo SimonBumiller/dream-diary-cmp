@@ -4,6 +4,7 @@ import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.createDirectories
 import io.github.vinceglb.filekit.delete
 import io.github.vinceglb.filekit.exists
+import io.github.vinceglb.filekit.list
 import io.github.vinceglb.filekit.sink
 import io.github.vinceglb.filekit.source
 import kotlinx.io.RawSource
@@ -46,5 +47,11 @@ internal class AttachmentStorageImpl : AttachmentStorage {
     }
 
     override suspend fun get(id: Long) = PlatformFile(directory, id.toString())
+
+    override suspend fun deleteAll(): Int {
+        val size = directory.list().size
+        directory.list().forEach { it.delete() }
+        return size
+    }
 
 }

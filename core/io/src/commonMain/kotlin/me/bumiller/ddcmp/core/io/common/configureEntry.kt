@@ -14,7 +14,7 @@ internal inline fun ZipOutputStream.configureEntry(
     name: String,
     extension: String,
     block: ZipOutputStream.() -> Unit
-) = configureEntry(name + extension, block)
+) = configureEntry("$name.$extension", block)
 
 /**
  * Function to configure a specific entry inside a zip output stream.

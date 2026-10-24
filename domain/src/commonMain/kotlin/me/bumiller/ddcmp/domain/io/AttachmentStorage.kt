@@ -30,4 +30,6 @@ interface AttachmentStorage {
      */
     suspend fun get(id: Long): PlatformFile?
 
+    suspend fun deleteAll(): Int
+
 }
