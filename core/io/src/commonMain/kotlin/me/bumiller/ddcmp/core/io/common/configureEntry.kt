@@ -2,6 +2,7 @@ package me.bumiller.ddcmp.core.io.common
 
 import no.synth.kmpzip.zip.ZipEntry
 import no.synth.kmpzip.zip.ZipOutputStream
+import kotlin.time.Clock
 
 /**
  * Function to configure a specific entry inside a zip output stream.
@@ -26,7 +27,9 @@ internal inline fun ZipOutputStream.configureEntry(
     name: String,
     block: ZipOutputStream.() -> Unit
 ) {
-    val entry = ZipEntry(name)
+    val entry = ZipEntry(name).apply {
+        time = Clock.System.now().toEpochMilliseconds()
+    }
 
     putNextEntry(entry)
     try {
