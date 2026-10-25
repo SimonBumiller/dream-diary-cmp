@@ -20,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,6 +47,7 @@ import dream_diary_cmp.feature.home.generated.resources.person_detail_associated
 import dream_diary_cmp.feature.home.generated.resources.person_detail_associated_percentage
 import dream_diary_cmp.feature.home.generated.resources.person_detail_associated_persons_description
 import dream_diary_cmp.feature.home.generated.resources.person_detail_associated_persons_title
+import dream_diary_cmp.feature.home.generated.resources.person_detail_delete
 import dream_diary_cmp.feature.home.generated.resources.person_detail_dream_occurence_label
 import dream_diary_cmp.feature.home.generated.resources.person_detail_edit
 import dream_diary_cmp.feature.home.generated.resources.person_detail_first_occurence_label
@@ -61,8 +63,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
-import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
+import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.stats.Histogram
 import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.stats.dream.global.base.DreamConditionalOccurrenceStatistic.ConditionalOccurrenceInfo
@@ -91,7 +93,6 @@ import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewMode
 import me.ddcmp.feature.stats.components.TimeFrequencyTooltip
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
-import kotlin.time.ExperimentalTime
 
 @Composable
 internal fun PersonDetailEntry(
@@ -177,11 +178,18 @@ private fun PersonDetailEntry(
                     navigationIcon = { BackIconButton { onEvent(GoBack) } },
                     actions = {
                         AppBarActions(
-                            actions = listOf(AppBarAction(
-                                label = stringResource(Res.string.person_detail_edit),
-                                icon = Icons.Default.Edit,
-                                handler = { onEvent(UiEvent.Edit) }
-                            ))
+                            actions = listOf(
+                                AppBarAction(
+                                    label = stringResource(Res.string.person_detail_edit),
+                                    icon = Icons.Default.Edit,
+                                    handler = { onEvent(UiEvent.Edit) }
+                                ),
+                                AppBarAction(
+                                    label = stringResource(Res.string.person_detail_delete),
+                                    icon = Icons.Default.Delete,
+                                    handler = { onEvent(UiEvent.ClickDelete) }
+                                )
+                            )
                         )
                     }
                 )

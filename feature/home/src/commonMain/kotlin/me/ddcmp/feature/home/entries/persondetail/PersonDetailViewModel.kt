@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.dream.Person
@@ -15,6 +16,8 @@ import me.bumiller.ddcmp.domain.stats.person.PersonOccurrenceStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonTimeFrequencyHistogram
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
+import me.bumiller.ddcmp.domain.usecase.person.DeletePersonUseCase
+import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
@@ -27,9 +30,9 @@ import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewMode
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent.GoToPage
 import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel.ViewModelEvent.GoToPerson
 import me.ddcmp.feature.home.navigation.HomeRoutes
+import kotlin.coroutines.CoroutineContext
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 internal class PersonDetailViewModel(
     allPersons: AllPersonUseCase,
     allDreams: AllDreamUseCase,
@@ -37,7 +40,9 @@ internal class PersonDetailViewModel(
     associatedEmotions: PersonInfluencingEmotionsStatistic,
     associatedPersons: PersonInfluencingPersonsStatistic,
     personOccurrence: PersonOccurrenceStatistic,
-    timeFrequency: PersonTimeFrequencyHistogram
+    timeFrequency: PersonTimeFrequencyHistogram,
+    private val deletePerson: DeletePersonUseCase,
+    private val appScope: AppCoroutineScope
 ) : AppViewModel<UiEvent, ViewModelEvent>() {
 
     private val personId = savedStateHandle.toRoute<HomeRoutes.PersonDetail>().personId
@@ -111,6 +116,13 @@ internal class PersonDetailViewModel(
                     it.copy(selectedTab = event.tab)
                 }
             }
+
+            UiEvent.ClickDelete -> {
+                appScope.launch {
+                    deletePerson(personId)
+                }
+                fireEvent(GoBack)
+            }
         }
 
     val occurrenceStats = personOccurrence(personId)
@@ -127,6 +139,7 @@ internal class PersonDetailViewModel(
         data class ChangeTab(val tab: PersonDetailTabs) : UiEvent
         data object Edit : UiEvent
         data object GoBack : UiEvent
+        data object ClickDelete : UiEvent
     }
 
     sealed interface ViewModelEvent : VME {

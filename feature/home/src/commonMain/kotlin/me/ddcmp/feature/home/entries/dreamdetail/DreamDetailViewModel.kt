@@ -12,6 +12,7 @@ import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.usecase.attachment.DownloadAttachmentUseCase
 import me.bumiller.ddcmp.domain.usecase.attachment.GetAttachmentsUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.dream.DeleteDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase.I
 import me.bumiller.ddcmp.domain.util.AppCoroutineScope
@@ -20,6 +21,7 @@ import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
 import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.UiEvent
 import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent
+import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent.*
 import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent.DownloadFinished
 import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent.GoBack
 import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent.GoToDreamStats
@@ -36,7 +38,8 @@ internal class DreamDetailViewModel(
     private val saveDream: SaveDreamUseCase,
     private val appScope: AppCoroutineScope,
     private val getAttachment: GetAttachmentsUseCase,
-    private val download: DownloadAttachmentUseCase
+    private val download: DownloadAttachmentUseCase,
+    private val deleteDream: DeleteDreamUseCase
 ) : AppViewModel<UiEvent, ViewModelEvent>() {
 
     private val navRoute = savedStateHandle.toRoute<HomeRoutes.DreamDetail>()
@@ -109,10 +112,17 @@ internal class DreamDetailViewModel(
         }
 
         UiEvent.GoToRecentlyDownloadedAttachment -> fireEvent(
-            ViewModelEvent.OpenDirectory(
+            OpenDirectory(
                 recentlyDownloadedAttachment!!
             )
         )
+
+        UiEvent.ClickDelete -> {
+            appScope.launch {
+                deleteDream(navRoute.dreamId)
+            }
+            fireEvent(GoBack)
+        }
     }
 
     sealed interface UiEvent : UIE {
@@ -126,6 +136,7 @@ internal class DreamDetailViewModel(
         data class ClickDownloadAttachment(val attachment: AttachmentMeta) : UiEvent
         data class SelectDownloadDestination(val destination: PlatformFile?) : UiEvent
         data object GoToRecentlyDownloadedAttachment : UiEvent
+        data object ClickDelete : UiEvent
     }
 
     sealed interface ViewModelEvent : VME {

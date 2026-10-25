@@ -74,7 +74,10 @@ fun RowScope.AppBarActions(
                     text = {
                         Text(action.label)
                     },
-                    onClick = action.handler,
+                    onClick = {
+                        menuExpanded = false
+                        action.handler()
+                    },
                     leadingIcon = {
                         Icon(
                             imageVector = action.icon,

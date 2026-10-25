@@ -68,6 +68,7 @@
     <string name="personadd_tags_label">Tags</string>
 
     <string name="dreamdetail_action_stats">Dream statistics</string>
+    <string name="dreamdetail_action_delete">Delete dream</string>
     <string name="dreamdetail_downloaded_snackbar">Downloaded attachment</string>
     <string name="dreamdetail_downloaded_snackbar_action">Show</string>
     <string name="dreamdetail_action_favorite">Mark as favorite</string>
@@ -148,6 +149,7 @@
     <string name="person_detail_time_frequency_period_label">Most prominent period:</string>
     <string name="person_detail_time_frequency_period">%1$s – %2$s</string>
     <string name="person_detail_edit">Edit</string>
+    <string name="person_detail_delete">Delete Person</string>
 
     <string-array name="basic_emotions_names">
         <item>Happiness</item>

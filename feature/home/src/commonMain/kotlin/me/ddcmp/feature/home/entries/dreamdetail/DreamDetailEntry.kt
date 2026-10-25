@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.LineAxis
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.home.generated.resources.Res
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_delete
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_edit
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_favorite
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_stats
@@ -187,6 +189,11 @@ private fun DreamDetailEntry(
                                 label = stringResource(Res.string.dreamdetail_action_stats),
                                 icon = Icons.Default.LineAxis,
                                 handler = { onEvent(UiEvent.GoToDreamStats) }
+                            ),
+                            AppBarAction(
+                                label = stringResource(Res.string.dreamdetail_action_delete),
+                                icon = Icons.Default.Delete,
+                                handler = { onEvent(UiEvent.ClickDelete) }
                             )
                         )
                     )
