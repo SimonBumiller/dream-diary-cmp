@@ -53,7 +53,6 @@ internal fun TagAddEntry(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TagAddEntry(
     onEvent: (UiEvent) -> Unit,

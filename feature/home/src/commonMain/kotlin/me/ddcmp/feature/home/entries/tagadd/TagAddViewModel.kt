@@ -14,6 +14,7 @@ import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
+import me.bumiller.ddcmp.ui.common.component.ColorPickerInitialColor
 import me.ddcmp.feature.home.entries.tagadd.TagAddViewModel.UiEvent
 import me.ddcmp.feature.home.entries.tagadd.TagAddViewModel.ViewModelEvent
 import me.ddcmp.feature.home.entries.tagadd.TagAddViewModel.ViewModelEvent.CloseDialog
@@ -30,7 +31,6 @@ internal class TagAddViewModel(
 
     private val tagId = savedStateHandle.toRoute<HomeRoutes.AddTag>().tagId
 
-    @OptIn(ExperimentalTime::class)
     override suspend fun handleEvent(event: UiEvent) = when (event) {
         is UiEvent.ChangeName -> updateUiState<TagState> {
             it.copy(name = event.name)
@@ -64,7 +64,7 @@ internal class TagAddViewModel(
                     edited = now,
                     name = state.name,
                     description = state.description,
-                    color = state.color!!
+                    color = state.color
                 )
 
                 SaveTagUseCase.I(
@@ -94,7 +94,7 @@ internal class TagAddViewModel(
                     val newState = it.copy(
                         name = tag?.name ?: "",
                         description = tag?.description ?: "",
-                        color = tag?.color
+                        color = tag?.color ?: ColorPickerInitialColor
                     )
                     initialTagState = newState
                     newState
@@ -112,7 +112,7 @@ internal class TagAddViewModel(
      * State that holds whether the content can be saved at the moment.
      */
     val canSave = tagState
-        .map { it != initialTagState && it.name.isNotBlank() && it.color != null }
+        .map { it != initialTagState && it.name.isNotBlank() }
         .stateIn(false)
 
     /**
@@ -125,7 +125,7 @@ internal class TagAddViewModel(
     data class TagState(
         val name: String = "",
         val description: String = "",
-        val color: Long? = null
+        val color: Long = ColorPickerInitialColor
     )
 
     sealed interface UiEvent : UIE {
