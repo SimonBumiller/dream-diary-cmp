@@ -82,7 +82,7 @@ fun <Bucket, Value : Number, BucketSize> Histogram(
             val labelsHeightDp = with(LocalDensity.current) { labelsHeight!!.toDp() }
             HistogramScale(
                 modifier = Modifier
-                    .padding(bottom = labelsHeightDp),
+                    .padding(bottom = labelsHeightDp, end = 4.dp),
                 meta = meta
             )
         }
@@ -266,7 +266,6 @@ private fun ContentDrawScope.drawAverageLine(average: Float, max: Float, color: 
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun <Bucket, BucketSize, Value : Number> HistogramBars(
     modifier: Modifier,
