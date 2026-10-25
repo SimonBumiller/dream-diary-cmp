@@ -1,25 +1,25 @@
-@file:OptIn(ExperimentalTime::class)
-
 package me.bumiller.ddcmp.domain.stats.dream.global.base
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
+import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.meta.SortDirection
 import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.model.stats.Stat
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
+import kotlin.time.Duration.Companion.days
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 /**
  * Base class for statistics that take the dream list as a base.
  */
-@OptIn(ExperimentalTime::class)
 abstract class DreamListBasedStatistic<I, O>(
 
     /**
@@ -73,7 +73,7 @@ private val timeZone = TimeZone.currentSystemDefault()
 
 private fun createInstantRange(dateRange: ClosedRange<LocalDate>): ClosedRange<Instant> {
     val start = dateRange.start.atStartOfDayIn(timeZone)
-    val end = dateRange.endInclusive.atStartOfDayIn(timeZone)
+    val end = dateRange.endInclusive.plus(1, DateTimeUnit.DAY).atStartOfDayIn(timeZone)
 
     return start..end
 }

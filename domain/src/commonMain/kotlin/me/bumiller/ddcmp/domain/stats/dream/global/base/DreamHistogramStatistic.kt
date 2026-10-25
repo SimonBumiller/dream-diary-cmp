@@ -26,6 +26,11 @@ abstract class DreamHistogramStatistic<I, Bucket, BucketSize, BucketValue : Numb
     ): Pair<List<Bucket>, BucketSize>?
 
     /**
+     * The minimum bucket count. If [createMetadata] creates fewer buckets, the statistic can't be calculated.
+     */
+    protected open val minBucketCount = 1
+
+    /**
      * Finds the bucket for a specific dream.
      *
      * @param dream The dream for which the bucket should be determined.
@@ -55,6 +60,8 @@ abstract class DreamHistogramStatistic<I, Bucket, BucketSize, BucketValue : Numb
         actualRange: ClosedRange<LocalDate>
     ): Histogram<Bucket, BucketSize, BucketValue>? {
         val (buckets, bucketSize) = createMetadata(input, actualRange, dreams) ?: return null
+
+        if(buckets.size < minBucketCount) return null
 
         val dreamsWithBuckets = dreams.mapNotNull {
             val bucket = findBucketFor(it, buckets, input)

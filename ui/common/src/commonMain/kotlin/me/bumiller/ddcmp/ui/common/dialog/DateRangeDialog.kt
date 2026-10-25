@@ -58,7 +58,6 @@ private val PreconfiguredRanges = listOf(
     Res.string.date_range_dialog_preconfigured_last_five_years to DatePeriod(years = 5)
 )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun DateRangeDialog(
     modifier: Modifier,

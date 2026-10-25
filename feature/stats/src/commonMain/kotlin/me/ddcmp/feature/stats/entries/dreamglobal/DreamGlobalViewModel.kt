@@ -1,6 +1,5 @@
 package me.ddcmp.feature.stats.entries.dreamglobal
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamStreakStatistic
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamTimeFrequencyHistogram
@@ -13,9 +12,7 @@ import me.bumiller.ddcmp.ui.common.VME
 import me.bumiller.ddcmp.ui.common.dialog.PickedDateRange
 import me.ddcmp.feature.stats.domain.DateRangeViewModel
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalCoroutinesApi::class, ExperimentalTime::class)
 internal class DreamGlobalViewModel(
     timeFrequency: DreamTimeFrequencyHistogram,
     weekdayFrequency: DreamWeekdayFrequencyHistogram,
@@ -29,7 +26,7 @@ internal class DreamGlobalViewModel(
      * The time vs dream frequency histogram.
      */
     val timeHistogram = dateRangeReactive { dateRange ->
-        timeFrequency(dateRange)
+        timeFrequency.invoke(dateRange)
     }.stateIn(null)
 
     /**
