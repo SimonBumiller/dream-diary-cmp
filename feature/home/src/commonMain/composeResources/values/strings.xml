@@ -28,6 +28,9 @@
     <string name="dreamadd_actions_add_attachment">Add Attachment</string>
     <string name="dreamadd_actions_save">Save</string>
     <string name="dreamadd_attachmentadd_description">You selected the file _%1$s_ as an attachment for the dream. Enter a short name to quickly identify the attachment.</string>
+    <string name="dreamadd_no_emotions_placeholder">No emotions added yet</string>
+    <string name="dreamadd_no_persons_placeholder">No persons added yet</string>
+    <string name="dreamadd_no_tags_placeholder">No tags added yet</string>
 
     <string name="attachment_add_confirm">Add</string>
     <string name="attachment_add_dismiss">Cancel</string>
@@ -68,6 +71,7 @@
     <string name="personadd_confirm_label_edit">Save</string>
     <string name="personadd_cancel_label">Cancel</string>
     <string name="personadd_tags_label">Tags</string>
+    <string name="personadd_no_tags_placeholder">No tags added yet</string>
 
     <string name="dreamdetail_action_stats">Dream statistics</string>
     <string name="dreamdetail_action_delete">Delete dream</string>

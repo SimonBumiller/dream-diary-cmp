@@ -26,6 +26,7 @@ import dream_diary_cmp.feature.home.generated.resources.personadd_confirm_label_
 import dream_diary_cmp.feature.home.generated.resources.personadd_confirm_label_edit
 import dream_diary_cmp.feature.home.generated.resources.personadd_name_label
 import dream_diary_cmp.feature.home.generated.resources.personadd_name_placeholder
+import dream_diary_cmp.feature.home.generated.resources.personadd_no_tags_placeholder
 import dream_diary_cmp.feature.home.generated.resources.personadd_note_label
 import dream_diary_cmp.feature.home.generated.resources.personadd_note_placeholder
 import dream_diary_cmp.feature.home.generated.resources.personadd_tags_label
@@ -136,6 +137,7 @@ private fun PersonEntry(
                     onQueryChange = { onEvent(UiEvent.ChangeTagQuery(it)) },
                     label = { Text(stringResource(Res.string.personadd_tags_label)) },
                     values = selectableTags,
+                    emptyLabel = { Text(stringResource(Res.string.personadd_no_tags_placeholder)) },
                     name = Tag::name,
                     onSelect = { onEvent(UiEvent.AddTag(it)) }
                 )

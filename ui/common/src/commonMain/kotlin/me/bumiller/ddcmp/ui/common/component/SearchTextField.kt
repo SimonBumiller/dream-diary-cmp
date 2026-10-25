@@ -23,6 +23,7 @@ fun <Item> SearchTextField(
     query: String,
     onQueryChange: (String) -> Unit,
     label: (@Composable () -> Unit)? = null,
+    emptyLabel: (@Composable () -> Unit)? = null,
     values: List<Item>,
     name: (Item) -> String,
     onSelect: (Item) -> Unit
@@ -48,7 +49,7 @@ fun <Item> SearchTextField(
             label = label,
             colors = ExposedDropdownMenuDefaults.textFieldColors()
         )
-        if (exposed && values.isNotEmpty()) {
+        if (exposed) {
             ExposedDropdownMenu(
                 expanded = exposed,
                 onDismissRequest = {
@@ -62,6 +63,14 @@ fun <Item> SearchTextField(
                             onSelect(value)
                         },
                         text = { Text(name(value)) }
+                    )
+                }
+
+                if(values.isEmpty() && emptyLabel != null) {
+                    DropdownMenuItem(
+                        onClick = {},
+                        text = emptyLabel,
+                        enabled = false
                     )
                 }
             }

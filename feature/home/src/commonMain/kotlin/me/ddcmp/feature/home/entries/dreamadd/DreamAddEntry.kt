@@ -51,6 +51,9 @@ import dream_diary_cmp.feature.home.generated.resources.dreamadd_description_pla
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_emotions_info
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_emotions_label
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_emotions_title
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_no_emotions_placeholder
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_no_persons_placeholder
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_no_tags_placeholder
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_note_info
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_note_label
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_persons_info
@@ -416,6 +419,7 @@ private fun MainMetaSection(
                 onQueryChange = { onEvent(UiEvent.ChangePersonQuery(it)) },
                 label = { Text(stringResource(Res.string.dreamadd_persons_label)) },
                 values = persons.search(uiState.personQuery),
+                emptyLabel = { Text(stringResource(Res.string.dreamadd_no_persons_placeholder)) },
                 name = Person::name,
                 onSelect = { onEvent(SelectPerson(it)) }
             )
@@ -461,6 +465,7 @@ private fun MainMetaSection(
                 onQueryChange = { onEvent(UiEvent.ChangeTagQuery(it)) },
                 label = { Text(stringResource(Res.string.dreamadd_tags_label)) },
                 values = tags.search(uiState.tagQuery),
+                emptyLabel = { Text(stringResource(Res.string.dreamadd_no_tags_placeholder)) },
                 name = Tag::name,
                 onSelect = { onEvent(UiEvent.SelectTag(it)) }
             )
@@ -506,6 +511,7 @@ private fun MainMetaSection(
                 onQueryChange = { onEvent(UiEvent.ChangeEmotionQuery(it)) },
                 label = { Text(stringResource(Res.string.dreamadd_emotions_label)) },
                 values = emotions.search(uiState.emotionQuery),
+                emptyLabel = { Text(stringResource(Res.string.dreamadd_no_emotions_placeholder)) },
                 name = Emotion::name,
                 onSelect = { onEvent(UiEvent.SelectEmotion(it)) }
             )
