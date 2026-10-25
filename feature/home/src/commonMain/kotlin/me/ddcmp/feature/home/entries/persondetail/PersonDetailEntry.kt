@@ -22,6 +22,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -186,7 +187,7 @@ private fun PersonDetailEntry(
                                 ),
                                 AppBarAction(
                                     label = stringResource(Res.string.person_detail_delete),
-                                    icon = Icons.Default.Delete,
+                                    icon = Icons.Outlined.Delete,
                                     handler = { onEvent(UiEvent.ClickDelete) }
                                 )
                             )

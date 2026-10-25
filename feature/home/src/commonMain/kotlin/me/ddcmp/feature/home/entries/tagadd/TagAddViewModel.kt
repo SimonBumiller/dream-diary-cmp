@@ -9,7 +9,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
+import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase.*
+import me.bumiller.ddcmp.domain.usecase.tag.DeleteTagUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase
+import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase.*
 import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
@@ -27,9 +30,33 @@ internal class TagAddViewModel(
     private val saveTag: SaveTagUseCase,
     savedStateHandle: SavedStateHandle,
     private val appScope: AppCoroutineScope,
+    private val deleteTag: DeleteTagUseCase
 ) : AppViewModel<UiEvent, ViewModelEvent>() {
 
     private val tagId = savedStateHandle.toRoute<HomeRoutes.AddTag>().tagId
+
+    init {
+        registerUiState(TagState())
+
+        if (tagId != null) {
+            viewModelScope.launch {
+                val tag = if (isAdd) null
+                else allTags(AllTagUseCase.I(id = tagId))
+                    .map { it.singleOrNull()?.tag }
+                    .firstOrNull() ?: return@launch
+
+                updateUiState<TagState> {
+                    val newState = it.copy(
+                        name = tag?.name ?: "",
+                        description = tag?.description ?: "",
+                        color = tag?.color ?: ColorPickerInitialColor
+                    )
+                    initialTagState = newState
+                    newState
+                }
+            }
+        }
+    }
 
     override suspend fun handleEvent(event: UiEvent) = when (event) {
         is UiEvent.ChangeName -> updateUiState<TagState> {
@@ -78,28 +105,12 @@ internal class TagAddViewModel(
             Unit
         }
 
-    }
-
-    init {
-        registerUiState(TagState())
-
-        if (tagId != null) {
-            viewModelScope.launch {
-                val tag = if (isAdd) null
-                else allTags(AllTagUseCase.I(id = tagId))
-                    .map { it.singleOrNull()?.tag }
-                    .firstOrNull() ?: return@launch
-
-                updateUiState<TagState> {
-                    val newState = it.copy(
-                        name = tag?.name ?: "",
-                        description = tag?.description ?: "",
-                        color = tag?.color ?: ColorPickerInitialColor
-                    )
-                    initialTagState = newState
-                    newState
-                }
+        UiEvent.ClickDelete -> {
+            appScope.launch {
+                deleteTag(tagId!!)
             }
+
+            fireEvent(CloseDialog)
         }
     }
 
@@ -134,6 +145,7 @@ internal class TagAddViewModel(
         data class ChangeColor(val color: Long) : UiEvent
         data object Cancel : UiEvent
         data object Save : UiEvent
+        data object ClickDelete : UiEvent
     }
 
     sealed interface ViewModelEvent : VME {

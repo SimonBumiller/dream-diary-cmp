@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.UpdateDisabled
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.StopCircle
 import androidx.compose.runtime.Composable
 import dream_diary_cmp.feature.settings.generated.resources.Res
@@ -57,7 +58,7 @@ internal fun OrderState.positiveActionLabelAndIcon() = Res.string.run {
 
 internal fun OrderState.negativeActionLabelAndIcon() = Res.string.run {
     when (this@negativeActionLabelAndIcon) {
-        OrderState.Saved -> Icons.Default.Delete to order_detail_state_saved_negative_action_label
+        OrderState.Saved -> Icons.Outlined.Delete to order_detail_state_saved_negative_action_label
         OrderState.Running -> Icons.Outlined.StopCircle  to order_detail_state_running_negative_action_label
         OrderState.Canceled -> null
     }

@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.LineAxis
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -192,7 +193,7 @@ private fun DreamDetailEntry(
                             ),
                             AppBarAction(
                                 label = stringResource(Res.string.dreamdetail_action_delete),
-                                icon = Icons.Default.Delete,
+                                icon = Icons.Outlined.Delete,
                                 handler = { onEvent(UiEvent.ClickDelete) }
                             )
                         )

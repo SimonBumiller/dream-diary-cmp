@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -215,7 +216,7 @@ private fun RowScope.EditActions(
         actions = listOf(
             AppBarAction(
                 label = stringResource(Res.string.emotionadd_actions_delete),
-                icon = Icons.Default.Delete,
+                icon = Icons.Outlined.Delete,
                 handler = { onEvent(UiEvent.ClickDelete) }
             ),
             AppBarAction(
