@@ -6,6 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import me.bumiller.ddcmp.domain.infrastructure.SettingsStore
 import okio.Path
 import org.koin.core.scope.Scope
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 private const val FILENAME = "settings.preferences_pb"
@@ -24,5 +26,5 @@ expect fun Scope.instantiateDataStore(): DataStore<Preferences>
 val datastore = module {
     single<DataStore<Preferences>> { instantiateDataStore() }
 
-    single<SettingsStore> { DataStoreSettingsStore(get()) }
+    singleOf(::DataStoreSettingsStore) bind SettingsStore::class
 }

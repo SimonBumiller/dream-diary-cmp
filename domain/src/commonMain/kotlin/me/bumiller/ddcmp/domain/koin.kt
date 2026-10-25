@@ -25,74 +25,84 @@ import me.bumiller.ddcmp.domain.usecase.backup.RecordPeriodicBackupUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.SaveBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.backup.ScheduleBackupOrderUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.dream.DeleteDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
+import me.bumiller.ddcmp.domain.usecase.emotion.DeleteEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.io.ExportUseCase
 import me.bumiller.ddcmp.domain.usecase.io.GetExportLogUsecase
 import me.bumiller.ddcmp.domain.usecase.io.GetImportLogUsecase
 import me.bumiller.ddcmp.domain.usecase.io.ImportUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
+import me.bumiller.ddcmp.domain.usecase.person.DeletePersonUseCase
 import me.bumiller.ddcmp.domain.usecase.person.SavePersonUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
+import me.bumiller.ddcmp.domain.usecase.tag.DeleteTagUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase
 import me.bumiller.ddcmp.domain.util.AppCoroutineScope
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 /**
  * The Koin module for the domain component
  */
 val domain = module {
-    single { AppCoroutineScope() }
+    singleOf(::AppCoroutineScope)
 
-    single { AllDreamUseCase(get(), get(), get(), get(), get()) }
-    single { DreamDatesUseCase(get()) }
-    single { SaveDreamUseCase(get(), get(), get(), get()) }
+    singleOf(::AllDreamUseCase)
+    singleOf(::DreamDatesUseCase)
+    singleOf(::SaveDreamUseCase)
 
-    single { AddAttachmentUseCase(get(), get()) }
-    single { GetAttachmentsUseCase(get(), get()) }
-    single { RemoveAttachmentUseCase(get(), get()) }
-    single { DownloadAttachmentUseCase(get()) }
+    singleOf(::AddAttachmentUseCase)
+    singleOf(::GetAttachmentsUseCase)
+    singleOf(::RemoveAttachmentUseCase)
+    singleOf(::DownloadAttachmentUseCase)
 
-    single { AllEmotionsUseCase(get()) }
-    single { SaveEmotionUseCase(get()) }
+    singleOf(::AllEmotionsUseCase)
+    singleOf(::SaveEmotionUseCase)
 
-    single { AllPersonUseCase(get(), get()) }
-    single { SavePersonUseCase(get(), get()) }
+    singleOf(::AllPersonUseCase)
+    singleOf(::SavePersonUseCase)
 
-    single { GetSettingsUseCase(get()) }
-    single { SetSettingsUseCase(get()) }
+    singleOf(::GetSettingsUseCase)
+    singleOf(::SetSettingsUseCase)
 
-    single { ImportUseCase(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    single { ExportUseCase(get(), get()) }
-    single { GetImportLogUsecase(get()) }
-    single { GetExportLogUsecase(get()) }
+    singleOf(::ImportUseCase)
+    singleOf(::ExportUseCase)
+    singleOf(::GetImportLogUsecase)
+    singleOf(::GetExportLogUsecase)
 
-    single { GetBackupOrderUseCase(get()) }
-    single { GetBackupsForOrderUseCase(get()) }
-    single { RecordPeriodicBackupUseCase(get(), get()) }
-    single { CancelBackupOrdersUseCase(get(), get(), get()) }
-    single { SaveBackupOrderUseCase(get()) }
-    single { ScheduleBackupOrderUseCase(get(), get(), get()) }
-    single { PerformBackupOrderUseCase(get(), get(), get(), get(), get(), get()) }
+    singleOf(::DeleteTagUseCase)
+    singleOf(::DeleteDreamUseCase)
+    singleOf(::DeleteEmotionUseCase)
+    singleOf(::DeletePersonUseCase)
 
-    single { AllTagUseCase(get(), get(), get()) }
-    single { SaveTagUseCase(get(), get(), get()) }
+    singleOf(::GetBackupOrderUseCase)
+    singleOf(::GetBackupsForOrderUseCase)
+    singleOf(::RecordPeriodicBackupUseCase)
+    singleOf(::CancelBackupOrdersUseCase)
+    singleOf(::SaveBackupOrderUseCase)
+    singleOf(::ScheduleBackupOrderUseCase)
+    singleOf(::PerformBackupOrderUseCase)
 
-    single { DreamTimeFrequencyHistogram(get()) }
-    single { DreamWeekdayFrequencyHistogram(get()) }
-    single { DreamStreakStatistic(get()) }
-    single { DreamWeeklyFrequencyStatistic(get()) }
-    single { DreamPersonCountFrequencyHistogram(get(), get()) }
-    single { MarkedDreamPersonCountFrequencyHistogram(get(), get()) }
-    single { DreamLengthFrequencyHistogram(get()) }
-    single { MarkedDreamLengthFrequencyHistogram(get(), get()) }
-    single { PersonInfluencingEmotionsStatistic(get()) }
-    single { PersonInfluencingPersonsStatistic(get()) }
-    single { PersonOccurrenceStatistic(get()) }
-    single { PersonsOccurrencesCountStatistic(get()) }
-    single { PersonTimeFrequencyHistogram(get()) }
+    singleOf(::AllTagUseCase)
+    singleOf(::SaveTagUseCase)
+
+    singleOf(::DreamTimeFrequencyHistogram)
+    singleOf(::DreamWeekdayFrequencyHistogram)
+    singleOf(::DreamStreakStatistic)
+    singleOf(::DreamWeeklyFrequencyStatistic)
+    singleOf(::DreamPersonCountFrequencyHistogram)
+    singleOf(::MarkedDreamPersonCountFrequencyHistogram)
+    singleOf(::DreamLengthFrequencyHistogram)
+    singleOf(::MarkedDreamLengthFrequencyHistogram)
+    singleOf(::PersonInfluencingEmotionsStatistic)
+    singleOf(::PersonInfluencingPersonsStatistic)
+    singleOf(::PersonOccurrenceStatistic)
+    singleOf(::PersonsOccurrencesCountStatistic)
+    singleOf(::PersonTimeFrequencyHistogram)
 }

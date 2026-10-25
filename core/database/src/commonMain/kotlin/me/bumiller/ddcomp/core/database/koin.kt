@@ -12,6 +12,8 @@ import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import me.bumiller.ddcmp.domain.infrastructure.TagRepository
 import me.bumiller.ddcmp.domain.infrastructure.AttachmentMetaRepository
 import org.koin.core.scope.Scope
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import me.bumiller.ddcomp.core.database.repository.DreamRepository as DreamRepositoryImpl
 import me.bumiller.ddcomp.core.database.repository.EmotionRepository as EmotionRepositoryImpl
@@ -54,13 +56,13 @@ val database = module {
     single { get<RelationalDatabase>().tagDao() }
     single { get<RelationalDatabase>().attachmentMetaDao() }
 
-    single<DreamRepository> { DreamRepositoryImpl(get(), get(), get(), get(), get(), get()) }
-    single<EmotionRepository> { EmotionRepositoryImpl(get(), get()) }
-    single<PersonRepository> { PersonRepositoryImpl(get(), get(), get()) }
-    single<ImportLogRepository> { ImportLogRepositoryImpl(get()) }
-    single<ExportLogRepository> { ExportLogRepositoryImpl(get()) }
-    single<PeriodicBackupOrderRepository> { PeriodicBackupOrderRepositoryImpl(get(), get()) }
-    single<PeriodicBackupRepository> { PeriodicBackupRepositoryImpl(get(), get()) }
-    single<TagRepository> { TagRepositoryImpl(get(), get(), get(), get(), get()) }
-    single<AttachmentMetaRepository> { AttachmentMetaRepositoryImpl(get()) }
+    singleOf(::DreamRepositoryImpl) bind DreamRepository::class
+    singleOf(::EmotionRepositoryImpl) bind EmotionRepository::class
+    singleOf(::PersonRepositoryImpl) bind PersonRepository::class
+    singleOf(::ImportLogRepositoryImpl) bind ImportLogRepository::class
+    singleOf(::ExportLogRepositoryImpl) bind ExportLogRepository::class
+    singleOf(::PeriodicBackupOrderRepositoryImpl) bind PeriodicBackupOrderRepository::class
+    singleOf(::PeriodicBackupRepositoryImpl) bind PeriodicBackupRepository::class
+    singleOf(::TagRepositoryImpl) bind TagRepository::class
+    singleOf(::AttachmentMetaRepositoryImpl) bind AttachmentMetaRepository::class
 }
