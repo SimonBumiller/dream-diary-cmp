@@ -11,7 +11,10 @@ import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.model.emotion.EmotionCoordinate
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase
+import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase.*
+import me.bumiller.ddcmp.domain.usecase.emotion.DeleteEmotionUseCase
 import me.bumiller.ddcmp.domain.usecase.emotion.SaveEmotionUseCase
+import me.bumiller.ddcmp.domain.usecase.person.DeletePersonUseCase
 import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
@@ -25,11 +28,40 @@ internal class EmotionAddViewModel(
     savedStateHandle: SavedStateHandle,
     val allEmotions: AllEmotionsUseCase,
     val saveEmotion: SaveEmotionUseCase,
-    private val appScope: AppCoroutineScope
+    private val appScope: AppCoroutineScope,
+    private val deleteEmotion: DeleteEmotionUseCase
 ) :
     AppViewModel<EmotionAddViewModel.UiEvent, EmotionAddViewModel.ViewModelEvent>() {
 
     private var navRoute: HomeRoutes.AddEmotion = savedStateHandle.toRoute<HomeRoutes.AddEmotion>()
+
+    val isAdd = navRoute.emotionId == null
+
+    init {
+        registerUiState(UiState())
+        registerUiState(EmotionState())
+
+        val isAdd = navRoute.emotionId == null
+
+        appScope.launch {
+            if (!isAdd) { // If the emotion exists, we update the state to reflect the existing emotion
+                val emotion = allEmotions(AllEmotionsUseCase.I(id = navRoute.emotionId))
+                    .map { it.firstOrNull() }
+                    .firstOrNull()
+
+                emotion?.let {
+                    updateUiState<EmotionState> {
+                        val newState = it.copy(
+                            name = emotion.name,
+                            coordinate = emotion.copy()
+                        )
+                        initialEmotionState = newState
+                        newState
+                    }
+                }
+            }
+        }
+    }
 
     override suspend fun handleEvent(event: UiEvent) = when (event) {
         is UiEvent.Save -> {
@@ -37,7 +69,7 @@ internal class EmotionAddViewModel(
 
             appScope.launch {
                 val existingEmotion = if (navRoute.emotionId == null) null
-                else allEmotions(AllEmotionsUseCase.I(id = navRoute.emotionId))
+                else allEmotions(I(id = navRoute.emotionId))
                     .map { it.singleOrNull() }
                     .firstOrNull()
 
@@ -87,31 +119,13 @@ internal class EmotionAddViewModel(
         is UiEvent.ChangeName -> updateUiState<EmotionState> {
             it.copy(name = event.name)
         }
-    }
 
-    init {
-        registerUiState(UiState())
-        registerUiState(EmotionState())
-
-        val isAdd = navRoute.emotionId == null
-
-        appScope.launch {
-            if (!isAdd) { // If the emotion exists, we update the state to reflect the existing emotion
-                val emotion = allEmotions(AllEmotionsUseCase.I(id = navRoute.emotionId))
-                    .map { it.firstOrNull() }
-                    .firstOrNull()
-
-                emotion?.let {
-                    updateUiState<EmotionState> {
-                        val newState = it.copy(
-                            name = emotion.name,
-                            coordinate = emotion.copy()
-                        )
-                        initialEmotionState = newState
-                        newState
-                    }
-                }
+        UiEvent.ClickDelete -> {
+            appScope.launch {
+                deleteEmotion(navRoute.emotionId!!)
             }
+
+            fireEvent(GoBack)
         }
     }
 
@@ -120,8 +134,7 @@ internal class EmotionAddViewModel(
     /**
      * State that contains all existing emotions.
      */
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val emotionsState = allEmotions(AllEmotionsUseCase.I()).stateIn(emptyList())
+    val emotionsState = allEmotions(I()).stateIn(emptyList())
 
     /**
      * The exposed ui state for the composable.
@@ -175,6 +188,7 @@ internal class EmotionAddViewModel(
         data object Save : UiEvent
         data object NavigateBack : UiEvent
         data object HideDiscardDialog : UiEvent
+        data object ClickDelete : UiEvent
 
     }
 

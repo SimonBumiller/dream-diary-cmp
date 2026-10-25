@@ -50,6 +50,8 @@
     <string name="emotionadd_grid_title">Emotion value</string>
     <string name="emotionadd_grid_info">Characterize the emotion by selecting its valence (mood) and arousal (strength). The other dots represent already existing emotions.</string>
     <string name="emotionadd_closest_label">The selected value is closest to:</string>
+    <string name="emotionadd_actions_save">Save</string>
+    <string name="emotionadd_actions_delete">Delete emotion</string>
 
     <string name="personlist_title">Persons</string>
     <string name="personlist_action_add">Add Person</string>

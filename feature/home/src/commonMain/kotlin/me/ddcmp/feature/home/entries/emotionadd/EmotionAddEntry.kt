@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -14,6 +15,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -30,7 +33,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -40,6 +42,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dream_diary_cmp.feature.home.generated.resources.Res
+import dream_diary_cmp.feature.home.generated.resources.emotionadd_actions_delete
+import dream_diary_cmp.feature.home.generated.resources.emotionadd_actions_save
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_closest_label
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_grid_info
 import dream_diary_cmp.feature.home.generated.resources.emotionadd_grid_title
@@ -53,10 +57,12 @@ import me.bumiller.ddcmp.ui.common.backhandler.PlatformBackHandler
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.EmotionGrid
 import me.bumiller.ddcmp.ui.common.dialog.DiscardChangesDialog
+import me.bumiller.ddcmp.ui.common.layout.AppBarAction
+import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.plus
 import me.ddcmp.feature.home.entries.emotionadd.EmotionAddViewModel.UiEvent
 import org.jetbrains.compose.resources.stringResource
-import kotlin.time.ExperimentalTime
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 internal fun EmotionAddEntry(
@@ -75,20 +81,20 @@ internal fun EmotionAddEntry(
         val emotions by vm.emotionsState.collectAsStateWithLifecycle()
         val closest by vm.closest.collectAsStateWithLifecycle()
 
-        DreamAddEntry(vm::onEvent, uiState, dreamState, canSave, emotions, closest)
+        EmotionAddEntry(vm::onEvent, uiState, dreamState, canSave, vm.isAdd, emotions, closest)
     }
 }
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class,
-    ExperimentalTime::class, ExperimentalComposeUiApi::class
+    ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class
 )
 @Composable
-private fun DreamAddEntry(
+private fun EmotionAddEntry(
     onEvent: (UiEvent) -> Unit,
     uiState: EmotionAddViewModel.UiState,
     emotionState: EmotionAddViewModel.EmotionState,
     canSave: Boolean,
+    isAdd: Boolean,
     emotions: List<Emotion>,
     closest: Emotion?
 ) {
@@ -96,7 +102,7 @@ private fun DreamAddEntry(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
-        delay(300L)
+        delay(300L.milliseconds)
         keyboardController?.run {
             show()
             focusRequester.requestFocus()
@@ -121,20 +127,10 @@ private fun DreamAddEntry(
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(Res.string.emotionadd_title)) },
                 actions = {
-                    FilledIconButton(
-                        onClick = { onEvent(UiEvent.Save) },
-                        modifier = Modifier
-                            .minimumInteractiveComponentSize()
-                            .size(IconButtonDefaults.extraSmallContainerSize(IconButtonDefaults.IconButtonWidthOption.Wide)),
-                        enabled = canSave
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(IconButtonDefaults.extraSmallIconSize)
-                        )
-                    }
+                    if (isAdd)
+                        AddActions(onEvent, canSave)
+                    else
+                        EditActions(onEvent, canSave)
                 },
                 navigationIcon = {
                     BackIconButton { onEvent(UiEvent.NavigateBack) }
@@ -207,5 +203,49 @@ private fun DreamAddEntry(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun RowScope.EditActions(
+    onEvent: (UiEvent) -> Unit,
+    canSave: Boolean
+) {
+    AppBarActions(
+        actions = listOf(
+            AppBarAction(
+                label = stringResource(Res.string.emotionadd_actions_delete),
+                icon = Icons.Default.Delete,
+                handler = { onEvent(UiEvent.ClickDelete) }
+            ),
+            AppBarAction(
+                label = stringResource(Res.string.emotionadd_actions_save),
+                icon = Icons.Default.Save,
+                handler = { onEvent(UiEvent.Save) },
+                enabled = canSave
+            )
+        )
+    )
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+private fun AddActions(
+    onEvent: (UiEvent) -> Unit,
+    canSave: Boolean
+) {
+    FilledIconButton(
+        onClick = { onEvent(UiEvent.Save) },
+        modifier = Modifier
+            .minimumInteractiveComponentSize()
+            .size(IconButtonDefaults.extraSmallContainerSize(IconButtonDefaults.IconButtonWidthOption.Wide)),
+        enabled = canSave
+    ) {
+        Icon(
+            imageVector = Icons.Default.Check,
+            contentDescription = stringResource(Res.string.emotionadd_actions_save),
+            modifier = Modifier
+                .size(IconButtonDefaults.extraSmallIconSize)
+        )
     }
 }
