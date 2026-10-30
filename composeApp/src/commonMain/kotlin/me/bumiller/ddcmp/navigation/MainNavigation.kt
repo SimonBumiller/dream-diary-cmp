@@ -32,10 +32,4 @@ internal sealed interface MainRoutes {
     @Serializable
     data object Export: MainRoutes
 
-    /**
-     * Navigation route for the settings screens.
-     */
-    @Serializable
-    data object Settings: MainRoutes
-
 }
