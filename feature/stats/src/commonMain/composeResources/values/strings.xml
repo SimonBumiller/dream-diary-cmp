@@ -10,9 +10,6 @@
     <string name="global_dream_streak_description">This statistic shows how consistently you record your dreams on consecutive days. It displays both your current streak and your longest streak, helping you see your recording habits and consistency over time.</string>
     <string name="global_dream_time_frequency_title">Dream Count over Time.</string>
     <string name="global_dream_time_frequency_description">This statistic shows how many dreams you had in selected periods of time. You can see what times you had many, and what times you had little dreams and correlate them to important phases in your life.</string>
-    <string name="global_dream_time_frequency_tooltip_1">From %1$s to %2$s</string>
-    <string name="global_dream_time_frequency_tooltip_2">In total %1$d dreams</string>
-    <string name="global_dream_weekday_frequency_tooltip">%1$s: %2$d</string>
     <string name="global_dream_top_persons_title">Most frequent persons</string>
     <string name="global_dream_top_persons_description">This statistic shows what persons most commonly occur in your dreams.</string>
     <string name="global_dream_top_person_index">%1$d.</string>
@@ -37,8 +34,6 @@
     <string name="dream_length_info_center">, which is more than </string>
     <string name="dream_length_info_rank">%1$d%</string>
     <string name="dream_length_info_post"> of all your dreams.</string>
-    <string name="dream_length_tooltip_line_1">%1$d – %2$d words</string>
-    <string name="dream_length_tooltip_line_2">Total %1$d dreams</string>
 
     <string name="dream_pcount_title">Count of persons in Dream</string>
     <string name="dream_pcount_description">This statistic shows how many different persons are present in the dream, and how that compares to other dreams.</string>
@@ -47,8 +42,6 @@
     <string name="dream_pcount_info_center">, which is more than </string>
     <string name="dream_pcount_info_rank">%1$d%</string>
     <string name="dream_pcount_info_post"> of all your dreams.</string>
-    <string name="dream_pcount_tooltip_line_1">%1$d persons</string>
-    <string name="dream_pcount_tooltip_line_2">Total %1$d dreams</string>
 
     <string name="histogram_rank_label_length_lowest">Very short</string>
     <string name="histogram_rank_label_length_low">Short</string>

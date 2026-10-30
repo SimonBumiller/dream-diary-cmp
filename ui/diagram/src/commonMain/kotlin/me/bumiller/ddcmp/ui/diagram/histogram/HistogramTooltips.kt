@@ -1,4 +1,4 @@
-package me.ddcmp.feature.stats.components
+package me.bumiller.ddcmp.ui.diagram.histogram
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -10,14 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dream_diary_cmp.feature.stats.generated.resources.Res
-import dream_diary_cmp.feature.stats.generated.resources.dream_length_tooltip_line_1
-import dream_diary_cmp.feature.stats.generated.resources.dream_length_tooltip_line_2
-import dream_diary_cmp.feature.stats.generated.resources.dream_pcount_tooltip_line_1
-import dream_diary_cmp.feature.stats.generated.resources.dream_pcount_tooltip_line_2
-import dream_diary_cmp.feature.stats.generated.resources.global_dream_time_frequency_tooltip_1
-import dream_diary_cmp.feature.stats.generated.resources.global_dream_time_frequency_tooltip_2
-import dream_diary_cmp.feature.stats.generated.resources.global_dream_weekday_frequency_tooltip
+import dream_diary_cmp.ui.diagram.generated.resources.Res
+import dream_diary_cmp.ui.diagram.generated.resources.tooltip_dream_length_1
+import dream_diary_cmp.ui.diagram.generated.resources.tooltip_dream_length_2
+import dream_diary_cmp.ui.diagram.generated.resources.tooltip_pcount_1
+import dream_diary_cmp.ui.diagram.generated.resources.tooltip_pcount_2
+import dream_diary_cmp.ui.diagram.generated.resources.tooltip_time_1
+import dream_diary_cmp.ui.diagram.generated.resources.tooltip_time_2
+import dream_diary_cmp.ui.diagram.generated.resources.tooltip_weekday
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
@@ -62,18 +62,18 @@ fun TimeFrequencyTooltip(
         modifier = modifier
     ) {
         Text(
-            text = stringResource(Res.string.global_dream_time_frequency_tooltip_1, fromString, toString),
+            text = stringResource(Res.string.tooltip_time_1, fromString, toString),
             style = MaterialTheme.typography.labelSmall
         )
         Text(
-            text = stringResource(Res.string.global_dream_time_frequency_tooltip_2, dreamCount),
+            text = stringResource(Res.string.tooltip_time_2, dreamCount),
             style = MaterialTheme.typography.labelSmall
         )
     }
 }
 
 @Composable
-internal fun WeekdayFrequencyTooltip(
+fun WeekdayFrequencyTooltip(
     modifier: Modifier = Modifier,
     from: DayOfWeek,
     dreamCount: Int
@@ -84,14 +84,14 @@ internal fun WeekdayFrequencyTooltip(
         modifier = modifier
     ) {
         Text(
-            text = stringResource(Res.string.global_dream_weekday_frequency_tooltip, dowName, dreamCount),
+            text = stringResource(Res.string.tooltip_weekday, dowName, dreamCount),
             style = MaterialTheme.typography.labelSmall
         )
     }
 }
 
 @Composable
-internal fun DreamLengthTooltip(
+fun DreamLengthTooltip(
     modifier: Modifier = Modifier,
     lowerLimit: Int,
     upperLimit: Int,
@@ -101,18 +101,18 @@ internal fun DreamLengthTooltip(
         modifier = modifier
     ) {
         Text(
-            text = stringResource(Res.string.dream_length_tooltip_line_1, lowerLimit, upperLimit),
+            text = stringResource(Res.string.tooltip_dream_length_1, lowerLimit, upperLimit),
             style = MaterialTheme.typography.labelSmall
         )
         Text(
-            text = stringResource(Res.string.dream_length_tooltip_line_2, dreamCount),
+            text = stringResource(Res.string.tooltip_dream_length_2, dreamCount),
             style = MaterialTheme.typography.labelSmall
         )
     }
 }
 
 @Composable
-internal fun DreamPersonCountTooltip(
+fun DreamPersonCountTooltip(
     modifier: Modifier = Modifier,
     personCount: Int,
     dreamCount: Int
@@ -121,11 +121,11 @@ internal fun DreamPersonCountTooltip(
         modifier = modifier
     ) {
         Text(
-            text = stringResource(Res.string.dream_pcount_tooltip_line_1, personCount),
+            text = stringResource(Res.string.tooltip_pcount_1, personCount),
             style = MaterialTheme.typography.labelSmall
         )
         Text(
-            text = stringResource(Res.string.dream_pcount_tooltip_line_2, dreamCount),
+            text = stringResource(Res.string.tooltip_pcount_2, dreamCount),
             style = MaterialTheme.typography.labelSmall
         )
     }

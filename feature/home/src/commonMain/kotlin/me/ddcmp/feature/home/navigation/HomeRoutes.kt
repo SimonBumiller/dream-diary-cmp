@@ -21,14 +21,6 @@ internal sealed interface HomeRoutes {
     data object TagList : HomeRoutes
 
     /**
-     * Navigation route for the statistics screens.
-     */
-    @Serializable
-    data class Statistics(
-        val dreamId: Long? = null
-    ): HomeRoutes
-
-    /**
      * Navigation route for the person detail screen.
      */
     @Serializable

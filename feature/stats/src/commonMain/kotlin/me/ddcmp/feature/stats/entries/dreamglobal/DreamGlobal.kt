@@ -73,8 +73,8 @@ import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.diagram.histogram.Histogram
 import me.bumiller.ddcmp.ui.diagram.histogram.HistogramLabelStyle
 import me.ddcmp.feature.stats.components.StreakDashboard
-import me.ddcmp.feature.stats.components.TimeFrequencyTooltip
-import me.ddcmp.feature.stats.components.WeekdayFrequencyTooltip
+import me.bumiller.ddcmp.ui.diagram.histogram.TimeFrequencyTooltip
+import me.bumiller.ddcmp.ui.diagram.histogram.WeekdayFrequencyTooltip
 import me.ddcmp.feature.stats.components.WeeklyAverageDashboard
 import me.ddcmp.feature.stats.domain.DateRangeViewModel
 import me.ddcmp.feature.stats.entries.dreamglobal.DreamGlobalViewModel.UiEvent
@@ -276,7 +276,7 @@ private fun DreamGlobal(
 }
 
 @Composable
-fun TopPersonsList(
+private fun TopPersonsList(
     topPersons: List<PersonWithCount>,
     onPersonClick: (Person) -> Unit
 ) {

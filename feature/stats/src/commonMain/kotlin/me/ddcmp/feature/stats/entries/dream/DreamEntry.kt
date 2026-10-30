@@ -58,8 +58,8 @@ import me.bumiller.ddcmp.ui.common.component.TextStyleWithCallback
 import me.bumiller.ddcmp.ui.common.plus
 import me.bumiller.ddcmp.ui.diagram.histogram.Histogram
 import me.bumiller.ddcmp.ui.diagram.histogram.HistogramLabelStyle
-import me.ddcmp.feature.stats.components.DreamLengthTooltip
-import me.ddcmp.feature.stats.components.DreamPersonCountTooltip
+import me.bumiller.ddcmp.ui.diagram.histogram.DreamLengthTooltip
+import me.bumiller.ddcmp.ui.diagram.histogram.DreamPersonCountTooltip
 import me.ddcmp.feature.stats.components.HistogramBadge
 import me.ddcmp.feature.stats.entries.dream.DreamViewModel.UiEvent
 import me.ddcmp.feature.stats.entries.dream.DreamViewModel.ViewModelEvent

@@ -8,7 +8,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import me.bumiller.ddcmp.ui.common.biometric.navigateSecured
 import me.bumiller.ddcmp.ui.common.biometric.securableComposable
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddEntry
@@ -23,7 +22,9 @@ import me.ddcmp.feature.home.entries.personlist.PersonListEntry
 import me.ddcmp.feature.home.entries.tagadd.TagAddEntry
 import me.ddcmp.feature.home.entries.taglist.TagListEntry
 import me.ddcmp.feature.home.navigation.HomeRoutes
-import me.ddcmp.feature.stats.StatsEntry
+import me.ddcmp.feature.stats.dreamStats
+import me.ddcmp.feature.stats.globalStats
+import me.ddcmp.feature.stats.navigation.StatsRoutes
 
 @Composable
 fun HomeEntry(
@@ -60,19 +61,16 @@ fun HomeEntry(
                     }
                 )
             }
-            composable<HomeRoutes.Statistics> {
-                val route = it.savedStateHandle.toRoute<HomeRoutes.Statistics>()
 
-                StatsEntry(
-                    dreamId = route.dreamId,
-                    onReturn = {
-                        navController.popBackStack()
-                    },
-                    onGoToPerson = {
-                        navController.navigate(HomeRoutes.PersonDetail(it))
-                    }
-                )
-            }
+            globalStats(
+                onGoToPerson = {
+                    navController.navigate(HomeRoutes.PersonDetail(it))
+                },
+                navController = navController
+            )
+
+            dreamStats(navController)
+
             composable<HomeRoutes.EmotionList> {
                 EmotionListEntry(
                     onBack = {
@@ -134,7 +132,7 @@ fun HomeEntry(
                         navController.navigate(HomeRoutes.PersonDetail(it))
                     },
                     onGoToDreamStats = {
-                        navController.navigate(HomeRoutes.Statistics(it))
+                        navController.navigate(StatsRoutes.Dream(it))
                     },
                     onBack = { navController.popBackStack() }
                 )
@@ -166,7 +164,7 @@ fun HomeEntry(
                         navController.navigate(HomeRoutes.EmotionList)
                     },
                     onGoToStats = {
-                        navController.navigate(HomeRoutes.Statistics())
+                        navController.navigate(StatsRoutes.Global)
                     },
                     onGoToPersons = {
                         navController.navigate(HomeRoutes.PersonList)
