@@ -79,7 +79,7 @@ open class AllDreamUseCase(
     private fun String?.compareTo(other: String?) = if (this == null) {
         if (other == null) 0 else -1
     } else {
-        if (other == null) 1 else compareTo(other)
+        if (other == null) 1 else String.CASE_INSENSITIVE_ORDER.compare(this, other)
     }
 
     private fun List<O>.applyFilter(i: I) =

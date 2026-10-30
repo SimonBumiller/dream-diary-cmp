@@ -34,7 +34,7 @@ open class AllTagUseCase(
     private fun List<O>.applySort(i: I) =
         sortedWith { one, two ->
             when (i.sortMode) {
-                TagSort.Name -> one.tag.name.compareTo(two.tag.name)
+                TagSort.Name -> String.CASE_INSENSITIVE_ORDER.compare(one.tag.name, two.tag.name)
                 TagSort.Color -> one.tag.color.compareTo(two.tag.color)
             }
         }.let {

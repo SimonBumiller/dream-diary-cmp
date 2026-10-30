@@ -27,7 +27,7 @@ open class AllEmotionsUseCase(
     private fun List<Emotion>.applySort(mode: SortMode.EmotionSort, direction: SortDirection) =
         sortedWith { one, two ->
             when (mode) {
-                SortMode.EmotionSort.Name -> one.name.compareTo(two.name)
+                SortMode.EmotionSort.Name -> String.CASE_INSENSITIVE_ORDER.compare(one.name, two.name)
             }
         }.let {
             if(direction == SortDirection.Descending) it.reversed()

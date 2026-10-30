@@ -45,12 +45,11 @@ open class AllPersonUseCase(
     private fun base(i: I) =
         if (i.dreamId == null) repo.all
         else repo.getForDream(i.dreamId)
-            .map { it ?: emptyList() }
 
     private fun List<O>.applySort(i: I) =
         sortedWith { one, two ->
             when (i.sortMode) {
-                SortMode.PersonSort.Name -> one.person.name.compareTo(two.person.name)
+                SortMode.PersonSort.Name -> String.CASE_INSENSITIVE_ORDER.compare(one.person.name, two.person.name)
             }
         }.let {
             if (i.sortDirection == SortDirection.Descending) it.reversed()
