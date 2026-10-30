@@ -11,10 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import me.bumiller.ddcmp.navigation.MainRoutes
 import me.bumiller.ddcmp.theme.AppTheme
 import me.bumiller.ddcmp.theme.systemTheme
-import me.ddcmp.feature.home.HomeEntry
+import me.ddcmp.feature.home.home
+import me.ddcmp.feature.home.navigateToOverview
 import me.ddcmp.feature.io.io
 import me.ddcmp.feature.io.navigateToExport
 import me.ddcmp.feature.io.navigateToImport
@@ -52,7 +52,7 @@ fun AppRoot(
 
     LaunchedEffect(doOnboarding) {
         if (doOnboarding == true) navController.navigateToOnboarding()
-        else if (doOnboarding == false) navController.navigate(MainRoutes.Home)
+        else if (doOnboarding == false) navController.navigateToOverview()
     }
 
     AppTheme(
@@ -74,21 +74,18 @@ fun AppRoot(
                 // Special destination to not display anything when the splash screen is shown.
                 composable<Unit> { }
 
-                composable<MainRoutes.Home> {
-                    HomeEntry(
-                        onGoToSettings = navController::navigateToSettings,
-                        onLoaded = onScreenReady
-                    )
-                }
+                home(
+                    onGoToSettings = navController::navigateToSettings,
+                    onLoaded = onScreenReady,
+                    navController = navController
+                )
 
                 io(
                     navController = navController
                 )
 
                 onboarding(
-                    onFinished = {
-                        navController.navigate(MainRoutes.Home)
-                    },
+                    onFinished = navController::navigateToOverview,
                     onImport = navController::navigateToImport,
                     navController = navController
                 )

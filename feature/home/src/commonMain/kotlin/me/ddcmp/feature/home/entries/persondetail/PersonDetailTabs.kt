@@ -5,7 +5,7 @@ import dream_diary_cmp.feature.home.generated.resources.person_detail_tabs_dream
 import dream_diary_cmp.feature.home.generated.resources.person_detail_tabs_stats
 import org.jetbrains.compose.resources.StringResource
 
-enum class PersonDetailTabs(
+internal enum class PersonDetailTabs(
     val index: Int,
     val textResource: StringResource
 ) {

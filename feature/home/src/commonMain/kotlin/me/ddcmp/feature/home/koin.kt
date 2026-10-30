@@ -11,13 +11,14 @@ import me.ddcmp.feature.home.entries.persondetail.PersonDetailViewModel
 import me.ddcmp.feature.home.entries.personlist.PersonListViewModel
 import me.ddcmp.feature.home.entries.tagadd.TagAddViewModel
 import me.ddcmp.feature.home.entries.taglist.TagListViewModel
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 /**
  * The koin module for the home module.
  */
-val home = module {
+public val home: Module = module {
     factoryOf(::DreamListViewModel)
     factoryOf(::DreamAddViewModel)
     factoryOf(::EmotionListViewModel)

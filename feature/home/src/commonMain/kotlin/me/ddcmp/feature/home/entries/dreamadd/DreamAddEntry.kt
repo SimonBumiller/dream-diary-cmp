@@ -142,7 +142,7 @@ internal fun DreamAddEntry(
     }
 }
 
-val transparentTextFieldColors: TextFieldColors
+private val transparentTextFieldColors: TextFieldColors
     @Composable get() = TextFieldDefaults.colors().copy(
         focusedIndicatorColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent,

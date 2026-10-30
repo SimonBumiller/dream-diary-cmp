@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.settings.Settings
 import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
-import me.bumiller.ddcmp.navigation.MainRoutes
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
 import me.bumiller.ddcmp.ui.common.AppViewModel as BaseViewModel
