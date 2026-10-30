@@ -22,9 +22,9 @@ import me.ddcmp.feature.home.entries.personlist.PersonListEntry
 import me.ddcmp.feature.home.entries.tagadd.TagAddEntry
 import me.ddcmp.feature.home.entries.taglist.TagListEntry
 import me.ddcmp.feature.home.navigation.HomeRoutes
-import me.ddcmp.feature.stats.dreamStats
-import me.ddcmp.feature.stats.globalStats
-import me.ddcmp.feature.stats.navigation.StatsRoutes
+import me.ddcmp.feature.stats.navigateToDreamStats
+import me.ddcmp.feature.stats.navigateToGlobalStats
+import me.ddcmp.feature.stats.stats
 
 @Composable
 fun HomeEntry(
@@ -62,14 +62,12 @@ fun HomeEntry(
                 )
             }
 
-            globalStats(
+            stats(
                 onGoToPerson = {
                     navController.navigate(HomeRoutes.PersonDetail(it))
                 },
                 navController = navController
             )
-
-            dreamStats(navController)
 
             composable<HomeRoutes.EmotionList> {
                 EmotionListEntry(
@@ -131,9 +129,7 @@ fun HomeEntry(
                     onGoToPerson = {
                         navController.navigate(HomeRoutes.PersonDetail(it))
                     },
-                    onGoToDreamStats = {
-                        navController.navigate(StatsRoutes.Dream(it))
-                    },
+                    onGoToDreamStats = navController::navigateToDreamStats,
                     onBack = { navController.popBackStack() }
                 )
             }
@@ -163,9 +159,7 @@ fun HomeEntry(
                     onGoToEmotions = {
                         navController.navigate(HomeRoutes.EmotionList)
                     },
-                    onGoToStats = {
-                        navController.navigate(StatsRoutes.Global)
-                    },
+                    onGoToStats = navController::navigateToGlobalStats,
                     onGoToPersons = {
                         navController.navigate(HomeRoutes.PersonList)
                     },
