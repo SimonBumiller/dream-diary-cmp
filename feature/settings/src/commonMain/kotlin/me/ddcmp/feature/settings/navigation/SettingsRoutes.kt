@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
  * Collects the routes for the settings.
  */
 @Serializable
-public sealed class SettingsRoutes {
+internal sealed class SettingsRoutes {
 
     /**
      * The root settings page.
      */
     @Serializable
-    public data object Root: SettingsRoutes()
+    internal data object Root: SettingsRoutes()
 
     /**
      * The backup order configuration screen.

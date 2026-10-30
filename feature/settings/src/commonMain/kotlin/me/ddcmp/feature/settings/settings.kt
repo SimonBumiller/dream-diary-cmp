@@ -9,6 +9,12 @@ import me.ddcmp.feature.settings.entries.root.SettingsRootEntry
 import me.ddcmp.feature.settings.navigation.SettingsRoutes
 
 /**
+ * Navigates to the setting screen.
+ */
+public fun NavController.navigateToSettings(): Unit =
+    navigate(SettingsRoutes.Root)
+
+/**
  * Entry for the settings section of the app.
  */
 public fun NavGraphBuilder.settings(

@@ -15,8 +15,8 @@ import me.bumiller.ddcmp.theme.systemTheme
 import me.ddcmp.feature.home.HomeEntry
 import me.ddcmp.feature.io.ExportEntry
 import me.ddcmp.feature.io.ImportEntry
-import me.ddcmp.feature.onboarding.OnboardingEntry
-import me.ddcmp.feature.settings.navigation.SettingsRoutes
+import me.ddcmp.feature.onboarding.onboarding
+import me.ddcmp.feature.settings.navigateToSettings
 import me.ddcmp.feature.settings.settings
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -60,7 +60,7 @@ fun AppRoot(
         ) {
             composable<MainRoutes.Home> {
                 HomeEntry(
-                    onGoToSettings = { navController.navigate(SettingsRoutes.Root) },
+                    onGoToSettings = navController::navigateToSettings,
                     onLoaded = onScreenReady
                 )
             }
@@ -81,7 +81,7 @@ fun AppRoot(
             }
 
             composable<MainRoutes.Onboarding> {
-                OnboardingEntry(
+                onboarding(
                     onFinished = {
                         navController.navigate(MainRoutes.Home)
                     },
