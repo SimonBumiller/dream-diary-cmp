@@ -14,16 +14,4 @@ internal sealed interface MainRoutes {
     @Serializable
     data object Home: MainRoutes
 
-    /**
-     * Navigation route for the import section of the app.
-     */
-    @Serializable
-    data object Import: MainRoutes
-
-    /**
-     * Navigation route for the export section of the app.
-     */
-    @Serializable
-    data object Export: MainRoutes
-
 }

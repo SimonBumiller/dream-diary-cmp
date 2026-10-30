@@ -15,8 +15,9 @@ import me.bumiller.ddcmp.navigation.MainRoutes
 import me.bumiller.ddcmp.theme.AppTheme
 import me.bumiller.ddcmp.theme.systemTheme
 import me.ddcmp.feature.home.HomeEntry
-import me.ddcmp.feature.io.ExportEntry
-import me.ddcmp.feature.io.ImportEntry
+import me.ddcmp.feature.io.io
+import me.ddcmp.feature.io.navigateToExport
+import me.ddcmp.feature.io.navigateToImport
 import me.ddcmp.feature.onboarding.navigateToOnboarding
 import me.ddcmp.feature.onboarding.onboarding
 import me.ddcmp.feature.settings.navigateToSettings
@@ -50,8 +51,8 @@ fun AppRoot(
     else if (doOnboarding!!) onScreenReady()
 
     LaunchedEffect(doOnboarding) {
-        if(doOnboarding == true) navController.navigateToOnboarding()
-        else if(doOnboarding == false) navController.navigate(MainRoutes.Home)
+        if (doOnboarding == true) navController.navigateToOnboarding()
+        else if (doOnboarding == false) navController.navigate(MainRoutes.Home)
     }
 
     AppTheme(
@@ -71,7 +72,7 @@ fun AppRoot(
                 startDestination = Unit // Unit is a special destination that simply displays blank.
             ) {
                 // Special destination to not display anything when the splash screen is shown.
-                composable<Unit> {  }
+                composable<Unit> { }
 
                 composable<MainRoutes.Home> {
                     HomeEntry(
@@ -80,36 +81,21 @@ fun AppRoot(
                     )
                 }
 
-                composable<MainRoutes.Import> {
-                    ImportEntry(
-                        onFinished = {
-                            navController.popBackStack()
-                        }
-                    )
-                }
-
-                composable<MainRoutes.Export> {
-                    ExportEntry(
-                        onBack = { navController.popBackStack() },
-                        onFinished = { navController.popBackStack() }
-                    )
-                }
+                io(
+                    navController = navController
+                )
 
                 onboarding(
                     onFinished = {
                         navController.navigate(MainRoutes.Home)
                     },
-                    onImport = { navController.navigate(MainRoutes.Import) },
+                    onImport = navController::navigateToImport,
                     navController = navController
                 )
 
                 settings(
-                    onGoToExport = {
-                        navController.navigate(MainRoutes.Export)
-                    },
-                    onGoToImport = {
-                        navController.navigate(MainRoutes.Import)
-                    },
+                    onGoToExport = navController::navigateToExport,
+                    onGoToImport = navController::navigateToImport,
                     navController = navController
                 )
             }
