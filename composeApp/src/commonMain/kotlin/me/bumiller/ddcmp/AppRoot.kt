@@ -1,8 +1,10 @@
 package me.bumiller.ddcmp
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -15,6 +17,7 @@ import me.bumiller.ddcmp.theme.systemTheme
 import me.ddcmp.feature.home.HomeEntry
 import me.ddcmp.feature.io.ExportEntry
 import me.ddcmp.feature.io.ImportEntry
+import me.ddcmp.feature.onboarding.navigateToOnboarding
 import me.ddcmp.feature.onboarding.onboarding
 import me.ddcmp.feature.settings.navigateToSettings
 import me.ddcmp.feature.settings.settings
@@ -37,14 +40,19 @@ fun AppRoot(
     val navController = rememberNavController()
 
     val _state by viewmodel.state.collectAsState()
-    val initialEntry by viewmodel.initialEntry.collectAsState()
+    val doOnboarding by viewmodel.doOnboarding.collectAsState()
 
     // If the state is not yet present, or the backstack is still empty, we simply show nothing.
     // Works because splash screen should be visible atm.
     val state = _state ?: return
 
-    if (initialEntry == null) return
-    else if (initialEntry == MainRoutes.Onboarding) onScreenReady()
+    if (doOnboarding == null) return
+    else if (doOnboarding!!) onScreenReady()
+
+    LaunchedEffect(doOnboarding) {
+        if(doOnboarding == true) navController.navigateToOnboarding()
+        else if(doOnboarding == false) navController.navigate(MainRoutes.Home)
+    }
 
     AppTheme(
         mode = state.settings.colorMode,
@@ -52,52 +60,59 @@ fun AppRoot(
         sizeClass = sizeClass,
         systemTheme = { systemTheme(it) }
     ) {
-        NavHost(
+        Surface(
             modifier = Modifier
-                .fillMaxSize(),
-            navController = navController,
-            startDestination = initialEntry!!
+                .fillMaxSize()
         ) {
-            composable<MainRoutes.Home> {
-                HomeEntry(
-                    onGoToSettings = navController::navigateToSettings,
-                    onLoaded = onScreenReady
-                )
-            }
+            NavHost(
+                modifier = Modifier
+                    .fillMaxSize(),
+                navController = navController,
+                startDestination = Unit // Unit is a special destination that simply displays blank.
+            ) {
+                // Special destination to not display anything when the splash screen is shown.
+                composable<Unit> {  }
 
-            composable<MainRoutes.Import> {
-                ImportEntry(
-                    onFinished = {
-                        navController.popBackStack()
-                    }
-                )
-            }
+                composable<MainRoutes.Home> {
+                    HomeEntry(
+                        onGoToSettings = navController::navigateToSettings,
+                        onLoaded = onScreenReady
+                    )
+                }
 
-            composable<MainRoutes.Export> {
-                ExportEntry(
-                    onBack = { navController.popBackStack() },
-                    onFinished = { navController.popBackStack() }
-                )
-            }
+                composable<MainRoutes.Import> {
+                    ImportEntry(
+                        onFinished = {
+                            navController.popBackStack()
+                        }
+                    )
+                }
 
-            composable<MainRoutes.Onboarding> {
+                composable<MainRoutes.Export> {
+                    ExportEntry(
+                        onBack = { navController.popBackStack() },
+                        onFinished = { navController.popBackStack() }
+                    )
+                }
+
                 onboarding(
                     onFinished = {
                         navController.navigate(MainRoutes.Home)
                     },
-                    onImport = { navController.navigate(MainRoutes.Import) }
+                    onImport = { navController.navigate(MainRoutes.Import) },
+                    navController = navController
+                )
+
+                settings(
+                    onGoToExport = {
+                        navController.navigate(MainRoutes.Export)
+                    },
+                    onGoToImport = {
+                        navController.navigate(MainRoutes.Import)
+                    },
+                    navController = navController
                 )
             }
-
-            settings(
-                onGoToExport = {
-                    navController.navigate(MainRoutes.Export)
-                },
-                onGoToImport = {
-                    navController.navigate(MainRoutes.Import)
-                },
-                navController = navController
-            )
         }
     }
 }

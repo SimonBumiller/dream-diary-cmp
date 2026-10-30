@@ -9,12 +9,6 @@ import kotlinx.serialization.Serializable
 internal sealed interface MainRoutes {
 
     /**
-     * Navigation route for the onboarding screen.
-     */
-    @Serializable
-    data object Onboarding: MainRoutes
-
-    /**
      * Navigation route for the main part of the app.
      */
     @Serializable

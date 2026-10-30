@@ -6,18 +6,18 @@ import kotlinx.serialization.Serializable
  * Routes for the onboarding.
  */
 @Serializable
-public sealed class OnboardingRoutes {
+internal sealed class OnboardingRoutes {
 
     /**
      * Route that contains the carousel for the non-functional screens.
      */
     @Serializable
-    data object NonFunctional : OnboardingRoutes
+    internal data object NonFunctional : OnboardingRoutes()
 
     /**
      * Route that contains the carousel for the functional screens.
      */
     @Serializable
-    data object Functional : OnboardingRoutes
+    internal data object Functional : OnboardingRoutes()
 
 }

@@ -28,16 +28,14 @@ internal class AppViewmodel(
     internal interface UiEvent: UIE
     internal interface ViewModelEvent: VME
 
-    private val _initialEntry = MutableStateFlow<MainRoutes?>(null)
-    val initialEntry = _initialEntry.asStateFlow()
+    private val _initialEntry = MutableStateFlow<Boolean?>(null)
+    val doOnboarding = _initialEntry.asStateFlow()
 
     init {
         viewModelScope.launch {
             val settings = getSettings(Unit).first()
-            val initialEntry = if (settings.onboardingFinished) MainRoutes.Home
-            else MainRoutes.Onboarding
 
-            _initialEntry.value = initialEntry
+            _initialEntry.value = !settings.onboardingFinished
         }
     }
 

@@ -100,7 +100,7 @@ internal fun <Screen> OnboardingPager(
  */
 
 @Composable
-fun PageIndicatorView(
+private fun PageIndicatorView(
     isSelected: Boolean,
     animationDurationInMillis: Int,
     modifier: Modifier = Modifier,
@@ -145,7 +145,7 @@ fun PageIndicatorView(
 }
 
 @Composable
-fun PageIndicator(
+private fun PageIndicator(
     numberOfPages: Int,
     modifier: Modifier = Modifier,
     selectedPage: Int = 0,
