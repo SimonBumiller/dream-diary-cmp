@@ -102,7 +102,7 @@ internal class LegacyImporter(
                         created = Clock.System.now(),
                         edited = Clock.System.now(),
                         name = relation.name,
-                        description = relation.notes.ifBlank { null },
+                        description = relation.notes?.ifBlank { null },
                         color = relation.color
                     )
                 }

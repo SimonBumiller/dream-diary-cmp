@@ -48,7 +48,7 @@ internal object Legacy {
         val id: Long,
         val name: String,
         val color: Long,
-        val notes: String
+        val notes: String?
     )
 
     @Serializable
