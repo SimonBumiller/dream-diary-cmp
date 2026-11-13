@@ -3,11 +3,12 @@ package me.ddcmp.feature.stats.entries.dream
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import me.bumiller.ddcmp.domain.stats.dream.global.MarkedDreamLengthFrequencyHistogram
 import me.bumiller.ddcmp.domain.stats.dream.global.MarkedDreamPersonCountFrequencyHistogram
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase
+import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
+import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
 import me.ddcmp.feature.stats.domain.DateRangeViewModel
@@ -21,8 +22,10 @@ internal class DreamViewModel(
     personCountHistogramUc: MarkedDreamPersonCountFrequencyHistogram,
     dreamDates: DreamDatesUseCase,
     savedStateHandle: SavedStateHandle,
-    allDreams: AllDreamUseCase
-) : DateRangeViewModel<UiEvent, ViewModelEvent>(dreamDates) {
+    allDreams: AllDreamUseCase,
+    getSettings: GetSettingsUseCase,
+    setSettings: SetSettingsUseCase
+) : DateRangeViewModel<UiEvent, ViewModelEvent>(dreamDates, getSettings, setSettings) {
 
     private val dreamId = savedStateHandle.toRoute<StatsRoutes.Dream>().id
 

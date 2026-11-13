@@ -8,4 +8,5 @@ Note: Changes in *italic* are changes not visible to users.
 - *Changed the navigation api-structures of the feature:* modules*
 
 ## Minor Changes
-- Added german translation
+- Added German translation
+- Made statistics range persisted

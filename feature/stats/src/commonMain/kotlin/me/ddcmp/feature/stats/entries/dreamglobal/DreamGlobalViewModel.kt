@@ -7,6 +7,8 @@ import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeekdayFrequencyHistogra
 import me.bumiller.ddcmp.domain.stats.dream.global.DreamWeeklyFrequencyStatistic
 import me.bumiller.ddcmp.domain.stats.person.PersonsOccurrencesCountStatistic
 import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase
+import me.bumiller.ddcmp.domain.usecase.settings.GetSettingsUseCase
+import me.bumiller.ddcmp.domain.usecase.settings.SetSettingsUseCase
 import me.bumiller.ddcmp.ui.common.UIE
 import me.bumiller.ddcmp.ui.common.VME
 import me.bumiller.ddcmp.ui.common.dialog.PickedDateRange
@@ -19,8 +21,14 @@ internal class DreamGlobalViewModel(
     weeklyFrequency: DreamWeeklyFrequencyStatistic,
     dreamStreak: DreamStreakStatistic,
     dreamDates: DreamDatesUseCase,
-    personsOccurrences: PersonsOccurrencesCountStatistic
-) : DateRangeViewModel<DreamGlobalViewModel.UiEvent, DreamGlobalViewModel.ViewModelEvent>(dreamDates) {
+    personsOccurrences: PersonsOccurrencesCountStatistic,
+    getSettings: GetSettingsUseCase,
+    setSettings: SetSettingsUseCase
+) : DateRangeViewModel<DreamGlobalViewModel.UiEvent, DreamGlobalViewModel.ViewModelEvent>(
+    dreamDates,
+    getSettings,
+    setSettings
+) {
 
     /**
      * The time vs dream frequency histogram.
@@ -72,13 +80,13 @@ internal class DreamGlobalViewModel(
 
     sealed interface UiEvent : UIE {
         data class ChangeDateRange(val dateRange: PickedDateRange) : UiEvent
-        data class ClickOnPerson(val personId: Long): UiEvent
+        data class ClickOnPerson(val personId: Long) : UiEvent
         data object Return : UiEvent
         data object ToggleDateRangeDialogVisibility : UiEvent
     }
 
     sealed interface ViewModelEvent : VME {
-        data class GoToPerson(val personId: Long): ViewModelEvent
+        data class GoToPerson(val personId: Long) : ViewModelEvent
         data object Return : ViewModelEvent
     }
 

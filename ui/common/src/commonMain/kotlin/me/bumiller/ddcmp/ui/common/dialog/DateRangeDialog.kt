@@ -11,8 +11,6 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -49,7 +47,7 @@ sealed interface PickedDateRange {
 
 }
 
-private val PreconfiguredRanges = listOf(
+val PreconfiguredDateRanges = listOf(
     Res.string.date_range_dialog_preconfigured_last_week to DatePeriod(days = 7),
     Res.string.date_range_dialog_preconfigured_last_month to DatePeriod(days = 30),
     Res.string.date_range_dialog_preconfigured_last_half_year to DatePeriod(months = 6),
@@ -87,9 +85,9 @@ fun DateRangeDialog(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(
-                        count = PreconfiguredRanges.size
+                        count = PreconfiguredDateRanges.size
                     ) { index ->
-                        val (name, period) = PreconfiguredRanges[index]
+                        val (name, period) = PreconfiguredDateRanges[index]
 
                         RangeButton(
                             modifier = Modifier

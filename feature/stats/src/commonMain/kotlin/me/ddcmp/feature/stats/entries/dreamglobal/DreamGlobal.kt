@@ -67,6 +67,7 @@ import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.StatCard
 import me.bumiller.ddcmp.ui.common.dialog.DateRangeDialog
+import me.bumiller.ddcmp.ui.common.dialog.PickedDateRange
 import me.bumiller.ddcmp.ui.common.format.formatDayOfWeekShort
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.plus
@@ -133,7 +134,7 @@ private fun DreamGlobal(
                     onEvent(UiEvent.ChangeDateRange(it))
                 }
             },
-            currentRange = dateRangeState.dateRange
+            currentRange = dateRangeState.dateRange ?: PickedDateRange.AllTime
         )
     }
 

@@ -1,5 +1,6 @@
 package me.bumiller.ddcmp.domain.model.settings
 
+import kotlinx.datetime.DatePeriod
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 
 /**
@@ -30,7 +31,13 @@ data class Settings(
     /**
      * Whether the user finished the onboarding.
      */
-    var onboardingFinished: Boolean
+    var onboardingFinished: Boolean,
+
+    /**
+     * The date range selected in a statistics screen.
+     * Null means all time.
+     */
+    var statisticsDateRange: DatePeriod?
 
 ) {
 
@@ -39,7 +46,7 @@ data class Settings(
         /**
          * The default settings instance to be used when none is available.
          */
-        val Default = Settings(false, ColorMode.System, ColorTheme.App, Confidentiality.None, false)
+        val Default = Settings(false, ColorMode.System, ColorTheme.App, Confidentiality.None, false, null)
 
     }
 

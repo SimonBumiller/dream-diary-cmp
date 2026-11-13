@@ -7,10 +7,11 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.DatePeriod
 import me.bumiller.ddcmp.domain.infrastructure.SettingsStore
+import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.settings.ColorMode
 import me.bumiller.ddcmp.domain.model.settings.ColorTheme
-import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.settings.Settings
 
 class DataStoreSettingsStore(private val dataStore: DataStore<Preferences>) :
@@ -23,6 +24,7 @@ class DataStoreSettingsStore(private val dataStore: DataStore<Preferences>) :
         val COLOR_THEME = stringPreferencesKey("color_theme")
         val DEFAULT_CONFIDENTIALITY = stringPreferencesKey("default_confidentiality")
         val ONBOARDING_FINISHED = booleanPreferencesKey("onboarding_finished")
+        val STATISTICS_DATE_RANGE = stringPreferencesKey("statistics_date_range")
     }
 
     // 3. Expose settings as a Flow
@@ -41,9 +43,16 @@ class DataStoreSettingsStore(private val dataStore: DataStore<Preferences>) :
                 }
                     ?: Settings.Default.defaultConfidentiality,
                 onboardingFinished = prefs[Keys.ONBOARDING_FINISHED]
-                    ?: Settings.Default.onboardingFinished
+                    ?: Settings.Default.onboardingFinished,
+                statisticsDateRange = parseDatePeriodSafe(prefs[Keys.STATISTICS_DATE_RANGE])
             )
         }
+
+    private fun parseDatePeriodSafe(string: String?): DatePeriod? =
+        if (string == null) null
+        else try {
+            DatePeriod.parse(string)
+        } catch(_: IllegalArgumentException) { null }
 
     // 4. Save settings
     override suspend fun save(settings: Settings) {
@@ -53,6 +62,7 @@ class DataStoreSettingsStore(private val dataStore: DataStore<Preferences>) :
             prefs[Keys.COLOR_THEME] = settings.colorTheme.name
             prefs[Keys.DEFAULT_CONFIDENTIALITY] = settings.defaultConfidentiality.name
             prefs[Keys.ONBOARDING_FINISHED] = settings.onboardingFinished
+            prefs[Keys.STATISTICS_DATE_RANGE] = settings.statisticsDateRange.toString()
         }
     }
 
