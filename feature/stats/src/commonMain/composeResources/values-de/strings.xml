@@ -1,0 +1,58 @@
+<resources>
+    <string name="global_dream_title">Statistiken</string>
+    <string name="global_dream_weekly_average_title">Wöchentlicher Durchschnitt</string>
+    <string name="global_dream_weekly_average_description_7_days">Der wöchentliche Durchschnitt zeigt, wie viele Träume du in einem bestimmten Zeitraum typischerweise pro Woche aufzeichnest. Durch den Vergleich des Gesamtdurchschnitts mit dem Durchschnitt der letzten sieben Tage erkennst du, ob sich deine Aufzeichnungshäufigkeit zuletzt verändert hat.</string>
+    <string name="global_dream_weekly_average_description_30_days">Der wöchentliche Durchschnitt zeigt, wie viele Träume du in einem bestimmten Zeitraum typischerweise pro Woche aufzeichnest. Durch den Vergleich des Gesamtdurchschnitts mit den Durchschnitten der letzten sieben und 30 Tage erkennst du, ob sich deine Aufzeichnungshäufigkeit zuletzt verändert hat.</string>
+    <string name="global_dream_weekly_average_description_6_months">Der wöchentliche Durchschnitt zeigt, wie viele Träume du in einem bestimmten Zeitraum typischerweise pro Woche aufzeichnest. Durch den Vergleich des Gesamtdurchschnitts mit den Durchschnitten der letzten sieben und 30 Tage sowie der letzten sechs Monate erkennst du, ob sich deine Aufzeichnungshäufigkeit zuletzt verändert hat.</string>
+    <string name="global_dream_weekday_frequency_title">Häufigkeit nach Wochentag</string>
+    <string name="global_dream_weekday_frequency_description">Dieses Diagramm zeigt, an welchen Wochentagen du deine Träume gewöhnlich aufzeichnest. So kannst du erkennen, wie sich deine Traumtagebuch-Gewohnheiten über die Woche verteilen.</string>
+    <string name="global_dream_streak_title">Aufzeichnungsserie</string>
+    <string name="global_dream_streak_description">Diese Statistik zeigt, wie regelmäßig du an aufeinanderfolgenden Tagen deine Träume aufzeichnest. Sie zeigt sowohl deine aktuelle als auch deine längste Serie und hilft dir dabei, deine Gewohnheiten und Beständigkeit im Zeitverlauf einzuschätzen.</string>
+    <string name="global_dream_time_frequency_title">Anzahl der Träume im Zeitverlauf</string>
+    <string name="global_dream_time_frequency_description">Diese Statistik zeigt, wie viele Träume du in ausgewählten Zeiträumen hattest. Du kannst erkennen, wann du viele und wann du wenige Träume hattest, und diese Beobachtungen mit wichtigen Lebensphasen in Verbindung bringen.</string>
+    <string name="global_dream_top_persons_title">Häufigste Personen</string>
+    <string name="global_dream_top_persons_description">Diese Statistik zeigt, welche Personen am häufigsten in deinen Träumen vorkommen.</string>
+    <string name="global_dream_top_person_index">%1$d.</string>
+    <string name="global_dream_top_person_count_label">%1$d Träume</string>
+
+    <string name="weekly_average_overall">Gesamt</string>
+    <string name="weekly_average_7_days">Letzte 7 Tage</string>
+    <string name="weekly_average_30_days">Letzte 30 Tage</string>
+    <string name="weekly_average_6_months">Letzte 6 Monate</string>
+
+    <string name="streak_dashboard_value">%1$d Tage</string>
+    <string name="streak_dashboard_interval">%1$s – %2$s</string>
+    <string name="streak_dashboard_interval_single">%1$s</string>
+    <string name="streak_dashboard_interval_none">k. A.</string>
+
+    <string name="dream_title">Traumstatistiken</string>
+
+    <string name="dream_length_title">Traumlänge</string>
+    <string name="dream_length_description">Diese Statistik zeigt, wie lang ein Traum im Vergleich zu anderen Träumen ist. Die Länge wird anhand der Wörter in der Traumbeschreibung gemessen.</string>
+    <string name="dream_length_info_pre">Dieser Traum enthält </string>
+    <string name="dream_length_info_length">%1$d Wörter</string>
+    <string name="dream_length_info_center">, das ist mehr als bei </string>
+    <string name="dream_length_info_rank">%1$d %</string>
+    <string name="dream_length_info_post"> aller deiner Träume.</string>
+
+    <string name="dream_pcount_title">Anzahl der Personen im Traum</string>
+    <string name="dream_pcount_description">Diese Statistik zeigt, wie viele verschiedene Personen im Traum vorkommen und wie dieser Wert im Vergleich zu anderen Träumen ausfällt.</string>
+    <string name="dream_pcount_info_pre">In diesem Traum kommen </string>
+    <string name="dream_pcount_info_pcount">%1$d verschiedene Personen</string>
+    <string name="dream_pcount_info_center">, das sind mehr als bei </string>
+    <string name="dream_pcount_info_rank">%1$d %</string>
+    <string name="dream_pcount_info_post"> aller deiner Träume.</string>
+
+    <string name="histogram_rank_label_length_lowest">Sehr kurz</string>
+    <string name="histogram_rank_label_length_low">Kurz</string>
+    <string name="histogram_rank_label_length_average">Durchschnittlich</string>
+    <string name="histogram_rank_label_length_high">Lang</string>
+    <string name="histogram_rank_label_length_highest">Sehr lang</string>
+
+    <string name="histogram_rank_label_pcount_lowest">Sehr wenige</string>
+    <string name="histogram_rank_label_pcount_low">Wenige</string>
+    <string name="histogram_rank_label_pcount_average">Durchschnittlich</string>
+    <string name="histogram_rank_label_pcount_high">Viele</string>
+    <string name="histogram_rank_label_pcount_highest">Sehr viele</string>
+</resources>
+

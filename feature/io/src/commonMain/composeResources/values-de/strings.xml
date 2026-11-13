@@ -1,0 +1,40 @@
+<resources>
+    <string name="import_configuration_title">Importieren</string>
+    <string name="import_configuration_actions_back">Zurück</string>
+    <string name="import_configuration_options_description">Konfiguriere den Import mithilfe erweiterter Importoptionen.</string>
+    <string name="import_configuration_transfer_favorites_label">Lieblingsträume beibehalten</string>
+    <string name="import_configuration_transfer_relations_label">Tags für Beziehungen erstellen</string>
+    <string name="import_configuration_description">Wähle aus, welche Art von Sicherung du importieren möchtest. Deine Auswahl sollte zum Format der Exportdatei passen.</string>
+    <string name="import_configuration_file_description">Wähle die Datei aus, die du importieren möchtest. Welche Dateien verfügbar sind, hängt vom ausgewählten Sicherungstyp ab.</string>
+    <string name="import_configuration_timezone_label">Referenzzeitzone</string>
+    <string name="import_configuration_filetype_label">Dateityp</string>
+    <string name="import_configuration_pick_file_label">Sicherungsdatei</string>
+    <string name="import_configuration_pick_file_header">Dateiauswahl</string>
+    <string name="import_configuration_file_name_placeholder">[Keine Datei ausgewählt]</string>
+    <string name="import_configuration_loading_label">Import wird ausgeführt …</string>
+    <string name="import_configuration_start_label">Import starten</string>
+
+    <string name="import_result_title_success">Import abgeschlossen</string>
+    <string name="import_result_title_failure">Import fehlgeschlagen</string>
+    <string name="import_result_description_success_legacy">Der Import wurde abgeschlossen. Insgesamt wurden **%1$d** Träume sowie **%2$s** Personen importiert. Die Träume erstrecken sich über den Zeitraum von **%3$s** bis **%4$s** (**%5$d** Monate). Der Import dauerte **%6$s**.</string>
+    <string name="import_result_description_success_normal">Der Import wurde abgeschlossen. Insgesamt wurden **%1$d** Träume, **%2$s** Personen und **%3$d** Emotionen hinzugefügt. Die Träume erstrecken sich über den Zeitraum von **%4$s** bis **%5$s** (**%6$d** Monate). Der Import dauerte **%7$s**.</string>
+    <string name="import_result_description_failure_consistency">Die Daten in der ausgewählten Datei erfüllen nicht die erforderlichen Konsistenzbedingungen. Ursache sind wahrscheinlich ungültige Verweise.</string>
+    <string name="import_result_description_failure_access">Die ausgewählte Datei konnte nicht gelesen werden. Ursache können Netzwerkprobleme oder andere Probleme beim Dateizugriff sein.</string>
+    <string name="import_result_description_failure_format">Die ausgewählte Datei entspricht nicht dem erwarteten Format. Ursache kann eine beschädigte Datei oder eine versehentliche Änderung sein.</string>
+    <string name="import_result_continue_label_success">Weiter</string>
+
+    <string name="export_result_continue_label_success">Weiter</string>
+    <string name="export_result_title_success">Export abgeschlossen</string>
+    <string name="export_result_title_failure">Export fehlgeschlagen</string>
+    <string name="export_result_description_access">Auf das ausgewählte Speicherziel konnte nicht zugegriffen werden. Ursache können Netzwerkprobleme sein.</string>
+    <string name="export_result_description">Die Sicherungsdatei wurde unter **%1$s** gespeichert. Sie belegt insgesamt **%2$s** Speicherplatz und der Vorgang dauerte **%3$s**.</string>
+
+    <string name="export_configuration_title">Exportieren</string>
+    <string name="export_configuration_description">Konfiguriere den Datenexport, indem du auswählst, welche Art von Sicherung du erstellen möchtest.</string>
+    <string name="export_configuration_file_description">Wähle den Speicherort für die Sicherungsdatei aus. Es muss eine ZIP-Datei ('.zip') sein.</string>
+    <string name="export_configuration_filetype_description">Wähle aus, welcher Dateityp für die Daten im Exportarchiv verwendet werden soll. Die verschiedenen Formate haben unterschiedliche Vorteile, können aber alle wieder importiert werden.</string>
+    <string name="export_configuration_filetype_label">Dateityp</string>
+    <string name="export_suggested_filename">traumtagebuch_sicherung_%1$s</string>
+    <string name="export_configuration_file_name_placeholder">Kein Speicherort ausgewählt</string>
+
+</resources>

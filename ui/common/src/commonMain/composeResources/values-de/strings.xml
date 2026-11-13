@@ -1,0 +1,98 @@
+<resources>
+    <string name="confidentiality_none_name">Keine</string>
+    <string name="confidentiality_medium_name">Mittel</string>
+    <string name="confidentiality_severe_name">Hoch </string>
+
+    <string name="confidentiality_none_description">Es werden keine Trauminhalte ausgeblendet. Jeder Traum kann bei geöffneter App uneingeschränkt aufgerufen werden.</string>
+    <string name="confidentiality_medium_description">In Übersichten werden nur die Titel der Träume angezeigt. Jeder Traum kann bei geöffneter App uneingeschränkt aufgerufen werden.</string>
+    <string name="confidentiality_severe_description">Es werden keine Trauminhalte angezeigt. Um Inhalte anzusehen, muss der Traum entsperrt werden.</string>
+
+    <string name="colormode_light_name">Hell</string>
+    <string name="colormode_dark_name">Dunkel</string>
+    <string name="colormode_system_name">System</string>
+
+    <string name="duration_days">%1$d Tage</string>
+    <string name="duration_hours">%1$d Stunden</string>
+    <string name="duration_minutes">%1$d Minuten</string>
+    <string name="duration_seconds">%1$d Sekunden</string>
+    <string name="duration_millis">%1$d Millisekunden</string>
+    <string name="duration_nanos">%1$d Nanosekunden</string>
+
+    <string name="emotiontype_joy">Freude</string>
+    <string name="emotiontype_pleasure">Wohlbefinden</string>
+    <string name="emotiontype_anger">Wut</string>
+    <string name="emotiontype_sadness">Traurigkeit</string>
+
+    <string name="cd_appbar_more">Weitere Aktionen anzeigen</string>
+
+    <string name="sort_created">Erstellt</string>
+    <string name="sort_updated">Bearbeitet</string>
+
+    <string name="sort_dream_valence">Stimmung</string>
+    <string name="sort_dream_confidentiality">Vertraulichkeit</string>
+    <string name="sort_dream_name">Name</string>
+    <string name="sort_dream_dreamt">Datum</string>
+    <string name="sort_dream_length">Länge</string>
+
+    <string name="sort_tag_color">Farbe</string>
+    <string name="sort_tag_name">Name</string>
+
+    <string name="emotion_grid_high_valence">Positive Stimmung</string>
+    <string name="emotion_grid_low_valence">Negative Stimmung</string>
+    <string name="emotion_grid_arousal_low">Niedrig</string>
+    <string name="emotion_grid_arousal_high">Hoch</string>
+    <string name="emotion_grid_arousal">Erregung</string>
+
+    <string name="sort_emotion_name">Name</string>
+    <string name="sort_person_name">Name</string>
+
+    <string name="sort_descending">Absteigend</string>
+    <string name="sort_ascending">Aufsteigend</string>
+
+    <string name="biometric_title">Authentifizierung</string>
+    <string name="biometric_description">Bitte bestätige deine Identität</string>
+
+    <string name="discard_changes_dialog_confirm_label">Änderungen verwerfen</string>
+    <string name="discard_changes_dialog_dismiss_label">Abbrechen</string>
+    <string name="discard_changes_dialog_title">Änderungen verwerfen?</string>
+    <string name="discard_changes_dialog_text">Du hast in diesem Bereich ungespeicherte Änderungen. Möchtest du sie verwerfen oder die Bearbeitung fortsetzen?</string>
+
+    <string name="importfiletype_json_name">JSON</string>
+    <string name="importfiletype_xml_name">XML</string>
+    <string name="importfiletype_yaml_name">YAML</string>
+
+    <string name="date_picker_dialog_confirm_label">Auswählen</string>
+    <string name="date_picker_dialog_cancel_label">Abbrechen</string>
+
+    <string name="stat_data_missing_description">Es sind nicht genügend Daten verfügbar, um diese Statistik zu berechnen.</string>
+
+    <string name="back_icon_button_cd">Zum vorherigen Bildschirm zurückkehren.</string>
+
+    <string name="preview_wizard_first">Erster</string>
+    <string name="preview_wizard_second">Zweiter</string>
+    <string name="preview_wizard_third">Dritter</string>
+
+    <string name="wizard_row_retreat_label">Zurück</string>
+    <string name="wizard_row_advance_label">Weiter</string>
+
+    <string name="iooption_type_normal_name">Normal</string>
+    <string name="iooption_type_legacy_name">Legacy-App</string>
+    <string name="iooption_type_normal_description">Sicherung mit allen wichtigen Benutzerdaten aus der App, einschließlich Emotionen.</string>
+    <string name="iooption_type_legacy_description">Sicherung mit einem Teil der Benutzerdaten zur Kompatibilität mit der Legacy-App.</string>
+
+    <string name="io_file_selector_label">Dateityp</string>
+
+    <string name="data_amount_byte">%1$d B</string>
+    <string name="data_amount_kilobyte">%1$d KB</string>
+    <string name="data_amount_megabyte">%1$d MB</string>
+    <string name="data_amount_gigabyte">%1$d GB</string>
+
+    <string name="date_range_dialog_preconfigured_last_week">Letzte 7 Tage</string>
+    <string name="date_range_dialog_preconfigured_last_month">Letzte 30 Tage</string>
+    <string name="date_range_dialog_preconfigured_last_half_year">Letzte 6 Monate</string>
+    <string name="date_range_dialog_preconfigured_last_year">Letztes Jahr</string>
+    <string name="date_range_dialog_preconfigured_last_two_years">Letzte 2 Jahre</string>
+    <string name="date_range_dialog_preconfigured_last_five_years">Letzte 5 Jahre</string>
+    <string name="date_range_dialog_preconfigured_all_time">Gesamter Zeitraum</string>
+    <string name="date_range_dialog_description">Wähle den Zeitraum aus, der bei der Berechnung der Statistiken berücksichtigt werden soll.</string>
+</resources>

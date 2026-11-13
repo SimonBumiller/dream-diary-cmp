@@ -1,0 +1,78 @@
+<resources>
+    <string name="settings_root_title">Einstellungen</string>
+
+    <string name="settings_root_design_section_label">Darstellung</string>
+    <string name="settings_root_design_color_theme_title">Dynamisches Farbschema</string>
+    <string name="settings_root_design_color_theme_description">Verwende ein Farbschema, das auf das Farbschema deines Betriebssystems abgestimmt ist.</string>
+    <string name="settings_root_design_color_mode_title">Darstellungsmodus</string>
+
+    <string name="settings_root_confidentiality_section_label">Vertraulichkeit</string>
+    <string name="settings_root_confidentiality_label">Standard-Vertraulichkeit für Träume</string>
+    <string name="settings_root_unlock_label">App sperren</string>
+    <string name="settings_root_unlock_description">Biometrische Authentifizierung verlangen, bevor die App geöffnet wird</string>
+    <string name="settings_root_confidentiality_none_description">Kein besonderer Schutz</string>
+    <string name="settings_root_confidentiality_medium_description">Inhaltsvorschau wird ausgeblendet</string>
+    <string name="settings_root_confidentiality_severe_description">Inhaltsvorschau und Titel werden ausgeblendet; Entsperren des Geräts erforderlich</string>
+
+    <string name="settings_root_io_section_label">Benutzerdaten</string>
+    <string name="settings_root_export_title">Daten exportieren</string>
+    <string name="settings_root_export_description">Exportiere deine Daten in eine lokale Datei</string>
+    <string name="settings_root_import_title">Daten importieren</string>
+    <string name="settings_root_import_description">Importiere Daten aus einer lokalen Datei</string>
+    <string name="settings_root_backup_title">Regelmäßige Sicherung</string>
+    <string name="settings_root_backup_description">Plane regelmäßige Sicherungen deiner Daten.</string>
+
+    <string name="order_config_title">Sicherung konfigurieren</string>
+    <string name="order_config_description">Verwende diesen Einrichtungsassistenten, um den regelmäßigen Export einzurichten. Lege dazu den Speicherort, den Sicherungszeitpunkt und weitere Optionen fest.</string>
+    <string name="order_config_storage_label">Speicher</string>
+    <string name="order_config_schedule_label">Zeitplan</string>
+    <string name="order_config_options_label">Optionen</string>
+    <string name="order_config_wizard_save_label">Konfiguration speichern</string>
+    <string name="order_config_wizard_retreat_label">Zurück</string>
+    <string name="order_config_storage_description">Wähle ein Verzeichnis aus, in dem die Sicherungsdateien gespeichert werden sollen.</string>
+    <string name="order_config_storage_description_important">Das Verzeichnis muss zum Zeitpunkt der Sicherung erreichbar sein. Liegt es auf einem Netzlaufwerk, ist eine Internetverbindung erforderlich.\nDas Verzeichnis muss leer sein. Vorhandene Dateien werden gelöscht.\n</string>
+    <string name="order_config_storage_directory_placeholder">Verzeichnis auswählen</string>
+
+    <string name="order_config_schedule_period_description">Sicherungshäufigkeit</string>
+    <string name="order_config_schedule_period_days_label">Tage</string>
+    <string name="order_config_schedule_period_hours_label">Stunden</string>
+    <string name="order_config_schedule_initial_description">Erste Sicherung</string>
+    <string name="order_config_schedule_inital_immediately">Sicherung sofort starten</string>
+    <string name="order_config_schedule_inital_deferred">Um eine Stunde verschieben</string>
+    <string name="order_config_options_filetype">Export-Dateityp</string>
+    <string name="order_config_options_type">Exportformat</string>
+    <string name="order_config_options_keeplast">Aufbewahrungsrichtlinie</string>
+    <string name="order_config_options_keeplast_unlimited">Alle Sicherungen behalten</string>
+    <string name="order_config_options_keeplast_limited">Letzte … Sicherungen behalten</string>
+
+    <string name="order_detail_title">Regelmäßige Sicherung</string>
+    <string name="order_detail_state_running_title">Sicherung konfiguriert</string>
+    <string name="order_detail_state_running_description">Sicherungen werden im Hintergrund gespeichert, auch wenn die App geschlossen ist.</string>
+    <string name="order_detail_state_running_negative_action_label">Konfiguration stoppen</string>
+    <string name="order_detail_state_canceled_title">Sicherung abgebrochen</string>
+    <string name="order_detail_state_canceled_description">Die Konfiguration wurde gestoppt. Es werden keine weiteren Sicherungen erstellt.</string>
+    <string name="order_detail_state_saved_title">Sicherung nicht gestartet</string>
+    <string name="order_detail_state_saved_description">Eine Konfiguration wurde gespeichert, aber noch nicht gestartet.</string>
+    <string name="order_detail_state_saved_positive_action_label">Konfiguration starten</string>
+    <string name="order_detail_state_saved_negative_action_label">Konfiguration löschen</string>
+    <string name="order_detail_filetype_legacy">JSON (Legacy-App)</string>
+    <string name="order_detail_keeplast_limited">Letzte %1$d Sicherungen behalten</string>
+    <string name="order_detail_keeplast_unlimited">Alle Sicherungen behalten</string>
+    <string name="order_detail_location">Speicherort</string>
+    <string name="order_detail_schedule">Zeitplan</string>
+    <string name="order_detail_schedule_value">Alle %1$d Tage und %2$d Stunden</string>
+    <string name="order_detail_schedule_value_days">Alle %1$d Tage</string>
+    <string name="order_detail_schedule_value_hours">Alle %1$d Stunden</string>
+    <string name="order_detail_filetype">Dateityp</string>
+    <string name="order_detail_keeplast">Aufbewahrung</string>
+    <string name="order_detail_backup_count">Anzahl der Sicherungen</string>
+    <string name="order_detail_used_storage">Belegter Speicherplatz</string>
+    <string name="order_detail_next_backup">Nächste Sicherung</string>
+    <string name="order_detail_backup_count_none">Keine</string>
+    <string name="order_detail_recent_backup">Letzte Sicherung</string>
+    <string name="order_detail_recent_backup_na">Keine vorherige Sicherung verfügbar</string>
+
+    <string name="export_failure_confirm">Bestätigen</string>
+    <string name="export_failure_title">Sicherung fehlgeschlagen</string>
+    <string name="export_failure_access_description">Die Sicherung konnte nicht gespeichert werden, da das ausgewählte Speicherziel nicht erreichbar war. Ursache können Netzwerkprobleme sein, wenn die Sicherung auf ein Netzlaufwerk exportiert wird, oder die Löschung des Sicherungsziels.</string>
+</resources>

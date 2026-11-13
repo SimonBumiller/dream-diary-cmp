@@ -1,0 +1,35 @@
+<resources>
+    <string name="cd_onboarding_welcome">Illustration eines Halbmonds und von Wolken.</string>
+    <string name="cd_onboarding_data">Illustration eines Notizbuchs mit einer Wolke aus Personen, Emotionen und Daten.</string>
+    <string name="cd_onboarding_connections">Illustration der Verbindungen zwischen Daten, Personen und Emotionen.</string>
+    <string name="cd_onboarding_security">Illustration eines Schlosses als Symbol für Sicherheit.</string>
+
+    <string name="welcome_title">Willkommen in deinem Traumtagebuch</string>
+    <string name="welcome_description">Halte deine nächtlichen Erlebnisse fest und entdecke deine unbewussten Gedanken.</string>
+
+    <string name="data_title">Halte deine Träume fest</string>
+    <string name="data_description">Notiere deine Träume und zugehörige Informationen, bevor die Erinnerung verblasst.</string>
+
+    <string name="connections_title">Muster und Bedeutungen entdecken</string>
+    <string name="connections_description">Entwickle ein besseres Verständnis für dich selbst, indem du Einblicke in Symbole und Personen gewinnst.</string>
+    <string name="connections_continue_label">Los geht's</string>
+
+    <string name="confidentiality_title">Vertraulichkeit</string>
+    <string name="confidentiality_description">Die Vertraulichkeit legt fest, wie viele Informationen in den Übersichtsansichten der App sichtbar sind. So kannst du verhindern, dass sensible Informationen angezeigt werden.</string>
+
+    <string name="theme_title">App-Design</string>
+    <string name="theme_description">Passe das Erscheinungsbild der App an deine Bedürfnisse an, indem du den Dunkelmodus aktivierst oder deaktivierst.</string>
+    <string name="theme_mode_label">App-Design</string>
+    <string name="theme_dynamic_description">Aktiviere das dynamische Design, um ein individuelles Farbschema zu nutzen, das auf dein Smartphone abgestimmt ist.</string>
+    <string name="theme_dynamic_label">Dynamisches Design</string>
+
+    <string name="lock_title">App schützen</string>
+    <string name="lock_description">Um deine Träume vollständig zu schützen, kannst du festlegen, dass dein Gerät vor dem Öffnen der App biometrisch entsperrt werden muss.</string>
+    <string name="lock_unlock_label">App-Sperre aktivieren</string>
+    <string name="lock_continue_label">Einrichtung abschließen</string>
+
+    <string name="import_title">Daten wiederherstellen</string>
+    <string name="import_description">Du kannst eine zuvor erstellte Datensicherung oder einen Export aus einer älteren App-Version importieren.</string>
+    <string name="import_import_label">Daten importieren</string>
+    <string name="import_noimport_label">Überspringen</string>
+</resources>

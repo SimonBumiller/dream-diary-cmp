@@ -61,7 +61,7 @@ internal fun OverviewFeatureCard(
                 modifier = Modifier
                     .padding(end = 4.dp),
                 text = name,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleSmall
                     .copy(fontWeight = FontWeight.Bold)
             )
             Text(

@@ -1,0 +1,185 @@
+<resources>
+    <string name="dream_title">Traum vom %1$s</string>
+
+    <string name="dreamlist_title">Träume</string>
+    <string name="dreamlist_action_add">Traum hinzufügen</string>
+    <string name="dreamlist_empty_placeholder">Du hast bisher keine Träume hinzugefügt. Verwende die Schaltfläche „+“, um deinen ersten Traum festzuhalten.</string>
+
+    <string name="dreamadd_description_placeholder">Beschreibe deinen Traum …</string>
+    <string name="dreamadd_title">Traum</string>
+
+    <string name="dreamadd_persons_title">Personen</string>
+    <string name="dreamadd_persons_info">Hier kannst du Personen auswählen, die mit dem Traum verknüpft werden sollen. Füge Personen hinzu, die darin vorkamen, an die du gedacht hast oder die im Traum eine andere Rolle gespielt haben.</string>
+    <string name="dreamadd_persons_label">Person</string>
+
+    <string name="dreamadd_confidentiality_title">Vertraulichkeit</string>
+    <string name="dreamadd_confidentiality_info">Hier kannst du die Vertraulichkeitsstufe dieses Traums festlegen. Eine höhere Vertraulichkeit schützt den Traum stärker, macht ihn aber weniger zugänglich. Ausführliche Erläuterungen findest du in den Einstellungen.</string>
+
+    <string name="dreamadd_emotions_title">Emotionen</string>
+    <string name="dreamadd_emotions_info">Hier kannst du Emotionen auswählen, die mit dem Traum verknüpft werden sollen. Füge Emotionen hinzu, die du im Traum empfunden hast oder die deine Stimmung nach dem Aufwachen beschreiben.</string>
+    <string name="dreamadd_emotions_label">Emotion</string>
+    <string name="dreamadd_tags_title">Tags</string>
+    <string name="dreamadd_tags_info">Hier kannst du Tags auswählen, die mit dem Traum verknüpft werden sollen.</string>
+    <string name="dreamadd_tags_label">Tag</string>
+    <string name="dreamadd_title_info">Lege einen eigenen Titel für den Traum fest oder behalte den Standardtitel mit dem Datum bei.</string>
+    <string name="dreamadd_title_label">Titel (optional)</string>
+    <string name="dreamadd_note_info">Füge eine Notiz hinzu, um weitere Informationen festzuhalten, z. B. zu deiner Schlafenszeit oder zu verzehrten Lebensmitteln.</string>
+    <string name="dreamadd_note_label">Notiz (optional)</string>
+    <string name="dreamadd_actions_add_attachment">Anhang hinzufügen</string>
+    <string name="dreamadd_actions_save">Speichern</string>
+    <string name="dreamadd_attachmentadd_description">Du hast die Datei _%1$s_ als Anhang für den Traum ausgewählt. Gib einen kurzen Namen ein, damit du den Anhang leichter wiedererkennst.</string>
+    <string name="dreamadd_no_emotions_placeholder">Noch keine Emotionen hinzugefügt</string>
+    <string name="dreamadd_no_persons_placeholder">Noch keine Personen hinzugefügt</string>
+    <string name="dreamadd_no_tags_placeholder">Noch keine Tags hinzugefügt</string>
+
+    <string name="attachment_add_confirm">Hinzufügen</string>
+    <string name="attachment_add_dismiss">Abbrechen</string>
+    <string name="attachment_add_title">Datei anhängen</string>
+    <string name="attachment_add_name_placeholder">Namen des Anhangs eingeben …</string>
+    <string name="attachment_add_name_label">Name</string>
+
+    <string name="emotionlist_title">Emotionen</string>
+    <string name="emotionlist_action_add">Emotion hinzufügen</string>
+    <string name="emotionlist_description">Hier findest du eine Liste aller Emotionen, die du hinzugefügt hast. Emotionen bilden die Grundlage deines Unterbewusstseins und können mit Träumen verknüpft werden.</string>
+    <string name="emotionlist_empty_placeholder_pre">Es sind derzeit keine Emotionen vorhanden. Verwende die Schaltfläche „+“, um eigene Emotionen hinzuzufügen,</string>
+    <string name="emotionlist_empty_placeholder_clickable"> oder füge die sechs von Paul Ekman definierten Basisemotionen hinzu</string>
+    <string name="emotionlist_empty_placeholder_post">.</string>
+    <string name="emotionlist_matrix_title">Emotionsmatrix</string>
+    <string name="emotionlist_matrix_description">Die folgende Matrix stellt alle von dir hinzugefügten Emotionen visuell dar. Emotionen werden anhand ihrer „Valenz“ (Stimmung) und ihrer „Erregung“ (Intensität) eingeordnet. Du kannst auf eine beliebige Stelle in der Matrix klicken, um zu sehen, welcher Eintrag welcher Emotion zugeordnet ist.</string>
+
+    <string name="emotionadd_title">Emotion</string>
+    <string name="emotionadd_name_placeholder">Namen der Emotion eingeben</string>
+    <string name="emotionadd_name_label">Emotion</string>
+    <string name="emotionadd_grid_title">Emotionswert</string>
+    <string name="emotionadd_grid_info">Charakterisiere die Emotion, indem du ihre Valenz (Stimmung) und Erregung (Intensität) auswählst. Die übrigen Punkte stehen für bereits vorhandene Emotionen.</string>
+    <string name="emotionadd_closest_label">Der ausgewählte Wert liegt am nächsten bei:</string>
+    <string name="emotionadd_actions_save">Speichern</string>
+    <string name="emotionadd_actions_delete">Emotion löschen</string>
+
+    <string name="personlist_title">Personen</string>
+    <string name="personlist_action_add">Person hinzufügen</string>
+    <string name="personlist_description">Hier findest du eine Liste aller Personen, die du hinzugefügt hast. Personen sind ein wichtiger Teil deines Unterbewusstseins und können mit Träumen verknüpft werden.</string>
+    <string name="personlist_empty_placeholder">Es sind derzeit keine Personen vorhanden. Verwende die Schaltfläche „+“, um neue Personen hinzuzufügen.</string>
+
+    <string name="personadd_title_add">Person hinzufügen</string>
+    <string name="personadd_title_edit">Person bearbeiten</string>
+    <string name="personadd_name_placeholder">Namen der Person eingeben …</string>
+    <string name="personadd_name_label">Name</string>
+    <string name="personadd_note_placeholder">Relevante Informationen hinzufügen …</string>
+    <string name="personadd_note_label">Notizen (optional)</string>
+    <string name="personadd_confirm_label_add">Hinzufügen</string>
+    <string name="personadd_confirm_label_edit">Speichern</string>
+    <string name="personadd_cancel_label">Abbrechen</string>
+    <string name="personadd_tags_label">Tags</string>
+    <string name="personadd_no_tags_placeholder">Noch keine Tags hinzugefügt</string>
+
+    <string name="dreamdetail_action_stats">Traumstatistiken</string>
+    <string name="dreamdetail_action_delete">Traum löschen</string>
+    <string name="dreamdetail_downloaded_snackbar">Anhang heruntergeladen</string>
+    <string name="dreamdetail_downloaded_snackbar_action">Anzeigen</string>
+    <string name="dreamdetail_action_favorite">Als Favorit markieren</string>
+    <string name="dreamdetail_action_edit">Bearbeiten</string>
+    <string name="dreamdetail_note_label">Kontextnotiz: </string>
+    <string name="dreamdetail_persons_title">Personen</string>
+    <string name="dreamdetail_persons_info_empty">Mit diesem Traum sind keine Personen verknüpft.</string>
+    <plurals name="dreamdetail_persons_info">
+        <item quantity="one">In total, there is one person taking part in this dream.</item>
+        <item quantity="other">In total, there are %1$d persons taking part in this dream.</item>
+    </plurals>
+    <string name="dreamdetail_tags_title">Tags</string>
+    <string name="dreamdetail_tags_info_empty">Mit diesem Traum sind keine Tags verknüpft.</string>
+    <plurals name="dreamdetail_tags_info">
+        <item quantity="one">In total, there is one tag applied to this dream.</item>
+        <item quantity="other">In total, there are %1$d tags applied to this dream.</item>
+    </plurals>
+    <string name="dreamdetail_emotions_title">Emotionen</string>
+    <string name="dreamdetail_emotions_info_empty">Mit diesem Traum sind keine Emotionen verknüpft.</string>
+    <plurals name="dreamdetail_emotions_info">
+        <item quantity="one">In total, there is one emotion associated with this dream.</item>
+        <item quantity="other">In total, there are %1$d emotions associated with this dream.</item>
+    </plurals>
+    <string name="dreamdetail_confidentiality_pre">Dieser Traum ist mit der Vertraulichkeitsstufe </string>
+    <string name="dreamdetail_confidentiality_post"> gekennzeichnet.</string>
+
+    <string name="overview_current_week_title_below_average">Weniger Traumaktivität als üblich</string>
+    <string name="overview_current_week_description_below_average">Du hattest in den letzten sieben Tagen weniger Träume als gewöhnlich. Das könnte an einer kürzeren durchschnittlichen Schlafdauer oder daran liegen, dass du deinem Traumverhalten weniger Aufmerksamkeit geschenkt hast.</string>
+    <string name="overview_current_week_title_average">Normale Traumaktivität</string>
+    <string name="overview_current_week_description_average">Deine Traumaktivität der letzten sieben Tage ähnelt deiner üblichen Traumaktivität. Weitere Einblicke erhältst du in den Statistiken zu deinem Traumverhalten.</string>
+    <string name="overview_current_week_title_above_average">Mehr Traumaktivität als üblich</string>
+    <string name="overview_current_week_description_above_average">Du hattest in den letzten sieben Tagen mehr Träume als gewöhnlich. Das könnte an häufigeren nächtlichen Aufwachphasen während des REM-Schlafs oder daran liegen, dass du deinem Traumverhalten mehr Aufmerksamkeit geschenkt hast.</string>
+    <string name="overview_current_week_title_nodata">Du fängst gerade erst an!</string>
+    <string name="overview_current_week_description_nodata">Du hast gerade erst begonnen, deine Träume aufzuzeichnen! Halte weiterhin deine Träume fest, um Statistiken und Einblicke in dein Traumverhalten zu erhalten.</string>
+
+    <string name="overview_title">Traumtagebuch</string>
+    <string name="overview_actions_settings">Einstellungen</string>
+    <string name="overview_actions_tags">Tags</string>
+    <string name="overview_feature_persons_title">Personen:</string>
+    <string name="overview_feature_emotions_title">Emotionen:</string>
+    <string name="overview_feature_dreams_title">Träume:</string>
+    <string name="overview_no_recent_dreams">Du hast in den letzten sieben Tagen keine Träume aufgezeichnet. Verwende die Schaltfläche „+“, um einen Traum festzuhalten.</string>
+    <string name="overview_dreams_label">Letzte Träume</string>
+    <string name="overview_record_dream">Traum festhalten</string>
+
+    <string name="tag_list_title">Tags</string>
+    <string name="tag_list_add">Tag hinzufügen</string>
+    <string name="tag_list_empty_placeholder">Es sind derzeit keine Tags vorhanden. Verwende die Schaltfläche „+“, um neue Personen hinzuzufügen.</string>
+    <string name="tag_list_description">Hier findest du eine Liste aller Tags, die du hinzugefügt hast. Tags dienen dazu, Metadaten hinzuzufügen oder Personen und Träume zu gruppieren.</string>
+    <string name="tag_list_long_press_label">Zum Bearbeiten lange drücken</string>
+
+    <string name="tag_add_title_add">Tag hinzufügen</string>
+    <string name="tag_add_title_edit">Tag bearbeiten</string>
+    <string name="tag_add_name_placeholder">Tag-Namen eingeben …</string>
+    <string name="tag_add_name_label">Tag-Name</string>
+    <string name="tag_add_note_placeholder">Beschreibung eingeben …</string>
+    <string name="tag_add_note_label">Tag-Beschreibung (optional)</string>
+    <string name="tag_add_confirm_label_add">Hinzufügen</string>
+    <string name="tag_add_confirm_label_edit">Speichern</string>
+    <string name="tag_add_cancel_label">Abbrechen</string>
+
+    <string name="person_detail_title">Personeninfo</string>
+    <string name="person_detail_associated_persons_title">Verbundene Personen</string>
+    <string name="person_detail_associated_persons_description">Diese Statistik zeigt, welche Personen mit %1$s verbunden sind. Verbundene Personen treten häufiger in einem Traum auf, wenn %1$s darin vorkommt.</string>
+    <string name="person_detail_associated_emotions_title">Verbundene Emotionen</string>
+    <string name="person_detail_associated_emotions_description">Diese Statistik zeigt, welche Emotionen mit %1$s verbunden sind. Verbundene Emotionen treten häufiger in einem Traum auf, wenn %1$s darin vorkommt.</string>
+    <string name="person_detail_associated_index">%1$d.</string>
+    <string name="person_detail_associated_percentage">+ %1$d%</string>
+    <string name="person_detail_no_info_placeholder">Für diese Person wurden keine weiteren Informationen angegeben.</string>
+    <string name="person_detail_no_occurence">Diese Person ist bisher in keinem Traum aufgetreten.</string>
+    <string name="person_detail_first_occurence_label">Erstes Auftreten:</string>
+    <string name="person_detail_last_occurence_label">Letztes Auftreten:</string>
+    <string name="person_detail_dream_occurence_label">Anzahl der Träume insgesamt:</string>
+    <string name="person_detail_tabs_dreams">Träume</string>
+    <string name="person_detail_tabs_stats">Statistiken</string>
+    <string name="person_detail_time_frequency_title">Zeitliche Häufigkeit</string>
+    <string name="person_detail_time_frequency_description">Diese Statistik zeigt, in welchen Zeiträumen %1$s in Träumen aufgetreten ist.</string>
+    <string name="person_detail_time_frequency_period_label">Häufigster Zeitraum:</string>
+    <string name="person_detail_time_frequency_period">%1$s – %2$s</string>
+    <string name="person_detail_edit">Bearbeiten</string>
+    <string name="person_detail_delete">Person löschen</string>
+
+    <string-array name="basic_emotions_names">
+        <item>Happiness</item>
+        <item>Sadness</item>
+        <item>Fear</item>
+        <item>Anger</item>
+        <item>Disgust</item>
+        <item>Surprise</item>
+    </string-array>
+    <string-array name="basic_emotions_valences">
+        <item>0.9</item>
+        <item>-0.9</item>
+        <item>-0.8</item>
+        <item>-0.7</item>
+        <item>-0.8</item>
+        <item>0.0</item>
+    </string-array>
+    <string-array name="basic_emotions_arousal">
+        <item>0.7</item>
+        <item>-0.6</item>
+        <item>0.9</item>
+        <item>0.8</item>
+        <item>0.3</item>
+        <item>0.8</item>
+    </string-array>
+
+</resources>
