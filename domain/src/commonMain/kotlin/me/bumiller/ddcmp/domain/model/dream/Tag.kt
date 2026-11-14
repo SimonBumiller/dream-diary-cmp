@@ -30,9 +30,30 @@ data class Tag(
     /**
      * The color in argb mode.
      */
-    val color: Long
+    val color: Long,
+
+    /**
+     * What element the tag targets.
+     */
+    val target: TagTarget
 
 ): Unique, Trackable, Editable, Searchable {
+
+    /**
+     * What elements the tag targets.
+     */
+    enum class TagTarget {
+
+        /**
+         * Applicable to dreams.
+         */
+        Dream,
+
+        /**
+         * Applicable to persons.
+         */
+        Person
+    }
 
     override val searchableFields = listOfNotNull(name, description)
 

@@ -69,7 +69,7 @@ internal class PersonAddViewModel(
 
     val uiState = uiState<UiState>().asStateFlow()
 
-    private val tagsQuery = AllTagUseCase.I(sortMode = SortMode.TagSort.Name)
+    private val tagsQuery = AllTagUseCase.I(sortMode = SortMode.TagSort.Name, target = Tag.TagTarget.Person)
 
     /**
      * The tags available for selection by the user.
@@ -86,7 +86,6 @@ internal class PersonAddViewModel(
                 }
         }.stateIn(emptyList())
 
-    @OptIn(ExperimentalTime::class)
     override suspend fun handleEvent(event: UiEvent) = when (event) {
         is UiEvent.ChangeName -> updateUiState<PersonState> {
             it.copy(name = event.name)

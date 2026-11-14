@@ -49,7 +49,8 @@ internal class TagAddViewModel(
                     val newState = it.copy(
                         name = tag?.name ?: "",
                         description = tag?.description ?: "",
-                        color = tag?.color ?: ColorPickerInitialColor
+                        color = tag?.color ?: ColorPickerInitialColor,
+                        target = tag?.target ?: Tag.TagTarget.Person
                     )
                     initialTagState = newState
                     newState
@@ -91,7 +92,8 @@ internal class TagAddViewModel(
                     edited = now,
                     name = state.name,
                     description = state.description,
-                    color = state.color
+                    color = state.color,
+                    target = state.target
                 )
 
                 SaveTagUseCase.I(
@@ -111,6 +113,10 @@ internal class TagAddViewModel(
             }
 
             fireEvent(CloseDialog)
+        }
+
+        is UiEvent.ChangeTarget -> updateUiState<TagState> {
+            it.copy(target = event.target)
         }
     }
 
@@ -136,13 +142,15 @@ internal class TagAddViewModel(
     data class TagState(
         val name: String = "",
         val description: String = "",
-        val color: Long = ColorPickerInitialColor
+        val color: Long = ColorPickerInitialColor,
+        val target: Tag.TagTarget = Tag.TagTarget.Person
     )
 
     sealed interface UiEvent : UIE {
         data class ChangeName(val name: String) : UiEvent
         data class ChangeDescription(val note: String) : UiEvent
         data class ChangeColor(val color: Long) : UiEvent
+        data class ChangeTarget(val target: Tag.TagTarget) : UiEvent
         data object Cancel : UiEvent
         data object Save : UiEvent
         data object ClickDelete : UiEvent

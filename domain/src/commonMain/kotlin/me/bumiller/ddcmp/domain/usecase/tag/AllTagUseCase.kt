@@ -19,7 +19,6 @@ import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase.I
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase.O
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 open class AllTagUseCase(
     val repo: TagRepository,
     val personRepo: PersonRepository,
@@ -46,9 +45,7 @@ open class AllTagUseCase(
     private fun Flow<List<Tag>>.aggregate(): Flow<List<O>> = flatMapLatest { tags ->
         val outputFlows = tags.map { tag ->
             val personFlow = personRepo.getForDream(tag.id)
-                .map { it ?: emptyList() }
             val dreamFlow = dreamRepo.getForTag(tag.id)
-                .map { it ?: emptyList() }
 
             combine(
                 flow = dreamFlow,
@@ -63,9 +60,10 @@ open class AllTagUseCase(
 
     private fun List<O>.applyFilter(i: I) =
         filter { o ->
-                    i.personIds?.any { it in o.persons.map(Person::id) } ?: true &&
+            i.personIds?.any { it in o.persons.map(Person::id) } ?: true &&
                     i.dreamIds?.any { it in o.dreams.map(Dream::id) } ?: true &&
-                    i.id?.let { o.tag.id == it } ?: true
+                    i.id?.let { o.tag.id == it } ?: true &&
+                    i.target?.let { o.tag.target == it } ?: true
         }
 
     data class O(
@@ -102,6 +100,11 @@ open class AllTagUseCase(
          * For which person-ids to filter.
          */
         val personIds: Set<Long>? = null,
+
+        /**
+         * The tag target to filter for.
+         */
+        val target: Tag.TagTarget? = null,
 
         /**
          * The id of the specific tag to filter for.

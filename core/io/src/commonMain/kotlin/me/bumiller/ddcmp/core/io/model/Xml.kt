@@ -306,6 +306,9 @@ internal object Xml {
         @XmlElement(false)
         val edited: Long,
 
+        @XmlElement(false)
+        val target: String,
+
         @XmlElement(true)
         val name: String,
 
@@ -322,7 +325,8 @@ internal object Xml {
             Instant.fromEpochMilliseconds(edited),
             name,
             description,
-            color
+            color,
+            ModelTag.TagTarget.valueOf(target)
         )
 
         companion object {
@@ -332,6 +336,7 @@ internal object Xml {
                     tag.created.toEpochMilliseconds(),
                     tag.edited.toEpochMilliseconds(),
                     tag.name,
+                    tag.target.name,
                     tag.description,
                     tag.color
                 )

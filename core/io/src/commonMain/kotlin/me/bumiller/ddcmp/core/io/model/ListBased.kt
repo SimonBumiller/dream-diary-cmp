@@ -100,6 +100,7 @@ internal object ListBased {
         val name: String,
         val description: String?,
         val color: Long,
+        val target: String
     ) {
 
         companion object {
@@ -110,14 +111,15 @@ internal object ListBased {
                     tag.edited.toEpochMilliseconds(),
                     tag.name,
                     tag.description,
-                    tag.color
+                    tag.color,
+                    tag.target.name
                 )
             }
         }
 
         fun toModel() = ModelTag(
             id, Instant.fromEpochMilliseconds(created), Instant.fromEpochMilliseconds(edited),
-            name, description, color
+            name, description, color, ModelTag.TagTarget.valueOf(target)
         )
 
     }

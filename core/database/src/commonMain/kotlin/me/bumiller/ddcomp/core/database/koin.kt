@@ -11,6 +11,7 @@ import me.bumiller.ddcmp.domain.infrastructure.PeriodicBackupRepository
 import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import me.bumiller.ddcmp.domain.infrastructure.TagRepository
 import me.bumiller.ddcmp.domain.infrastructure.AttachmentMetaRepository
+import me.bumiller.ddcomp.core.database.migrations.Migration_9_10
 import org.koin.core.scope.Scope
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -37,6 +38,7 @@ val database = module {
     single {
         databaseBuilder()
             .setDriver(BundledSQLiteDriver())
+            .addMigrations(Migration_9_10)
             .build()
     }
 

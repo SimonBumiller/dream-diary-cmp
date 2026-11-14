@@ -61,7 +61,8 @@ object Mapping {
                 updated = edited,
                 name = name,
                 description = description,
-                color = color
+                color = color,
+                target = target.name
             )
         }
 
@@ -175,7 +176,8 @@ object Mapping {
             edited = updated,
             name = name,
             description = description,
-            color = color
+            color = color,
+            target = Tag.TagTarget.valueOf(target)
         )
     }
 

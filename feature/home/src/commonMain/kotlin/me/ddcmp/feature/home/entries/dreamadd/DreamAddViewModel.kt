@@ -345,7 +345,7 @@ internal class DreamAddViewModel(
         uiState<UiState>()
             .combine(uiState<DreamState>()) { uiState, dreamState -> uiState to dreamState }
             .flatMapLatest { (uiState, dreamState) ->
-                allTags(AllTagUseCase.I(sortMode = SortMode.TagSort.Name))
+                allTags(AllTagUseCase.I(sortMode = SortMode.TagSort.Name, target = Tag.TagTarget.Dream))
                     .map { tags ->
                         tags
                             .map { it.tag }

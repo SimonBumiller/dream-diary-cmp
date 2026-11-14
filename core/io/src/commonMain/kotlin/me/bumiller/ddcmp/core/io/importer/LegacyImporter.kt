@@ -106,7 +106,8 @@ internal class LegacyImporter(
                         edited = Clock.System.now(),
                         name = relation.name,
                         description = relation.notes?.ifBlank { null },
-                        color = relation.color
+                        color = relation.color,
+                        target = Tag.TagTarget.Person
                     )
                 }
 

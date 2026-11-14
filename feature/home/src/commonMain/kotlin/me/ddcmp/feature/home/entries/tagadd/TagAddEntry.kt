@@ -2,13 +2,13 @@ package me.ddcmp.feature.home.entries.tagadd
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -31,8 +31,10 @@ import dream_diary_cmp.feature.home.generated.resources.tag_add_note_label
 import dream_diary_cmp.feature.home.generated.resources.tag_add_note_placeholder
 import dream_diary_cmp.feature.home.generated.resources.tag_add_title_add
 import dream_diary_cmp.feature.home.generated.resources.tag_add_title_edit
+import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.ColorPicker
+import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.ddcmp.feature.home.entries.tagadd.TagAddViewModel.TagState
 import me.ddcmp.feature.home.entries.tagadd.TagAddViewModel.UiEvent
 import me.ddcmp.feature.home.entries.tagadd.TagAddViewModel.ViewModelEvent
@@ -124,6 +126,19 @@ private fun TagAddEntry(
                     label = { Text(stringResource(Res.string.tag_add_note_label)) },
                     minLines = 3
                 )
+
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    for (target in Tag.TagTarget.entries.reversed()) {
+                        FilterChip(
+                            selected = target == tagState.target,
+                            onClick = { onEvent(UiEvent.ChangeTarget(target)) },
+                            label = { Text(target.translateName) },
+                            enabled = !isAdd
+                        )
+                    }
+                }
             }
         },
         confirmButton = {

@@ -1,5 +1,6 @@
 package me.ddcmp.feature.home.entries.taglist
 
+import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 import me.bumiller.ddcmp.ui.common.AppViewModel
@@ -14,14 +15,26 @@ internal class TagListViewModel(
     getTags: AllTagUseCase
 ): AppViewModel<UiEvent, ViewModelEvent>() {
 
-    private val tagsQuery = AllTagUseCase.I(
-        sortMode = SortMode.TagSort.Color
+    private val tagsQueryPersons = AllTagUseCase.I(
+        sortMode = SortMode.TagSort.Color,
+        target = Tag.TagTarget.Person
     )
 
     /**
      * The tags to display
      */
-    val tags = getTags(tagsQuery)
+    val tagsPerson = getTags(tagsQueryPersons)
+        .stateIn(null)
+
+    private val tagsQueryDreams = AllTagUseCase.I(
+        sortMode = SortMode.TagSort.Color,
+        target = Tag.TagTarget.Dream
+    )
+
+    /**
+     * The tags to display
+     */
+    val tagsDream = getTags(tagsQueryDreams)
         .stateIn(null)
 
     override suspend fun handleEvent(event: UiEvent) = when (event) {

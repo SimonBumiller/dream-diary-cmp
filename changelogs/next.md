@@ -13,3 +13,4 @@ Note: Changes in *italic* are changes not visible to users.
 
 ## New Features
 - Added per-dream clearness and intensity values
+- Tags can now only be applied to either dreams or persons. This can be specified on a tag-basis when creating one.

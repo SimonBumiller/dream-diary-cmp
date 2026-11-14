@@ -130,6 +130,8 @@
     <string name="tag_list_empty_placeholder">There are currently no tags present. Use the '+' button to add new persons.</string>
     <string name="tag_list_description">Below is a list of all tags added by you. Tags are used to add metadata or group together persons and dreams.</string>
     <string name="tag_list_long_press_label">Long-press to edit</string>
+    <string name="tag_list_target_person">Person tags</string>
+    <string name="tag_list_target_dream">Dream tags</string>
 
     <string name="tag_add_title_add">Add Tag</string>
     <string name="tag_add_title_edit">Edit Tag</string>
