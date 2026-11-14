@@ -45,6 +45,8 @@ open class AllDreamUseCase(
                 DreamSort.Dreamt -> one.dream.dreamt.compareTo(two.dream.dreamt)
                 DreamSort.Name -> one.dream.title.compareTo(two.dream.title)
                 DreamSort.Length -> one.dream.length.compareTo(two.dream.length)
+                DreamSort.Clearness -> one.dream.clearness.compareTo(two.dream.clearness)
+                DreamSort.Intensity -> one.dream.intensity.compareTo(two.dream.intensity)
             }
         }.let {
             if (i.sortDirection == SortDirection.Descending) it.reversed()
@@ -80,6 +82,12 @@ open class AllDreamUseCase(
         if (other == null) 0 else -1
     } else {
         if (other == null) 1 else String.CASE_INSENSITIVE_ORDER.compare(this, other)
+    }
+
+    private fun <T: Enum<T>> T?.compareTo(other: T?) = if(this == null) {
+        if(other == null) 0 else 1
+    } else {
+        if(other == null) 1 else this.compareTo(other)
     }
 
     private fun List<O>.applyFilter(i: I) =

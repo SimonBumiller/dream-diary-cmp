@@ -5,8 +5,10 @@ import dream_diary_cmp.ui.common.generated.resources.Res
 import dream_diary_cmp.ui.common.generated.resources.sort_ascending
 import dream_diary_cmp.ui.common.generated.resources.sort_created
 import dream_diary_cmp.ui.common.generated.resources.sort_descending
+import dream_diary_cmp.ui.common.generated.resources.sort_dream_clearness
 import dream_diary_cmp.ui.common.generated.resources.sort_dream_confidentiality
 import dream_diary_cmp.ui.common.generated.resources.sort_dream_dreamt
+import dream_diary_cmp.ui.common.generated.resources.sort_dream_intensity
 import dream_diary_cmp.ui.common.generated.resources.sort_dream_length
 import dream_diary_cmp.ui.common.generated.resources.sort_dream_name
 import dream_diary_cmp.ui.common.generated.resources.sort_dream_valence
@@ -35,6 +37,8 @@ val SortMode.translateName: String
         SortMode.DreamSort.Length -> Res.string.sort_dream_length
         SortMode.TagSort.Color -> Res.string.sort_tag_color
         SortMode.TagSort.Name -> Res.string.sort_tag_name
+        SortMode.DreamSort.Clearness -> Res.string.sort_dream_clearness
+        SortMode.DreamSort.Intensity -> Res.string.sort_dream_intensity
     }.let { stringResource(it) }
 
 /**
