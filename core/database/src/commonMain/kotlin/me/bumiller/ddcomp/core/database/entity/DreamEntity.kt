@@ -15,7 +15,6 @@ import kotlin.time.Instant
 /**
  * Entity class for a dream.
  */
-@OptIn(ExperimentalTime::class)
 @Entity(
     tableName = "dreams"
 )
@@ -38,7 +37,11 @@ data class DreamEntity(
 
     val favorite: Boolean,
 
-    val confidentiality: String
+    val confidentiality: String,
+
+    val clearness: String?,
+
+    val intensity: String?
 
 ) : BaseEntity {
 

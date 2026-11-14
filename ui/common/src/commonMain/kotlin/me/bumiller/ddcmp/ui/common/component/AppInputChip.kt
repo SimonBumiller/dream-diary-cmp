@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.SelectableChipColors
@@ -72,6 +73,8 @@ fun AppInputChip(
     colors: SelectableChipColors = InputChipDefaults.inputChipColors(),
     elevation: SelectableChipElevation? = InputChipDefaults.inputChipElevation(),
     border: BorderStroke? = InputChipDefaults.inputChipBorder(enabled, selected),
+    contentPadding: PaddingValues =
+        InputChipDefaults.contentPadding(avatar != null, leadingIcon != null, trailingIcon != null),
     interactionSource: MutableInteractionSource? = null
 ) {
     val intSource = interactionSource ?: remember { MutableInteractionSource() }
@@ -90,6 +93,8 @@ fun AppInputChip(
             colors,
             elevation,
             border,
+            horizontalArrangement = InputChipDefaults.horizontalArrangement(),
+            contentPadding,
             intSource
         )
         Box(

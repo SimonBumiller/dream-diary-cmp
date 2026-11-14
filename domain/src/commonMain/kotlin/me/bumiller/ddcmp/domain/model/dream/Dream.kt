@@ -9,7 +9,6 @@ import kotlin.time.Instant
 /**
  * Models a dream that has been recorded.
  */
-@OptIn(ExperimentalTime::class)
 data class Dream(
 
     override val id: Long,
@@ -45,7 +44,17 @@ data class Dream(
     /**
      * The confidentiality level of the dream.
      */
-    var confidentiality: Confidentiality
+    var confidentiality: Confidentiality,
+
+    /**
+     * Clearness of the dream.
+     */
+    var clearness: Clearness?,
+
+    /**
+     * Intensity of the dream
+     */
+    var intensity: Intensity?
 
 ) : Unique, Editable, Searchable {
 

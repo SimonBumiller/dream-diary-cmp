@@ -87,6 +87,28 @@
     <string name="data_amount_megabyte">%1$d MB</string>
     <string name="data_amount_gigabyte">%1$d GB</string>
 
+    <string name="clearness_verylow_name">Very low clarity</string>
+    <string name="clearness_low_name">Low clarity</string>
+    <string name="clearness_medium_name">Medium clarity</string>
+    <string name="clearness_high_name">High clarity</string>
+    <string name="clearness_veryhigh_name">Very high clarity</string>
+    <string name="clearness_verylow_description">You remember only vague images, without any clear order or connection between them.</string>
+    <string name="clearness_low_description">You remember vague images and a few sequences of events, but cannot piece together a coherent dream narrative.</string>
+    <string name="clearness_medium_description">You remember several connected situations that form a somewhat coherent dream narrative.</string>
+    <string name="clearness_high_description">You remember almost the entire dream, with only a few gaps or unclear situations.</string>
+    <string name="clearness_veryhigh_description">You remember the entire dream in detail, without any gaps, and can retell it consistently.</string>
+
+    <string name="intensity_verylow_name">Very low intensity</string>
+    <string name="intensity_low_name">Low intensity</string>
+    <string name="intensity_medium_name">Medium intensity</string>
+    <string name="intensity_high_name">High intensity</string>
+    <string name="intensity_veryhigh_name">Very high intensity</string>
+    <string name="intensity_verylow_description">The dream had no noticeable effect on your emotional state.</string>
+    <string name="intensity_low_description">The dream affected your emotions only slightly, and only immediately after waking up.</string>
+    <string name="intensity_medium_description">The dream moderately affected your emotional state until you felt fully awake.</string>
+    <string name="intensity_high_description">The dream strongly affected your emotional state, even after getting out of bed and going about your day.</string>
+    <string name="intensity_veryhigh_description">The dream had a significant impact on your emotional state throughout the entire day.</string>
+
     <string name="date_range_dialog_preconfigured_last_week">Last 7 days</string>
     <string name="date_range_dialog_preconfigured_last_month">Last 30 days</string>
     <string name="date_range_dialog_preconfigured_last_half_year">Last 6 months</string>

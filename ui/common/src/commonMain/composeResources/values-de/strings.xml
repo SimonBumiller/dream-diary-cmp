@@ -87,6 +87,28 @@
     <string name="data_amount_megabyte">%1$d MB</string>
     <string name="data_amount_gigabyte">%1$d GB</string>
 
+    <string name="clearness_verylow_name">Sehr geringe Klarheit</string>
+    <string name="clearness_low_name">Geringe Klarheit</string>
+    <string name="clearness_medium_name">Mittlere Klarheit</string>
+    <string name="clearness_high_name">Hohe Klarheit</string>
+    <string name="clearness_veryhigh_name">Sehr hohe Klarheit</string>
+    <string name="clearness_verylow_description">Du erinnerst dich nur an vage Bilder, die weder eine klare Reihenfolge noch einen erkennbaren Zusammenhang haben.</string>
+    <string name="clearness_low_description">Du erinnerst dich an vage Bilder und einige Handlungsabläufe, kannst daraus aber keine zusammenhängende Traumgeschichte bilden.</string>
+    <string name="clearness_medium_description">Du erinnerst dich an mehrere zusammenhängende Situationen, die eine einigermaßen schlüssige Traumgeschichte ergeben.</string>
+    <string name="clearness_high_description">Du erinnerst dich an fast den gesamten Traum, mit nur wenigen Lücken oder unklaren Situationen.</string>
+    <string name="clearness_veryhigh_description">Du erinnerst dich lückenlos und detailliert an den gesamten Traum und kannst ihn zusammenhängend wiedergeben.</string>
+
+    <string name="intensity_verylow_name">Sehr geringe Intensität</string>
+    <string name="intensity_low_name">Geringe Intensität</string>
+    <string name="intensity_medium_name">Mittlere Intensität</string>
+    <string name="intensity_high_name">Hohe Intensität</string>
+    <string name="intensity_veryhigh_name">Sehr hohe Intensität</string>
+    <string name="intensity_verylow_description">Der Traum hatte keine merklichen Auswirkungen auf deine Gefühlslage.</string>
+    <string name="intensity_low_description">Der Traum beeinflusste deine Gefühlslage nur leicht und ausschließlich unmittelbar nach dem Aufwachen.</string>
+    <string name="intensity_medium_description">Der Traum beeinflusste deine Gefühlslage mäßig, bis du vollständig wach warst.</string>
+    <string name="intensity_high_description">Der Traum beeinflusste deine Gefühlslage stark, auch nachdem du aufgestanden warst und deinen Alltag begonnen hattest.</string>
+    <string name="intensity_veryhigh_description">Der Traum beeinflusste deine Gefühlslage den gesamten Tag über erheblich.</string>
+
     <string name="date_range_dialog_preconfigured_last_week">Letzte 7 Tage</string>
     <string name="date_range_dialog_preconfigured_last_month">Letzte 30 Tage</string>
     <string name="date_range_dialog_preconfigured_last_half_year">Letzte 6 Monate</string>

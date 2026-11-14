@@ -16,8 +16,10 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.bumiller.ddcmp.domain.model.attachment.AttachmentMeta
+import me.bumiller.ddcmp.domain.model.dream.Clearness
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.dream.Dream
+import me.bumiller.ddcmp.domain.model.dream.Intensity
 import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
@@ -203,6 +205,19 @@ internal class DreamAddViewModel(
 
             fireEvent(ShowAttachment(file, event.attachment))
         }
+
+        is UiEvent.ChangeClearness -> updateUiState<DreamState> {
+            it.copy(clearness = event.clearness)
+        }
+        is UiEvent.ChangeIntensity -> updateUiState<DreamState> {
+            it.copy(intensity = event.intensity)
+        }
+        UiEvent.ToggleClearness -> updateUiState<DreamState> {
+            it.copy(clearnessEnabled = !it.clearnessEnabled)
+        }
+        UiEvent.ToggleIntensity -> updateUiState<DreamState> {
+            it.copy(intensityEnabled = !it.intensityEnabled)
+        }
     }
 
     private suspend fun save() {
@@ -227,7 +242,9 @@ internal class DreamAddViewModel(
                 description = state.description,
                 note = state.note.ifBlank { null },
                 favorite = existingDream?.favorite ?: false,
-                confidentiality = state.confidentiality
+                confidentiality = state.confidentiality,
+                clearness = state.clearness.takeIf { state.clearnessEnabled },
+                intensity = state.intensity.takeIf { state.intensityEnabled }
             ).let { dream ->
                 I(
                     dream = dream,
@@ -300,7 +317,11 @@ internal class DreamAddViewModel(
                                 )
                             },
                             confidentiality = dream.dream.confidentiality,
-                            dreamt = dream.dream.dreamt
+                            dreamt = dream.dream.dreamt,
+                            clearness = dream.dream.clearness ?: Clearness.Medium,
+                            clearnessEnabled = dream.dream.clearness != null,
+                            intensity = dream.dream.intensity ?: Intensity.Medium,
+                            intensityEnabled = dream.dream.intensity != null
                         )
                         initialDreamState = newState
                         newState
@@ -406,7 +427,13 @@ internal class DreamAddViewModel(
 
         val confidentiality: Confidentiality = Confidentiality.None,
 
-        val dreamt: Instant = Clock.System.now()
+        val dreamt: Instant = Clock.System.now(),
+
+        val clearness: Clearness = Clearness.Medium,
+        val clearnessEnabled: Boolean = false,
+
+        val intensity: Intensity = Intensity.Medium,
+        val intensityEnabled: Boolean = false,
     )
 
     sealed interface ViewModelAttachment: UiAttachment {
@@ -480,7 +507,11 @@ internal class DreamAddViewModel(
         data class SelectAttachmentFile(val file: PlatformFile?) : UiEvent
         data class RemoveAttachment(val attachment: ViewModelAttachment) : UiEvent
         data class ClickAttachment(val attachment: ViewModelAttachment) : UiEvent
+        data class ChangeClearness(val clearness: Clearness) : UiEvent
+        data class ChangeIntensity(val intensity: Intensity) : UiEvent
         data object Save : UiEvent
+        data object ToggleClearness : UiEvent
+        data object ToggleIntensity : UiEvent
         data object ClickAddAttachment : UiEvent
         data object NavigateBack : UiEvent
         data object HideDiscardDialog : UiEvent

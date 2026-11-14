@@ -45,12 +45,14 @@ import dream_diary_cmp.feature.home.generated.resources.Res
 import dream_diary_cmp.feature.home.generated.resources.dream_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_actions_add_attachment
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_actions_save
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_clearness_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_confidentiality_info
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_confidentiality_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_description_placeholder
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_emotions_info
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_emotions_label
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_emotions_title
+import dream_diary_cmp.feature.home.generated.resources.dreamadd_intensity_title
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_no_emotions_placeholder
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_no_persons_placeholder
 import dream_diary_cmp.feature.home.generated.resources.dreamadd_no_tags_placeholder
@@ -70,6 +72,8 @@ import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import kotlinx.coroutines.delay
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import me.bumiller.ddcmp.domain.model.dream.Clearness
+import me.bumiller.ddcmp.domain.model.dream.Intensity
 import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
@@ -79,6 +83,7 @@ import me.bumiller.ddcmp.ui.common.backhandler.PlatformBackHandler
 import me.bumiller.ddcmp.ui.common.component.AppTagInputChip
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.ConfidentialitySelector
+import me.bumiller.ddcmp.ui.common.component.HiddenEnumSlider
 import me.bumiller.ddcmp.ui.common.component.SearchTextField
 import me.bumiller.ddcmp.ui.common.dialog.DDCDatePickerDialog
 import me.bumiller.ddcmp.ui.common.dialog.DiscardChangesDialog
@@ -88,6 +93,8 @@ import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.layout.ColumnOrRow
 import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
+import me.bumiller.ddcmp.ui.common.translation.translateDescription
+import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.bumiller.ddcmp.ui.common.viewFile
 import me.ddcmp.feature.home.component.AttachmentItem
 import me.ddcmp.feature.home.entries.dreamadd.DreamAddViewModel.UiEvent
@@ -365,7 +372,7 @@ private fun OptionalSection(
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 private fun MainMetaSection(
     dreamState: DreamAddViewModel.DreamState,
     onEvent: (UiEvent) -> Unit,
@@ -545,5 +552,29 @@ private fun MainMetaSection(
                 onSelect = { onEvent(UiEvent.SetConfidentiality(it)) }
             )
         }
+
+        HiddenEnumSlider(
+            visible = dreamState.clearnessEnabled,
+            current = dreamState.clearness,
+            toggleVisibility = { onEvent(UiEvent.ToggleClearness) },
+            title = stringResource(Res.string.dreamadd_clearness_title),
+            description = { it.translateDescription },
+            name = { it.translateName },
+            entries = Clearness.entries,
+            onChange = { onEvent(UiEvent.ChangeClearness(it)) },
+            fromOrdinal = Clearness::fromOrdinal
+        )
+
+        HiddenEnumSlider(
+            visible = dreamState.intensityEnabled,
+            current = dreamState.intensity,
+            toggleVisibility = { onEvent(UiEvent.ToggleIntensity) },
+            title = stringResource(Res.string.dreamadd_intensity_title),
+            description = { it.translateDescription },
+            name = { it.translateName },
+            entries = Intensity.entries,
+            onChange = { onEvent(UiEvent.ChangeIntensity(it)) },
+            fromOrdinal = Intensity::fromOrdinal
+        )
     }
 }

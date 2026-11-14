@@ -10,3 +10,6 @@ Note: Changes in *italic* are changes not visible to users.
 ## Minor Changes
 - Added German translation
 - Made statistics range persisted
+
+## New Features
+- Added per-dream clearness and intensity values

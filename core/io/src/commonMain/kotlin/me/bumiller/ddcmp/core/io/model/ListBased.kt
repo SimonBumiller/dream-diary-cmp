@@ -1,7 +1,9 @@
 package me.bumiller.ddcmp.core.io.model
 
 import kotlinx.serialization.Serializable
+import me.bumiller.ddcmp.domain.model.dream.Clearness
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.dream.Intensity
 import me.bumiller.ddcmp.domain.model.emotion.Arousal
 import me.bumiller.ddcmp.domain.model.emotion.Valence
 import me.bumiller.ddcmp.domain.usecase.attachment.GetAttachmentsUseCase
@@ -27,13 +29,15 @@ internal object ListBased {
         val description: String,
         val note: String?,
         val favorite: Boolean,
+        val clearness: String? = null,
+        val intensity: String? = null,
         val confidentiality: String
     ) {
 
         fun toModel() = ModelDream(
             id, Instant.fromEpochMilliseconds(created), Instant.fromEpochMilliseconds(edited),
             Instant.fromEpochMilliseconds(created), title, description, note, favorite,
-            Confidentiality.valueOf(confidentiality)
+            Confidentiality.valueOf(confidentiality), clearness?.let(Clearness::valueOf), intensity?.let(Intensity::valueOf)
         )
 
         companion object {
@@ -48,6 +52,8 @@ internal object ListBased {
                     description,
                     note,
                     favorite,
+                    clearness?.name,
+                    intensity?.name,
                     confidentiality.name
                 )
             }

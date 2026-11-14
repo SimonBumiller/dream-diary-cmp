@@ -3,8 +3,10 @@ package me.bumiller.ddcomp.core.database
 import me.bumiller.ddcmp.domain.model.attachment.AttachmentMeta
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackup
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
+import me.bumiller.ddcmp.domain.model.dream.Clearness
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.dream.Dream
+import me.bumiller.ddcmp.domain.model.dream.Intensity
 import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.emotion.Arousal
@@ -140,7 +142,9 @@ object Mapping {
                 description = description,
                 note = note,
                 favorite = favorite,
-                confidentiality = confidentiality.name
+                confidentiality = confidentiality.name,
+                clearness = clearness?.name,
+                intensity = intensity?.name
             )
         }
 
@@ -261,7 +265,9 @@ object Mapping {
                 description = description,
                 note = note,
                 favorite = favorite,
-                confidentiality = confidentiality(confidentiality)
+                confidentiality = confidentiality(confidentiality),
+                clearness = clearness?.let(Clearness::valueOf),
+                intensity = intensity?.let(Intensity::valueOf)
             )
         }
 

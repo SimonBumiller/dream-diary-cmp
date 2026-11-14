@@ -4,22 +4,23 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.LineAxis
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -30,7 +31,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -41,6 +44,7 @@ import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_delet
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_edit
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_favorite
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_action_stats
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_clearness_label
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_confidentiality_post
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_confidentiality_pre
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_downloaded_snackbar
@@ -48,6 +52,7 @@ import dream_diary_cmp.feature.home.generated.resources.dreamdetail_downloaded_s
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_emotions_info
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_emotions_info_empty
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_emotions_title
+import dream_diary_cmp.feature.home.generated.resources.dreamdetail_intensity_label
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_note_label
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_info
 import dream_diary_cmp.feature.home.generated.resources.dreamdetail_persons_info_empty
@@ -59,8 +64,10 @@ import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
 import io.github.vinceglb.filekit.dialogs.compose.SaverResultLauncher
 import io.github.vinceglb.filekit.dialogs.compose.rememberFileSaverLauncher
 import me.bumiller.ddcmp.domain.model.attachment.AttachmentMeta
+import me.bumiller.ddcmp.domain.model.dream.Clearness
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.dream.Dream
+import me.bumiller.ddcmp.domain.model.dream.Intensity
 import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
@@ -70,6 +77,7 @@ import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.MultiStyleText
 import me.bumiller.ddcmp.ui.common.component.TextStyleWithCallback
 import me.bumiller.ddcmp.ui.common.format.formatInstant
+import me.bumiller.ddcmp.ui.common.icons.bolt_filled
 import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.plus
@@ -81,6 +89,7 @@ import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.UiEvent
 import me.ddcmp.feature.home.entries.dreamdetail.DreamDetailViewModel.ViewModelEvent
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
+import kotlin.enums.EnumEntries
 
 @Composable
 internal fun DreamDetailEntry(
@@ -115,7 +124,7 @@ internal fun DreamDetailEntry(
                         message = snackbarMessage,
                         actionLabel = snackbarAction
                     )
-                    if(result == SnackbarResult.ActionPerformed)
+                    if (result == SnackbarResult.ActionPerformed)
                         onEvent(UiEvent.GoToRecentlyDownloadedAttachment)
                 }
 
@@ -150,10 +159,7 @@ internal fun DreamDetailEntry(
     }
 }
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3ExpressiveApi::class
-)
+
 @Composable
 private fun DreamDetailEntry(
     onEvent: (UiEvent) -> Unit,
@@ -385,6 +391,47 @@ private fun DreamDetailEntry(
                         }
                     }
 
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 8.dp,
+                                end = 8.dp,
+                                top = 4.dp,
+                                bottom = 12.dp
+                            )
+                    ) {
+                        dream.clearness?.let { clearness ->
+                            FilledEnumDisplay(
+                                entries = Clearness.entries,
+                                selected = clearness,
+                                icon = Icons.Filled.Star,
+                                label = stringResource(Res.string.dreamdetail_clearness_label)
+                            )
+                        }
+
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 8.dp,
+                                end = 8.dp,
+                                top = 4.dp,
+                                bottom = 12.dp
+                            )
+                    ) {
+                        dream.intensity?.let { intensity ->
+                            FilledEnumDisplay(
+                                entries = Intensity.entries,
+                                selected = intensity,
+                                icon = bolt_filled,
+                                label = stringResource(Res.string.dreamdetail_intensity_label)
+                            )
+                        }
+                    }
+
                     dream.note?.let { note ->
                         Column(
                             modifier = Modifier
@@ -424,6 +471,48 @@ private fun DreamDetailEntry(
                         stringResource(Res.string.dreamdetail_confidentiality_post) to null
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun <T: Enum<T>> FilledEnumDisplay(
+    entries: EnumEntries<T>,
+    selected: T,
+    icon: ImageVector,
+    label: String
+) {
+    val filledCount = selected.ordinal + 1
+    val restCount = entries.size - filledCount
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            repeat(filledCount) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.tertiary
+                )
+            }
+            repeat(restCount) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = LocalContentColor.current.copy(alpha = 0.39F)
+                )
             }
         }
     }

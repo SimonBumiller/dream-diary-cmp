@@ -15,6 +15,9 @@
     <string name="dreamadd_confidentiality_title">Vertraulichkeit</string>
     <string name="dreamadd_confidentiality_info">Hier kannst du die Vertraulichkeitsstufe dieses Traums festlegen. Eine höhere Vertraulichkeit schützt den Traum stärker, macht ihn aber weniger zugänglich. Ausführliche Erläuterungen findest du in den Einstellungen.</string>
 
+    <string name="dreamadd_clearness_title">Klarheit</string>
+    <string name="dreamadd_intensity_title">Intensität</string>
+
     <string name="dreamadd_emotions_title">Emotionen</string>
     <string name="dreamadd_emotions_info">Hier kannst du Emotionen auswählen, die mit dem Traum verknüpft werden sollen. Füge Emotionen hinzu, die du im Traum empfunden hast oder die deine Stimmung nach dem Aufwachen beschreiben.</string>
     <string name="dreamadd_emotions_label">Emotion</string>
@@ -74,6 +77,8 @@
     <string name="personadd_no_tags_placeholder">Noch keine Tags hinzugefügt</string>
 
     <string name="dreamdetail_action_stats">Traumstatistiken</string>
+    <string name="dreamdetail_clearness_label">Klarheit:</string>
+    <string name="dreamdetail_intensity_label">Intensität:</string>
     <string name="dreamdetail_action_delete">Traum löschen</string>
     <string name="dreamdetail_downloaded_snackbar">Anhang heruntergeladen</string>
     <string name="dreamdetail_downloaded_snackbar_action">Anzeigen</string>

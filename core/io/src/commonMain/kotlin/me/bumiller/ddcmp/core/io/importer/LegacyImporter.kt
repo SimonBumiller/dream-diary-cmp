@@ -91,7 +91,10 @@ internal class LegacyImporter(
                         description = legacyDream.description,
                         note = legacyDream.note,
                         favorite = transferFavorites && legacyDream.isFavourite,
-                        confidentiality = defaultConfidentiality
+                        confidentiality = defaultConfidentiality,
+                        // TODO: This is not good, we are losing the data.
+                        clearness = null,
+                        intensity = null
                     )
                 }
 

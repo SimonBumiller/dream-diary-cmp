@@ -36,7 +36,6 @@ expect fun Scope.databaseBuilder(): RoomDatabase.Builder<RelationalDatabase>
 val database = module {
     single {
         databaseBuilder()
-            .fallbackToDestructiveMigration(true)
             .setDriver(BundledSQLiteDriver())
             .build()
     }

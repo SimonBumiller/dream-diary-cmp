@@ -1,7 +1,9 @@
 package me.bumiller.ddcmp.core.io.model
 
 import kotlinx.serialization.Serializable
+import me.bumiller.ddcmp.domain.model.dream.Clearness
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
+import me.bumiller.ddcmp.domain.model.dream.Intensity
 import me.bumiller.ddcmp.domain.model.emotion.Arousal
 import me.bumiller.ddcmp.domain.model.emotion.Valence
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
@@ -71,6 +73,12 @@ internal object Xml {
         @XmlElement(false)
         val favorite: Boolean,
 
+        @XmlElement(false)
+        val clearness: String? = null,
+
+        @XmlElement
+        val intensity: String? = null,
+
         @XmlElement(true)
         val title: String?,
 
@@ -102,7 +110,9 @@ internal object Xml {
             description,
             note,
             favorite,
-            Confidentiality.valueOf(confidentiality)
+            Confidentiality.valueOf(confidentiality),
+            clearness?.let(Clearness::valueOf),
+            intensity?.let(Intensity::valueOf)
         )
 
         companion object {
@@ -114,6 +124,8 @@ internal object Xml {
                     dream.dreamt.toEpochMilliseconds(),
                     dream.confidentiality.name,
                     dream.favorite,
+                    dream.clearness?.name,
+                    dream.intensity?.name,
                     dream.title,
                     dream.description,
                     dream.note,

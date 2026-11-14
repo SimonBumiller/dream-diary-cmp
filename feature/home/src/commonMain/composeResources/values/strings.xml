@@ -15,6 +15,9 @@
     <string name="dreamadd_confidentiality_title">Confidentiality</string>
     <string name="dreamadd_confidentiality_info">Here you can select the confidentiality level of this dream. Higher confidentiality means the dream is secured stronger, but less accessible. Check the settings for detailed explanations.</string>
 
+    <string name="dreamadd_clearness_title">Clearness</string>
+    <string name="dreamadd_intensity_title">Intensity</string>
+
     <string name="dreamadd_emotions_title">Emotions</string>
     <string name="dreamadd_emotions_info">Here you can select emotions to be associated with the dream. Add emotions that you felt during the dream or describe your mood after waking up.</string>
     <string name="dreamadd_emotions_label">Emotion</string>
@@ -74,6 +77,8 @@
     <string name="personadd_no_tags_placeholder">No tags added yet</string>
 
     <string name="dreamdetail_action_stats">Dream statistics</string>
+    <string name="dreamdetail_clearness_label">Clearness:</string>
+    <string name="dreamdetail_intensity_label">Intensity:</string>
     <string name="dreamdetail_action_delete">Delete dream</string>
     <string name="dreamdetail_downloaded_snackbar">Downloaded attachment</string>
     <string name="dreamdetail_downloaded_snackbar_action">Show</string>
