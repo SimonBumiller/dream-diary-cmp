@@ -1,0 +1,44 @@
+<resources>
+    <string name="emotionlist_title">Emotionen</string>
+    <string name="emotionlist_action_add">Emotion hinzufügen</string>
+    <string name="emotionlist_description">Hier findest du eine Liste aller Emotionen, die du hinzugefügt hast. Emotionen bilden die Grundlage deines Unterbewusstseins und können mit Träumen verknüpft werden.</string>
+    <string name="emotionlist_empty_placeholder_pre">Es sind derzeit keine Emotionen vorhanden. Verwende die Schaltfläche „+“, um eigene Emotionen hinzuzufügen,</string>
+    <string name="emotionlist_empty_placeholder_clickable"> oder füge die sechs von Paul Ekman definierten Basisemotionen hinzu</string>
+    <string name="emotionlist_empty_placeholder_post">.</string>
+    <string name="emotionlist_matrix_title">Emotionsmatrix</string>
+    <string name="emotionlist_matrix_description">Die folgende Matrix stellt alle von dir hinzugefügten Emotionen visuell dar. Emotionen werden anhand ihrer „Valenz“ (Stimmung) und ihrer „Erregung“ (Intensität) eingeordnet. Du kannst auf eine beliebige Stelle in der Matrix klicken, um zu sehen, welcher Eintrag welcher Emotion zugeordnet ist.</string>
+
+    <string name="emotionadd_title">Emotion</string>
+    <string name="emotionadd_name_placeholder">Namen der Emotion eingeben</string>
+    <string name="emotionadd_name_label">Emotion</string>
+    <string name="emotionadd_grid_title">Emotionswert</string>
+    <string name="emotionadd_grid_info">Charakterisiere die Emotion, indem du ihre Valenz (Stimmung) und Erregung (Intensität) auswählst. Die übrigen Punkte stehen für bereits vorhandene Emotionen.</string>
+    <string name="emotionadd_closest_label">Der ausgewählte Wert liegt am nächsten bei:</string>
+    <string name="emotionadd_actions_save">Speichern</string>
+    <string name="emotionadd_actions_delete">Emotion löschen</string>
+
+    <string-array name="basic_emotions_names">
+        <item>Glück</item>
+        <item>Trauer</item>
+        <item>Angst</item>
+        <item>Wut</item>
+        <item>Ekel</item>
+        <item>Überraschung</item>
+    </string-array>
+    <string-array name="basic_emotions_valences">
+        <item>0.9</item>
+        <item>-0.9</item>
+        <item>-0.8</item>
+        <item>-0.7</item>
+        <item>-0.8</item>
+        <item>0.0</item>
+    </string-array>
+    <string-array name="basic_emotions_arousal">
+        <item>0.7</item>
+        <item>-0.6</item>
+        <item>0.9</item>
+        <item>0.8</item>
+        <item>0.3</item>
+        <item>0.8</item>
+    </string-array>
+</resources>

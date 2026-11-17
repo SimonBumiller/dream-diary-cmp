@@ -14,7 +14,6 @@ import androidx.compose.material.icons.automirrored.filled.Label
 import androidx.compose.material.icons.automirrored.outlined.Article
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Label
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -48,7 +47,7 @@ import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.plus
-import me.ddcmp.feature.home.component.DreamLazyColumn
+import me.bumiller.ddcmp.ui.common.component.DreamLazyColumn
 import me.ddcmp.feature.home.component.OverviewCurrentWeekCard
 import me.ddcmp.feature.home.component.OverviewFeatureCard
 import me.ddcmp.feature.home.entries.overview.OverviewViewModel.UiEvent

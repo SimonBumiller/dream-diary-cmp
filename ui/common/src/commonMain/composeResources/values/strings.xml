@@ -1,4 +1,7 @@
 <resources>
+    <string name="dream_title">Dream from %1$s</string>
+    <string name="dreamlist_empty_placeholder">You currently have no dreams added. Use the '+' button to add your first dream.</string>
+
     <string name="confidentiality_none_name">None</string>
     <string name="confidentiality_medium_name">Medium</string>
     <string name="confidentiality_severe_name">High </string>

@@ -1,0 +1,21 @@
+<resources>
+
+
+    <string name="tag_list_title">Tags</string>
+    <string name="tag_list_add">Tag hinzufügen</string>
+    <string name="tag_list_empty_placeholder">Es sind derzeit keine Tags vorhanden. Verwende die Schaltfläche „+“, um neue Personen hinzuzufügen.</string>
+    <string name="tag_list_description">Hier findest du eine Liste aller Tags, die du hinzugefügt hast. Tags dienen dazu, Metadaten hinzuzufügen oder Personen und Träume zu gruppieren.</string>
+    <string name="tag_list_long_press_label">Zum Bearbeiten lange drücken</string>
+    <string name="tag_list_target_person">Tags für Personen</string>
+    <string name="tag_list_target_dream">Tags für Träume</string>
+
+    <string name="tag_add_title_add">Tag hinzufügen</string>
+    <string name="tag_add_title_edit">Tag bearbeiten</string>
+    <string name="tag_add_name_placeholder">Tag-Namen eingeben …</string>
+    <string name="tag_add_name_label">Tag-Name</string>
+    <string name="tag_add_note_placeholder">Beschreibung eingeben …</string>
+    <string name="tag_add_note_label">Tag-Beschreibung (optional)</string>
+    <string name="tag_add_confirm_label_add">Hinzufügen</string>
+    <string name="tag_add_confirm_label_edit">Speichern</string>
+    <string name="tag_add_cancel_label">Abbrechen</string>
+</resources>

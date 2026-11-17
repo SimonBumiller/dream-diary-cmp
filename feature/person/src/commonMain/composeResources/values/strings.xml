@@ -1,0 +1,39 @@
+<resources>
+    <string name="personlist_title">Persons</string>
+    <string name="personlist_action_add">Add Person</string>
+    <string name="personlist_description">Below is a list of all persons added by you. Persons are an important part of your subconsciousness and can be associated with dreams.</string>
+    <string name="personlist_empty_placeholder">There are currently no persons present. Use the '+' button to add new persons.</string>
+
+    <string name="personadd_title_add">Add Person</string>
+    <string name="personadd_title_edit">Edit Person</string>
+    <string name="personadd_name_placeholder">Enter name of the person…</string>
+    <string name="personadd_name_label">Name</string>
+    <string name="personadd_note_placeholder">Add some relevant information…</string>
+    <string name="personadd_note_label">Notes (optional)</string>
+    <string name="personadd_confirm_label_add">Add</string>
+    <string name="personadd_confirm_label_edit">Save</string>
+    <string name="personadd_cancel_label">Cancel</string>
+    <string name="personadd_tags_label">Tags</string>
+    <string name="personadd_no_tags_placeholder">No tags added yet</string>
+
+    <string name="person_detail_title">Person Info</string>
+    <string name="person_detail_associated_persons_title">Related Persons</string>
+    <string name="person_detail_associated_persons_description">This statistic shows what persons are related to %1$s. Related persons are those that occur more frequently in a dream when %1$s is present.</string>
+    <string name="person_detail_associated_emotions_title">Related Emotions</string>
+    <string name="person_detail_associated_emotions_description">This statistic shows what emotions are related to %1$s. Related emotions are those that occur more frequently in a dream when %1$s is present.</string>
+    <string name="person_detail_associated_index">%1$d.</string>
+    <string name="person_detail_associated_percentage">+ %1$d%</string>
+    <string name="person_detail_no_info_placeholder">No additional information was provided for this person.</string>
+    <string name="person_detail_no_occurence">This person has not yet occurred in a dream.</string>
+    <string name="person_detail_first_occurence_label">First appearance:</string>
+    <string name="person_detail_last_occurence_label">Last appearance:</string>
+    <string name="person_detail_dream_occurence_label">Total dream count:</string>
+    <string name="person_detail_tabs_dreams">Dreams</string>
+    <string name="person_detail_tabs_stats">Statistics</string>
+    <string name="person_detail_time_frequency_title">Absolute Time Occurrence</string>
+    <string name="person_detail_time_frequency_description">This statistics shows in what time ranges %1$s has occurred in dreams.</string>
+    <string name="person_detail_time_frequency_period_label">Most prominent period:</string>
+    <string name="person_detail_time_frequency_period">%1$s – %2$s</string>
+    <string name="person_detail_edit">Edit</string>
+    <string name="person_detail_delete">Delete Person</string>
+</resources>

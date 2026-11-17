@@ -1,0 +1,72 @@
+<resources>
+    <string name="attachment_add_confirm">Hinzufügen</string>
+    <string name="attachment_add_dismiss">Abbrechen</string>
+    <string name="attachment_add_title">Datei anhängen</string>
+    <string name="attachment_add_name_placeholder">Namen des Anhangs eingeben …</string>
+    <string name="attachment_add_name_label">Name</string>
+
+    <string name="dream_title">Traum vom %1$s</string>
+
+    <string name="dreamlist_title">Träume</string>
+    <string name="dreamlist_action_add">Traum hinzufügen</string>
+
+    <string name="dreamadd_description_placeholder">Beschreibe deinen Traum …</string>
+    <string name="dreamadd_title">Traum</string>
+
+    <string name="dreamadd_persons_title">Personen</string>
+    <string name="dreamadd_persons_info">Hier kannst du Personen auswählen, die mit dem Traum verknüpft werden sollen. Füge Personen hinzu, die darin vorkamen, an die du gedacht hast oder die im Traum eine andere Rolle gespielt haben.</string>
+    <string name="dreamadd_persons_label">Person</string>
+
+    <string name="dreamadd_confidentiality_title">Vertraulichkeit</string>
+    <string name="dreamadd_confidentiality_info">Hier kannst du die Vertraulichkeitsstufe dieses Traums festlegen. Eine höhere Vertraulichkeit schützt den Traum stärker, macht ihn aber weniger zugänglich. Ausführliche Erläuterungen findest du in den Einstellungen.</string>
+
+    <string name="dreamadd_clearness_title">Klarheit</string>
+    <string name="dreamadd_intensity_title">Intensität</string>
+
+    <string name="dreamadd_emotions_title">Emotionen</string>
+    <string name="dreamadd_emotions_info">Hier kannst du Emotionen auswählen, die mit dem Traum verknüpft werden sollen. Füge Emotionen hinzu, die du im Traum empfunden hast oder die deine Stimmung nach dem Aufwachen beschreiben.</string>
+    <string name="dreamadd_emotions_label">Emotion</string>
+    <string name="dreamadd_tags_title">Tags</string>
+    <string name="dreamadd_tags_info">Hier kannst du Tags auswählen, die mit dem Traum verknüpft werden sollen.</string>
+    <string name="dreamadd_tags_label">Tag</string>
+    <string name="dreamadd_title_info">Lege einen eigenen Titel für den Traum fest oder behalte den Standardtitel mit dem Datum bei.</string>
+    <string name="dreamadd_title_label">Titel (optional)</string>
+    <string name="dreamadd_note_info">Füge eine Notiz hinzu, um weitere Informationen festzuhalten, z. B. zu deiner Schlafenszeit oder zu verzehrten Lebensmitteln.</string>
+    <string name="dreamadd_note_label">Notiz (optional)</string>
+    <string name="dreamadd_actions_add_attachment">Anhang hinzufügen</string>
+    <string name="dreamadd_actions_save">Speichern</string>
+    <string name="dreamadd_attachmentadd_description">Du hast die Datei _%1$s_ als Anhang für den Traum ausgewählt. Gib einen kurzen Namen ein, damit du den Anhang leichter wiedererkennst.</string>
+    <string name="dreamadd_no_emotions_placeholder">Noch keine Emotionen hinzugefügt</string>
+    <string name="dreamadd_no_persons_placeholder">Noch keine Personen hinzugefügt</string>
+    <string name="dreamadd_no_tags_placeholder">Noch keine Tags hinzugefügt</string>
+
+    <string name="dreamdetail_action_stats">Traumstatistiken</string>
+    <string name="dreamdetail_clearness_label">Klarheit:</string>
+    <string name="dreamdetail_intensity_label">Intensität:</string>
+    <string name="dreamdetail_action_delete">Traum löschen</string>
+    <string name="dreamdetail_downloaded_snackbar">Anhang heruntergeladen</string>
+    <string name="dreamdetail_downloaded_snackbar_action">Anzeigen</string>
+    <string name="dreamdetail_action_favorite">Als Favorit markieren</string>
+    <string name="dreamdetail_action_edit">Bearbeiten</string>
+    <string name="dreamdetail_note_label">Kontextnotiz: </string>
+    <string name="dreamdetail_persons_title">Personen</string>
+    <string name="dreamdetail_persons_info_empty">Mit diesem Traum sind keine Personen verknüpft.</string>
+    <plurals name="dreamdetail_persons_info">
+        <item quantity="one">In total, there is one person taking part in this dream.</item>
+        <item quantity="other">In total, there are %1$d persons taking part in this dream.</item>
+    </plurals>
+    <string name="dreamdetail_tags_title">Tags</string>
+    <string name="dreamdetail_tags_info_empty">Mit diesem Traum sind keine Tags verknüpft.</string>
+    <plurals name="dreamdetail_tags_info">
+        <item quantity="one">In total, there is one tag applied to this dream.</item>
+        <item quantity="other">In total, there are %1$d tags applied to this dream.</item>
+    </plurals>
+    <string name="dreamdetail_emotions_title">Emotionen</string>
+    <string name="dreamdetail_emotions_info_empty">Mit diesem Traum sind keine Emotionen verknüpft.</string>
+    <plurals name="dreamdetail_emotions_info">
+        <item quantity="one">In total, there is one emotion associated with this dream.</item>
+        <item quantity="other">In total, there are %1$d emotions associated with this dream.</item>
+    </plurals>
+    <string name="dreamdetail_confidentiality_pre">Dieser Traum ist mit der Vertraulichkeitsstufe </string>
+    <string name="dreamdetail_confidentiality_post"> gekennzeichnet.</string>
+</resources>

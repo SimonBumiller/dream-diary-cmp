@@ -1,0 +1,72 @@
+<resources>
+    <string name="dreamlist_title">Dreams</string>
+    <string name="dreamlist_action_add">Add Dream</string>
+
+    <string name="dream_title">Dream from %1$s</string>
+
+    <string name="dreamadd_description_placeholder">Enter the course of your dream…</string>
+    <string name="dreamadd_title">Dream</string>
+
+    <string name="dreamadd_persons_title">Persons</string>
+    <string name="dreamadd_persons_info">Here you can select persons to be associated with the dream. Add persons that appeared here, you thought about or that played other roles in the dream.</string>
+    <string name="dreamadd_persons_label">Person</string>
+
+    <string name="dreamadd_confidentiality_title">Confidentiality</string>
+    <string name="dreamadd_confidentiality_info">Here you can select the confidentiality level of this dream. Higher confidentiality means the dream is secured stronger, but less accessible. Check the settings for detailed explanations.</string>
+
+    <string name="dreamadd_clearness_title">Clearness</string>
+    <string name="dreamadd_intensity_title">Intensity</string>
+
+    <string name="dreamadd_emotions_title">Emotions</string>
+    <string name="dreamadd_emotions_info">Here you can select emotions to be associated with the dream. Add emotions that you felt during the dream or describe your mood after waking up.</string>
+    <string name="dreamadd_emotions_label">Emotion</string>
+    <string name="dreamadd_tags_title">Tags</string>
+    <string name="dreamadd_tags_info">Here you can select tags to be associated with the dream.</string>
+    <string name="dreamadd_tags_label">Tag</string>
+    <string name="dreamadd_title_info">Set a custom title for the dream, or keep the default one that shows the date.</string>
+    <string name="dreamadd_title_label">Title (optional)</string>
+    <string name="dreamadd_note_info">Set a note to capture additional information, e.g. bedtime routine or ingested food.</string>
+    <string name="dreamadd_note_label">Note (optional)</string>
+    <string name="dreamadd_actions_add_attachment">Add Attachment</string>
+    <string name="dreamadd_actions_save">Save</string>
+    <string name="dreamadd_attachmentadd_description">You selected the file _%1$s_ as an attachment for the dream. Enter a short name to quickly identify the attachment.</string>
+    <string name="dreamadd_no_emotions_placeholder">No emotions added yet</string>
+    <string name="dreamadd_no_persons_placeholder">No persons added yet</string>
+    <string name="dreamadd_no_tags_placeholder">No tags added yet</string>
+
+    <string name="dreamdetail_action_stats">Dream statistics</string>
+    <string name="dreamdetail_clearness_label">Clearness:</string>
+    <string name="dreamdetail_intensity_label">Intensity:</string>
+    <string name="dreamdetail_action_delete">Delete dream</string>
+    <string name="dreamdetail_downloaded_snackbar">Downloaded attachment</string>
+    <string name="dreamdetail_downloaded_snackbar_action">Show</string>
+    <string name="dreamdetail_action_favorite">Mark as favorite</string>
+    <string name="dreamdetail_action_edit">Edit</string>
+    <string name="dreamdetail_note_label">Contextual Note: </string>
+    <string name="dreamdetail_persons_title">Persons</string>
+    <string name="dreamdetail_persons_info_empty">This dream does not have any associated persons.</string>
+    <plurals name="dreamdetail_persons_info">
+        <item quantity="one">In total, there is one person taking part in this dream.</item>
+        <item quantity="other">In total, there are %1$d persons taking part in this dream.</item>
+    </plurals>
+    <string name="dreamdetail_tags_title">Tags</string>
+    <string name="dreamdetail_tags_info_empty">This dream does not have any associated tags.</string>
+    <plurals name="dreamdetail_tags_info">
+        <item quantity="one">In total, there is one tag applied to this dream.</item>
+        <item quantity="other">In total, there are %1$d tags applied to this dream.</item>
+    </plurals>
+    <string name="dreamdetail_emotions_title">Emotions</string>
+    <string name="dreamdetail_emotions_info_empty">This dream does not have any associated emotions.</string>
+    <plurals name="dreamdetail_emotions_info">
+        <item quantity="one">In total, there is one emotion associated with this dream.</item>
+        <item quantity="other">In total, there are %1$d emotions associated with this dream.</item>
+    </plurals>
+    <string name="dreamdetail_confidentiality_pre">This dream is marked with </string>
+    <string name="dreamdetail_confidentiality_post"> confidentiality.</string>
+
+    <string name="attachment_add_confirm">Add</string>
+    <string name="attachment_add_dismiss">Cancel</string>
+    <string name="attachment_add_title">Attach File</string>
+    <string name="attachment_add_name_placeholder">Enter Attachment name…</string>
+    <string name="attachment_add_name_label">Name</string>
+</resources>

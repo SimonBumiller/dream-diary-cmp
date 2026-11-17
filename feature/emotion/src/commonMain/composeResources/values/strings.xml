@@ -1,0 +1,44 @@
+<resources>
+    <string name="emotionlist_title">Emotions</string>
+    <string name="emotionlist_action_add">Add Emotion</string>
+    <string name="emotionlist_description">Below is a list of all emotions you added. Emotions form the basis of your subconsciousness and can be associated with dreams.</string>
+    <string name="emotionlist_empty_placeholder_pre">There are currently no emotions present. Use the '+' button to add custom emotions,</string>
+    <string name="emotionlist_empty_placeholder_clickable"> or add the six basic emotions as determined by Paul Ekman</string>
+    <string name="emotionlist_empty_placeholder_post">.</string>
+    <string name="emotionlist_matrix_title">Emotion Matrix</string>
+    <string name="emotionlist_matrix_description">The following matrix shows a visual representation of all emotions you have added. Emotions are classified by their 'valence' (mood of emotion) and 'arousal' (strength of emotion). You can click anywhere on the matrix to see which entry is assigned to which emotion.</string>
+
+    <string name="emotionadd_title">Emotion</string>
+    <string name="emotionadd_name_placeholder">Enter the name of the emotion</string>
+    <string name="emotionadd_name_label">Emotion</string>
+    <string name="emotionadd_grid_title">Emotion value</string>
+    <string name="emotionadd_grid_info">Characterize the emotion by selecting its valence (mood) and arousal (strength). The other dots represent already existing emotions.</string>
+    <string name="emotionadd_closest_label">The selected value is closest to:</string>
+    <string name="emotionadd_actions_save">Save</string>
+    <string name="emotionadd_actions_delete">Delete emotion</string>
+
+    <string-array name="basic_emotions_names">
+        <item>Happiness</item>
+        <item>Sadness</item>
+        <item>Fear</item>
+        <item>Anger</item>
+        <item>Disgust</item>
+        <item>Surprise</item>
+    </string-array>
+    <string-array name="basic_emotions_valences">
+        <item>0.9</item>
+        <item>-0.9</item>
+        <item>-0.8</item>
+        <item>-0.7</item>
+        <item>-0.8</item>
+        <item>0.0</item>
+    </string-array>
+    <string-array name="basic_emotions_arousal">
+        <item>0.7</item>
+        <item>-0.6</item>
+        <item>0.9</item>
+        <item>0.8</item>
+        <item>0.3</item>
+        <item>0.8</item>
+    </string-array>
+</resources>

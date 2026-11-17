@@ -1,0 +1,39 @@
+<resources>
+    <string name="personlist_title">Personen</string>
+    <string name="personlist_action_add">Person hinzufügen</string>
+    <string name="personlist_description">Hier findest du eine Liste aller Personen, die du hinzugefügt hast. Personen sind ein wichtiger Teil deines Unterbewusstseins und können mit Träumen verknüpft werden.</string>
+    <string name="personlist_empty_placeholder">Es sind derzeit keine Personen vorhanden. Verwende die Schaltfläche „+“, um neue Personen hinzuzufügen.</string>
+
+    <string name="personadd_title_add">Person hinzufügen</string>
+    <string name="personadd_title_edit">Person bearbeiten</string>
+    <string name="personadd_name_placeholder">Namen der Person eingeben …</string>
+    <string name="personadd_name_label">Name</string>
+    <string name="personadd_note_placeholder">Relevante Informationen hinzufügen …</string>
+    <string name="personadd_note_label">Notizen (optional)</string>
+    <string name="personadd_confirm_label_add">Hinzufügen</string>
+    <string name="personadd_confirm_label_edit">Speichern</string>
+    <string name="personadd_cancel_label">Abbrechen</string>
+    <string name="personadd_tags_label">Tags</string>
+    <string name="personadd_no_tags_placeholder">Noch keine Tags hinzugefügt</string>
+
+    <string name="person_detail_title">Personeninfo</string>
+    <string name="person_detail_associated_persons_title">Verbundene Personen</string>
+    <string name="person_detail_associated_persons_description">Diese Statistik zeigt, welche Personen mit %1$s verbunden sind. Verbundene Personen treten häufiger in einem Traum auf, wenn %1$s darin vorkommt.</string>
+    <string name="person_detail_associated_emotions_title">Verbundene Emotionen</string>
+    <string name="person_detail_associated_emotions_description">Diese Statistik zeigt, welche Emotionen mit %1$s verbunden sind. Verbundene Emotionen treten häufiger in einem Traum auf, wenn %1$s darin vorkommt.</string>
+    <string name="person_detail_associated_index">%1$d.</string>
+    <string name="person_detail_associated_percentage">+ %1$d%</string>
+    <string name="person_detail_no_info_placeholder">Für diese Person wurden keine weiteren Informationen angegeben.</string>
+    <string name="person_detail_no_occurence">Diese Person ist bisher in keinem Traum aufgetreten.</string>
+    <string name="person_detail_first_occurence_label">Erstes Auftreten:</string>
+    <string name="person_detail_last_occurence_label">Letztes Auftreten:</string>
+    <string name="person_detail_dream_occurence_label">Anzahl der Träume insgesamt:</string>
+    <string name="person_detail_tabs_dreams">Träume</string>
+    <string name="person_detail_tabs_stats">Statistiken</string>
+    <string name="person_detail_time_frequency_title">Zeitliche Häufigkeit</string>
+    <string name="person_detail_time_frequency_description">Diese Statistik zeigt, in welchen Zeiträumen %1$s in Träumen aufgetreten ist.</string>
+    <string name="person_detail_time_frequency_period_label">Häufigster Zeitraum:</string>
+    <string name="person_detail_time_frequency_period">%1$s – %2$s</string>
+    <string name="person_detail_edit">Bearbeiten</string>
+    <string name="person_detail_delete">Person löschen</string>
+</resources>

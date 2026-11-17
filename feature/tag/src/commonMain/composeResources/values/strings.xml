@@ -1,0 +1,21 @@
+<resources>
+
+
+    <string name="tag_list_title">Tags</string>
+    <string name="tag_list_add">Add Tag</string>
+    <string name="tag_list_empty_placeholder">There are currently no tags present. Use the '+' button to add new persons.</string>
+    <string name="tag_list_description">Below is a list of all tags added by you. Tags are used to add metadata or group together persons and dreams.</string>
+    <string name="tag_list_long_press_label">Long-press to edit</string>
+    <string name="tag_list_target_person">Person tags</string>
+    <string name="tag_list_target_dream">Dream tags</string>
+
+    <string name="tag_add_title_add">Add Tag</string>
+    <string name="tag_add_title_edit">Edit Tag</string>
+    <string name="tag_add_name_placeholder">Enter name of tag…</string>
+    <string name="tag_add_name_label">Tag name</string>
+    <string name="tag_add_note_placeholder">Enter description…</string>
+    <string name="tag_add_note_label">Tag description (optional)</string>
+    <string name="tag_add_confirm_label_add">Add</string>
+    <string name="tag_add_confirm_label_edit">Save</string>
+    <string name="tag_add_cancel_label">Cancel</string>
+</resources>

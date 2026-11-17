@@ -1,4 +1,7 @@
 <resources>
+    <string name="dream_title">Traum vom %1$s</string>
+    <string name="dreamlist_empty_placeholder">Du hast bisher keine Träume hinzugefügt. Verwende die Schaltfläche „+“, um deinen ersten Traum festzuhalten.</string>
+
     <string name="confidentiality_none_name">Keine</string>
     <string name="confidentiality_medium_name">Mittel</string>
     <string name="confidentiality_severe_name">Hoch </string>
