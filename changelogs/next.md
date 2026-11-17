@@ -10,6 +10,8 @@ Note: Changes in *italic* are changes not visible to users.
 ## Minor Changes
 - Added German translation
 - Made statistics range persisted
+- Person-chips are now the color of the first tag applied to the person, if existing
+- *The `:feature:home` module was split into several other `feature:*` modules*
 
 ## New Features
 - Added per-dream clearness and intensity values

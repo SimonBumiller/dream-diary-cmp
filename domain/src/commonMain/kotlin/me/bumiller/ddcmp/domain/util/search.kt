@@ -2,6 +2,16 @@ package me.bumiller.ddcmp.domain.util
 
 import me.bumiller.ddcmp.domain.model.meta.Searchable
 
+fun <T> List<T>.search(query: String, attribute: (T) -> Searchable): List<T> {
+    data class SearchDelegate(
+        val original: T
+    ): Searchable by attribute(original)
+
+    return map(::SearchDelegate)
+        .search(query)
+        .map(SearchDelegate::original)
+}
+
 fun <T : Searchable> List<T>.search(query: String): List<T> {
     val scored = map { element ->
         element.searchableFields.forEachIndexed { index, field ->

@@ -252,7 +252,7 @@ internal class DreamAddViewModel(
             ).let { dream ->
                 I(
                     dream = dream,
-                    persons = state.persons,
+                    persons = state.persons.map(AllPersonUseCase.O::person),
                     emotions = state.emotions,
                     tags = state.tags
                 )
@@ -374,9 +374,8 @@ internal class DreamAddViewModel(
                 allPersons(AllPersonUseCase.I())
                     .map { persons ->
                         persons
-                            .map { it.person }
-                            .search(uiState.personQuery)
-                            .filter { person -> dreamState.persons.all { it.id != person.id } }
+                            .search(uiState.personQuery, AllPersonUseCase.O::person)
+                            .filter { person -> dreamState.persons.all { it.person.id != person.person.id } }
                     }
             }.stateIn(emptyList())
 
@@ -424,7 +423,7 @@ internal class DreamAddViewModel(
 
         val note: String = "",
 
-        val persons: List<Person> = emptyList(),
+        val persons: List<AllPersonUseCase.O> = emptyList(),
 
         val emotions: List<Emotion> = emptyList(),
 
@@ -504,10 +503,10 @@ internal class DreamAddViewModel(
         data class ChangePersonQuery(val personQuery: String) : UiEvent
         data class ChangeTagQuery(val tagQuery: String) : UiEvent
         data class ChangeEmotionQuery(val emotionQuery: String) : UiEvent
-        data class SelectPerson(val person: Person) : UiEvent
+        data class SelectPerson(val person: AllPersonUseCase.O) : UiEvent
         data class SelectTag(val tag: Tag) : UiEvent
         data class UnselectTag(val tag: Tag) : UiEvent
-        data class UnSelectPerson(val person: Person) : UiEvent
+        data class UnSelectPerson(val person: AllPersonUseCase.O) : UiEvent
         data class SelectEmotion(val emotion: Emotion) : UiEvent
         data class UnSelectEmotion(val emotion: Emotion) : UiEvent
         data class SetConfidentiality(val confidentiality: Confidentiality) : UiEvent

@@ -17,8 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -74,9 +72,9 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import me.bumiller.ddcmp.domain.model.dream.Clearness
 import me.bumiller.ddcmp.domain.model.dream.Intensity
-import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
+import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.domain.util.search
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.backhandler.PlatformBackHandler
@@ -84,6 +82,7 @@ import me.bumiller.ddcmp.ui.common.component.AppTagInputChip
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.ConfidentialitySelector
 import me.bumiller.ddcmp.ui.common.component.HiddenEnumSlider
+import me.bumiller.ddcmp.ui.common.component.PersonInputChip
 import me.bumiller.ddcmp.ui.common.component.SearchTextField
 import me.bumiller.ddcmp.ui.common.dialog.DDCDatePickerDialog
 import me.bumiller.ddcmp.ui.common.dialog.DiscardChangesDialog
@@ -96,11 +95,11 @@ import me.bumiller.ddcmp.ui.common.layout.TopBarWithProgressIndicator
 import me.bumiller.ddcmp.ui.common.translation.translateDescription
 import me.bumiller.ddcmp.ui.common.translation.translateName
 import me.bumiller.ddcmp.ui.common.viewFile
+import me.ddcmp.feature.dream.components.AddAttachmentDialog
 import me.ddcmp.feature.dream.components.AttachmentItem
 import me.ddcmp.feature.dream.entries.dreamadd.DreamAddViewModel.UiEvent
 import me.ddcmp.feature.dream.entries.dreamadd.DreamAddViewModel.UiEvent.ChangeDescription
 import me.ddcmp.feature.dream.entries.dreamadd.DreamAddViewModel.UiEvent.SelectPerson
-import me.ddcmp.feature.dream.components.AddAttachmentDialog
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.milliseconds
@@ -160,17 +159,14 @@ private val transparentTextFieldColors: TextFieldColors
         unfocusedContainerColor = Color.Transparent
     )
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3ExpressiveApi::class
-)
+
 @Composable
 private fun DreamAddEntry(
     onEvent: (UiEvent) -> Unit,
     uiState: DreamAddViewModel.UiState,
     dreamState: DreamAddViewModel.DreamState,
     canSave: Boolean,
-    persons: List<Person>,
+    persons: List<AllPersonUseCase.O>,
     tags: List<Tag>,
     emotions: List<Emotion>
 ) {
@@ -376,7 +372,7 @@ private fun MainMetaSection(
     dreamState: DreamAddViewModel.DreamState,
     onEvent: (UiEvent) -> Unit,
     uiState: DreamAddViewModel.UiState,
-    persons: List<Person>,
+    persons: List<AllPersonUseCase.O>,
     tags: List<Tag>,
     emotions: List<Emotion>
 ) {
@@ -412,10 +408,11 @@ private fun MainMetaSection(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 dreamState.persons.forEach { person ->
-                    InputChip(
-                        selected = false,
+                    PersonInputChip(
+                        person = person.person,
+                        tags = person.tags,
                         onClick = { onEvent(UiEvent.UnSelectPerson(person)) },
-                        label = { Text(person.name) }
+                        onLongClick = {}
                     )
                 }
             }
@@ -424,9 +421,9 @@ private fun MainMetaSection(
                 query = uiState.personQuery,
                 onQueryChange = { onEvent(UiEvent.ChangePersonQuery(it)) },
                 label = { Text(stringResource(Res.string.dreamadd_persons_label)) },
-                values = persons.search(uiState.personQuery),
+                values = persons.search(uiState.personQuery, AllPersonUseCase.O::person),
                 emptyLabel = { Text(stringResource(Res.string.dreamadd_no_persons_placeholder)) },
-                name = Person::name,
+                name = { it.person.name },
                 onSelect = { onEvent(SelectPerson(it)) }
             )
         }

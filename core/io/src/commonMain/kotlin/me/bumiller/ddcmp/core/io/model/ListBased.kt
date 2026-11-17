@@ -199,7 +199,7 @@ internal object ListBased {
 
         companion object {
             fun fromModel(model: AllDreamUseCase.O) =
-                model.persons.map { DreamToPersons(model.dream.id, it.id) }
+                model.persons.map { DreamToPersons(model.dream.id, it.person.id) }
         }
 
     }

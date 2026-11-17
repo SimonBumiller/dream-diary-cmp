@@ -30,6 +30,7 @@ import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.AppInputChip
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
+import me.bumiller.ddcmp.ui.common.component.PersonInputChip
 import me.bumiller.ddcmp.ui.common.layout.AppBarAction
 import me.bumiller.ddcmp.ui.common.layout.AppBarActions
 import me.bumiller.ddcmp.ui.common.plus
@@ -124,15 +125,11 @@ private fun PersonListEntry(
                 horizontalArrangement = Arrangement.Center
             ) {
                 persons.forEach { person ->
-                    AppInputChip(
-                        modifier = Modifier
-                            .padding(horizontal = 6.dp),
-                        label = {
-                            Text(person.person.name)
-                        },
+                    PersonInputChip(
                         onClick = { onEvent(UiEvent.GoToPerson(person.person.id)) },
                         onLongClick = { onEvent(UiEvent.EditPerson(person.person.id)) },
-                        selected = false
+                        person = person.person,
+                        tags = person.tags
                     )
                 }
             }

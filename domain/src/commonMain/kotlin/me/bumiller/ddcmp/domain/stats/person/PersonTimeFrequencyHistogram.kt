@@ -49,7 +49,7 @@ class PersonTimeFrequencyHistogram(
     }
 
     override suspend fun findBucketFor(dream: AllDreamUseCase.O, buckets: List<LocalDate>, input: Long): LocalDate? {
-        val personInDream = dream.persons.any { it.id == input }
+        val personInDream = dream.persons.any { it.person.id == input }
 
         if(!personInDream) return null
 

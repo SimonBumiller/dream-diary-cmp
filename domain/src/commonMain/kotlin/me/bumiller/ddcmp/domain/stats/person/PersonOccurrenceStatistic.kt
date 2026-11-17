@@ -22,7 +22,7 @@ class PersonOccurrenceStatistic(
     ): PersonOccurrenceInfo? {
         val dreamsWithPerson = dreams
             .filter { dream ->
-                dream.persons.any { input == it.id }
+                dream.persons.any { input == it.person.id }
             }
 
         if(dreamsWithPerson.isEmpty()) return null

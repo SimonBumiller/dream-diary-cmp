@@ -14,6 +14,7 @@ import dream_diary_cmp.ui.common.generated.resources.Res
 import dream_diary_cmp.ui.common.generated.resources.dreamlist_empty_placeholder
 import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
+import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import org.jetbrains.compose.resources.stringResource
 
@@ -60,7 +61,7 @@ fun DreamLazyColumn(
                     onClick = { onClick(dreams[it].dream) },
                     selected = dreams[it].dream.id == selectedId,
                     emotions = dreams[it].emotions,
-                    persons = dreams[it].persons
+                    persons = dreams[it].persons.map(AllPersonUseCase.O::person)
                 )
             }
         }

@@ -63,7 +63,7 @@ internal class LegacyExportStrategy(
         val dreamPersonCrossrefs = allDreams
             .first()
             .map { aggregate ->
-                aggregate.dream.id to aggregate.persons.map { it.id }
+                aggregate.dream.id to aggregate.persons.map { it.person.id }
             }
             .flatMap { pair ->
                 pair.second.map { personId ->

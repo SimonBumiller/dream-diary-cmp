@@ -21,7 +21,7 @@ class PersonsOccurrencesCountStatistic(
     ): List<PersonWithCount>? {
         val persons = dreams
             .flatMap(AllDreamUseCase.O::persons)
-            .distinctBy { it.id }
+            .distinctBy { it.person.id }
             .associateWith { 0 }
             .toMutableMap()
 
@@ -34,7 +34,7 @@ class PersonsOccurrencesCountStatistic(
         if(persons.size < 3) return null
 
         return persons
-            .map { (person, count) -> PersonWithCount(person, count) }
+            .map { (person, count) -> PersonWithCount(person.person, count) }
             .sortedByDescending(PersonWithCount::count)
             .let { persons ->
                 if(input.pickTop == null) persons

@@ -15,6 +15,7 @@ import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.DeleteDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.dream.SaveDreamUseCase.I
+import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.domain.util.AppCoroutineScope
 import me.bumiller.ddcmp.ui.common.AppViewModel
 import me.bumiller.ddcmp.ui.common.UIE
@@ -72,7 +73,7 @@ internal class DreamDetailViewModel(
             if (state != null) {
                 val i = I(
                     dream = newDream!!,
-                    persons = state.persons,
+                    persons = state.persons.map(AllPersonUseCase.O::person),
                     emotions = state.emotions
                 )
                 saveDream(i)

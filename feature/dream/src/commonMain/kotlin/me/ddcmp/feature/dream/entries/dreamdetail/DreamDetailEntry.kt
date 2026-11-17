@@ -68,13 +68,14 @@ import me.bumiller.ddcmp.domain.model.dream.Clearness
 import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 import me.bumiller.ddcmp.domain.model.dream.Dream
 import me.bumiller.ddcmp.domain.model.dream.Intensity
-import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
+import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import me.bumiller.ddcmp.ui.common.ViewModelScope
 import me.bumiller.ddcmp.ui.common.component.AppTagInputChip
 import me.bumiller.ddcmp.ui.common.component.BackIconButton
 import me.bumiller.ddcmp.ui.common.component.MultiStyleText
+import me.bumiller.ddcmp.ui.common.component.PersonInputChip
 import me.bumiller.ddcmp.ui.common.component.TextStyleWithCallback
 import me.bumiller.ddcmp.ui.common.format.formatInstant
 import me.bumiller.ddcmp.ui.common.icons.bolt_filled
@@ -167,7 +168,7 @@ private fun DreamDetailEntry(
     dream: Dream,
     emotions: List<Emotion>,
     tags: List<Tag>,
-    persons: List<Person>,
+    persons: List<AllPersonUseCase.O>,
     attachments: List<AttachmentMeta>
 ) {
     Scaffold(
@@ -300,10 +301,11 @@ private fun DreamDetailEntry(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             persons.forEach { person ->
-                                InputChip(
-                                    selected = false,
-                                    onClick = { onEvent(UiEvent.ClickPerson(person)) },
-                                    label = { Text(person.name) }
+                                PersonInputChip(
+                                    onClick = { onEvent(UiEvent.ClickPerson(person.person)) },
+                                    onLongClick = { },
+                                    person = person.person,
+                                    tags = person.tags
                                 )
                             }
                         }
@@ -477,7 +479,7 @@ private fun DreamDetailEntry(
 }
 
 @Composable
-private fun <T: Enum<T>> FilledEnumDisplay(
+private fun <T : Enum<T>> FilledEnumDisplay(
     entries: EnumEntries<T>,
     selected: T,
     icon: ImageVector,

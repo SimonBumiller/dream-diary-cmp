@@ -129,7 +129,7 @@ internal object Xml {
                     dream.title,
                     dream.description,
                     dream.note,
-                    persons.map { PersonRef(it.id) },
+                    persons.map { PersonRef(it.person.id) },
                     emotions.map { EmotionRef(it.id) },
                     tags.map { TagRef(it.id) },
                     attachmentMetas.map(Xml.AttachmentMeta::fromModel)

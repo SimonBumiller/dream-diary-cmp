@@ -22,12 +22,13 @@ import me.bumiller.ddcmp.domain.model.meta.SortMode.DreamSort
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase.I
 import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase.O
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
+import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import kotlin.time.Instant
 
 open class AllDreamUseCase(
     val repo: DreamRepository,
     val emotionRepo: EmotionRepository,
-    val personRepo: PersonRepository,
+    val allPersons: AllPersonUseCase,
     val tagRepo: TagRepository,
     val attachmentMetaRepo: AttachmentMetaRepository
 ) : FlowUseCase<I, List<O>> {
@@ -58,7 +59,7 @@ open class AllDreamUseCase(
         val outputFlows = dreams.map { dream ->
             val emotionFlow = emotionRepo.getForDream(dream.id)
                 .map { it ?: emptyList() }
-            val personFlow = personRepo.getForDream(dream.id)
+            val personFlow = allPersons(AllPersonUseCase.I(dreamId = dream.id))
                 .map { it }
             val tagFlow = tagRepo.getForDream(dream.id)
                 .map { it ?: emptyList() }
@@ -94,7 +95,7 @@ open class AllDreamUseCase(
         filter { o ->
             o.dream.dreamt in i.timeRange &&
                     i.emotionIds?.any { it in o.emotions.map(Emotion::id) } ?: true &&
-                    i.personIds?.any { it in o.persons.map(Person::id) } ?: true &&
+                    i.personIds?.any { it in o.persons.map { o -> o.person.id } } ?: true &&
                     i.tagIds?.any { it in o.tags.map(Tag::id) } ?: true &&
                     (!i.onlyFavorite || o.dream.favorite) &&
                     i.id?.let { o.dream.id == it } ?: true
@@ -109,7 +110,7 @@ open class AllDreamUseCase(
 
         val emotions: List<Emotion>,
 
-        val persons: List<Person>,
+        val persons: List<AllPersonUseCase.O>,
 
         val tags: List<Tag>,
 

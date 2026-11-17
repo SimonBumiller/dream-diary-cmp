@@ -11,7 +11,7 @@ class PersonInfluencingEmotionsStatistic(
     allDreams: AllDreamUseCase
 ): DreamConditionalOccurrenceStatistic<Long, Emotion>(allDreams) {
 
-    override fun AllDreamUseCase.O.isRequirementMet(input: Long) = persons.any { it.id == input }
+    override fun AllDreamUseCase.O.isRequirementMet(input: Long) = persons.any { it.person.id == input }
 
     override fun AllDreamUseCase.O.getAttributes(input: Long): List<Emotion> = emotions
 }
