@@ -3,17 +3,21 @@ package me.ddcmp.feature.home
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import me.ddcmp.feature.dream.dream
 import me.ddcmp.feature.dream.navigateToAddDream
 import me.ddcmp.feature.dream.navigateToDreamDetail
 import me.ddcmp.feature.dream.navigateToDreamList
+import me.ddcmp.feature.emotion.emotion
 import me.ddcmp.feature.emotion.navigateToEmotionList
 import me.ddcmp.feature.home.entries.overview.OverviewEntry
 import me.ddcmp.feature.home.navigation.HomeRoutes
 import me.ddcmp.feature.person.navigateToPersonDetail
 import me.ddcmp.feature.person.navigateToPersonList
+import me.ddcmp.feature.person.person
 import me.ddcmp.feature.stats.navigateToGlobalStats
 import me.ddcmp.feature.stats.stats
 import me.ddcmp.feature.tag.navigateToTagList
+import me.ddcmp.feature.tag.tag
 
 /**
  * Navigates to the overview route.
@@ -31,6 +35,24 @@ public fun NavGraphBuilder.home(
 ) {
     stats(
         onGoToPerson = navController::navigateToPersonDetail,
+        navController = navController
+    )
+
+    dream(
+        goToPerson = navController::navigateToPersonDetail,
+        navController = navController
+    )
+
+    person(
+        goToDreamDetail = navController::navigateToDreamDetail,
+        navController = navController
+    )
+
+    tag(
+        navController = navController
+    )
+
+    emotion(
         navController = navController
     )
 

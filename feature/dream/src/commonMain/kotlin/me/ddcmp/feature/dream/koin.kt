@@ -10,7 +10,7 @@ import org.koin.dsl.module
 /**
  * The koin module for the dream module.
  */
-public val home: Module = module {
+public val dream: Module = module {
     factoryOf(::DreamListViewModel)
     factoryOf(::DreamAddViewModel)
     factoryOf(::DreamDetailViewModel)

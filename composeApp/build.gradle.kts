@@ -21,6 +21,10 @@ kotlin {
             implementation(project(":feature:io"))
             implementation(project(":feature:stats"))
             implementation(project(":feature:onboarding"))
+            implementation(project(":feature:dream"))
+            implementation(project(":feature:emotion"))
+            implementation(project(":feature:tag"))
+            implementation(project(":feature:person"))
             implementation(project(":ui:common"))
             implementation(project(":ui:diagram"))
         }

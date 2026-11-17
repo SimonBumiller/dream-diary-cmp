@@ -9,7 +9,7 @@ import org.koin.dsl.module
 /**
  * The koin module for the tag module.
  */
-public val home: Module = module {
+public val tag: Module = module {
     factoryOf(::TagListViewModel)
     factoryOf(::TagAddViewModel)
 }
