@@ -6,16 +6,16 @@ import me.bumiller.ddcmp.domain.model.settings.Settings
 /**
  * Data store interface for the settings.
  */
-interface SettingsStore {
+public interface SettingsStore {
 
     /**
      * The current settings.
      */
-    val settings: Flow<Settings>
+    public val settings: Flow<Settings>
 
     /**
      * Updates the settibngs.
      */
-    suspend fun save(settings: Settings)
+    public suspend fun save(settings: Settings)
 
 }

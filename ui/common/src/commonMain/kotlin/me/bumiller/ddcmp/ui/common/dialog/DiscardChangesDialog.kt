@@ -13,7 +13,7 @@ import dream_diary_cmp.ui.common.generated.resources.discard_changes_dialog_titl
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun DiscardChangesDialog(
+public fun DiscardChangesDialog(
     modifier: Modifier = Modifier,
     onDiscard: () -> Unit,
     onKeep: () -> Unit

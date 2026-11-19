@@ -11,11 +11,11 @@ import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.model.emotion.Emotion
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 
-class SaveDreamUseCase(
-    val dreamRepo: DreamRepository,
-    val emotionRepo: EmotionRepository,
-    val personRepo: PersonRepository,
-    val tagRepo: TagRepository
+public class SaveDreamUseCase(
+    private val dreamRepo: DreamRepository,
+    private val emotionRepo: EmotionRepository,
+    private val personRepo: PersonRepository,
+    private val tagRepo: TagRepository
 ) : UseCase<SaveDreamUseCase.I, Dream> {
 
     override suspend fun invoke(i: I): Dream {
@@ -67,7 +67,7 @@ class SaveDreamUseCase(
     /**
      * Input for the usecase.
      */
-    data class I(
+    public data class I(
 
         /**
          * The dream that should be saved.

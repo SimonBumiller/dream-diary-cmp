@@ -46,7 +46,7 @@ private fun selectedCardColors() = CardDefaults.cardColors()
     )
 
 @Composable
-fun DreamItem(
+public fun DreamItem(
     modifier: Modifier,
     dream: Dream,
     emotions: List<Emotion>,

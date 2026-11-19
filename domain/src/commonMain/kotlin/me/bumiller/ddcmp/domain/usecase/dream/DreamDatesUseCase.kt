@@ -8,7 +8,7 @@ import me.bumiller.ddcmp.domain.usecase.dream.DreamDatesUseCase.O
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import kotlin.time.ExperimentalTime
 
-class DreamDatesUseCase(
+public class DreamDatesUseCase(
     private val repo: DreamRepository
 ) : FlowUseCase<Unit, O?> {
 
@@ -24,7 +24,7 @@ class DreamDatesUseCase(
     /**
      * The output type.
      */
-    data class O(
+    public data class O(
 
         /**
          * The dream that was dreamt the earliest.

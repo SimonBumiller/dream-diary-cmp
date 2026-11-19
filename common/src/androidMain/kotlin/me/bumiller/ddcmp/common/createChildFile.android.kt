@@ -14,7 +14,7 @@ import java.io.File
  * The original one does weird things with nextcloud documents and appends the filename.
  * This fix changes the behavior for [AndroidFile.UriWrapper] by simply registering a new child document.
  */
-actual suspend fun PlatformFile.createChildFile(
+public actual suspend fun PlatformFile.createChildFile(
     name: String,
     mimeType: String
 ): PlatformFile = when (androidFile) {

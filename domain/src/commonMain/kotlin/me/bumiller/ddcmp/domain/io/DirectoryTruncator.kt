@@ -5,7 +5,7 @@ import io.github.vinceglb.filekit.PlatformFile
 /**
  * Truncates directories.
  */
-interface DirectoryTruncator {
+public interface DirectoryTruncator {
 
     /**
      * Deletes so many files that at a maximum, [maxCount] files are present in [directory].
@@ -13,6 +13,6 @@ interface DirectoryTruncator {
      *
      * @return The number of deleted files.
      */
-    suspend fun ensureMaxFileCount(directory: PlatformFile, maxCount: Int): Int
+    public suspend fun ensureMaxFileCount(directory: PlatformFile, maxCount: Int): Int
 
 }

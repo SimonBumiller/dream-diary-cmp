@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import kotlin.time.Duration
 import kotlin.time.Instant
 
-class DurationConverter {
+internal class DurationConverter {
 
     @TypeConverter
     fun toString(duration: Duration?): String? = duration?.toIsoString()

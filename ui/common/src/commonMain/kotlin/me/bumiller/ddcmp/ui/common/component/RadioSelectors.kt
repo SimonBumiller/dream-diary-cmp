@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import me.bumiller.ddcmp.ui.common.style.DisabledContent
 
 @Composable
-fun <T> RadioSelectors(
+public fun <T> RadioSelectors(
     modifier: Modifier = Modifier,
     items: List<T>,
     selected: T? = null,

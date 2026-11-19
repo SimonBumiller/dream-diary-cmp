@@ -7,14 +7,14 @@ import kotlin.time.Instant
 /**
  * Result when exporting data.
  */
-sealed interface ExportResult: Unique, ProcessResult {
+public sealed interface ExportResult: Unique, ProcessResult {
 
     override val id: Long
 
     /**
      * Data was exported successfully.
      */
-    data class Success(
+    public data class Success(
         override val id: Long,
         override val started: Instant,
         override val ended: Instant,
@@ -34,12 +34,12 @@ sealed interface ExportResult: Unique, ProcessResult {
     /**
      * Failure arose when exporting.
      */
-    sealed interface Failure: ExportResult {
+    public sealed interface Failure: ExportResult {
 
         /**
          * The file could not be accessed.
          */
-        data class FileAccess(override val id: Long, override val started: Instant,
+        public data class FileAccess(override val id: Long, override val started: Instant,
                               override val ended: Instant): Failure
 
     }

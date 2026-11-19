@@ -21,7 +21,7 @@ import me.bumiller.ddcmp.ui.common.style.icon
 import me.bumiller.ddcmp.ui.common.translation.translateName
 
 @Composable
-fun ConfidentialitySelector(
+public fun ConfidentialitySelector(
     modifier: Modifier = Modifier,
     confidentiality: Confidentiality,
     onSelect: (Confidentiality) -> Unit

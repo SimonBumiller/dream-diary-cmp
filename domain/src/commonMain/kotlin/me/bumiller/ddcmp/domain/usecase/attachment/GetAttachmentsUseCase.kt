@@ -13,7 +13,7 @@ import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 /**
  * Usecase to get attachments.
  */
-class GetAttachmentsUseCase(
+public class GetAttachmentsUseCase(
     private val attachmentMetaRepo: AttachmentMetaRepository,
     private val attachmentStorage: AttachmentStorage
 ) : FlowUseCase<I, List<GetAttachmentsUseCase.O>> {
@@ -42,7 +42,7 @@ class GetAttachmentsUseCase(
     /**
      * The Query class.
      */
-    data class I(
+    public data class I(
 
         /**
          * The id to filter for.
@@ -56,7 +56,7 @@ class GetAttachmentsUseCase(
 
     )
 
-    data class O(
+    public data class O(
 
         /**
          * The meta.

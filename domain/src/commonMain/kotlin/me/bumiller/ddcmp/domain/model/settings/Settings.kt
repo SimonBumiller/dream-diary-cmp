@@ -6,7 +6,7 @@ import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 /**
  * Models the settings of the app.
  */
-data class Settings(
+public data class Settings(
 
     /**
      * Whether the app should be unlocked.
@@ -41,12 +41,12 @@ data class Settings(
 
 ) {
 
-    companion object {
+    public companion object {
 
         /**
          * The default settings instance to be used when none is available.
          */
-        val Default = Settings(false, ColorMode.System, ColorTheme.App, Confidentiality.None, false, null)
+        public val Default: Settings = Settings(false, ColorMode.System, ColorTheme.App, Confidentiality.None, false, null)
 
     }
 

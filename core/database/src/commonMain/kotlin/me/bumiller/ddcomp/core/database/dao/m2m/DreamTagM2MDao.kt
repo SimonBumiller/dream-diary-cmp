@@ -8,7 +8,7 @@ import me.bumiller.ddcomp.core.database.entity.m2m.DreamEmotionM2M
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamTagM2M
 
 @Dao
-interface DreamTagM2MDao: M2MDao<DreamTagM2M> {
+internal interface DreamTagM2MDao: M2MDao<DreamTagM2M> {
 
     @Insert
     override suspend fun insert(m2m: DreamTagM2M)

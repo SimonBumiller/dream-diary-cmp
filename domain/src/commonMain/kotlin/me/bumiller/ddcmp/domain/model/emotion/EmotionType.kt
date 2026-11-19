@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.model.emotion
 /**
  * Groups emotions into four canonical types, based on their arousal and valence.
  */
-enum class EmotionType {
+public enum class EmotionType {
 
     /**
      * High arousal, high valence.
@@ -25,12 +25,12 @@ enum class EmotionType {
      */
     Anger;
 
-    companion object {
+    public companion object {
 
         /**
          * Gets the appropriate emotion type for an emotion.
          */
-        fun from(e: EmotionCoordinate) =
+        public fun from(e: EmotionCoordinate): EmotionType =
             when (e.arousal.value) {
                 in 0F..1F if e.valence.value in 0F..1F -> Joy
                 in -1F..0F if e.valence.value in 0F..1F -> Pleasure

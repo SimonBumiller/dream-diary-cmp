@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.model
 /**
  * Information about the current platform.
  */
-data class PlatformInfo (
+public data class PlatformInfo (
 
     /**
      * Whether the platform allows locking the app.
@@ -20,21 +20,21 @@ data class PlatformInfo (
 /**
  * Declaration of what features a platform supports.
  */
-expect object PlatformFeatures {
+public expect object PlatformFeatures {
 
     /**
      * Whether the platform supports biometric authentication.
      */
-    val supportsBiometricAuth: Boolean
+    public val supportsBiometricAuth: Boolean
 
     /**
      * Whether the platform supports periodic backups.
      */
-    val supportsPeriodicBackups: Boolean
+    public val supportsPeriodicBackups: Boolean
 
     /**
      * Whether the platform supports dynamic theming.
      */
-    val supportsDynamicTheming: Boolean
+    public val supportsDynamicTheming: Boolean
 
 }

@@ -207,7 +207,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val sync_saved_locally: ImageVector
+public val sync_saved_locally: ImageVector
     get() {
         if (_MaterialSymbolsSyncSavedLocally != null) return _MaterialSymbolsSyncSavedLocally!!
         

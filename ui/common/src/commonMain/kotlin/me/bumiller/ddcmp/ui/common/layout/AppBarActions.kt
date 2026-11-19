@@ -21,7 +21,7 @@ import dream_diary_cmp.ui.common.generated.resources.cd_appbar_more
 import me.bumiller.ddcmp.ui.common.LocalWindowSizeClass
 import org.jetbrains.compose.resources.stringResource
 
-data class AppBarAction(
+public data class AppBarAction(
     val label: String,
     val icon: ImageVector,
     val handler: () -> Unit,
@@ -29,7 +29,7 @@ data class AppBarAction(
 )
 
 @Composable
-fun RowScope.AppBarActions(
+public fun RowScope.AppBarActions(
     actions: List<AppBarAction>,
     sizeClass: WindowSizeClass = LocalWindowSizeClass.current
 ) {

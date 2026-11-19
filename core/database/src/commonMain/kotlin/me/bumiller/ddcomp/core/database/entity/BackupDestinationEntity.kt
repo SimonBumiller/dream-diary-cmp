@@ -8,7 +8,7 @@ import kotlin.time.Instant
 @Entity(
     tableName = "backup_destinations"
 )
-data class BackupDestinationEntity(
+internal data class BackupDestinationEntity(
 
     @PrimaryKey(autoGenerate = true)
     override val id: Long,

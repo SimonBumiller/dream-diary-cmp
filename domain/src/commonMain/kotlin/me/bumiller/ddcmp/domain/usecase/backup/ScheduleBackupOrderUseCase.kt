@@ -6,7 +6,7 @@ import me.bumiller.ddcmp.domain.infrastructure.PeriodicBackupOrderRepository
 import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 
-class ScheduleBackupOrderUseCase(
+public class ScheduleBackupOrderUseCase(
     private val backupScheduler: BackupScheduler,
     private val cancelBackup: CancelBackupOrdersUseCase,
     private val orderRepo: PeriodicBackupOrderRepository

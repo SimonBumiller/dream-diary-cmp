@@ -9,6 +9,8 @@ dependencies {
 }
 
 kotlin {
+    explicitApi()
+
     sourceSets {
         commonMain {
             dependencies {

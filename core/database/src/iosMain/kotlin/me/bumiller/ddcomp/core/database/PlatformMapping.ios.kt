@@ -5,7 +5,7 @@ import me.bumiller.ddcmp.domain.model.backup.BackupDestination
 import me.bumiller.ddcomp.core.database.entity.BackupDestinationEntity
 import platform.Foundation.NSURL
 
-actual object PlatformMapping {
+internal actual object PlatformMapping {
     actual fun backupDestination(model: BackupDestination) = model.run {
         val localDir = model as? BackupDestination.LocalDirectory
 

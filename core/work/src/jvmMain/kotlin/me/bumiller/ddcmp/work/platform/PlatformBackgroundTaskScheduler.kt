@@ -2,7 +2,7 @@ package me.bumiller.ddcmp.work.platform
 
 import kotlin.time.Duration
 
-actual class PlatformBackgroundTaskScheduler {
+internal actual class PlatformBackgroundTaskScheduler {
     actual suspend fun enqueuePeriodic(
         id: String,
         inputJson: String,

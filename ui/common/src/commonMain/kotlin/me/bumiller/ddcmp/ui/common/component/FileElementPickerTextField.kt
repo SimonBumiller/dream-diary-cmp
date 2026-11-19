@@ -19,7 +19,7 @@ import me.bumiller.ddcmp.ui.common.directory.rememberPersistableDirectoryPickerL
  * Component that allows a user to pick a persistable directory path.
  */
 @Composable
-fun PersistableDirectoryTextField(
+public fun PersistableDirectoryTextField(
     modifier: Modifier,
     file: PlatformFile?,
     onFileChanged: (PlatformFile?) -> Unit,
@@ -39,7 +39,7 @@ fun PersistableDirectoryTextField(
  * Component that allows a user to pick a new file.
  */
 @Composable
-fun FileSaverTextField(
+public fun FileSaverTextField(
     modifier: Modifier,
     file: PlatformFile?,
     onFileChanged: (PlatformFile?) -> Unit,
@@ -64,7 +64,7 @@ fun FileSaverTextField(
  * Component that allows a user to pick a new file.
  */
 @Composable
-fun FileSelectorTextField(
+public fun FileSelectorTextField(
     modifier: Modifier,
     file: PlatformFile?,
     onFileChanged: (PlatformFile?) -> Unit,

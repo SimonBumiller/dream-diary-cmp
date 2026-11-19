@@ -9,7 +9,7 @@ import kotlin.time.Instant
 /**
  * Models a dream that has been recorded.
  */
-data class Dream(
+public data class Dream(
 
     override val id: Long,
     override val created: Instant,

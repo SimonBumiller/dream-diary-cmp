@@ -7,7 +7,7 @@ import kotlinx.io.Source
 /**
  * Storage abstraction for attachments.
  */
-interface AttachmentStorage {
+public interface AttachmentStorage {
 
     /**
      * Saves the bytes from a source into persisted storage
@@ -16,20 +16,20 @@ interface AttachmentStorage {
      * @param source Where the bytes are taken from
      * @return The total byte count
      */
-    suspend fun save(id: Long, source: RawSource): Long
+    public suspend fun save(id: Long, source: RawSource): Long
 
     /**
      * Deletes the bytes from the storage.
      */
-    suspend fun delete(id: Long): Boolean
+    public suspend fun delete(id: Long): Boolean
 
     /**
      * Gets the source for an attachment for a specific id
      *
      * @return The source, or null if not found
      */
-    suspend fun get(id: Long): PlatformFile?
+    public suspend fun get(id: Long): PlatformFile?
 
-    suspend fun deleteAll(): Int
+    public suspend fun deleteAll(): Int
 
 }

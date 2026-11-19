@@ -9,7 +9,7 @@ import me.bumiller.ddcomp.core.database.dao.base.AggregateDao
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 
 @Dao
-interface DreamDao: AggregateDao<DreamEntity, DreamEntity.Aggregate> {
+internal interface DreamDao: AggregateDao<DreamEntity, DreamEntity.Aggregate> {
 
     @Upsert
     override suspend fun upsert(entity: DreamEntity): Long

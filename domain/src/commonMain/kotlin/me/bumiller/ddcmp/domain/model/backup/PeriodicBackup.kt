@@ -8,7 +8,7 @@ import kotlin.time.Instant
 /**
  * Models an export that was performed for a [PeriodicBackupOrder].
  */
-data class PeriodicBackup(
+public data class PeriodicBackup(
 
     override val id: Long,
     override val created: Instant,

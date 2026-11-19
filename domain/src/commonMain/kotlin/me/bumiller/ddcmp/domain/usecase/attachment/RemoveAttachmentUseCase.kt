@@ -7,7 +7,7 @@ import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 /**
  * Usecase that removes a specified attachment.
  */
-class RemoveAttachmentUseCase(
+public class RemoveAttachmentUseCase(
     private val attachmentMetaRepo: AttachmentMetaRepository,
     private val attachmentStorage: AttachmentStorage
 ) : UseCase<Long, Boolean> {

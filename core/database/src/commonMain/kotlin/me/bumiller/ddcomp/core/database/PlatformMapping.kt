@@ -6,7 +6,7 @@ import me.bumiller.ddcomp.core.database.entity.BackupDestinationEntity
 /**
  * Platform dependant model-mapping.
  */
-expect object PlatformMapping {
+internal expect object PlatformMapping {
 
     fun backupDestination(model: BackupDestination): BackupDestinationEntity
 

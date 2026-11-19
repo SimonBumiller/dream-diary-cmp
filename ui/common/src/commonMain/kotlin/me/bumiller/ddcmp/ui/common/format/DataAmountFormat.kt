@@ -12,7 +12,7 @@ import org.jetbrains.compose.resources.stringResource
  * Formats a byte count to normalized data count and unit
  */
 @Composable
-fun Long.formatDataAmount(): String =
+public fun Long.formatDataAmount(): String =
     if(this < 5_000) stringResource(Res.string.data_amount_byte, this)
     else if(this < 5_000_000) stringResource(Res.string.data_amount_kilobyte, this / 1000)
     else if(this < 5_000_000_000) stringResource(Res.string.data_amount_megabyte, this / 1000_000)

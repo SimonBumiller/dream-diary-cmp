@@ -3,43 +3,43 @@ package me.bumiller.ddcmp.domain.model.meta
 /**
  * Models sorting modes.
  */
-sealed interface SortMode {
+public sealed interface SortMode {
 
-    data object Created : SortMode
-    data object Updated : SortMode
+    public data object Created : SortMode
+    public data object Updated : SortMode
 
     /**
      * Sort modes for dreams.
      */
-    sealed interface DreamSort : SortMode {
-        data object Name : DreamSort
-        data object Dreamt : DreamSort
-        data object Confidentiality : DreamSort
-        data object AverageValence : DreamSort
-        data object Length: DreamSort
-        data object Clearness: DreamSort
-        data object Intensity: DreamSort
+    public sealed interface DreamSort : SortMode {
+        public data object Name : DreamSort
+        public data object Dreamt : DreamSort
+        public data object Confidentiality : DreamSort
+        public data object AverageValence : DreamSort
+        public data object Length: DreamSort
+        public data object Clearness: DreamSort
+        public data object Intensity: DreamSort
     }
 
     /**
      * Sort modes for tags.
      */
-    sealed interface TagSort : SortMode {
-        data object Color: TagSort
-        data object Name: TagSort
+    public sealed interface TagSort : SortMode {
+       public data object Color: TagSort
+        public data object Name: TagSort
     }
 
     /**
      * Sort modes for emotions.
      */
-    sealed interface EmotionSort : SortMode {
-        data object Name : EmotionSort
+    public sealed interface EmotionSort : SortMode {
+        public data object Name : EmotionSort
     }
 
     /**
      * Sort modes for persons.
      */
-    sealed interface PersonSort : SortMode {
-        data object Name : PersonSort
+    public sealed interface PersonSort : SortMode {
+        public data object Name : PersonSort
     }
 }

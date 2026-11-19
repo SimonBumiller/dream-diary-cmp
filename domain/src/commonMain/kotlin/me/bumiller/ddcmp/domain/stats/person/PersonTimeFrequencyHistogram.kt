@@ -13,8 +13,7 @@ import kotlin.time.ExperimentalTime
 /**
  * A statistical usecase that calculates a histogram (time vs person frequency) for a specified date range and person.
  */
-@OptIn(ExperimentalTime::class)
-class PersonTimeFrequencyHistogram(
+public class PersonTimeFrequencyHistogram(
     getDreams: AllDreamUseCase
 ) : DreamFrequencyHistogramStatistic<Long, LocalDate, DatePeriod>(
     getDreams = getDreams,

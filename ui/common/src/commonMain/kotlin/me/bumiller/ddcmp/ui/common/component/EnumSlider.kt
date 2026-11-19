@@ -19,7 +19,7 @@ import kotlin.math.roundToInt
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun <T: Enum<T>> EnumSlider(
+public fun <T: Enum<T>> EnumSlider(
     current: T,
     entries: EnumEntries<T>,
     fromOrdinal: (Int) -> T,

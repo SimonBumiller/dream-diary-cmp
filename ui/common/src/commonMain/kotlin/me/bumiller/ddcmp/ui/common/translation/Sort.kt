@@ -24,7 +24,7 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * Gets the translated name for the specific sort mode.
  */
-val SortMode.translateName: String
+public val SortMode.translateName: String
     @Composable get() = when (this) {
         SortMode.Created -> Res.string.sort_created
         SortMode.DreamSort.AverageValence -> Res.string.sort_dream_valence
@@ -44,7 +44,7 @@ val SortMode.translateName: String
 /**
  * Gets the translated name for the specific sort direction.
  */
-val SortDirection.translateName: String
+public val SortDirection.translateName: String
     @Composable get() = when (this) {
         SortDirection.Ascending -> Res.string.sort_ascending
         SortDirection.Descending -> Res.string.sort_descending

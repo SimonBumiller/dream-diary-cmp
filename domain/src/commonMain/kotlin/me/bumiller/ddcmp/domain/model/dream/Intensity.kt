@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.model.dream
 /**
  * Classifies how intense a dream was.
  */
-enum class Intensity {
+public enum class Intensity {
 
     /**
      * Dream had very low intensity.
@@ -30,7 +30,7 @@ enum class Intensity {
      */
     VeryHigh;
 
-    companion object {
-        fun fromOrdinal(ordinal: Int) = entries.find { it.ordinal == ordinal }!!
+    public companion object {
+        public fun fromOrdinal(ordinal: Int): Intensity = entries.find { it.ordinal == ordinal }!!
     }
 }

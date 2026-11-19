@@ -12,7 +12,7 @@ import androidx.compose.ui.text.withStyle
 /**
  * Bundles a text style and a callback.
  */
-data class TextStyleWithCallback(
+public data class TextStyleWithCallback(
 
     /**
      * The text style.
@@ -36,7 +36,7 @@ private const val TagPrefix = "MultiStyleText-Tag-"
  * @param pairs The pairs, assigning each text a specific style and an optional callback.
  */
 @Composable
-fun MultiStyleText(
+public fun MultiStyleText(
     modifier: Modifier = Modifier,
     defaultStyle: TextStyle = LocalTextStyle.current,
     vararg pairs: Pair<String, TextStyleWithCallback?>

@@ -34,10 +34,10 @@ private val colors = listOf(
     listOf(0xFF8853B5, 0xFFA14F9E, 0xFFB54F83, 0xFF7957A8)
 )
 
-const val ColorPickerInitialColor = 0xFFB83A42
+public const val ColorPickerInitialColor: Long = 0xFFB83A42
 
 @Composable
-fun ColorPicker(
+public fun ColorPicker(
     modifier: Modifier = Modifier,
     selectedColor: Long?,
     onColorChange: (Long) -> Unit

@@ -19,8 +19,7 @@ internal class XmlExportStrategy(
     private val allDreams: AllDreamUseCase,
     private val allPersons: AllPersonUseCase,
     private val allEmotions: AllEmotionsUseCase,
-    private val allTags: AllTagUseCase,
-    private val allAttachmentMetas: GetAttachmentsUseCase
+    private val allTags: AllTagUseCase
 ) : DataExportStrategy {
 
     override suspend fun writeDataInto(

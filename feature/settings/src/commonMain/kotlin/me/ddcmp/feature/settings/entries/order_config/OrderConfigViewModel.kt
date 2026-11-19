@@ -173,7 +173,7 @@ internal class OrderConfigViewModel(
                 Clock.System.now(),
                 backupDirectory!!
             ),
-            period = scheduleDays!!.days + scheduleHours!!.hours,
+            period = scheduleDays.days + scheduleHours.hours,
             initialTime = Clock.System.now().let {
                 if (firstBackupImmediately) it
                 else it + 30.minutes

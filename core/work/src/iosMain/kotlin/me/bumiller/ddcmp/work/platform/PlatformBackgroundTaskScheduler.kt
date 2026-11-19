@@ -8,7 +8,7 @@ import dev.brewkits.kmpworkmanager.background.domain.ScheduleResult
 import dev.brewkits.kmpworkmanager.background.domain.TaskTrigger
 import kotlin.time.Duration
 
-actual class PlatformBackgroundTaskScheduler(
+internal actual class PlatformBackgroundTaskScheduler(
     private val delegate: BackgroundTaskScheduler
 ) {
     actual suspend fun enqueuePeriodic(

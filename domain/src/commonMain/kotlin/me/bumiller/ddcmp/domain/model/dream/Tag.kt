@@ -11,7 +11,7 @@ import kotlin.time.Instant
  *
  * This can be thought of as a property, attribute or group that the applied model has.
  */
-data class Tag(
+public data class Tag(
 
     override val id: Long,
     override val created: Instant,
@@ -42,7 +42,7 @@ data class Tag(
     /**
      * What elements the tag targets.
      */
-    enum class TagTarget {
+    public enum class TagTarget {
 
         /**
          * Applicable to dreams.
@@ -55,6 +55,6 @@ data class Tag(
         Person
     }
 
-    override val searchableFields = listOfNotNull(name, description)
+    override val searchableFields: List<String> = listOfNotNull(name, description)
 
 }

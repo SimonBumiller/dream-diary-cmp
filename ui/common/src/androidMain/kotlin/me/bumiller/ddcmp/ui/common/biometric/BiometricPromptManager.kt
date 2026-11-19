@@ -13,15 +13,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 
-class BiometricPromptManager(
+public class BiometricPromptManager(
     private val context: FragmentActivity
 ) {
     private val resultChannel = Channel<BiometricResult>()
-    val promptResults = resultChannel.receiveAsFlow()
+    public val promptResults: Flow<BiometricResult> = resultChannel.receiveAsFlow()
 
-    fun showBiometricPrompt(
+    public fun showBiometricPrompt(
         title: String,
         description: String
     ) {
@@ -79,7 +80,7 @@ class BiometricPromptManager(
 }
 
 @Composable
-fun rememberBiometricPromptManager(): BiometricPromptManager {
+public fun rememberBiometricPromptManager(): BiometricPromptManager {
     val context = LocalActivity.current as FragmentActivity
 
     return remember(context) {

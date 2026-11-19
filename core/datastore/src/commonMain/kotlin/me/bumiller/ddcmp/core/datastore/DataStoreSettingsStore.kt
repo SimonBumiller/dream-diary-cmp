@@ -14,7 +14,7 @@ import me.bumiller.ddcmp.domain.model.settings.ColorMode
 import me.bumiller.ddcmp.domain.model.settings.ColorTheme
 import me.bumiller.ddcmp.domain.model.settings.Settings
 
-class DataStoreSettingsStore(private val dataStore: DataStore<Preferences>) :
+internal class DataStoreSettingsStore(private val dataStore: DataStore<Preferences>) :
     SettingsStore {
 
     // 2. Define preference keys

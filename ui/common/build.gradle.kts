@@ -4,6 +4,8 @@ plugins {
 }
 
 kotlin {
+    explicitApi()
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.android.biometric)

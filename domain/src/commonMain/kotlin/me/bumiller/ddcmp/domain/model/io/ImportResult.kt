@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalTime::class)
-
 package me.bumiller.ddcmp.domain.model.io
 
 import me.bumiller.ddcmp.domain.model.meta.ProcessResult
@@ -10,31 +8,31 @@ import kotlin.time.Instant
 /**
  * Result that gets created when importing a backup.
  */
-sealed interface ImportResult : Unique, ProcessResult {
+public sealed interface ImportResult : Unique, ProcessResult {
 
     override val id: Long
 
     /**
      * The import failed.
      */
-    sealed interface Failure : ImportResult {
+    public sealed interface Failure : ImportResult {
 
         /**
          * A problem occurred reading the file.
          */
-        data class FileAccess(override val id: Long, override val started: Instant,
+        public data class FileAccess(override val id: Long, override val started: Instant,
                               override val ended: Instant) : Failure
 
         /**
          * The file did not adhere to the data format specified.
          */
-        data class FileFormat(override val id: Long, override val started: Instant,
+        public data class FileFormat(override val id: Long, override val started: Instant,
                               override val ended: Instant) : Failure
 
         /**
          * Data consistency was not present, e.g. invalid references.
          */
-        data class DataConsistency(
+        public data class DataConsistency(
             override val id: Long,
             override val started: Instant,
             override val ended: Instant
@@ -45,32 +43,32 @@ sealed interface ImportResult : Unique, ProcessResult {
     /**
      * The import was a success.
      */
-    sealed interface Success : ImportResult {
+    public sealed interface Success : ImportResult {
 
         /**
          * THe number of imported dreams.
          */
-        val dreamCount: Int
+        public val dreamCount: Int
 
         /**
          * The number of imported persons.
          */
-        val personCount: Int
+        public val personCount: Int
 
         /**
          * Timestamp of the first dream.
          */
-        val firstDream: Instant
+        public val firstDream: Instant
 
         /**
          * Timestamp of the last dream.
          */
-        val lastDream: Instant
+        public val lastDream: Instant
 
         /**
          * Normal import result.
          */
-        data class Normal(
+        public data class Normal(
 
             /**
              * The number of imported emotions
@@ -90,7 +88,7 @@ sealed interface ImportResult : Unique, ProcessResult {
         /**
          * Legacy import result.
          */
-        data class Legacy(
+        public data class Legacy(
             override val dreamCount: Int,
             override val personCount: Int,
             override val firstDream: Instant,

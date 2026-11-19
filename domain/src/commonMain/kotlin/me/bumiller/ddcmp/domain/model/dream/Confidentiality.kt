@@ -3,22 +3,22 @@ package me.bumiller.ddcmp.domain.model.dream
 /**
  * Models different types of confidentiality that a dream can be.
  */
-enum class Confidentiality(
+public enum class Confidentiality(
 
     /**
      * Whether the title can be previewed.
      */
-    val previewTitle: Boolean,
+    public val previewTitle: Boolean,
 
     /**
      * Whether the description can be previewed.
      */
-    val previewDescription: Boolean,
+    public val previewDescription: Boolean,
 
     /**
      * Whether the dream needs to be unlocked.
      */
-    val locked: Boolean
+    public val locked: Boolean
 
 ) {
 

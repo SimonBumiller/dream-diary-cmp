@@ -4,4 +4,4 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 
 @Composable
-actual fun systemTheme(dark: Boolean): ColorScheme? = null
+internal actual fun systemTheme(dark: Boolean): ColorScheme? = null

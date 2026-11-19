@@ -11,7 +11,7 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * The translated description of the confidentiality.
  */
-val ColorMode.translateName: String
+public val ColorMode.translateName: String
     @Composable get() = when (this) {
         ColorMode.Light -> Res.string.colormode_light_name
         ColorMode.Dark -> Res.string.colormode_dark_name

@@ -5,4 +5,4 @@ import io.github.vinceglb.filekit.PlatformFile
 /**
  * Opens a platform-specified way to view the file content.
  */
-expect fun viewFile(file: PlatformFile, mimeType: String): Boolean
+public expect fun viewFile(file: PlatformFile, mimeType: String): Boolean

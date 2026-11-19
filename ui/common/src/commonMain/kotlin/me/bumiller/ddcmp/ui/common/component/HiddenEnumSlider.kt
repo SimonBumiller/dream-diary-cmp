@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import kotlin.enums.EnumEntries
 
 @Composable
-fun <T: Enum<T>> HiddenEnumSlider(
+public fun <T: Enum<T>> HiddenEnumSlider(
     visible: Boolean,
     current: T,
     toggleVisibility: () -> Unit,

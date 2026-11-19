@@ -3,7 +3,7 @@ package me.bumiller.ddcomp.core.database.converter
 import androidx.room.TypeConverter
 import kotlin.time.Instant
 
-class InstantConverter {
+internal class InstantConverter {
 
     @TypeConverter
     fun toLong(instant: Instant?) = instant?.epochSeconds

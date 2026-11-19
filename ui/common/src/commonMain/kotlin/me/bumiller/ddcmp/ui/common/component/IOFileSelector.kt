@@ -17,7 +17,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IOFileSelector(
+public fun IOFileSelector(
     showDropdown: Boolean,
     toggleDropdownVisibility: () -> Unit,
     onTypeSelected: (IOFileType) -> Unit,

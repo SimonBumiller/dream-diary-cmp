@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
@@ -19,22 +21,22 @@ import kotlin.reflect.KClass
 /**
  * Marker interface for any event fired by the ui.
  */
-interface UIE
+public interface UIE
 
 /**
  * Marker interface for any event fired by the view model.
  */
-interface VME
+public interface VME
 
 /**
  * Base class for view models in the app that contains utility methods and fields.
  */
-abstract class AppViewModel<UiEvent : UIE, ViewModelEvent : VME> : ViewModel() {
+public abstract class AppViewModel<UiEvent : UIE, ViewModelEvent : VME> : ViewModel() {
 
     /**
      * Shorthand for creating a stateflow that runs in the [viewModelScope].
      */
-    protected fun <T> Flow<T>.stateIn(initial: T) =
+    protected fun <T> Flow<T>.stateIn(initial: T): StateFlow<T> =
         this.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), initial)
 
     //
@@ -51,7 +53,7 @@ abstract class AppViewModel<UiEvent : UIE, ViewModelEvent : VME> : ViewModel() {
      *
      * @param uiEvent The event from the ui.
      */
-    fun onEvent(uiEvent: UiEvent) {
+    public fun onEvent(uiEvent: UiEvent) {
         viewModelScope.launch {
             handleEvent(uiEvent)
         }
@@ -62,7 +64,7 @@ abstract class AppViewModel<UiEvent : UIE, ViewModelEvent : VME> : ViewModel() {
     /**
      * The events fired by the view model.
      */
-    val events = _events.asSharedFlow()
+    public val events: SharedFlow<ViewModelEvent> = _events.asSharedFlow()
 
     /**
      * Fired an event into the view model events flow.
@@ -80,7 +82,7 @@ abstract class AppViewModel<UiEvent : UIE, ViewModelEvent : VME> : ViewModel() {
     /**
      * List of all current ui stated registered.
      */
-    protected val uiStates = hashMapOf<Pair<KClass<*>, *>, MutableStateFlow<*>>()
+    protected val uiStates: HashMap<Pair<KClass<*>, *>, MutableStateFlow<*>> = hashMapOf()
 
     /**
      * Registers a new ui state.
@@ -149,7 +151,7 @@ abstract class AppViewModel<UiEvent : UIE, ViewModelEvent : VME> : ViewModel() {
  * A composable which is supposed to wrap a composable that acts as a screen, and is controlled by a [AppViewModel].
  */
 @Composable
-inline fun <ScreenEvent : UIE, Event : VME, reified ViewModel : AppViewModel<ScreenEvent, Event>> ViewModelScope(
+public inline fun <ScreenEvent : UIE, Event : VME, reified ViewModel : AppViewModel<ScreenEvent, Event>> ViewModelScope(
     noinline onViewModelEvent: suspend ViewModel.(Event) -> Unit = {},
     crossinline content: @Composable (ViewModel) -> Unit
 ) {

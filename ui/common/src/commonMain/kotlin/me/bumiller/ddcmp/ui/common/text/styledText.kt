@@ -10,7 +10,7 @@ import androidx.compose.ui.text.withStyle
 /**
  * Builds an annotated string from markdown-like syntax.
  */
-fun styledText(input: String): AnnotatedString {
+public fun styledText(input: String): AnnotatedString {
     return buildAnnotatedString {
         var i = 0
 

@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 @Composable
-actual fun systemTheme(dark: Boolean): ColorScheme? {
+internal actual fun systemTheme(dark: Boolean): ColorScheme? {
     val context = LocalContext.current
 
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return null

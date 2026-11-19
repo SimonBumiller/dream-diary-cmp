@@ -25,7 +25,7 @@ private class TempFileSeekableSource(
 // A PlatformFile on android can be a content file.
 // We create a temporary file that we get by making a copy,
 // and then return a seekable source to that temporary file.
-actual fun PlatformFile.asSeekableSource(): SeekableSource {
+internal actual fun PlatformFile.asSeekableSource(): SeekableSource {
     val context = GlobalContext.get().get<Context>()
 
     // Temporary file

@@ -1,10 +1,8 @@
 package me.bumiller.ddcomp.core.database.entity.base
 
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
-@OptIn(ExperimentalTime::class)
-interface BaseEntity {
+internal interface BaseEntity {
 
     val id: Long
 

@@ -17,7 +17,7 @@ import kotlin.time.Instant
 @Entity(
     tableName = "emotions"
 )
-data class EmotionEntity (
+internal data class EmotionEntity (
 
     @PrimaryKey(autoGenerate = true)
     override val id: Long,

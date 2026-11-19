@@ -9,7 +9,7 @@ import kotlin.time.Instant
 @Entity(
     tableName = "attachment_metas"
 )
-data class AttachmentMetaEntity(
+internal data class AttachmentMetaEntity(
 
     @PrimaryKey(autoGenerate = true)
     override val id: Long,

@@ -10,7 +10,7 @@ import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 /**
  * Finds for all persons, how often each person occurred in a dream.
  */
-class PersonsOccurrencesCountStatistic(
+public class PersonsOccurrencesCountStatistic(
     allDreams: AllDreamUseCase
 ) : DreamListBasedStatistic<I, List<PersonWithCount>>(allDreams) {
 
@@ -42,12 +42,12 @@ class PersonsOccurrencesCountStatistic(
             }
     }
 
-    override fun I.invoke() = dateRange
+    override fun I.invoke(): ClosedRange<LocalDate> = dateRange
 
     /**
      * Input for the statistic.
      */
-    data class I(
+    public data class I(
 
         /**
          * The date range.
@@ -64,7 +64,7 @@ class PersonsOccurrencesCountStatistic(
     /**
      * A person together with the count of dreams it is in.
      */
-    data class PersonWithCount(
+    public data class PersonWithCount(
 
         /**
          * The person.

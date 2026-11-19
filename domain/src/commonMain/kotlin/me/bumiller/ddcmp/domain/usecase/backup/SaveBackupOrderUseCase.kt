@@ -12,14 +12,14 @@ import kotlin.time.Clock
 import kotlin.time.Duration
 import kotlin.time.Instant
 
-class SaveBackupOrderUseCase(
+public class SaveBackupOrderUseCase(
     private val orderRepo: PeriodicBackupOrderRepository
 ) : UseCase<I, PeriodicBackupOrder> {
 
     /**
      * The attributes needed to construct a new backup order.
      */
-    data class I(
+    public data class I(
 
         val destination: BackupDestination,
         val period: Duration,

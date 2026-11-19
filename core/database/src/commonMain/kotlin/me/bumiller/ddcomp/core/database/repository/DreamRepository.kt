@@ -15,7 +15,7 @@ import me.bumiller.ddcomp.core.database.dao.m2m.DreamPersonM2MDao
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamEmotionM2M
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
 
-class DreamRepository(
+internal class DreamRepository(
     private val dreamDao: DreamDao,
     private val personDao: PersonDao,
     private val emotionDao: EmotionDao,

@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import me.bumiller.ddcmp.ui.common.LocalWindowSizeClass
 
 @Composable
-fun ColumnOrRow(
+public fun ColumnOrRow(
     modifier: Modifier = Modifier,
     doColumn: @Composable (sizeClass: WindowSizeClass) -> Boolean,
     first: @Composable (doColumn: Boolean) -> Unit,

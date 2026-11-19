@@ -10,7 +10,7 @@ import me.bumiller.ddcomp.core.database.entity.ExportLogEntity
 import me.bumiller.ddcomp.core.database.entity.ImportLogEntity
 
 @Dao
-interface ExportLogDao : BaseDao<ExportLogEntity> {
+internal interface ExportLogDao : BaseDao<ExportLogEntity> {
 
     @Upsert
     override suspend fun upsert(entity: ExportLogEntity): Long

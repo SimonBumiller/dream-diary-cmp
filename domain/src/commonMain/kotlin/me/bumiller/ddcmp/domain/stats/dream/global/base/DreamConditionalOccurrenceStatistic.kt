@@ -13,8 +13,7 @@ import kotlin.time.ExperimentalTime
 /**
  * This statistic calculates how certain dream properties are affected by the presence of another.
  */
-@OptIn(ExperimentalTime::class)
-abstract class DreamConditionalOccurrenceStatistic<I, Attribute : Unique>(
+public abstract class DreamConditionalOccurrenceStatistic<I, Attribute : Unique>(
     allDreams: AllDreamUseCase
 ) : DreamListBasedStatistic<I, List<ConditionalOccurrenceInfo<Attribute>>>(allDreams) {
 
@@ -23,12 +22,12 @@ abstract class DreamConditionalOccurrenceStatistic<I, Attribute : Unique>(
      *
      * @return The classification
      */
-    abstract fun AllDreamUseCase.O.isRequirementMet(input: I): Boolean
+    public abstract fun AllDreamUseCase.O.isRequirementMet(input: I): Boolean
 
     /**
      * Gets all the attributes of the specific dream.
      */
-    abstract fun AllDreamUseCase.O.getAttributes(input: I): List<Attribute>
+    public abstract fun AllDreamUseCase.O.getAttributes(input: I): List<Attribute>
 
     override suspend fun invoke(
         input: I,
@@ -103,7 +102,7 @@ abstract class DreamConditionalOccurrenceStatistic<I, Attribute : Unique>(
     /**
      * Information about how a specific attribute is affected by the requirement.
      */
-    data class ConditionalOccurrenceInfo<Attribute>(
+    public data class ConditionalOccurrenceInfo<Attribute>(
 
         /**
          * The attribute that is influenced by the requirement.

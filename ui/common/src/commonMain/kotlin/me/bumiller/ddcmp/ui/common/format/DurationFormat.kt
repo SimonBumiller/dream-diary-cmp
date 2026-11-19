@@ -15,7 +15,7 @@ import kotlin.time.Duration
  * Formats a time-duration with a fitting unit.
  */
 @Composable
-fun Duration.formatDurationLength(): String =
+public fun Duration.formatDurationLength(): String =
     if (inWholeDays > 1) stringResource(Res.string.duration_days, inWholeDays)
     else if (inWholeHours > 1) stringResource(Res.string.duration_hours, inWholeHours)
     else if (inWholeMinutes > 1) stringResource(Res.string.duration_minutes, inWholeMinutes)

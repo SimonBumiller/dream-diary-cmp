@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.model.stats
 /**
  * Meta-information about a numerical histogram.
  */
-data class Histogram<Bucket, BucketSize, Value : Number>(
+public data class Histogram<Bucket, BucketSize, Value : Number>(
 
     /**
      * The actual histogram.
@@ -34,7 +34,7 @@ data class Histogram<Bucket, BucketSize, Value : Number>(
 /**
  * Calculates the bucket a value lies in.
  */
-fun <T: Comparable<T>> Histogram<T, *, Int>.bucketFor(value: T): T {
+public fun <T: Comparable<T>> Histogram<T, *, Int>.bucketFor(value: T): T {
     return dataMap
         .keys
         .sorted()

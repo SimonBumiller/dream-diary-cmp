@@ -49,7 +49,7 @@ import kotlin.math.floor
 import kotlin.math.roundToInt
 
 @Composable
-fun <Bucket, Value : Number, BucketSize> Histogram(
+public fun <Bucket, Value : Number, BucketSize> Histogram(
     modifier: Modifier = Modifier,
     meta: Histogram<Bucket, BucketSize, Value>,
     bucketLabel: (@Composable (Bucket) -> String)? = null,
@@ -191,7 +191,7 @@ private fun <Bucket> HistogramLabels(
     }
 }
 
-class CenterSpacedArrangement : Arrangement.Horizontal {
+private class CenterSpacedArrangement : Arrangement.Horizontal {
     override fun Density.arrange(
         totalSize: Int,
         sizes: IntArray,
@@ -221,7 +221,7 @@ class CenterSpacedArrangement : Arrangement.Horizontal {
 /**
  * Style configuration for the labels of the histogram.
  */
-sealed class HistogramLabelStyle(
+public sealed class HistogramLabelStyle(
     internal val rotation: Float,
     internal val arrangement: Arrangement.Horizontal,
     internal val baseModifier: @Composable RowScope.() -> Modifier
@@ -230,7 +230,7 @@ sealed class HistogramLabelStyle(
     /**
      * All labels are visible.
      */
-    data object AllVisible : HistogramLabelStyle(
+    public data object AllVisible : HistogramLabelStyle(
         rotation = -45.0F,
         arrangement = Arrangement.spacedBy(8.dp),
         baseModifier = { Modifier.weight(1F) }
@@ -239,7 +239,7 @@ sealed class HistogramLabelStyle(
     /**
      * Only [labelCount] labels are visible.
      */
-    data class PartiallyVisible(
+    public data class PartiallyVisible(
         val labelCount: Int
     ) : HistogramLabelStyle(
         rotation = -45.0F,
@@ -361,7 +361,7 @@ private fun <Bucket, BucketSize, Value : Number> HistogramBars(
     }
 }
 
-fun evenlySpaced(size: Int, targetSize: Int): List<Int> {
+private fun evenlySpaced(size: Int, targetSize: Int): List<Int> {
     require(targetSize in 1..size)
 
     if (targetSize == 1) return listOf(0)
@@ -440,5 +440,4 @@ private fun HistogramBar(
             )
         }
     }
-
 }

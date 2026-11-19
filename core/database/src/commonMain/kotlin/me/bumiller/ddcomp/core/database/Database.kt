@@ -35,7 +35,7 @@ import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamTagM2M
 import me.bumiller.ddcomp.core.database.entity.m2m.PersonTagM2M
 
-const val DB_NAME = "dream_diary.db"
+internal const val DB_NAME = "dream_diary.db"
 
 private const val DB_VERSION = 10
 
@@ -65,7 +65,7 @@ private const val DB_VERSION = 10
     ]
 )
 @TypeConverters(InstantConverter::class, DurationConverter::class)
-abstract class RelationalDatabase : RoomDatabase() {
+internal abstract class RelationalDatabase : RoomDatabase() {
 
     abstract fun dreamDao(): DreamDao
 

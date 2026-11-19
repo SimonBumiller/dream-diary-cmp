@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <Item> SearchTextField(
+public fun <Item> SearchTextField(
     modifier: Modifier = Modifier,
     query: String,
     onQueryChange: (String) -> Unit,

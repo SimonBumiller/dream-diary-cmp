@@ -8,7 +8,7 @@ private const val AppName = "me.bumiller.ddcmp"
 /**
  * Gets the root of the apps data-directory.
  */
-fun dataDirectory(): PlatformFile {
+public fun dataDirectory(): PlatformFile {
     val osName = System.getProperty("os.name").lowercase()
     val userHome = System.getProperty("user.home")
 

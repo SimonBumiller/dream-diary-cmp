@@ -31,7 +31,7 @@ import me.bumiller.ddcmp.ui.common.translation.translateDescription
 import me.bumiller.ddcmp.ui.common.translation.translateName
 
 @Composable
-fun IOOptionTypeSelection(
+public fun IOOptionTypeSelection(
     modifier: Modifier,
     type: IOOptionType,
     onTypeChange: (IOOptionType) -> Unit

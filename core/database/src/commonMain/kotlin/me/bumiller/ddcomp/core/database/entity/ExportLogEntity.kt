@@ -13,7 +13,7 @@ import kotlin.time.Instant
 @Entity(
     tableName = "export_logs"
 )
-data class ExportLogEntity (
+internal data class ExportLogEntity (
 
     @PrimaryKey(autoGenerate = true)
     override val id: Long,

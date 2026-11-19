@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.model.meta
 /**
  * Models sort directions.
  */
-enum class SortDirection {
+public enum class SortDirection {
 
     /**
      * Lower values first.
@@ -15,7 +15,7 @@ enum class SortDirection {
      */
     Descending;
 
-    operator fun not() = when (this) {
+    public operator fun not(): SortDirection = when (this) {
         Ascending -> Descending
         Descending -> Ascending
     }

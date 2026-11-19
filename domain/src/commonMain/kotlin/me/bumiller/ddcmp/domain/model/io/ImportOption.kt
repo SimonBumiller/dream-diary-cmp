@@ -3,22 +3,22 @@ package me.bumiller.ddcmp.domain.model.io
 import kotlinx.datetime.TimeZone
 import me.bumiller.ddcmp.domain.model.io.IOFileType
 
-sealed interface ImportOption {
+public sealed interface ImportOption {
 
     /**
      * Whether favorite-marked dreams should carry that information.
      */
-    val transferFavorites: Boolean
+    public val transferFavorites: Boolean
 
     /**
      * The file extension of the backup file.
      */
-    val backupFileExtension: String
+    public val backupFileExtension: String
 
     /**
      * Importing legacy backups.
      */
-    data class Legacy(
+    public data class Legacy(
 
         /**
          * The time zone to use when constructing the dreams.
@@ -34,14 +34,14 @@ sealed interface ImportOption {
 
     ) : ImportOption {
 
-        override val backupFileExtension = "json"
+        override val backupFileExtension: String = "json"
 
     }
 
     /**
      * Importing common backups.
      */
-    data class Normal(
+    public data class Normal(
 
         /**
          * The filetype that the content is represented in.
@@ -52,7 +52,7 @@ sealed interface ImportOption {
 
     ): ImportOption {
 
-        override val backupFileExtension = "zip"
+        override val backupFileExtension: String = "zip"
 
     }
 

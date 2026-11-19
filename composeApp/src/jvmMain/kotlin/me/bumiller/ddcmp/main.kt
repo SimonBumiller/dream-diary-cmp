@@ -9,7 +9,7 @@ import dream_diary_cmp.composeapp.generated.resources.jvm_icon
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-fun main() = application {
+public fun main(): Unit = application {
     initKoin()
     Window(
         onCloseRequest = ::exitApplication,

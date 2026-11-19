@@ -6,34 +6,34 @@ import me.bumiller.ddcmp.domain.model.meta.Unique
 /**
  * Models a fixed set of use-cases that are used to perform simple crud-operations.
  */
-interface CrudUseCases<T: Unique> {
+public interface CrudUseCases<T: Unique> {
 
     /**
      * Usecase to get all entities.
      */
-    val getAll: FlowUseCase<Unit, List<T>>
+    public val getAll: FlowUseCase<Unit, List<T>>
 
     /**
      * Usecase to save an entity.
      */
-    val save: UseCase<T, Long>
+    public val save: UseCase<T, Long>
 
     /**
      * Usecase to get by id.
      */
-    val byId: FlowUseCase<Long, T?>
+    public val byId: FlowUseCase<Long, T?>
 
     /**
      * Usecase to delete entity.
      */
-    val delete: UseCase<Long, Boolean>
+    public val delete: UseCase<Long, Boolean>
 
-    companion object {
+    public companion object {
 
         /**
          * Creates a crud-usecase object that delegates to a specific repository.
          */
-        fun <T: Unique>create(repo: Repository<T>): CrudUseCases<T> = object : CrudUseCases<T> {
+        public fun <T: Unique>create(repo: Repository<T>): CrudUseCases<T> = object : CrudUseCases<T> {
             override val getAll: FlowUseCase<Unit, List<T>> = FlowUseCase { repo.all }
             override val save: UseCase<T, Long> = UseCase { repo.save(it) }
             override val byId: FlowUseCase<Long, T?> = FlowUseCase { repo.id(it) }

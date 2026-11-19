@@ -18,7 +18,7 @@ import kotlin.time.Instant
 @Entity(
     tableName = "tags"
 )
-data class TagEntity(
+internal data class TagEntity(
 
     @PrimaryKey(autoGenerate = true)
     override val id: Long,

@@ -11,7 +11,7 @@ import me.bumiller.ddcomp.core.database.entity.BackupDestinationEntity
 import me.bumiller.ddcomp.core.database.entity.DreamEntity
 
 @Dao
-interface BackupDestinationDao: BaseDao<BackupDestinationEntity> {
+internal interface BackupDestinationDao: BaseDao<BackupDestinationEntity> {
 
     @Upsert
     override suspend fun upsert(entity: BackupDestinationEntity): Long

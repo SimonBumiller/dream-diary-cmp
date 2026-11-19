@@ -11,7 +11,7 @@ import me.bumiller.ddcmp.domain.model.dream.Confidentiality
 /**
  * Gets the appropriate icon for a given confidentiality.
  */
-val Confidentiality.icon: ImageVector
+public val Confidentiality.icon: ImageVector
     @Composable get() = when (this) {
         Confidentiality.None -> Icons.Outlined.CheckCircle
         Confidentiality.Medium -> Icons.Outlined.Security

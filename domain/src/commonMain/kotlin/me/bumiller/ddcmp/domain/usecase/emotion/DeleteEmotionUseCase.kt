@@ -8,7 +8,7 @@ import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 /**
  * Use case for deleting an emotion.
  */
-class DeleteEmotionUseCase(
+public class DeleteEmotionUseCase(
     private val getEmotion: AllEmotionsUseCase,
     private val emotionRepo: EmotionRepository
 ) : UseCase<Long, Emotion?> {

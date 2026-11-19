@@ -8,7 +8,7 @@ import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.div
 
 @Composable
-actual fun PlatformBackHandler(onBack: () -> Unit) {
+public actual fun PlatformBackHandler(onBack: () -> Unit) {
     NavigationBackHandler(
         state = rememberNavigationEventState(NavigationEventInfo.None),
         onBackCompleted = onBack

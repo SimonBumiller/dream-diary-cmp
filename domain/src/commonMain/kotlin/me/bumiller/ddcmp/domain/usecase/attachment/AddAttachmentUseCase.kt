@@ -12,7 +12,7 @@ import kotlin.time.Clock
 /**
  * Usecase for adding an attachment to an existing dream.
  */
-class AddAttachmentUseCase(
+public class AddAttachmentUseCase(
     private val attachmentMetaRepo: AttachmentMetaRepository,
     private val attachmentStorage: AttachmentStorage
 ): UseCase<I, AttachmentMeta> {
@@ -46,7 +46,7 @@ class AddAttachmentUseCase(
     /**
      * Input for the usecase.
      */
-    data class I(
+    public data class I(
 
         /**
          * The id of the dream.

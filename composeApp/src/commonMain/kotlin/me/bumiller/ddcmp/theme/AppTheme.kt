@@ -16,7 +16,7 @@ import me.bumiller.ddcmp.ui.common.LocalWindowSizeClass
  * Takes configuration parameters to create the material setup.
  */
 @Composable
-fun AppTheme(
+internal fun AppTheme(
     mode: ColorMode,
     theme: ColorTheme,
     sizeClass: WindowSizeClass,

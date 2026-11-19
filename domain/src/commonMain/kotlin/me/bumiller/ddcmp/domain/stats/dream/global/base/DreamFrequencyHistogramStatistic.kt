@@ -6,7 +6,7 @@ import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 /**
  * Special case of a histogram statistic when only the dream frequency is counted, i.e. how many dreams are in a bucket.
  */
-abstract class DreamFrequencyHistogramStatistic<I, Bucket, BucketSize>(
+public abstract class DreamFrequencyHistogramStatistic<I, Bucket, BucketSize>(
     getDreams: AllDreamUseCase,
     forceEnd: Boolean = false
 ) : DreamHistogramStatistic<I, Bucket, BucketSize, Int>(getDreams, forceEnd) {

@@ -7,13 +7,13 @@ import me.bumiller.ddcmp.domain.model.attachment.AttachmentMeta
 /**
  * Repository for attachments.
  */
-interface AttachmentMetaRepository: Repository<AttachmentMeta> {
+public interface AttachmentMetaRepository: Repository<AttachmentMeta> {
 
     /**
      * Gets all attachment-metas for a dream.
      */
-    fun getForDream(dreamId: Long): Flow<List<AttachmentMeta>?>
+    public fun getForDream(dreamId: Long): Flow<List<AttachmentMeta>?>
 
-    suspend fun deleteForDream(dreamId: Long): Boolean
+    public suspend fun deleteForDream(dreamId: Long): Boolean
 
 }

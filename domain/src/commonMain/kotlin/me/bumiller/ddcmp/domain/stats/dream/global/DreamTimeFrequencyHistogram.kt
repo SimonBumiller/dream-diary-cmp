@@ -11,14 +11,14 @@ import kotlin.time.ExperimentalTime
 /**
  * A statistical usecase that calculates a histogram (time vs dream frequency) for a specified date range.
  */
-class DreamTimeFrequencyHistogram(
+public class DreamTimeFrequencyHistogram(
     getDreams: AllDreamUseCase
 ) : DreamFrequencyHistogramStatistic<ClosedRange<LocalDate>, LocalDate, DatePeriod>(
     getDreams = getDreams,
     forceEnd = true
 ) {
 
-    override fun ClosedRange<LocalDate>.invoke() = this
+    override fun ClosedRange<LocalDate>.invoke(): ClosedRange<LocalDate> = this
 
     // We want at least three buckets to properly display a statistic
     override val minBucketCount: Int = 3

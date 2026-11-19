@@ -7,8 +7,8 @@ import me.bumiller.ddcmp.domain.model.emotion.Emotion
 /**
  * Typed emotion repository.
  */
-interface EmotionRepository : Repository<Emotion> {
+public interface EmotionRepository : Repository<Emotion> {
 
-    fun getForDream(dreamId: Long): Flow<List<Emotion>?>
+    public fun getForDream(dreamId: Long): Flow<List<Emotion>?>
 
 }

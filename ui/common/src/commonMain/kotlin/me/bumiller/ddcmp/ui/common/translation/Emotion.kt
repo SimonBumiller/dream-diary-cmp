@@ -12,7 +12,7 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * Translated name of the emotion type.
  */
-val EmotionType.translateName: String
+public val EmotionType.translateName: String
     @Composable get() = when (this) {
         EmotionType.Joy -> stringResource(Res.string.emotiontype_joy)
         EmotionType.Pleasure -> stringResource(Res.string.emotiontype_pleasure)

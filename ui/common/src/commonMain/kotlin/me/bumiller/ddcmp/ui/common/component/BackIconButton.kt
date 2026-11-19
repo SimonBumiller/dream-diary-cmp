@@ -10,7 +10,7 @@ import dream_diary_cmp.ui.common.generated.resources.back_icon_button_cd
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun BackIconButton(
+public fun BackIconButton(
     onBack: () -> Unit
 ) {
     IconButton(

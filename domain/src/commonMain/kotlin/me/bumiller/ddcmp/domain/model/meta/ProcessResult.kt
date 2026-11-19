@@ -6,22 +6,22 @@ import kotlin.time.Instant
 /**
  * An entity that has a start and end timestamp.
  */
-interface ProcessResult {
+public interface ProcessResult {
 
     /**
      * When the process was started.
      */
-    val started: Instant
+    public val started: Instant
 
     /**
      * When the process was ended.
      */
-    val ended: Instant
+    public val ended: Instant
 
     /**
      * The total running time of the process.
      */
-    val processLength: Duration
+    public val processLength: Duration
         get() = (ended - started).absoluteValue
 
 }

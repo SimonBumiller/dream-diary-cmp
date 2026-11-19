@@ -19,7 +19,7 @@ private val baseline = Typography()
 /**
  * The typography configuration for the app.
  */
-val AppTypography: Typography
+internal val AppTypography: Typography
     @Composable get() = Typography(
         displayLarge = baseline.displayLarge.copy(fontFamily = fontFamily),
         displayMedium = baseline.displayMedium.copy(fontFamily = fontFamily),

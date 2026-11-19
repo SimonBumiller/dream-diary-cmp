@@ -1,7 +1,7 @@
 package me.bumiller.ddcmp.domain.model
 
-actual object PlatformFeatures {
-    actual val supportsBiometricAuth = false
-    actual val supportsPeriodicBackups = true
-    actual val supportsDynamicTheming = false
+public actual object PlatformFeatures {
+    public actual val supportsBiometricAuth: Boolean = false
+    public actual val supportsPeriodicBackups: Boolean = true
+    public actual val supportsDynamicTheming: Boolean = false
 }

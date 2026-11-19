@@ -7,7 +7,7 @@ import me.bumiller.ddcomp.core.database.dao.ExportLogDao
 import me.bumiller.ddcomp.core.database.entity.ExportLogEntity
 import me.bumiller.ddcomp.core.database.repository.base.SimpleBaseRepository
 
-class ExportLogRepository(
+internal class ExportLogRepository(
     exportDao: ExportLogDao
 ) : SimpleBaseRepository<ExportResult, ExportLogEntity>(
     dao = exportDao,

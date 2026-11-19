@@ -9,7 +9,7 @@ import me.bumiller.ddcmp.domain.model.emotion.EmotionType
 /**
  * The color associated with the emotion type
  */
-val EmotionType.color: Color
+public val EmotionType.color: Color
     get() = when (this) {
         EmotionType.Joy -> Color(0xff77dd77)
         EmotionType.Pleasure -> Color(0xff99607d) // Purple
@@ -21,7 +21,7 @@ val EmotionType.color: Color
  * The shape associated with the emotion type.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
-val EmotionType.shape: RoundedPolygon
+public val EmotionType.shape: RoundedPolygon
     get() = when (this) {
         EmotionType.Joy -> MaterialShapes.Flower
         EmotionType.Pleasure -> MaterialShapes.Sunny

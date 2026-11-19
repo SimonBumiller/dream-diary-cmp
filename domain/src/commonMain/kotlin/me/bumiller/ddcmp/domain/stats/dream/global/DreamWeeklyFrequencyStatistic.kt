@@ -13,8 +13,7 @@ import kotlin.time.ExperimentalTime
 /**
  * Statistical use-case to calculate weekly averages over different timespans.
  */
-@OptIn(ExperimentalTime::class)
-class DreamWeeklyFrequencyStatistic(
+public class DreamWeeklyFrequencyStatistic(
     getDreams: AllDreamUseCase
 ) : DreamListBasedStatistic<DreamWeeklyFrequencyStatistic.I, DreamWeeklyFrequencyStatistic.WeeklyFrequency>(
     getDreams
@@ -114,7 +113,7 @@ class DreamWeeklyFrequencyStatistic(
     /**
      * The weekly frequency stat.
      */
-    data class WeeklyFrequency(
+    public data class WeeklyFrequency(
 
         /**
          * The weekly average overall.
@@ -146,7 +145,7 @@ class DreamWeeklyFrequencyStatistic(
     /**
      * Config options.
      */
-    data class I(
+    public data class I(
 
         /**
          * The date range.

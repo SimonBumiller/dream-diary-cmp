@@ -7,7 +7,7 @@ import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 /**
  * Use case for deleting a tag.
  */
-class DeleteTagUseCase(
+public class DeleteTagUseCase(
     private val getTag: AllTagUseCase,
     private val tagRepo: TagRepository
 ) : UseCase<Long, AllTagUseCase.O?> {

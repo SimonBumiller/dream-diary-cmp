@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.model.stats
 /**
  * Models a histogram together with a selected bucket, and information about that bucket.
  */
-data class MarkedHistogram<Bucket, BucketSize, Value : Number>(
+public data class MarkedHistogram<Bucket, BucketSize, Value : Number>(
 
     /**
      * THe histogram.

@@ -9,7 +9,7 @@ import me.bumiller.ddcomp.core.database.dao.base.AggregateDao
 import me.bumiller.ddcomp.core.database.entity.PeriodicBackupEntity
 
 @Dao
-interface PeriodicBackupDao: AggregateDao<PeriodicBackupEntity, PeriodicBackupEntity.Aggregate> {
+internal interface PeriodicBackupDao: AggregateDao<PeriodicBackupEntity, PeriodicBackupEntity.Aggregate> {
 
     @Query("SELECT * FROM periodic_backups WHERE id = :id")
     override fun getByIdAggregate(id: Long): Flow<PeriodicBackupEntity.Aggregate?>

@@ -11,8 +11,6 @@ import kotlin.time.Duration.Companion.minutes
 
 private const val TAG = "me.bumiller.ddcmp.work.periodic_backup"
 
-private val Flex = 0.minutes
-
 private val PeriodicBackupOrder.taskId: String
     get() = "$TAG-$id"
 

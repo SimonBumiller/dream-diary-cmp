@@ -9,7 +9,7 @@ import me.bumiller.ddcomp.core.database.dao.EmotionDao
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
 import me.bumiller.ddcomp.core.database.repository.base.SimpleBaseRepository
 
-class EmotionRepository(
+internal class EmotionRepository(
     emotionDao: EmotionDao,
     val dreamDao: DreamDao
 ) : SimpleBaseRepository<Emotion, EmotionEntity>(

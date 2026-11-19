@@ -19,7 +19,7 @@ import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun DreamLazyColumn(
+public fun DreamLazyColumn(
     modifier: Modifier = Modifier,
     dreams: List<AllDreamUseCase.O>,
     onClick: (Dream) -> Unit,

@@ -7,7 +7,7 @@ import io.github.vinceglb.filekit.utils.toPath
 import me.bumiller.ddcmp.domain.model.backup.BackupDestination
 import me.bumiller.ddcomp.core.database.entity.BackupDestinationEntity
 
-actual object PlatformMapping {
+internal actual object PlatformMapping {
 
     actual fun backupDestination(model: BackupDestination) = model.run {
         val localDir = this as? BackupDestination.LocalDirectory

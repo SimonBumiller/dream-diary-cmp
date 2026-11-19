@@ -9,8 +9,7 @@ import kotlin.time.Instant
 /**
  * Describes an emotion.
  */
-@OptIn(ExperimentalTime::class)
-data class Emotion(
+public data class Emotion(
 
     override val id: Long,
     override val created: Instant,

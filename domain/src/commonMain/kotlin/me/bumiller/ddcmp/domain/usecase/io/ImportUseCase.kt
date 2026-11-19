@@ -17,7 +17,7 @@ import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 /**
  * Usecase for importing data from a file to the local data.
  */
-class ImportUseCase(
+public class ImportUseCase(
     private val personRepository: PersonRepository,
     private val dreamRepository: DreamRepository,
     private val emotionRepository: EmotionRepository,
@@ -50,7 +50,7 @@ class ImportUseCase(
     /**
      * The usecase input.
      */
-    data class I(
+    public data class I(
 
         /**
          * The file to import from.

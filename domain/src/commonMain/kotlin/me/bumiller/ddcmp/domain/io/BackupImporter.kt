@@ -6,11 +6,11 @@ import me.bumiller.ddcmp.domain.model.io.ImportResult
 /**
  * Importer for backups.
  */
-interface BackupImporter {
+public interface BackupImporter {
 
     /**
      * Imports a given backup and returns the result.
      */
-    suspend fun importBackup(file: PlatformFile): ImportResult
+    public suspend fun importBackup(file: PlatformFile): ImportResult
 
 }

@@ -19,10 +19,10 @@ import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase.I
 import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase.O
 import kotlin.time.ExperimentalTime
 
-open class AllTagUseCase(
-    val repo: TagRepository,
-    val personRepo: PersonRepository,
-    val dreamRepo: DreamRepository
+public open class AllTagUseCase(
+    private val repo: TagRepository,
+    private val personRepo: PersonRepository,
+    private val dreamRepo: DreamRepository
 ) : FlowUseCase<I, List<O>> {
 
     override fun invoke(i: I): Flow<List<O>> = repo.all
@@ -66,7 +66,7 @@ open class AllTagUseCase(
                     i.target?.let { o.tag.target == it } ?: true
         }
 
-    data class O(
+    public data class O(
 
         val tag: Tag,
 
@@ -79,7 +79,7 @@ open class AllTagUseCase(
     /**
      * Input type
      */
-    data class I(
+    public data class I(
 
         /**
          * The sort mode.

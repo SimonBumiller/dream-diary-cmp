@@ -9,13 +9,13 @@ import kotlin.time.ExperimentalTime
  * A statistical usecase that calculates a histogram (word count in dream vs dream frequency) for a specified date range.
  */
 @OptIn(ExperimentalTime::class)
-class DreamLengthFrequencyHistogram(
+public class DreamLengthFrequencyHistogram(
 
     getDreams: AllDreamUseCase
 
 ) : DreamFrequencyHistogramStatistic<ClosedRange<LocalDate>, Int, Int>(getDreams) {
 
-    override fun ClosedRange<LocalDate>.invoke() = this
+    override fun ClosedRange<LocalDate>.invoke(): ClosedRange<LocalDate> = this
 
     override suspend fun createMetadata(
         input: ClosedRange<LocalDate>,

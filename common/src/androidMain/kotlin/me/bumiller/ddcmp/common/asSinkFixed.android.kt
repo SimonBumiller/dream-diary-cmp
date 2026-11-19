@@ -15,7 +15,7 @@ import java.io.FileOutputStream
  * The normal [sink] function reopens a uri as a document file again, which causes problems with nextcloud content providers.
  * This fixed implementation directly resolves the uri in an output stream, which is then converted into a sink.
  */
-actual fun PlatformFile.asSinkFixed(): RawSink = when (androidFile) {
+public actual fun PlatformFile.asSinkFixed(): RawSink = when (androidFile) {
     is AndroidFile.FileWrapper -> FileOutputStream((androidFile as AndroidFile.FileWrapper).file).asSink()
     is AndroidFile.UriWrapper -> {
         val context = GlobalContext.get().get<Context>()

@@ -9,4 +9,4 @@ import androidx.compose.runtime.Composable
  * @return Null if dynamic theming is not available.
  */
 @Composable
-expect fun systemTheme(dark: Boolean): ColorScheme?
+internal expect fun systemTheme(dark: Boolean): ColorScheme?

@@ -10,7 +10,7 @@ import me.bumiller.ddcomp.core.database.dao.base.AggregateDao
 import me.bumiller.ddcomp.core.database.entity.EmotionEntity
 
 @Dao
-interface EmotionDao: AggregateDao<EmotionEntity, EmotionEntity.Aggregate> {
+internal interface EmotionDao: AggregateDao<EmotionEntity, EmotionEntity.Aggregate> {
 
     @Upsert
     override suspend fun upsert(entity: EmotionEntity): Long

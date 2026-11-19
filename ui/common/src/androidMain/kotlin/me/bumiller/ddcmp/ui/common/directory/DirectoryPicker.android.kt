@@ -13,10 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import io.github.vinceglb.filekit.PlatformFile
 
-actual class DirectoryPickerResultLauncher(
+public actual class DirectoryPickerResultLauncher(
     private val delegate: ManagedActivityResultLauncher<Uri?, Uri?>
 ) {
-    actual fun launch() {
+    public actual fun launch() {
         delegate.launch(null)
     }
 }
@@ -36,7 +36,7 @@ private class OpenDocumentTreePersistable: ActivityResultContracts.OpenDocumentT
 }
 
 @Composable
-actual fun rememberPersistableDirectoryPickerLauncher(
+public actual fun rememberPersistableDirectoryPickerLauncher(
     onResult: (PlatformFile?) -> Unit
 ): DirectoryPickerResultLauncher {
     val context = LocalContext.current

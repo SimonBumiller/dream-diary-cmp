@@ -6,6 +6,7 @@ import me.bumiller.ddcmp.domain.io.AttachmentStorage
 import me.bumiller.ddcmp.domain.io.BackupExporterFactory
 import me.bumiller.ddcmp.domain.io.BackupImporterFactory
 import me.bumiller.ddcmp.domain.io.DirectoryTruncator
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -13,7 +14,7 @@ import org.koin.dsl.module
 /**
  * Koin module for the io module.
  */
-val io = module {
+public val io: Module = module {
     singleOf(::ImporterFactoryImpl) bind BackupImporterFactory::class
 
     singleOf(::DirectoryTruncatorImpl) bind DirectoryTruncator::class

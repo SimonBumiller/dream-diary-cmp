@@ -44,13 +44,14 @@ import me.bumiller.ddcmp.domain.usecase.tag.AllTagUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.DeleteTagUseCase
 import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase
 import me.bumiller.ddcmp.domain.util.AppCoroutineScope
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 /**
  * The Koin module for the domain component
  */
-val domain = module {
+public val domain: Module = module {
     singleOf(::AppCoroutineScope)
 
     singleOf(::AllDreamUseCase)

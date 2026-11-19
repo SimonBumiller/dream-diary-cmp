@@ -5,11 +5,11 @@ import me.bumiller.ddcmp.domain.model.io.ExportOption
 /**
  * Factory for creating backup exporters.
  */
-interface BackupExporterFactory {
+public interface BackupExporterFactory {
 
     /**
      * Creates a new backup exporter based on import options.
      */
-    fun createExporter(options: ExportOption): BackupExporter
+    public fun createExporter(options: ExportOption): BackupExporter
 
 }

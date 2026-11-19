@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.model.stats
 /**
  * Models different sections of histogram ranks.
  */
-enum class HistogramRank {
+public enum class HistogramRank {
 
     Lowest,
 

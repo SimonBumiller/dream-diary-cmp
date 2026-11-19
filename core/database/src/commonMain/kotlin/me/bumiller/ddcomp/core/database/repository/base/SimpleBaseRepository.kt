@@ -8,7 +8,7 @@ import me.bumiller.ddcmp.domain.model.meta.Unique
 import me.bumiller.ddcomp.core.database.dao.base.BaseDao
 import me.bumiller.ddcomp.core.database.entity.base.BaseEntity
 
-open class SimpleBaseRepository<Model : Unique, Entity : BaseEntity>(
+internal open class SimpleBaseRepository<Model : Unique, Entity : BaseEntity>(
 
     private val dao: BaseDao<Entity>,
 

@@ -10,7 +10,7 @@ import me.bumiller.ddcmp.domain.usecase.meta.UseCase
  *
  * Returns if a backup was actually canceled.
  */
-class CancelBackupOrdersUseCase(
+public class CancelBackupOrdersUseCase(
     private val getOrder: GetBackupOrderUseCase,
     private val orderRepo: PeriodicBackupOrderRepository,
     private val backupScheduler: BackupScheduler

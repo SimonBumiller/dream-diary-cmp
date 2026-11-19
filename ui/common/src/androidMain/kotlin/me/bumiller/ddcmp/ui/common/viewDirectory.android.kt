@@ -10,7 +10,7 @@ import androidx.core.content.FileProvider
 import io.github.vinceglb.filekit.AndroidFile
 import me.bumiller.ddcmp.common.captureException
 
-actual fun viewDirectory(file: PlatformFile): Boolean {
+public actual fun viewDirectory(file: PlatformFile): Boolean {
     val context = GlobalContext.get().get<Context>()
 
     val fileUri = when (file.androidFile) {

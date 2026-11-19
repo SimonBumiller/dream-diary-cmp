@@ -12,7 +12,7 @@ import kotlin.time.Instant
 /**
  * Contains instructions to specify a periodic backup.
  */
-data class PeriodicBackupOrder(
+public data class PeriodicBackupOrder(
 
     override val id: Long,
     override val created: Instant,
@@ -62,7 +62,7 @@ data class PeriodicBackupOrder(
      *
      * @param timestamp The timestamp on when the backup is performed.
      */
-    fun createBackupFileName(timestamp: Instant) = "Backup-$id-${
+    public fun createBackupFileName(timestamp: Instant): String = "Backup-$id-${
         timestamp.toLocalDateTime(TimeZone.currentSystemDefault()).toBackupFilenameRepresentation()
     }.zip"
 

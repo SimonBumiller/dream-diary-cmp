@@ -47,7 +47,7 @@ private fun BasicTooltip(
 }
 
 @Composable
-fun TimeFrequencyTooltip(
+public fun TimeFrequencyTooltip(
     modifier: Modifier = Modifier,
     from: LocalDate,
     length: DatePeriod,
@@ -73,7 +73,7 @@ fun TimeFrequencyTooltip(
 }
 
 @Composable
-fun WeekdayFrequencyTooltip(
+public fun WeekdayFrequencyTooltip(
     modifier: Modifier = Modifier,
     from: DayOfWeek,
     dreamCount: Int
@@ -91,7 +91,7 @@ fun WeekdayFrequencyTooltip(
 }
 
 @Composable
-fun DreamLengthTooltip(
+public fun DreamLengthTooltip(
     modifier: Modifier = Modifier,
     lowerLimit: Int,
     upperLimit: Int,
@@ -112,7 +112,7 @@ fun DreamLengthTooltip(
 }
 
 @Composable
-fun DreamPersonCountTooltip(
+public fun DreamPersonCountTooltip(
     modifier: Modifier = Modifier,
     personCount: Int,
     dreamCount: Int

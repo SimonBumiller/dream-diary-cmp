@@ -41,7 +41,7 @@ internal class ExporterFactoryImpl(
                         options.fileType
                     )
 
-                    IOFileType.Xml -> XmlExportStrategy(allDreams, allPersons, allEmotions, allTags, allAttachmentMetas)
+                    IOFileType.Xml -> XmlExportStrategy(allDreams, allPersons, allEmotions, allTags)
                 }
             }.let { ZipFileExporter(it, allAttachmentMetas) }
         }

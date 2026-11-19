@@ -11,11 +11,10 @@ import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 import me.bumiller.ddcmp.domain.usecase.tag.SaveTagUseCase.I
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
-class SaveTagUseCase(
-    val tagRepo: TagRepository,
-    val dreamRepo: DreamRepository,
-    val personRepo: PersonRepository
+public class SaveTagUseCase(
+    private val tagRepo: TagRepository,
+    private val dreamRepo: DreamRepository,
+    private val personRepo: PersonRepository
 ) : UseCase<I, Tag> {
 
     override suspend fun invoke(i: I ): Tag {
@@ -57,7 +56,7 @@ class SaveTagUseCase(
     /**
      * Input for the usecase.
      */
-    data class I(
+    public data class I(
 
         /**
          * The tag that should be saved.

@@ -9,7 +9,7 @@ import me.bumiller.ddcomp.core.database.dao.AttachmentMetaDao
 import me.bumiller.ddcomp.core.database.entity.AttachmentMetaEntity
 import me.bumiller.ddcomp.core.database.repository.base.SimpleBaseRepository
 
-class AttachmentMetaRepository(
+internal class AttachmentMetaRepository(
     private val metaDao: AttachmentMetaDao
 ) : AttachmentMetaRepository, SimpleBaseRepository<AttachmentMeta, AttachmentMetaEntity>(
     dao = metaDao,

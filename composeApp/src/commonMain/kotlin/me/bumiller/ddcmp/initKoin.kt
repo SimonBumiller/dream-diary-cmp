@@ -31,7 +31,7 @@ private val app = module {
  *
  * Method called in the initial setup by all platforms.
  */
-fun initKoin(config: KoinApplication.() -> Unit = {}) {
+public fun initKoin(config: KoinApplication.() -> Unit = {}) {
     startKoin {
         config()
 

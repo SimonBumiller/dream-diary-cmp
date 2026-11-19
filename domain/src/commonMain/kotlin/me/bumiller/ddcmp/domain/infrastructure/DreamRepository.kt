@@ -7,17 +7,17 @@ import me.bumiller.ddcmp.domain.model.dream.Dream
 /**
  * Typed dream repository.
  */
-interface DreamRepository : Repository<Dream> {
+public interface DreamRepository : Repository<Dream> {
 
-    suspend fun addEmotionTo(dreamId: Long, emotionId: Long)
-    suspend fun removeEmotionFrom(dreamId: Long, emotionId: Long)
-    fun getForEmotion(emotionId: Long): Flow<List<Dream>>
+    public suspend fun addEmotionTo(dreamId: Long, emotionId: Long)
+    public suspend fun removeEmotionFrom(dreamId: Long, emotionId: Long)
+    public fun getForEmotion(emotionId: Long): Flow<List<Dream>>
 
-    suspend fun addPersonTo(dreamId: Long, personId: Long)
-    suspend fun removePersonFrom(dreamId: Long, personId: Long)
-    fun getForPerson(personId: Long): Flow<List<Dream>>
+    public suspend fun addPersonTo(dreamId: Long, personId: Long)
+    public suspend fun removePersonFrom(dreamId: Long, personId: Long)
+    public fun getForPerson(personId: Long): Flow<List<Dream>>
 
-    fun getForTag(tagId: Long): Flow<List<Dream>>
+    public fun getForTag(tagId: Long): Flow<List<Dream>>
 
 
 }

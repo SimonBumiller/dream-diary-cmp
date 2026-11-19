@@ -16,7 +16,7 @@ import java.util.Locale
 import kotlin.time.Instant
 
 @RequiresApi(Build.VERSION_CODES.O)
-actual fun formatLocalDate(date: LocalDate): String {
+public actual fun formatLocalDate(date: LocalDate): String {
     val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
     return formatter.format(date.toJavaLocalDate())
 }
@@ -26,27 +26,27 @@ internal actual fun formatLocalDateMonth(date: LocalDate): String {
     return date.toJavaLocalDate().format(formatter)
 }
 
-actual fun formatDayOfWeekShort(dayOfWeek: DayOfWeek): String {
+public actual fun formatDayOfWeekShort(dayOfWeek: DayOfWeek): String {
     return dayOfWeek.toJavaDayOfWeek().getDisplayName(
         TextStyle.SHORT,
         Locale.getDefault()
     )
 }
 
-actual fun formatDayOfWeek(dayOfWeek: DayOfWeek): String {
+public actual fun formatDayOfWeek(dayOfWeek: DayOfWeek): String {
     return dayOfWeek.toJavaDayOfWeek().getDisplayName(
         TextStyle.FULL,
         Locale.getDefault()
     )
 }
 
-actual fun formatLocalDateYearIndependent(date: LocalDate): String {
+public actual fun formatLocalDateYearIndependent(date: LocalDate): String {
     val formatter = DateTimeFormatter.ofPattern("dd MMMM", Locale.getDefault())
     return date.toJavaLocalDate().format(formatter)
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-actual fun formatLocalDateTime(dateTime: LocalDateTime): String {
+public actual fun formatLocalDateTime(dateTime: LocalDateTime): String {
     val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
     return formatter.format(dateTime.toJavaLocalDateTime())
 }

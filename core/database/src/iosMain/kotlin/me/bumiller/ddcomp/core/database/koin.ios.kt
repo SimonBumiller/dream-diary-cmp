@@ -10,7 +10,7 @@ import platform.Foundation.NSURL
 import platform.Foundation.NSUserDomainMask
 
 @OptIn(ExperimentalForeignApi::class)
-actual fun Scope.databaseBuilder(): RoomDatabase.Builder<RelationalDatabase> {
+internal actual fun Scope.databaseBuilder(): RoomDatabase.Builder<RelationalDatabase> {
     val fileManager = NSFileManager.defaultManager
     val urls = fileManager.URLsForDirectory(
         directory = NSApplicationSupportDirectory,

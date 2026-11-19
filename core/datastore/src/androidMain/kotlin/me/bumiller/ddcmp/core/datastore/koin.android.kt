@@ -6,5 +6,5 @@ import okio.Path.Companion.toOkioPath
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.scope.Scope
 
-actual fun Scope.instantiateDataStore(): DataStore<Preferences> =
+internal actual fun Scope.instantiateDataStore(): DataStore<Preferences> =
     createDataStore(androidContext().filesDir.toOkioPath())

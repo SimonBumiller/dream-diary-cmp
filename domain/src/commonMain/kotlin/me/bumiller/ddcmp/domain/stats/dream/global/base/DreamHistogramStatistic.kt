@@ -8,7 +8,7 @@ import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 /**
  * Base for a class that maps each dream to a certain bucket, and then creates a histogram from it.
  */
-abstract class DreamHistogramStatistic<I, Bucket, BucketSize, BucketValue : Number>(
+public abstract class DreamHistogramStatistic<I, Bucket, BucketSize, BucketValue : Number>(
     getDreams: AllDreamUseCase,
     forceEnd: Boolean = false
 ) : DreamListBasedStatistic<I, Histogram<Bucket, BucketSize, BucketValue>>(
@@ -28,7 +28,7 @@ abstract class DreamHistogramStatistic<I, Bucket, BucketSize, BucketValue : Numb
     /**
      * The minimum bucket count. If [createMetadata] creates fewer buckets, the statistic can't be calculated.
      */
-    protected open val minBucketCount = 1
+    protected open val minBucketCount: Int = 1
 
     /**
      * Finds the bucket for a specific dream.

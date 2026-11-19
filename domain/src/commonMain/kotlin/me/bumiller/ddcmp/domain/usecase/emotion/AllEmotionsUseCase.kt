@@ -10,8 +10,8 @@ import me.bumiller.ddcmp.domain.model.meta.SortMode
 import me.bumiller.ddcmp.domain.usecase.emotion.AllEmotionsUseCase.I
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 
-open class AllEmotionsUseCase(
-    val repo: EmotionRepository
+public open class AllEmotionsUseCase(
+    private val repo: EmotionRepository
 ) : FlowUseCase<I, List<Emotion>> {
 
     override fun invoke(i: I): Flow<List<Emotion>> =
@@ -41,7 +41,7 @@ open class AllEmotionsUseCase(
     /**
      * Input type
      */
-    data class I(
+    public data class I(
 
         /**
          * The sort mode.

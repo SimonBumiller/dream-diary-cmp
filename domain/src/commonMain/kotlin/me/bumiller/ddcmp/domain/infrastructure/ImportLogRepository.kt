@@ -6,4 +6,4 @@ import me.bumiller.ddcmp.domain.model.io.ImportResult
 /**
  * Interface for import results.
  */
-interface ImportLogRepository: Repository<ImportResult>
+public interface ImportLogRepository: Repository<ImportResult>

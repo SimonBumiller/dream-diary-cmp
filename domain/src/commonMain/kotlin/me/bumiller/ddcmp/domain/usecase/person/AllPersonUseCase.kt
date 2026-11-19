@@ -15,9 +15,9 @@ import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase.I
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase.O
 
-open class AllPersonUseCase(
-    val repo: PersonRepository,
-    val tagRepo: TagRepository
+public open class AllPersonUseCase(
+    private val repo: PersonRepository,
+    private val tagRepo: TagRepository
 ) : FlowUseCase<I, List<O>> {
 
     override fun invoke(i: I): Flow<List<O>> =
@@ -65,7 +65,7 @@ open class AllPersonUseCase(
     /**
      * Data class for the usecase output.
      */
-    data class O(
+    public data class O(
 
         /**
          * The person
@@ -82,7 +82,7 @@ open class AllPersonUseCase(
     /**
      * Input type
      */
-    data class I(
+    public data class I(
 
         /**
          * The sort mode.

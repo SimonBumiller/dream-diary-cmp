@@ -13,7 +13,7 @@ import me.bumiller.ddcomp.core.database.dao.PeriodicBackupOrderDao
 import me.bumiller.ddcomp.core.database.entity.PeriodicBackupOrderEntity
 import kotlin.jvm.JvmName
 
-class PeriodicBackupOrderRepository(
+internal class PeriodicBackupOrderRepository(
     private val orderDao: PeriodicBackupOrderDao,
     private val backupDestinationDao: BackupDestinationDao
 ): PeriodicBackupOrderRepository {

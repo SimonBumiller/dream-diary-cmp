@@ -9,8 +9,7 @@ import kotlin.time.Instant
 /**
  * Models a person that can be part of a dream.
  */
-@OptIn(ExperimentalTime::class)
-data class Person(
+public data class Person(
 
     override val id: Long,
     override val created: Instant,

@@ -7,4 +7,4 @@ import kotlinx.io.RawSink
 /**
  * Platform specific fix for the [sink] function.
  */
-expect fun PlatformFile.asSinkFixed(): RawSink
+public expect fun PlatformFile.asSinkFixed(): RawSink

@@ -10,7 +10,7 @@ import java.nio.file.Path
 
 private const val DatastoreDirectoryName = "datastore"
 
-actual fun Scope.instantiateDataStore(): DataStore<Preferences> {
+internal actual fun Scope.instantiateDataStore(): DataStore<Preferences> {
     val path = PlatformFile(dataDirectory(), DatastoreDirectoryName).file.toOkioPath()
     return createDataStore(path)
 }

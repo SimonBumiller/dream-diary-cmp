@@ -21,7 +21,7 @@ import me.bumiller.ddcmp.domain.model.dream.Person
 import me.bumiller.ddcmp.domain.model.dream.Tag
 
 @Composable
-fun AppTagInputChip(
+public fun AppTagInputChip(
     selected: Boolean,
     tag: Tag,
     onClick: () -> Unit,
@@ -76,7 +76,7 @@ private fun borderForTag(tag: Tag, enabled: Boolean, selected: Boolean) = InputC
 )
 
 @Composable
-fun PersonInputChip(
+public fun PersonInputChip(
     modifier: Modifier = Modifier,
     person: Person,
     tags: List<Tag>,
@@ -102,7 +102,7 @@ fun PersonInputChip(
 }
 
 @Composable
-fun AppInputChip(
+public fun AppInputChip(
     selected: Boolean,
     onClick: () -> Unit,
     onLongClick: () -> Unit = {},

@@ -40,12 +40,12 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * Symbolizes a step in the wizard process.
  */
-interface WizardStep {
+public interface WizardStep {
 
     /**
      * The string resource for the step.
      */
-    val nameRes: StringResource
+    public val nameRes: StringResource
 
 }
 
@@ -53,7 +53,7 @@ interface WizardStep {
  * Default bottom row with two text buttons.
  */
 @Composable
-fun <Step : WizardStep> BottomRowScope<Step>.DefaultBottomRow(
+public fun <Step : WizardStep> BottomRowScope<Step>.DefaultBottomRow(
     modifier: Modifier,
     retreatText: String = stringResource(Res.string.wizard_row_retreat_label),
     advanceText: String = stringResource(Res.string.wizard_row_advance_label),
@@ -79,42 +79,42 @@ fun <Step : WizardStep> BottomRowScope<Step>.DefaultBottomRow(
 /**
  * Scope for the bottom row composable.
  */
-interface BottomRowScope<Step : WizardStep> {
+public interface BottomRowScope<Step : WizardStep> {
 
     /**
      * The current step.
      */
-    val current: Step
+    public val current: Step
 
     /**
      * Whether the wizard can advance.
      */
-    val canAdvance: Boolean
+    public val canAdvance: Boolean
 
     /**
      * Whether the wizard can retreat.
      */
-    val canRetreat: Boolean
+    public val canRetreat: Boolean
 
     /**
      * Retreat to the recent step.
      */
-    fun retreat()
+    public fun retreat()
 
     /**
      * Advance to the next step.
      */
-    fun advance()
+    public fun advance()
 
     /**
      * Whether it's the last step.
      */
-    val isLast: Boolean
+    public val isLast: Boolean
 
     /**
      * Whether it's the first step.
      */
-    val isFirst: Boolean
+    public val isFirst: Boolean
 
 }
 
@@ -127,7 +127,7 @@ interface BottomRowScope<Step : WizardStep> {
  * @param onCancel Invoked when the initial step is retreated
  */
 @Composable
-fun <Step : WizardStep> SetupWizard(
+public fun <Step : WizardStep> SetupWizard(
     modifier: Modifier,
     steps: List<Step>,
     canAdvance: (Step) -> Boolean = { true },
@@ -264,7 +264,7 @@ private fun WizardHeaderItem(
     }
 }
 
-enum class PreviewStep(
+public enum class PreviewStep(
     override val nameRes: StringResource
 ) : WizardStep {
 

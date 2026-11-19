@@ -5,25 +5,25 @@ import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 /**
  * Interface to schedule backups.
  */
-interface BackupScheduler {
+public interface BackupScheduler {
 
     /**
      * Schedules backups for a specified order.
      *
      * @return Whether the schedule was successful.
      */
-    suspend fun scheduleOrder(order: PeriodicBackupOrder): Boolean
+    public suspend fun scheduleOrder(order: PeriodicBackupOrder): Boolean
 
     /**
      * Cancels all currently ongoing backup tasks.
      *
      * @return The number of stopped backups orders.
      */
-    suspend fun cancelAll(): Int
+    public suspend fun cancelAll(): Int
 
     /**
      * Whether a backup is running at the moment
      */
-    suspend fun isBackupRunning(): Boolean
+    public suspend fun isBackupRunning(): Boolean
 
 }

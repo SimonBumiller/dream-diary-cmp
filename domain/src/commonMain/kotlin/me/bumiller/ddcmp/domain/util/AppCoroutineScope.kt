@@ -7,4 +7,4 @@ import kotlinx.coroutines.SupervisorJob
 /**
  * Application-Scoped coroutine scope.
  */
-class AppCoroutineScope : CoroutineScope by CoroutineScope(SupervisorJob() + Dispatchers.Default)
+public class AppCoroutineScope : CoroutineScope by CoroutineScope(SupervisorJob() + Dispatchers.Default)

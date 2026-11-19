@@ -6,6 +6,8 @@ plugins {
 }
 
 kotlin {
+    explicitApi()
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.workmanager)

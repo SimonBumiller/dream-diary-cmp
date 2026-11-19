@@ -25,12 +25,12 @@ import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import me.bumiller.ddcmp.domain.usecase.person.AllPersonUseCase
 import kotlin.time.Instant
 
-open class AllDreamUseCase(
-    val repo: DreamRepository,
-    val emotionRepo: EmotionRepository,
-    val allPersons: AllPersonUseCase,
-    val tagRepo: TagRepository,
-    val attachmentMetaRepo: AttachmentMetaRepository
+public open class AllDreamUseCase(
+    private val repo: DreamRepository,
+    private val emotionRepo: EmotionRepository,
+    private val allPersons: AllPersonUseCase,
+    private val tagRepo: TagRepository,
+    private val attachmentMetaRepo: AttachmentMetaRepository
 ) : FlowUseCase<I, List<O>> {
 
     override fun invoke(i: I): Flow<List<O>> = repo.all
@@ -104,7 +104,7 @@ open class AllDreamUseCase(
     private val List<Emotion>.averageValence: Float
         get() = map(Emotion::valence).map(Valence::value).average().toFloat()
 
-    data class O(
+    public data class O(
 
         val dream: Dream,
 
@@ -121,7 +121,7 @@ open class AllDreamUseCase(
     /**
      * Input type
      */
-    data class I(
+    public data class I(
 
         /**
          * The sort mode.

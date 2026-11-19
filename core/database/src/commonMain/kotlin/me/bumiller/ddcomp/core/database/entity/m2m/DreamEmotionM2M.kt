@@ -28,7 +28,7 @@ import me.bumiller.ddcomp.core.database.entity.EmotionEntity
         Index("emotionId")
     ]
 )
-data class DreamEmotionM2M(
+internal data class DreamEmotionM2M(
 
     val dreamId: Long,
 

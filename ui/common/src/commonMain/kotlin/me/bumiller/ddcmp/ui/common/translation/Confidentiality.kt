@@ -14,7 +14,7 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * The translated name of the confidentiality.
  */
-val Confidentiality.translateName: String
+public val Confidentiality.translateName: String
     @Composable get() = when (this) {
         Confidentiality.None -> Res.string.confidentiality_none_name
         Confidentiality.Medium -> Res.string.confidentiality_medium_name
@@ -24,7 +24,7 @@ val Confidentiality.translateName: String
 /**
  * The translated description of the confidentiality.
  */
-val Confidentiality.translateDescription: String
+public val Confidentiality.translateDescription: String
     @Composable get() = when (this) {
         Confidentiality.None -> Res.string.confidentiality_none_description
         Confidentiality.Medium -> Res.string.confidentiality_medium_description

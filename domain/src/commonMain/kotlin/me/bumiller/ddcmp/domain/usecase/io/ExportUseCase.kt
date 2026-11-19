@@ -7,7 +7,7 @@ import me.bumiller.ddcmp.domain.model.io.ExportOption
 import me.bumiller.ddcmp.domain.usecase.io.ExportUseCase.I
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 
-class ExportUseCase(
+public class ExportUseCase(
     private val exporterFactory: BackupExporterFactory,
     private val exportRepo: ExportLogRepository
 ): UseCase<I, Long> {
@@ -24,7 +24,7 @@ class ExportUseCase(
     /**
      * Input for the usecase.
      */
-    data class I(
+    public data class I(
 
         /**
          * Where the export should be saved to.

@@ -1,6 +1,6 @@
 package me.bumiller.ddcmp.core.io.common
 
-fun <K, V> Map<K, V>.getAny(keys: List<K>): V? {
+private fun <K, V> Map<K, V>.getAny(keys: List<K>): V? {
     keys.forEach { key ->
         get(key)?.let { return it }
     }

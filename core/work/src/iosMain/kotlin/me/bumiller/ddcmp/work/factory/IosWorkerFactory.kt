@@ -5,7 +5,7 @@ import dev.brewkits.kmpworkmanager.background.data.IosWorkerFactory
 import me.bumiller.ddcmp.work.worker.PeriodicBackupWorkerIos
 import org.koin.core.Koin
 
-class IosWorkerFactory(private val koin: Koin) : IosWorkerFactory {
+public class IosWorkerFactory(private val koin: Koin) : IosWorkerFactory {
 
     override fun createWorker(workerClassName: String): IosWorker? = when (workerClassName) {
         "PeriodicBackupWorker" -> koin.get<PeriodicBackupWorkerIos>()

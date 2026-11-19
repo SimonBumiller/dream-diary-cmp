@@ -9,7 +9,7 @@ import androidx.core.content.FileProvider
 import io.github.vinceglb.filekit.AndroidFile
 import me.bumiller.ddcmp.common.captureException
 
-actual fun viewFile(
+public actual fun viewFile(
     file: PlatformFile,
     mimeType: String
 ): Boolean {

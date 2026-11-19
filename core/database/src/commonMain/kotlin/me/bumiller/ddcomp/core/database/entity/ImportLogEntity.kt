@@ -13,7 +13,7 @@ import kotlin.time.Instant
 @Entity(
     tableName = "import_logs"
 )
-data class ImportLogEntity (
+internal data class ImportLogEntity (
 
     @PrimaryKey(autoGenerate = true)
     override val id: Long,

@@ -8,7 +8,7 @@ import kotlin.time.Instant
 /**
  * Models attachment metadata for an attachment, usually attached to a dream.
  */
-data class AttachmentMeta(
+public data class AttachmentMeta(
 
     override val id: Long,
     override val created: Instant,

@@ -7,7 +7,7 @@ import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 import me.bumiller.ddcmp.domain.usecase.backup.GetBackupOrderUseCase.I
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 
-class GetBackupOrderUseCase(
+public class GetBackupOrderUseCase(
     private val orderRepo: PeriodicBackupOrderRepository
 ) : FlowUseCase<I, PeriodicBackupOrder?> {
 
@@ -24,7 +24,7 @@ class GetBackupOrderUseCase(
     /**
      * Query for the usecase.
      */
-    data class I(
+    public data class I(
 
         /**
          * The id to search for.

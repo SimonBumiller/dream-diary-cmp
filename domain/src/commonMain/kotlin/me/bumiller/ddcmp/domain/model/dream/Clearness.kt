@@ -3,7 +3,7 @@ package me.bumiller.ddcmp.domain.model.dream
 /**
  * Classifies how clear the memory of a dream was.
  */
-enum class Clearness {
+public enum class Clearness {
 
     /**
      * Dream had very low clearness.
@@ -29,7 +29,7 @@ enum class Clearness {
      */
     VeryHigh;
 
-    companion object {
-        fun fromOrdinal(ordinal: Int) = entries.find { it.ordinal == ordinal }!!
+    public companion object {
+        public fun fromOrdinal(ordinal: Int): Clearness = entries.find { it.ordinal == ordinal }!!
     }
 }

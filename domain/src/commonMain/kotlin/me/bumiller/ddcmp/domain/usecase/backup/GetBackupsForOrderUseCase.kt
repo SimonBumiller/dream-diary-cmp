@@ -8,7 +8,7 @@ import me.bumiller.ddcmp.domain.model.io.ExportResult
 import me.bumiller.ddcmp.domain.usecase.backup.GetBackupsForOrderUseCase.BackupsForOrder
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 
-class GetBackupsForOrderUseCase(
+public class GetBackupsForOrderUseCase(
     private val backupRepo: PeriodicBackupRepository
 ): FlowUseCase<Long, BackupsForOrder> {
 
@@ -17,9 +17,9 @@ class GetBackupsForOrderUseCase(
             .map(::BackupsForOrder)
 
     /**
-     * Result class of the usecase.
+     * Result public class of the usecase.
      */
-    data class BackupsForOrder(
+    public data class BackupsForOrder(
 
         /**
          * All backups for the order.

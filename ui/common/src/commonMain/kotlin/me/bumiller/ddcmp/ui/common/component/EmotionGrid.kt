@@ -50,7 +50,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 @Composable
-fun <T : EmotionCoordinate> EmotionGrid(
+public fun <T : EmotionCoordinate> EmotionGrid(
     modifier: Modifier = Modifier,
     existingPoints: Set<T> = emptySet(),
     selectedPoint: T? = null,

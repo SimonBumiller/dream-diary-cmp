@@ -7,7 +7,7 @@ import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 /**
  * Use case for deleting a person.
  */
-class DeletePersonUseCase(
+public class DeletePersonUseCase(
     private val getPerson: AllPersonUseCase,
     private val personRepo: PersonRepository
 ) : UseCase<Long, AllPersonUseCase.O?> {

@@ -9,7 +9,7 @@ import kotlin.time.Duration
  * But that library does not cater to jvm-targets.
  * We add this intermediary interface so that we can implement a no-operation implementation for jvm.
  */
-expect class PlatformBackgroundTaskScheduler {
+internal expect class PlatformBackgroundTaskScheduler {
 
     /**
      * Forwards configuration for a periodic work request.

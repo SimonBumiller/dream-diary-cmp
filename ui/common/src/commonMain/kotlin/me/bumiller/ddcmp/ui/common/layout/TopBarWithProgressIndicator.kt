@@ -11,7 +11,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TopBarWithProgressIndicator(
+public fun TopBarWithProgressIndicator(
     modifier: Modifier = Modifier,
     loading: Boolean = false,
     topBar: @Composable () -> Unit

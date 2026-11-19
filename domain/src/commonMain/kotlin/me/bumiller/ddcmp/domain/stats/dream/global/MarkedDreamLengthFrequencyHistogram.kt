@@ -17,13 +17,12 @@ import me.bumiller.ddcmp.domain.usecase.dream.AllDreamUseCase
 import me.bumiller.ddcmp.domain.usecase.meta.FlowUseCase
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
-class MarkedDreamLengthFrequencyHistogram(
+public class MarkedDreamLengthFrequencyHistogram(
     private val lengthFrequencyHistogram: DreamLengthFrequencyHistogram,
     private val allDreams: AllDreamUseCase
 ) : FlowUseCase<I, Stat<MarkedHistogram<Int, Int, Int>>> {
 
-    data class I(
+    public data class I(
 
         val range: ClosedRange<LocalDate>,
 

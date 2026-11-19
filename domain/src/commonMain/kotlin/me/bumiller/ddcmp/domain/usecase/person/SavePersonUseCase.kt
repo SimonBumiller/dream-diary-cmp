@@ -8,12 +8,11 @@ import me.bumiller.ddcmp.domain.model.dream.Tag
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 import kotlin.time.ExperimentalTime
 
-class SavePersonUseCase(
-    val personRepo: PersonRepository,
-    val tagRepo: TagRepository
+public class SavePersonUseCase(
+    private val personRepo: PersonRepository,
+    private val tagRepo: TagRepository
 ) : UseCase<SavePersonUseCase.I, Person> {
 
-    @OptIn(ExperimentalTime::class)
     override suspend fun invoke(i: I): Person {
         val person = personRepo.save(i.person).let {
             if(it == -1L) i.person
@@ -44,7 +43,7 @@ class SavePersonUseCase(
     /**
      * Input for the use case.
      */
-    data class I(
+    public data class I(
 
         /**
          * The person to save.

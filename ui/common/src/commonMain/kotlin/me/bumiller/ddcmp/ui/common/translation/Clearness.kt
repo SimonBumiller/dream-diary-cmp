@@ -15,7 +15,7 @@ import dream_diary_cmp.ui.common.generated.resources.clearness_verylow_name
 import me.bumiller.ddcmp.domain.model.dream.Clearness
 import org.jetbrains.compose.resources.stringResource
 
-val Clearness.translateName: String
+public val Clearness.translateName: String
     @Composable get() = when (this) {
         Clearness.VeryLow -> Res.string.clearness_verylow_name
         Clearness.Low -> Res.string.clearness_low_name
@@ -24,7 +24,7 @@ val Clearness.translateName: String
         Clearness.VeryHigh -> Res.string.clearness_veryhigh_name
     }.let { stringResource(it) }
 
-val Clearness.translateDescription: String
+public val Clearness.translateDescription: String
     @Composable get() = when (this) {
         Clearness.VeryLow -> Res.string.clearness_verylow_description
         Clearness.Low -> Res.string.clearness_low_description

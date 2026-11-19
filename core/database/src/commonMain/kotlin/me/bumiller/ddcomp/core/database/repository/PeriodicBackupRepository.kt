@@ -14,7 +14,7 @@ import me.bumiller.ddcomp.core.database.dao.PeriodicBackupOrderDao
 import me.bumiller.ddcomp.core.database.entity.PeriodicBackupEntity
 import me.bumiller.ddcomp.core.database.entity.PeriodicBackupOrderEntity
 
-class PeriodicBackupRepository(
+internal class PeriodicBackupRepository(
     private val backupDao: PeriodicBackupDao,
     private val orderDao: PeriodicBackupOrderDao
 ) : PeriodicBackupRepository {

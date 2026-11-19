@@ -26,7 +26,7 @@ import me.bumiller.ddcomp.core.database.entity.PeriodicBackupOrderEntity
 import me.bumiller.ddcomp.core.database.entity.PersonEntity
 import me.bumiller.ddcomp.core.database.entity.TagEntity
 
-object Mapping {
+internal object Mapping {
 
     object Reverse {
 

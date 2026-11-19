@@ -5,7 +5,7 @@ import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Instant
 
-fun Instant.toDosTime(): Long {
+public fun Instant.toDosTime(): Long {
     val dt = toLocalDateTime(TimeZone.currentSystemDefault())
 
     val date = ((dt.year - 1980) shl 9) or

@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
-fun String.mimeTypeIcon(): ImageVector = when {
+public fun String.mimeTypeIcon(): ImageVector = when {
     "image/" in this -> Icons.Outlined.Image
     "video/" in this -> Icons.Outlined.VideoFile
     "audio/" in this -> Icons.Outlined.AudioFile

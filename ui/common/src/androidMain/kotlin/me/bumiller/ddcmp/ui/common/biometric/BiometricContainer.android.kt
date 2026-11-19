@@ -8,7 +8,7 @@ import dream_diary_cmp.ui.common.generated.resources.biometric_title
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-actual fun BiometricContainer(state: BiometricAuthState, onResult: (BiometricResult) -> Unit) {
+public actual fun BiometricContainer(state: BiometricAuthState, onResult: (BiometricResult) -> Unit) {
     val manager = rememberBiometricPromptManager()
 
     val title = stringResource(Res.string.biometric_title)

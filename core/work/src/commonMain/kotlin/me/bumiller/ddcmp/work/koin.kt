@@ -7,10 +7,10 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-expect fun Module.provideWorkers()
-expect fun Module.providePlatformBackgroundTaskScheduler()
+internal expect fun Module.provideWorkers()
+internal expect fun Module.providePlatformBackgroundTaskScheduler()
 
-val work = module {
+public val work: Module = module {
     provideWorkers()
     providePlatformBackgroundTaskScheduler()
 

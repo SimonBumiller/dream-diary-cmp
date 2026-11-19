@@ -12,6 +12,7 @@ import me.bumiller.ddcmp.domain.infrastructure.PersonRepository
 import me.bumiller.ddcmp.domain.infrastructure.TagRepository
 import me.bumiller.ddcmp.domain.infrastructure.AttachmentMetaRepository
 import me.bumiller.ddcomp.core.database.migrations.Migration_9_10
+import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -29,12 +30,12 @@ import me.bumiller.ddcomp.core.database.repository.AttachmentMetaRepository as A
 /**
  * Platform specific method to create the database builder
  */
-expect fun Scope.databaseBuilder(): RoomDatabase.Builder<RelationalDatabase>
+internal expect fun Scope.databaseBuilder(): RoomDatabase.Builder<RelationalDatabase>
 
 /**
  * Database koin module.
  */
-val database = module {
+public val database: Module = module {
     single {
         databaseBuilder()
             .setDriver(BundledSQLiteDriver())

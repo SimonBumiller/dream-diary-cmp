@@ -7,7 +7,7 @@ import me.bumiller.ddcomp.core.database.dao.ImportLogDao
 import me.bumiller.ddcomp.core.database.entity.ImportLogEntity
 import me.bumiller.ddcomp.core.database.repository.base.SimpleBaseRepository
 
-class ImportLogRepository(
+internal class ImportLogRepository(
     importDao: ImportLogDao
 ) : SimpleBaseRepository<ImportResult, ImportLogEntity>(
     dao = importDao,

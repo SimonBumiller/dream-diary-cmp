@@ -7,7 +7,7 @@ import me.bumiller.ddcomp.core.database.dao.base.M2MDao
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamPersonM2M
 
 @Dao
-interface DreamPersonM2MDao: M2MDao<DreamPersonM2M> {
+internal interface DreamPersonM2MDao: M2MDao<DreamPersonM2M> {
 
     @Insert
     override suspend fun insert(m2m: DreamPersonM2M)

@@ -11,7 +11,7 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * Name of the selected import file type.
  */
-val IOFileType.translateName: String
+public val IOFileType.translateName: String
     @Composable get() = when (this) {
         IOFileType.Json -> Res.string.importfiletype_json_name
         IOFileType.Xml -> Res.string.importfiletype_xml_name

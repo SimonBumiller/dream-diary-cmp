@@ -7,22 +7,22 @@ import kotlin.math.sqrt
 /**
  * Base class for something that carries information about emotion-placement.
  */
-interface EmotionCoordinate {
+public interface EmotionCoordinate {
 
     /**
      * The valence, i.e. X-axis placement.
      */
-    val valence: Valence
+    public val valence: Valence
 
     /**
      * The arousal, i.e. Y-axis placement.
      */
-    val arousal: Arousal
+    public val arousal: Arousal
 
     /**
      * Calculates the euclidean distance to another coordinate.
      */
-    fun distanceTo(other: EmotionCoordinate): Float = sqrt(
+    public fun distanceTo(other: EmotionCoordinate): Float = sqrt(
         abs(other.valence.value - valence.value).pow(2) + abs(other.arousal.value - arousal.value).pow(
             2
         )

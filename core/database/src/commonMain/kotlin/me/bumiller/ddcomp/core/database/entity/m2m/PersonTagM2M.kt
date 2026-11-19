@@ -24,7 +24,7 @@ import me.bumiller.ddcomp.core.database.entity.TagEntity
         )
     ]
 )
-data class PersonTagM2M(
+internal data class PersonTagM2M(
 
     val personId: Long,
 

@@ -23,7 +23,7 @@ import me.bumiller.ddcomp.core.database.entity.PersonEntity
         )
     ]
 )
-data class DreamPersonM2M(
+internal data class DreamPersonM2M(
 
     val dreamId: Long,
 

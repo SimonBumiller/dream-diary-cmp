@@ -3,12 +3,12 @@ package me.bumiller.ddcmp.domain.model.io
 /**
  * Types of files that can be imported.
  */
-enum class IOFileType(
+public enum class IOFileType(
 
     /**
      * The matching file extension.
      */
-    vararg val fileExtensions: String
+    public vararg val fileExtensions: String
 
 ) {
 
@@ -27,7 +27,7 @@ enum class IOFileType(
      */
     Yaml("yaml", "yml");
 
-    val exportFileEx: String
+    public val exportFileEx: String
         get() = fileExtensions.first()
 
 }

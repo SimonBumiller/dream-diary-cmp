@@ -21,7 +21,7 @@ import kotlin.time.Instant
         )
     ]
 )
-data class PeriodicBackupOrderEntity(
+internal data class PeriodicBackupOrderEntity(
 
     @PrimaryKey(autoGenerate = true)
     override val id: Long,

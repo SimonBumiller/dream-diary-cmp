@@ -6,4 +6,4 @@ import me.bumiller.ddcmp.domain.model.io.ExportResult
 /**
  * Interface for export results.
  */
-interface ExportLogRepository: Repository<ExportResult>
+public interface ExportLogRepository: Repository<ExportResult>

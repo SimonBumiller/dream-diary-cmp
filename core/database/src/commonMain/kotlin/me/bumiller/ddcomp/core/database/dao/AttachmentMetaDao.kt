@@ -9,7 +9,7 @@ import me.bumiller.ddcomp.core.database.dao.base.BaseDao
 import me.bumiller.ddcomp.core.database.entity.AttachmentMetaEntity
 
 @Dao
-interface AttachmentMetaDao : BaseDao<AttachmentMetaEntity> {
+internal interface AttachmentMetaDao : BaseDao<AttachmentMetaEntity> {
 
     @Upsert
     override suspend fun upsert(entity: AttachmentMetaEntity): Long

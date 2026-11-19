@@ -51,7 +51,7 @@ internal data class SecureNavigationState(
 )
 
 @PublishedApi
-internal const val SecureNavigationStateKey = "secure_navigation_state"
+internal const val SecureNavigationStateKey: String = "secure_navigation_state"
 
 /**
  * Enables the secure navigation on this nav-graph.
@@ -95,7 +95,7 @@ internal inline fun <reified T : Any> NavGraphBuilder.setRouteSecurable(controll
 /**
  * Sets up a composable and also configures that composable to be securable.
  */
-inline fun <reified T : Any> NavGraphBuilder.securableComposable(
+public inline fun <reified T : Any> NavGraphBuilder.securableComposable(
     navController: NavController,
     noinline content: @Composable (AnimatedContentScope.(NavBackStackEntry) -> Unit)
 ) {
@@ -111,7 +111,7 @@ inline fun <reified T : Any> NavGraphBuilder.securableComposable(
  *
  * @param secured Whether the navigation should be performed secured. If false, equivalent to [NavController.navigate].
  */
-inline fun <reified T : Any> NavController.navigateSecured(
+public inline fun <reified T : Any> NavController.navigateSecured(
     route: T,
     secured: Boolean = true,
     noinline builder: (NavOptionsBuilder.() -> Unit)? = null

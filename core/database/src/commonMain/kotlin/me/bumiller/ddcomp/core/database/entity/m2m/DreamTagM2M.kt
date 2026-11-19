@@ -24,7 +24,7 @@ import me.bumiller.ddcomp.core.database.entity.TagEntity
         )
     ]
 )
-data class DreamTagM2M(
+internal data class DreamTagM2M(
 
     val dreamId: Long,
 

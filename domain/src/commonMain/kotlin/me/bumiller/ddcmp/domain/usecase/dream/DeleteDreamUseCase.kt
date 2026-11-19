@@ -7,7 +7,7 @@ import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 /**
  * Use case for deleting a dream.
  */
-class DeleteDreamUseCase(
+public class DeleteDreamUseCase(
     private val getDReam: AllDreamUseCase,
     private val dreamRepo: DreamRepository
 ) : UseCase<Long, AllDreamUseCase.O?> {

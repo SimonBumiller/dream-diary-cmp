@@ -28,7 +28,7 @@ import me.bumiller.ddcmp.ui.common.style.DisabledContent
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun <T> StatCard(
+public fun <T> StatCard(
     modifier: Modifier = Modifier,
     stat: Stat<T>,
     title: String,

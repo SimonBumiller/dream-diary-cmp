@@ -11,7 +11,7 @@ import me.bumiller.ddcomp.core.database.dao.TagDao
 import me.bumiller.ddcomp.core.database.entity.PersonEntity
 import me.bumiller.ddcomp.core.database.repository.base.SimpleBaseRepository
 
-class PersonRepository(
+internal class PersonRepository(
     personDao: PersonDao,
     val dreamDao: DreamDao,
     val tagDao: TagDao,

@@ -7,11 +7,11 @@ import me.bumiller.ddcmp.domain.model.backup.PeriodicBackupOrder
 /**
  * Repository granting access to a collection of periodic backup orders.
  */
-interface PeriodicBackupOrderRepository: Repository<PeriodicBackupOrder> {
+public interface PeriodicBackupOrderRepository: Repository<PeriodicBackupOrder> {
 
     /**
      * Contains the currently active order, or null if no order is active.
      */
-    val activeOrder: Flow<PeriodicBackupOrder?>
+    public val activeOrder: Flow<PeriodicBackupOrder?>
 
 }

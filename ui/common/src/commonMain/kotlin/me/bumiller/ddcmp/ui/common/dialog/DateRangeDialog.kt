@@ -28,26 +28,27 @@ import dream_diary_cmp.ui.common.generated.resources.date_range_dialog_preconfig
 import dream_diary_cmp.ui.common.generated.resources.date_range_dialog_preconfigured_last_week
 import dream_diary_cmp.ui.common.generated.resources.date_range_dialog_preconfigured_last_year
 import kotlinx.datetime.DatePeriod
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
  * A date range that was picked by the user.
  */
-sealed interface PickedDateRange {
+public sealed interface PickedDateRange {
 
     /**
      * Current date is offset by a specific period.
      */
-    data class Offset(val offset: DatePeriod) : PickedDateRange
+    public data class Offset(val offset: DatePeriod) : PickedDateRange
 
     /**
      * Whole time is taken into account.
      */
-    data object AllTime : PickedDateRange
+    public data object AllTime : PickedDateRange
 
 }
 
-val PreconfiguredDateRanges = listOf(
+public val PreconfiguredDateRanges: List<Pair<StringResource, DatePeriod>> = listOf(
     Res.string.date_range_dialog_preconfigured_last_week to DatePeriod(days = 7),
     Res.string.date_range_dialog_preconfigured_last_month to DatePeriod(days = 30),
     Res.string.date_range_dialog_preconfigured_last_half_year to DatePeriod(months = 6),
@@ -57,7 +58,7 @@ val PreconfiguredDateRanges = listOf(
 )
 
 @Composable
-fun DateRangeDialog(
+public fun DateRangeDialog(
     modifier: Modifier,
     onDismiss: () -> Unit,
     onRangeSelected: (PickedDateRange?) -> Unit,

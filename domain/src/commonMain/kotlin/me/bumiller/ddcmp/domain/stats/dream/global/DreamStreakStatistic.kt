@@ -14,12 +14,11 @@ import kotlin.time.ExperimentalTime
 /**
  * Statistical usecase that reports on the longest and current streak of dreams, i.e. consecutive days on which dreams have been entered.
  */
-@OptIn(ExperimentalTime::class)
-class DreamStreakStatistic(
+public class DreamStreakStatistic(
     getDreams: AllDreamUseCase
 ) : DreamListBasedStatistic<I, StreakStatistic>(getDreams) {
 
-    override fun I.invoke() = dateRange
+    override fun I.invoke(): ClosedRange<LocalDate> = dateRange
 
     override suspend fun invoke(
         input: I,
@@ -95,7 +94,7 @@ class DreamStreakStatistic(
     /**
      * Streak statistic data
      */
-    data class StreakStatistic(
+    public data class StreakStatistic(
 
         /**
          * The longest streak.
@@ -112,7 +111,7 @@ class DreamStreakStatistic(
     /**
      * The input.
      */
-    data class I(
+    public data class I(
 
         /**
          * The date range for the dreams.

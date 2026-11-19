@@ -4,7 +4,6 @@ import androidx.collection.FloatFloatPair
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -32,6 +31,7 @@ import me.bumiller.ddcmp.domain.model.emotion.EmotionType
 import me.bumiller.ddcmp.ui.common.style.color
 import me.bumiller.ddcmp.ui.common.style.shape
 import me.bumiller.ddcmp.ui.common.translation.translateName
+import kotlin.time.Duration.Companion.milliseconds
 
 private fun RoundedPolygon.scale(scope: CacheDrawScope) = transformed { x, y ->
     FloatFloatPair(
@@ -58,7 +58,7 @@ private fun AbstractEmotionBadge(
     // Change emotion every 1 second
     LaunchedEffect(emotions) {
         while (true) {
-            delay(ANIMATION_WAIT_TIME)
+            delay(ANIMATION_WAIT_TIME.milliseconds)
             currentIndex = (currentIndex + 1) % emotions.size
         }
     }
@@ -121,7 +121,6 @@ private fun AbstractEmotionBadge(
 /**
  * A component that displays a set of emotions with a colorful and animated badge.
  */
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun SimpleEmotionBadge(
     modifier: Modifier = Modifier,
@@ -141,39 +140,6 @@ internal fun SimpleEmotionBadge(
                 badge()
                 label()
             }
-        }
-    )
-}
-
-/**
- * A component that displays a set of emotions with a colorful and animated badge.
- */
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-internal fun ChipEmotionBadge(
-    modifier: Modifier = Modifier,
-    emotions: List<Emotion>,
-    onClick: (Emotion) -> Unit,
-    onLongClick: (Emotion) -> Unit = {},
-    label: @Composable (Emotion) -> String = { EmotionType.from(it).translateName },
-    selected: Boolean = false
-) {
-    val intSource = remember { MutableInteractionSource() }
-
-    AbstractEmotionBadge(
-        modifier = modifier,
-        emotions = emotions,
-        label = label,
-        display = { m, emotion, badge, label ->
-            AppInputChip(
-                modifier = m,
-                selected = selected,
-                onClick = { onClick(emotion) },
-                onLongClick = { onLongClick(emotion) },
-                interactionSource = intSource,
-                label = { label() },
-                leadingIcon = { badge() }
-            )
         }
     )
 }

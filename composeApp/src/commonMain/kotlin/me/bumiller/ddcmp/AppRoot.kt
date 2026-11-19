@@ -33,7 +33,7 @@ import org.koin.compose.viewmodel.koinViewModel
  * @param onScreenReady The callback that is called when the screen is ready to display the app, i.e. remove a loading screen.
  */
 @Composable
-fun AppRoot(
+public fun AppRoot(
     sizeClass: WindowSizeClass,
     onScreenReady: () -> Unit = {}
 ) {

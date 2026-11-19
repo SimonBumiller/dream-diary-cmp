@@ -20,7 +20,7 @@ import kotlin.time.Instant
 /**
  * Base class for statistics that take the dream list as a base.
  */
-abstract class DreamListBasedStatistic<I, O>(
+public abstract class DreamListBasedStatistic<I, O>(
 
     /**
      * Usecase to get all dreams.
@@ -34,7 +34,7 @@ abstract class DreamListBasedStatistic<I, O>(
 
 ) : FlowUseCase<I, Stat<O>> {
 
-    protected val timeZone = TimeZone.currentSystemDefault()
+    protected val timeZone: TimeZone = TimeZone.currentSystemDefault()
 
     override fun invoke(i: I): Flow<Stat<O>> = getDreams.asynchronousDreamStatistic(
         dateRange = i(),
@@ -81,7 +81,7 @@ private fun createInstantRange(dateRange: ClosedRange<LocalDate>): ClosedRange<I
 /**
  * Wrapper to perform synchronous stat-calculations on dreams.
  */
-fun <T> AllDreamUseCase.asynchronousDreamStatistic(
+public fun <T> AllDreamUseCase.asynchronousDreamStatistic(
     dateRange: ClosedRange<LocalDate>,
     dreamQuery: AllDreamUseCase.I = AllDreamUseCase.I(
         sortMode = SortMode.DreamSort.Dreamt,

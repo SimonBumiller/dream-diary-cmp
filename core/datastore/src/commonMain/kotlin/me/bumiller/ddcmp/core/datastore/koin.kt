@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import me.bumiller.ddcmp.domain.infrastructure.SettingsStore
 import okio.Path
+import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -15,15 +16,15 @@ private const val FILENAME = "settings.preferences_pb"
 /**
  * Creates a datastore inside a given parent directory.
  */
-fun createDataStore(dir: Path) =
+internal fun createDataStore(dir: Path): DataStore<Preferences> =
     PreferenceDataStoreFactory.createWithPath { dir.resolve(FILENAME) }
 
-expect fun Scope.instantiateDataStore(): DataStore<Preferences>
+internal expect fun Scope.instantiateDataStore(): DataStore<Preferences>
 
 /**
  * The Koin module for the datastore component.
  */
-val datastore = module {
+public val datastore: Module = module {
     single<DataStore<Preferences>> { instantiateDataStore() }
 
     singleOf(::DataStoreSettingsStore) bind SettingsStore::class

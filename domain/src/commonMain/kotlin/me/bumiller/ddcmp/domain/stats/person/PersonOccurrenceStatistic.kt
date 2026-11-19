@@ -10,8 +10,7 @@ import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
-@OptIn(ExperimentalTime::class)
-class PersonOccurrenceStatistic(
+public class PersonOccurrenceStatistic(
     allDreams: AllDreamUseCase
 ): DreamListBasedStatistic<Long, PersonOccurrenceInfo>(allDreams) {
 
@@ -35,7 +34,7 @@ class PersonOccurrenceStatistic(
         )
     }
 
-    data class PersonOccurrenceInfo(
+    public data class PersonOccurrenceInfo(
         val first: Instant,
         val last: Instant
     )

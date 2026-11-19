@@ -9,7 +9,7 @@ import me.bumiller.ddcomp.core.database.entity.m2m.DreamTagM2M
 import me.bumiller.ddcomp.core.database.entity.m2m.PersonTagM2M
 
 @Dao
-interface PersonTagM2MDao: M2MDao<PersonTagM2M> {
+internal interface PersonTagM2MDao: M2MDao<PersonTagM2M> {
 
     @Insert
     override suspend fun insert(m2m: PersonTagM2M)

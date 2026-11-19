@@ -21,7 +21,7 @@ import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
-fun SelectablePolicy(now: Long) = object : SelectableDates {
+private fun selectablePolicy(now: Long): SelectableDates = object : SelectableDates {
 
     override fun isSelectableDate(utcTimeMillis: Long): Boolean {
         return utcTimeMillis <= now
@@ -29,9 +29,9 @@ fun SelectablePolicy(now: Long) = object : SelectableDates {
 
 }
 
-@OptIn(ExperimentalTime::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DDCDatePickerDialog(
+public fun DDCDatePickerDialog(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
     onSelect: (LocalDate, Instant) -> Unit,
@@ -39,7 +39,7 @@ fun DDCDatePickerDialog(
 ) {
     val state = rememberDatePickerState(
         initialSelectedDateMillis = initialSelected.toEpochMilliseconds(),
-        selectableDates = SelectablePolicy(Clock.System.now().toEpochMilliseconds())
+        selectableDates = selectablePolicy(Clock.System.now().toEpochMilliseconds())
     )
 
     DatePickerDialog(

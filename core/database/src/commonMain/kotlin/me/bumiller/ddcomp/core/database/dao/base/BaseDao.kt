@@ -2,7 +2,7 @@ package me.bumiller.ddcomp.core.database.dao.base
 
 import kotlinx.coroutines.flow.Flow
 
-interface BaseDao<Entity> {
+internal interface BaseDao<Entity> {
 
     suspend fun upsert(entity: Entity): Long
 

@@ -9,7 +9,7 @@ import me.bumiller.ddcomp.core.database.dao.base.AggregateDao
 import me.bumiller.ddcomp.core.database.entity.TagEntity
 
 @Dao
-interface TagDao: AggregateDao<TagEntity, TagEntity.Aggregate> {
+internal interface TagDao: AggregateDao<TagEntity, TagEntity.Aggregate> {
 
     @Upsert
     override suspend fun upsert(entity: TagEntity): Long

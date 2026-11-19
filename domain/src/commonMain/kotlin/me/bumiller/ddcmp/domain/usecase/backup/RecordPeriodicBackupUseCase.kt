@@ -13,7 +13,7 @@ import kotlin.time.Clock
  *
  * This should be called in the background, right after a background was performed.
  */
-class RecordPeriodicBackupUseCase(
+public class RecordPeriodicBackupUseCase(
     private val backupRepo: PeriodicBackupRepository,
     private val getOrder: GetBackupOrderUseCase
 ) : UseCase<I, PeriodicBackup> {
@@ -21,7 +21,7 @@ class RecordPeriodicBackupUseCase(
     /**
      * Input for configuring a periodic backup instance.
      */
-    data class I(
+    public data class I(
 
         /**
          * The order for which it was created.

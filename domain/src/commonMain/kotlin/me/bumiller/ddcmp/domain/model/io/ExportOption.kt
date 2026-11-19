@@ -3,12 +3,12 @@ package me.bumiller.ddcmp.domain.model.io
 /**
  * Options for exporting the data into a backup.
  */
-sealed interface ExportOption {
+public sealed interface ExportOption {
 
     /**
      * Normal data export.
      */
-    data class Normal(
+    public data class Normal(
 
         /**
          * The file type that should be exported to.
@@ -20,6 +20,6 @@ sealed interface ExportOption {
     /**
      * Export into the legacy format
      */
-    data object Legacy : ExportOption
+    public data object Legacy : ExportOption
 
 }

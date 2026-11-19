@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flowOf
  *
  * Now, if the flows list is empty and the [transform] lambda also returns a list, a flow of an empty list is returned
  */
-inline fun <reified T, R> combineSafe(
+public inline fun <reified T, R> combineSafe(
     flows: Iterable<Flow<T>>,
     crossinline transform: suspend (List<T>) -> List<R>
 ): Flow<List<R>> = if (flows.none()) flowOf(emptyList())

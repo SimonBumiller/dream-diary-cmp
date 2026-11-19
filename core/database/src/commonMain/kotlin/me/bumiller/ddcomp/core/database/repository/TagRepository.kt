@@ -14,7 +14,7 @@ import me.bumiller.ddcomp.core.database.dao.m2m.PersonTagM2MDao
 import me.bumiller.ddcomp.core.database.entity.m2m.DreamTagM2M
 import me.bumiller.ddcomp.core.database.entity.m2m.PersonTagM2M
 
-class TagRepository(
+internal class TagRepository(
     private val tagDao: TagDao,
     private val dreamDao: DreamDao,
     private val personDao: PersonDao,

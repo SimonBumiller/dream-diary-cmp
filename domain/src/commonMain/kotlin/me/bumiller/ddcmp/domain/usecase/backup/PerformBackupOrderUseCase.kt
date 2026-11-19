@@ -21,7 +21,7 @@ import kotlin.time.Instant
  *
  * This handles the work, not the scheduling.
  */
-class PerformBackupOrderUseCase(
+public class PerformBackupOrderUseCase(
     private val getOrder: GetBackupOrderUseCase,
     private val getExportLog: GetExportLogUsecase,
     private val recordBackup: RecordPeriodicBackupUseCase,
@@ -89,7 +89,7 @@ class PerformBackupOrderUseCase(
     /**
      * Input to the usecase.
      */
-    data class I(
+    public data class I(
 
         /**
          * The id of the order for which the backup is performed.

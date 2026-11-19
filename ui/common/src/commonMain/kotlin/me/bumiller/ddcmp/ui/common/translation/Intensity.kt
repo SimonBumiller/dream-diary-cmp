@@ -15,7 +15,7 @@ import dream_diary_cmp.ui.common.generated.resources.intensity_verylow_name
 import me.bumiller.ddcmp.domain.model.dream.Intensity
 import org.jetbrains.compose.resources.stringResource
 
-val Intensity.translateName: String
+public val Intensity.translateName: String
     @Composable get() = when (this) {
         Intensity.VeryLow -> Res.string.intensity_verylow_name
         Intensity.Low -> Res.string.intensity_low_name
@@ -24,7 +24,7 @@ val Intensity.translateName: String
         Intensity.VeryHigh -> Res.string.intensity_veryhigh_name
     }.let { stringResource(it) }
 
-val Intensity.translateDescription: String
+public val Intensity.translateDescription: String
     @Composable get() = when (this) {
         Intensity.VeryLow -> Res.string.intensity_verylow_description
         Intensity.Low -> Res.string.intensity_low_description

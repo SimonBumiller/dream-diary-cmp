@@ -6,12 +6,11 @@ import kotlin.time.Instant
 /**
  * Models an editable instance that can be edited on a specific point in time.
  */
-@OptIn(ExperimentalTime::class)
-interface Editable: Trackable {
+public interface Editable: Trackable {
 
     /**
      * The edit timestamp.
      */
-    var edited: Instant
+    public var edited: Instant
 
 }

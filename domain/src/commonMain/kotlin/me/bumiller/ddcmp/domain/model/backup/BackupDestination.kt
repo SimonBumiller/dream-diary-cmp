@@ -10,12 +10,12 @@ import kotlin.time.Instant
 /**
  * Destination for periodic backups.
  */
-sealed interface BackupDestination : Unique, Trackable {
+public sealed interface BackupDestination : Unique, Trackable {
 
     /**
      * Backup should be stored in a local directory.
      */
-    data class LocalDirectory(
+    public data class LocalDirectory(
 
         override val id: Long,
         override val created: Instant,
@@ -24,7 +24,7 @@ sealed interface BackupDestination : Unique, Trackable {
 
     ) : BackupDestination {
 
-        override fun toString() = directory.path
+        override fun toString(): String = directory.path
 
     }
 
@@ -33,6 +33,6 @@ sealed interface BackupDestination : Unique, Trackable {
 /**
  * Created a copy with varied id.
  */
-fun <T: BackupDestination> T.copy(id: Long = this.id) = when(this) {
+public fun <T: BackupDestination> T.copy(id: Long = this.id): BackupDestination.LocalDirectory = when(this) {
     is BackupDestination.LocalDirectory -> BackupDestination.LocalDirectory(id, created, directory)
 }

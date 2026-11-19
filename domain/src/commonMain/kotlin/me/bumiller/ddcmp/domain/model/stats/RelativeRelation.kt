@@ -1,6 +1,6 @@
 package me.bumiller.ddcmp.domain.model.stats
 
-enum class RelativeRelation {
+public enum class RelativeRelation {
 
     BelowAverage,
 

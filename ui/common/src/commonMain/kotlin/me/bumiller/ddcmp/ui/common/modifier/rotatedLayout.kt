@@ -8,9 +8,9 @@ import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.unit.Constraints
 import kotlin.math.PI
 
-fun Modifier.rotatedLayout(
+public fun Modifier.rotatedLayout(
     degrees: Float
-) = this.then(
+): Modifier = this.then(
     object : LayoutModifier {
         override fun MeasureScope.measure(
             measurable: Measurable,

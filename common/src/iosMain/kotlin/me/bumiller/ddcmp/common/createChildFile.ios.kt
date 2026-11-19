@@ -5,7 +5,7 @@ import io.github.vinceglb.filekit.div
 import io.github.vinceglb.filekit.path
 import platform.Foundation.NSFileManager
 
-actual suspend fun PlatformFile.createChildFile(
+public actual suspend fun PlatformFile.createChildFile(
     name: String,
     mimeType: String
 ): PlatformFile {

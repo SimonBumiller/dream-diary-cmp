@@ -8,11 +8,11 @@ import me.bumiller.ddcmp.domain.io.AttachmentStorage
 import me.bumiller.ddcmp.domain.usecase.attachment.DownloadAttachmentUseCase.I
 import me.bumiller.ddcmp.domain.usecase.meta.UseCase
 
-class DownloadAttachmentUseCase(
+public class DownloadAttachmentUseCase(
     private val attachmentStorage: AttachmentStorage
 ) : UseCase<I, Boolean> {
 
-    override suspend fun invoke(i: I) = attachmentStorage
+    override suspend fun invoke(i: I): Boolean = attachmentStorage
         .get(i.attachmentId)
         ?.source()
         ?.buffered()
@@ -22,7 +22,7 @@ class DownloadAttachmentUseCase(
     /**
      * Input for the usecase.
      */
-    data class I(
+    public data class I(
 
         /**
          * The id of the attachment.

@@ -79,7 +79,7 @@ private val surfaceContainerHighestDark = Color(0xFF313539)
 /**
  * Light color scheme by the app.
  */
-val AppLightColorScheme = lightColorScheme(
+internal val AppLightColorScheme = lightColorScheme(
     primary = primaryLight,
     onPrimary = onPrimaryLight,
     primaryContainer = primaryContainerLight,
@@ -120,7 +120,7 @@ val AppLightColorScheme = lightColorScheme(
 /**
  * Dark color scheme by the app.
  */
-val AppDarkColorScheme = darkColorScheme(
+internal val AppDarkColorScheme = darkColorScheme(
     primary = primaryDark,
     onPrimary = onPrimaryDark,
     primaryContainer = primaryContainerDark,
